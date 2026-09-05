@@ -312,6 +312,8 @@
     .avatar-opt:hover, .avatar-opt.selected {
       background: var(--badge-bg); border-color: var(--accent); transform: scale(1.08); box-shadow: 0 0 15px var(--accent-glow);
     }
+    .avatar-upload-preview { width: 72px; height: 72px; object-fit: cover; border-radius: 50%; border: 2px solid var(--accent); display: block; margin: 0.75rem auto; }
+    .avatar-image { width: 34px; height: 34px; object-fit: cover; border-radius: 50%; vertical-align: middle; }
 
     /* Admin Cards & Tables */
     .admin-stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
@@ -404,7 +406,7 @@
       <form id="form-login" onsubmit="event.preventDefault(); auth.login(document.getElementById('login-u').value, document.getElementById('login-p').value);">
         <div class="form-group">
           <label class="form-label">ชื่อผู้ใช้ (Username)</label>
-          <input type="text" id="login-u" class="form-input" required placeholder="admin หรือ PlayerOne">
+          <input type="text" id="login-u" class="form-input" required placeholder="ชื่อผู้ใช้ของคุณ">
         </div>
         <div class="form-group">
           <label class="form-label">รหัสผ่าน</label>
@@ -415,7 +417,6 @@
 
       <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; display: flex; flex-direction: column; gap: 0.6rem;">
         <button class="btn btn-outline" style="width: 100%; font-size: 0.88rem;" onclick="auth.login('PlayerOne', '123456');">⚡ เข้าใช้งานด่วน: ผู้เรียนทั่วไป (Demo Player)</button>
-        <button class="btn btn-outline" style="width: 100%; font-size: 0.88rem; border-color: #38bdf8; color: #38bdf8;" onclick="auth.login('admin', 'admin123');">🛡️ เข้าใช้งานด่วน: ผู้ดูแลระบบ (Admin Sage)</button>
         <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">
           ยังไม่มีตัวละคร? <a href="javascript:void(0)" onclick="app.closeModal('modal-login'); app.openModal('modal-register');" style="color: var(--accent); font-weight: 600;">สมัครสมาชิกสร้างตัวละครใหม่</a>
         </p>
@@ -433,16 +434,23 @@
         <p style="font-size: 0.85rem; color: var(--text-muted);">เลือก Avatar และตั้งชื่อเพื่อเริ่มการผจญภัย</p>
       </div>
 
-      <form id="form-reg" onsubmit="event.preventDefault(); auth.register(document.getElementById('reg-u').value, app.selectedRegAvatar);">
+      <form id="form-reg" onsubmit="event.preventDefault(); auth.register(document.getElementById('reg-u').value, app.selectedRegAvatar, document.getElementById('reg-p').value);">
         <div class="form-group">
           <label class="form-label">ชื่อตัวละครของคุณ</label>
           <input type="text" id="reg-u" class="form-input" required placeholder="ตั้งชื่อตัวละคร">
+        </div>
+        <div class="form-group">
+          <label class="form-label">รหัสผ่าน</label>
+          <input type="password" id="reg-p" class="form-input" required minlength="6" placeholder="อย่างน้อย 6 ตัวอักษร">
         </div>
         <div class="form-group">
           <label class="form-label">เลือก Avatar ประจำตัว</label>
           <div class="avatar-picker-grid" id="reg-avatar-grid">
             <!-- Avatars dynamically generated -->
           </div>
+          <label class="form-label" for="reg-avatar-file">หรืออัปโหลดรูปจากอุปกรณ์</label>
+          <input type="file" id="reg-avatar-file" class="form-input" accept="image/*" onchange="app.previewUploadedAvatar(this, 'register')">
+          <img id="reg-avatar-preview" class="avatar-upload-preview" alt="ตัวอย่าง Avatar ที่อัปโหลด" hidden>
         </div>
         <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">สร้างตัวละครและเริ่มฝึกฝนทันที 🌟</button>
       </form>
@@ -461,6 +469,10 @@
       <div class="avatar-picker-grid" id="profile-avatar-grid">
         <!-- 16 Avatars -->
       </div>
+
+      <label class="form-label" for="profile-avatar-file">หรืออัปโหลดรูปจากอุปกรณ์</label>
+      <input type="file" id="profile-avatar-file" class="form-input" accept="image/*" onchange="app.previewUploadedAvatar(this, 'profile')">
+      <img id="profile-avatar-preview" class="avatar-upload-preview" alt="ตัวอย่าง Avatar ที่อัปโหลด" hidden>
 
       <button class="btn btn-primary" style="width: 100%;" onclick="app.saveProfileAvatar()">บันทึกรูปโปรไฟล์ใหม่ ✨</button>
     </div>
@@ -592,33 +604,86 @@
       constructor() {
         const saved = localStorage.getItem('omni_user');
         this.currentUser = saved ? JSON.parse(saved) : null;
+        this.users = JSON.parse(localStorage.getItem('omni_users') || '[]');
+        if (!this.users.some(user => user.username.toLowerCase() === 'admin')) {
+          this.users.unshift({ username: 'admin', password: 'admin123', role: 'admin', xp: 1500, level: 10, rank: 'Omniscient Sage', avatar: '🧙‍♂️', registeredAt: new Date().toISOString() });
+          this.saveUsers();
+        }
+        if (this.currentUser && !this.users.some(user => user.username.toLowerCase() === this.currentUser.username.toLowerCase())) {
+          this.users.push({ ...this.currentUser, registeredAt: new Date().toISOString() });
+          this.saveUsers();
+        }
+      }
+
+      saveUsers() {
+        localStorage.setItem('omni_users', JSON.stringify(this.users));
+      }
+
+      saveCurrentUser() {
+        if (!this.currentUser) return;
+        const userIndex = this.users.findIndex(user => user.username.toLowerCase() === this.currentUser.username.toLowerCase());
+        if (userIndex >= 0) this.users[userIndex] = { ...this.users[userIndex], ...this.currentUser };
+        else this.users.push({ ...this.currentUser, registeredAt: new Date().toISOString() });
+        this.saveUsers();
+        localStorage.setItem('omni_user', JSON.stringify(this.currentUser));
+      }
+
+      deleteUser(index) {
+        const user = this.users[index];
+        if (!user || user.role === 'admin') {
+          app.showToast('ไม่สามารถลบบัญชีผู้ดูแลระบบได้');
+          return;
+        }
+        if (!confirm(`ต้องการลบบัญชี ${user.username} ใช่หรือไม่?`)) return;
+        this.users.splice(index, 1);
+        this.saveUsers();
+        app.showToast(`ลบบัญชี ${user.username} เรียบร้อยแล้ว`);
+        app.renderAdmin();
       }
 
       login(username, password) {
-        if (username.toLowerCase() === 'admin') {
-          this.currentUser = { username: 'admin', role: 'admin', xp: 1500, level: 10, rank: 'Omniscient Sage', avatar: '🧙‍♂️' };
+        const requestedName = (username || '').trim();
+        const savedUser = this.users.find(user => user.username.toLowerCase() === requestedName.toLowerCase());
+        if (savedUser && savedUser.password && savedUser.password !== password) {
+          app.showToast('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+          return;
+        }
+        if (savedUser) {
+          this.currentUser = { ...savedUser };
         } else {
           const curXp = parseInt(localStorage.getItem('omni_xp') || '180');
           const savedAvatar = localStorage.getItem('omni_avatar') || '⚡';
-          this.currentUser = { username: username || 'PlayerOne', role: 'user', xp: curXp, level: Math.floor(Math.sqrt(curXp/25))+1, rank: 'Silver Apprentice', avatar: savedAvatar };
+          this.currentUser = { username: requestedName || 'PlayerOne', role: 'user', xp: curXp, level: Math.floor(Math.sqrt(curXp/25))+1, rank: 'Silver Apprentice', avatar: savedAvatar };
         }
         localStorage.setItem('omni_user', JSON.stringify(this.currentUser));
         localStorage.setItem('omni_xp', this.currentUser.xp);
+        this.saveCurrentUser();
         app.closeModal('modal-login');
         app.updateUserUI();
         app.showToast(`ยินดีต้อนรับ ${this.currentUser.username}! เข้าสู่ระบบสำเร็จ`);
         app.handleRoute();
       }
 
-      register(username, avatar) {
-        this.currentUser = { username: username || 'Seeker', role: 'user', xp: 0, level: 1, rank: 'Bronze Novice', avatar: avatar || '🧙‍♂️' };
+      register(username, avatar, password) {
+        const requestedName = (username || '').trim() || 'Seeker';
+        if (!password || password.length < 6) {
+          app.showToast('รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร');
+          return;
+        }
+        if (this.users.some(user => user.username.toLowerCase() === requestedName.toLowerCase())) {
+          app.showToast('ชื่อนี้มีผู้ใช้งานแล้ว กรุณาเลือกชื่อใหม่');
+          return;
+        }
+        this.currentUser = { username: requestedName, password, role: 'user', xp: 0, level: 1, rank: 'Bronze Novice', avatar: avatar || '🧙‍♂️', registeredAt: new Date().toISOString() };
+        this.users.push({ ...this.currentUser });
+        this.saveUsers();
         localStorage.setItem('omni_user', JSON.stringify(this.currentUser));
         localStorage.setItem('omni_xp', '0');
         localStorage.setItem('omni_avatar', this.currentUser.avatar);
         app.closeModal('modal-register');
         app.updateUserUI();
         app.showToast(`สร้างตัวละครสำเร็จ! ยินดีต้อนรับ ${this.currentUser.username}`);
-        app.handleRoute();
+        app.navigate('#/profile');
       }
 
       logout() {
@@ -902,6 +967,60 @@
       ]
     };
 
+    const EXPANSION_TOPICS = {
+      academic: [
+        ['คณิตศาสตร์และการคิดเชิงปริมาณ', 'สมการ ฟังก์ชัน ความน่าจะเป็น และการตรวจคำตอบ', 'กำหนดตัวแปรจากสิ่งที่โจทย์ถาม แยกข้อมูลที่ทราบ เลือกแบบจำลอง แล้วตรวจคำตอบด้วยหน่วยและขนาดของตัวเลข การเขียนเหตุผลทุกขั้นทำให้ผู้อื่นตรวจสอบได้', 'แปลงปัญหาเป็นสมการ ทดลองกรณีเล็ก และตรวจกรณีขอบก่อนสรุป'],
+        ['ชีววิทยา เซลล์ และพันธุศาสตร์', 'เซลล์ DNA การถ่ายทอดลักษณะ และการออกแบบการทดลอง', 'DNA เก็บข้อมูลทางพันธุกรรม ส่วนการแสดงออกของยีนได้รับอิทธิพลจากทั้งพันธุกรรมและสิ่งแวดล้อม การทดลองที่ดีต้องมีกลุ่มควบคุม ทำซ้ำ และรายงานความไม่แน่นอน', 'แยกความสัมพันธ์ออกจากเหตุผลเชิงสาเหตุ และไม่สรุปจากตัวอย่างเดียว'],
+        ['โลก ภูมิอากาศ และความยั่งยืน', 'วัฏจักรคาร์บอน พลังงาน และการใช้ทรัพยากรอย่างรับผิดชอบ', 'ภูมิอากาศเป็นผลจากสมดุลพลังงานของโลก การวิเคราะห์จึงต้องดูข้อมูลระยะยาว แหล่งที่มา และผลกระทบตลอดวงจรชีวิต ไม่ตัดสินจากภาพเหตุการณ์เดียว', 'เปรียบเทียบทางเลือกด้วยข้อมูล ผลกระทบ และความไม่แน่นอน']
+      ],
+      survival: [
+        ['ปฐมพยาบาลและประเมินเหตุฉุกเฉิน', 'ตรวจความปลอดภัย การตอบสนอง การหายใจ และขอความช่วยเหลือ', 'ผู้ช่วยต้องดูความปลอดภัยของพื้นที่ก่อน ประเมินผู้บาดเจ็บ โทรขอความช่วยเหลือ และทำตามคำแนะนำหน่วยฉุกเฉิน การห้ามเลือดใช้แรงกดตรงด้วยผ้าสะอาดและเฝ้าดูอาการ', 'อย่าเคลื่อนย้ายผู้บาดเจ็บโดยไม่จำเป็น โดยเฉพาะเมื่อสงสัยการบาดเจ็บคอหรือหลัง'],
+        ['น้ำ อาหาร และสุขอนามัยภาคสนาม', 'จัดการน้ำ อาหาร และของเสียเพื่อลดการเจ็บป่วย', 'น้ำใสจากธรรมชาติยังอาจมีเชื้อโรค ควรกรองและฆ่าเชื้อตามอุปกรณ์ที่มี แยกพื้นที่อาหารจากของเสีย และวางแผนปริมาณตามจำนวนคนกับระยะเวลา', 'เตรียมแหล่งน้ำสำรองและภาชนะปิดสนิท ไม่พึ่งแหล่งเดียว'],
+        ['การนำทางและสัญญาณขอความช่วยเหลือ', 'ใช้แผนที่ ทิศ จุดสังเกต และสัญญาณอย่างเป็นระบบ', 'เมื่อหลงทางให้หยุด บันทึกตำแหน่งล่าสุด ใช้แผนที่ร่วมกับภูมิประเทศ และทำเครื่องหมายเส้นทาง สัญญาณควรเด่น สม่ำเสมอ และประหยัดพลังงาน', 'คงอยู่ในพื้นที่ปลอดภัยเมื่อไม่มีแผนที่ชัดเจน แทนการเดินสุ่ม']
+      ],
+      tech: [
+        ['การเขียนโปรแกรมและอัลกอริทึม', 'แยกปัญหา ข้อมูลเข้า ผลลัพธ์ และกรณีขอบ', 'อัลกอริทึมที่ดีระบุขั้นตอนชัดเจน ทดสอบค่าปกติ ค่าว่าง ค่ามาก และข้อมูลผิดรูปแบบ แล้ววิเคราะห์เวลาและหน่วยความจำก่อนปรับปรุง', 'เริ่มจากกรณีเล็กและเขียนการทดสอบก่อนเพิ่มความซับซ้อน'],
+        ['ฐานข้อมูลและการจัดการข้อมูล', 'ตาราง คีย์ ความสัมพันธ์ ดัชนี และความถูกต้องของข้อมูล', 'ฐานข้อมูลเชิงสัมพันธ์ใช้ตารางและคีย์เชื่อมความสัมพันธ์ การออกแบบที่ดีลดข้อมูลซ้ำ กำหนดข้อจำกัด และสำรองข้อมูลพร้อมทดสอบการกู้คืน', 'เก็บข้อมูลเท่าที่จำเป็น จำกัดสิทธิ์ และตรวจสอบข้อมูลก่อนบันทึก'],
+        ['เครือข่าย คลาวด์ และความเป็นส่วนตัว', 'การเข้ารหัส การยืนยันตัวตน และสิทธิ์แบบ least privilege', 'ระบบออนไลน์ควรแบ่งชั้นเครือข่าย เข้ารหัสข้อมูลระหว่างส่งและขณะเก็บ บันทึกเหตุการณ์ และให้แต่ละบัญชีเข้าถึงเท่าที่จำเป็น', 'ทบทวนสิทธิ์เมื่อบทบาทเปลี่ยนและไม่เปิดทรัพยากรเป็นสาธารณะโดยไม่จำเป็น']
+      ],
+      arts: [
+        ['การวาดภาพ องค์ประกอบ และแสง', 'เส้น รูปร่าง น้ำหนักภาพ พื้นที่ว่าง และจุดสนใจ', 'องค์ประกอบภาพเกิดจากความสัมพันธ์ของจุด เส้น รูปร่าง น้ำหนัก และจังหวะ การทำภาพร่างขนาดเล็กหลายแบบก่อนลงรายละเอียดช่วยให้ภาพอ่านง่าย', 'วางลำดับสายตาและพื้นที่ว่างก่อนปรับรายละเอียด'],
+        ['การเขียนและการเล่าเรื่อง', 'ตัวละคร เป้าหมาย ความขัดแย้ง และจังหวะการสื่อสาร', 'เรื่องที่ดีมีผู้รับสารชัดเจน ตัวละครต้องการบางอย่าง และเหตุการณ์เปลี่ยนสถานะ การตัดส่วนที่ไม่ช่วยเป้าหมายทำให้เนื้อหากระชับ', 'อ่านงานออกเสียงและให้ผู้อื่นเล่าว่าเข้าใจอะไรเพื่อค้นหาจุดสับสน'],
+        ['ภาพยนตร์ เสียง และการตัดต่อ', 'ใช้ภาพ จังหวะ เสียง และความต่อเนื่องสร้างความหมาย', 'การตัดต่อกำหนดจังหวะและอารมณ์ เสียงบรรยากาศช่วยสร้างพื้นที่ และความต่อเนื่องช่วยให้ผู้ชมไม่สับสน ควรทำ rough cut ก่อนตกแต่ง', 'ทำโครงเรื่องให้ชัดก่อนเพิ่มสีหรือเอฟเฟกต์']
+      ],
+      combat: [
+        ['การฝึกกำลังและการเคลื่อนไหว', 'แรง ความยืดหยุ่น การทรงตัว และการฟื้นตัว', 'เริ่มจากท่าที่ควบคุมได้ เพิ่มภาระทีละน้อย และมีวันพัก กล้ามเนื้อ เอ็น และระบบประสาทปรับตัวต่างจังหวะ จึงไม่ควรเร่งน้ำหนัก', 'บันทึกจำนวนครั้ง ความเหนื่อย และอาการเจ็บ หากผิดปกติให้หยุดและปรึกษาผู้เชี่ยวชาญ'],
+        ['การป้องกันตัวเชิงหลีกเลี่ยง', 'อ่านสภาพแวดล้อม สื่อสารขอบเขต และเลือกทางหนี', 'เป้าหมายคือกลับสู่ความปลอดภัย ไม่ใช่ชนะการต่อสู้ ให้รักษาระยะ ไปยังพื้นที่มีคน ใช้น้ำเสียงชัดเจน และขอความช่วยเหลือเมื่อทำได้', 'การฝึกควรอยู่ภายใต้ผู้สอนที่มีคุณสมบัติและเน้นการหลบหนี'],
+        ['โภชนาการ การนอน และการฟื้นตัว', 'สมดุลอาหาร น้ำ การนอน และวันพักให้เหมาะกับการฝึก', 'สมรรถภาพไม่ได้เกิดจากการฝึกอย่างเดียว ร่างกายต้องได้รับพลังงาน โปรตีน น้ำ และการนอนเพียงพอ การเพิ่มทุกอย่างพร้อมกันทำให้แยกสาเหตุความล้าได้ยาก', 'ใช้ตารางฝึกที่มีวันเบาและติดตามคุณภาพการนอน']
+      ],
+      wealth: [
+        ['งบประมาณ ภาษี และกระแสเงินสด', 'แยกรายรับ รายจ่าย หนี้ และเงินสำรอง', 'งบประมาณเริ่มจากข้อมูลจริง แยกค่าใช้จ่ายจำเป็นกับยืดหยุ่น กระแสเงินสดบอกความสามารถระยะสั้น ส่วนทรัพย์สินสุทธิบอกภาพรวมระยะยาว', 'ทบทวนงบทุกเดือนและกันเงินสำหรับภาษี ค่าซ่อม และเหตุฉุกเฉิน'],
+        ['การตลาดและผู้ประกอบการ', 'ค้นหาปัญหาจริง ทดสอบคุณค่า และวัดผลก่อนขยาย', 'ธุรกิจเริ่มจากปัญหาของลูกค้า การสัมภาษณ์และต้นแบบราคาถูกช่วยตรวจสมมติฐานก่อนลงทุน ตัวชี้วัดควรเชื่อมกับคุณค่าที่ลูกค้าได้รับ', 'แยกคำชมออกจากพฤติกรรมซื้อจริงและปรับข้อเสนอจากข้อมูล'],
+        ['การเจรจา จริยธรรม และการตัดสินใจ', 'เตรียม BATNA ฟังความต้องการ และรักษาความโปร่งใส', 'การเจรจาที่ดีแยกคนออกจากปัญหา ใช้ข้อมูลและทางเลือกสำรอง รู้ขอบเขตที่ยอมรับได้ และคำนึงถึงผลกระทบต่อผู้เกี่ยวข้อง', 'ระบุเงื่อนไขเป็นลายลักษณ์อักษรและไม่ปิดบังข้อมูลสำคัญ']
+      ],
+      engineering: [
+        ['กลศาสตร์ วัสดุ และความปลอดภัย', 'แรง โมเมนต์ ความเค้น และปัจจัยความปลอดภัย', 'การออกแบบต้องดูแรง จุดรับแรง การเสียรูป และโหมดการพัง วัสดุแต่ละชนิดมีความแข็งแรง น้ำหนัก และความทนทานต่างกัน จึงต้องเลือกจากภาระจริง', 'ทดสอบต้นแบบในเงื่อนไขควบคุมและใช้อุปกรณ์ป้องกัน'],
+        ['อิเล็กทรอนิกส์และไมโครคอนโทรลเลอร์', 'แหล่งจ่าย อินพุต การประมวลผล เอาต์พุต และเซนเซอร์', 'ต้องตรวจแรงดัน กระแส ขั้ว และกราวด์ก่อนจ่ายไฟ การอ่านเซนเซอร์ควรสอบเทียบและจัดการค่าผิดปกติ แยกวงจรแรงดันสูงจากส่วนทดลอง', 'ตรวจขั้วและจำกัดกระแสก่อนเชื่อมต่ออุปกรณ์'],
+        ['การออกแบบผลิตภัณฑ์และคุณภาพ', 'เปลี่ยนความต้องการเป็นแบบ ทดสอบซ้ำ และปรับปรุง', 'กระบวนการวิศวกรรมเริ่มจากความต้องการที่วัดได้ สร้างแบบ กำหนดเกณฑ์ยอมรับ ทดสอบ และบันทึกผล การป้องกันปัญหาที่ต้นเหตุลดงานแก้', 'ใช้รายการตรวจสอบและการทดสอบอิสระเมื่อมีผลต่อความปลอดภัย']
+      ]
+    };
+
+    Object.entries(EXPANSION_TOPICS).forEach(([disciplineId, topics]) => {
+      topics.forEach(([title, desc, theory, practice], index) => {
+        LESSON_DATA[disciplineId].push({
+          id: `${disciplineId}-expanded-${index + 1}`,
+          title,
+          desc,
+          theory: `<div class="theory-section-title">📜 หลักการสำคัญ</div><p>${theory}</p><div class="theory-section-title">🧠 วิธีคิดและการฝึกปฏิบัติ</div><p>${practice}</p><div class="theory-section-title">💡 สรุปนำไปใช้</div><div class="example-card"><strong>แนวทาง:</strong> ${practice} ควรตรวจสอบผลและคำนึงถึงความปลอดภัยทุกครั้ง</div>`,
+          question: `ข้อใดเป็นแนวทางที่เหมาะสมที่สุดสำหรับเรื่อง ${title}?`,
+          scenario: `กำลังนำความรู้เรื่อง ${title} ไปใช้ในชีวิตจริง`,
+          opts: [practice, 'ข้ามขั้นตอนตรวจสอบเพื่อให้เสร็จเร็ว', 'ทำตามผู้อื่นโดยไม่ดูบริบท', 'ละเลยข้อมูลและความปลอดภัย'],
+          ans: 0,
+          exp: `${practice} เพราะช่วยให้วางแผน ตรวจสอบผล และลดความเสี่ยงจากการนำความรู้ไปใช้ผิดบริบท`
+        });
+      });
+    });
+
     // 5. Main Application Controller
     class AppController {
       constructor() {
@@ -923,9 +1042,9 @@
         window.addEventListener('hashchange', () => this.handleRoute());
         this.updateUserUI();
 
-        // If user is not logged in on first visit, show the Login Modal automatically!
+        // New visitors start by creating a learner profile.
         if (!auth.currentUser) {
-          setTimeout(() => this.openModal('modal-login'), 400);
+          setTimeout(() => this.openModal('modal-register'), 400);
         }
 
         this.handleRoute();
@@ -956,8 +1075,29 @@
 
       selectProfileAvatar(av, el) {
         this.selectedProfileAvatar = av;
+        const preview = document.getElementById('profile-avatar-preview');
+        if (preview) preview.hidden = true;
         document.querySelectorAll('#profile-avatar-grid .avatar-opt').forEach(a => a.classList.remove('selected'));
         el.classList.add('selected');
+      }
+
+      previewUploadedAvatar(input, target) {
+        const file = input.files && input.files[0];
+        if (!file || !file.type.startsWith('image/')) return;
+        if (file.size > 2 * 1024 * 1024) {
+          this.showToast('รูป Avatar ต้องมีขนาดไม่เกิน 2 MB');
+          input.value = '';
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = () => {
+          const avatar = reader.result;
+          const preview = document.getElementById(`${target === 'register' ? 'reg' : 'profile'}-avatar-preview`);
+          if (preview) { preview.src = avatar; preview.hidden = false; }
+          if (target === 'register') this.selectedRegAvatar = avatar;
+          else this.selectedProfileAvatar = avatar;
+        };
+        reader.readAsDataURL(file);
       }
 
       saveProfileAvatar() {
@@ -972,6 +1112,12 @@
         }
       }
 
+      avatarMarkup(avatar, className = '') {
+        return typeof avatar === 'string' && avatar.startsWith('data:image/')
+          ? `<img class="avatar-image ${className}" src="${avatar}" alt="Avatar">`
+          : `<span class="${className}">${avatar}</span>`;
+      }
+
       getLevel() {
         const xp = auth.currentUser ? auth.currentUser.xp : 0;
         return Math.floor(Math.sqrt(xp / 25)) + 1;
@@ -979,6 +1125,10 @@
 
       getRank() {
         const xp = auth.currentUser ? auth.currentUser.xp : 0;
+        return this.getRankForXp(xp);
+      }
+
+      getRankForXp(xp) {
         if (xp >= 1500) return 'Omniscient Sage';
         if (xp >= 600) return 'Platinum Expert';
         if (xp >= 300) return 'Gold Adept';
@@ -996,7 +1146,7 @@
         if (auth.currentUser) {
           authActions.style.display = 'none';
           userStatus.style.display = 'flex';
-          document.getElementById('nav-user-avatar').innerText = auth.currentUser.avatar;
+          document.getElementById('nav-user-avatar').innerHTML = this.avatarMarkup(auth.currentUser.avatar);
           document.getElementById('nav-user-name').innerText = auth.currentUser.username;
           document.getElementById('nav-user-level').innerText = `LV. ${this.getLevel()} • ${this.getRank()}`;
           mobProfileLabel.innerText = 'โปรไฟล์';
@@ -1171,8 +1321,8 @@
           const gained = 50 + (this.combo - 1) * 5;
           if (auth.currentUser) {
             auth.currentUser.xp += gained;
-            localStorage.setItem('omni_user', JSON.stringify(auth.currentUser));
             localStorage.setItem('omni_xp', auth.currentUser.xp);
+            auth.saveCurrentUser();
           }
           this.combo += 1;
           this.updateUserUI();
@@ -1210,9 +1360,7 @@
 
       renderLeaderboard() {
         const view = document.getElementById('app-view');
-        const curXp = auth.currentUser ? auth.currentUser.xp : 180;
-        const curName = auth.currentUser ? auth.currentUser.username : 'PlayerOne';
-        const curAvatar = auth.currentUser ? auth.currentUser.avatar : '⚡';
+        const users = [...auth.users].sort((first, second) => (second.xp || 0) - (first.xp || 0));
 
         view.innerHTML = `
           <div class="hero-banner">
@@ -1232,20 +1380,15 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><strong style="color: #fbbf24;">#1</strong></td>
-                  <td>🧙‍♂️ admin <span style="background: #38bdf8; color: #000; font-size: 0.7rem; font-weight: 700; padding: 0.1rem 0.4rem; border-radius: 4px;">ADMIN</span></td>
-                  <td><span style="color: var(--accent); font-weight: 600;">Omniscient Sage</span></td>
-                  <td><strong>LV. 10</strong></td>
-                  <td style="text-align: right;"><strong style="color: #fbbf24;">1,500 EXP</strong></td>
-                </tr>
-                <tr>
-                  <td><strong style="color: #cbd5e1;">#2</strong></td>
-                  <td>${curAvatar} ${curName}</td>
-                  <td><span style="color: var(--accent); font-weight: 600;">${this.getRank()}</span></td>
-                  <td><strong>LV. ${this.getLevel()}</strong></td>
-                  <td style="text-align: right;"><strong style="color: #38bdf8;">${curXp} EXP</strong></td>
-                </tr>
+                ${users.map((user, index) => `
+                  <tr>
+                    <td><strong style="color: ${index === 0 ? '#fbbf24' : '#cbd5e1'};">#${index + 1}</strong></td>
+                    <td>${this.avatarMarkup(user.avatar)} ${user.username} ${user.role === 'admin' ? '<span style="background: #38bdf8; color: #000; font-size: 0.7rem; font-weight: 700; padding: 0.1rem 0.4rem; border-radius: 4px;">ADMIN</span>' : ''}</td>
+                    <td><span style="color: var(--accent); font-weight: 600;">${this.getRankForXp(user.xp || 0)}</span></td>
+                    <td><strong>LV. ${user.level || 1}</strong></td>
+                    <td style="text-align: right;"><strong style="color: #38bdf8;">${user.xp || 0} EXP</strong></td>
+                  </tr>
+                `).join('')}
               </tbody>
             </table>
           </div>
@@ -1271,7 +1414,7 @@
           </div>
 
           <div style="background: var(--card-bg); border-radius: 16px; padding: 2rem; border: 1px solid var(--card-border); text-align: center; max-width: 600px; margin: 0 auto;">
-            <div style="font-size: 4.5rem; margin-bottom: 0.25rem;">${auth.currentUser.avatar}</div>
+            <div style="font-size: 4.5rem; margin-bottom: 0.25rem;">${this.avatarMarkup(auth.currentUser.avatar)}</div>
             <button class="btn btn-outline" style="padding: 0.35rem 0.8rem; font-size: 0.82rem; margin-bottom: 1.25rem;" onclick="app.openModal('modal-avatar-picker')">🎨 เปลี่ยนรูปโปรไฟล์ (Avatar)</button>
 
             <h2>${auth.currentUser.username}</h2>
@@ -1376,7 +1519,7 @@
             <div style="text-align: center; padding: 4rem 1rem;">
               <h2>🛡️ พื้นที่เฉพาะผู้ดูแลระบบ (Admin Only)</h2>
               <p style="color: var(--text-muted); margin-top: 0.5rem;">กรุณาเข้าสู่ระบบด้วยบัญชีแอดมิน</p>
-              <button class="btn btn-primary" style="margin-top: 1.5rem;" onclick="auth.login('admin', 'admin123')">⚡ เข้าสู่ระบบด้วยบัญชี Admin Sage</button>
+              <button class="btn btn-primary" style="margin-top: 1.5rem;" onclick="app.openModal('modal-login')">เข้าสู่ระบบด้วยแบบฟอร์มปกติ</button>
             </div>
           `;
           return;
@@ -1394,7 +1537,7 @@
             <div class="admin-stat-card">
               <div style="font-size: 2rem;">👥</div>
               <div>
-                <div class="admin-stat-val">1,248</div>
+                <div class="admin-stat-val">${auth.users.length}</div>
                 <div style="font-size: 0.8rem; color: var(--text-muted);">ผู้เรียนทั้งหมด</div>
               </div>
             </div>
@@ -1461,21 +1604,16 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>🧙‍♂️ admin</td>
-                  <td><span style="color: #38bdf8; font-weight: 700;">ADMIN</span></td>
-                  <td>LV. 10 (1,500 EXP)</td>
-                  <td style="text-align: right;"><button class="btn btn-outline" disabled style="padding: 0.3rem 0.6rem; font-size: 0.8rem;">Superuser</button></td>
-                </tr>
-                <tr>
-                  <td>⚡ PlayerOne</td>
-                  <td>USER</td>
-                  <td>LV. 2 (180 EXP)</td>
-                  <td style="text-align: right;">
-                    <button class="btn btn-outline" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; color: #fbbf24;" onclick="app.showToast('เพิ่ม +100 EXP ให้ PlayerOne สำเร็จ!')">+100 EXP ⭐</button>
-                    <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="app.showToast('ระงับการใช้งานชั่วคราวสำเร็จ')">แบนผู้ใช้</button>
-                  </td>
-                </tr>
+                ${auth.users.map((user, index) => `
+                  <tr>
+                    <td>${this.avatarMarkup(user.avatar)} ${user.username}</td>
+                    <td>${user.role === 'admin' ? '<span style="color: #38bdf8; font-weight: 700;">ADMIN</span>' : 'USER'}</td>
+                    <td>LV. ${user.level || 1} (${user.xp || 0} EXP)</td>
+                    <td style="text-align: right;">
+                      ${user.role === 'admin' ? '<button class="btn btn-outline" disabled style="padding: 0.3rem 0.6rem; font-size: 0.8rem;">Superuser</button>' : `<button class="btn btn-outline" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; color: #fbbf24;" onclick="app.showToast('จัดการ EXP ให้ ${user.username} สำเร็จ!')">จัดการ EXP ⭐</button><button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="auth.deleteUser(${index})">ลบบัญชี</button>`}
+                    </td>
+                  </tr>
+                `).join('')}
               </tbody>
             </table>
           </div>
@@ -1494,7 +1632,19 @@
         }
       }
 
-      openModal(id) { document.getElementById(id).classList.add('active'); }
+      openModal(id) {
+        if (id === 'modal-register') this.closeModal('modal-login');
+        if (id === 'modal-login') this.closeModal('modal-register');
+        if (id === 'modal-avatar-picker' && auth.currentUser) {
+          this.selectedProfileAvatar = auth.currentUser.avatar;
+          const preview = document.getElementById('profile-avatar-preview');
+          if (preview && this.selectedProfileAvatar.startsWith('data:image/')) {
+            preview.src = this.selectedProfileAvatar;
+            preview.hidden = false;
+          }
+        }
+        document.getElementById(id).classList.add('active');
+      }
       closeModal(id) { document.getElementById(id).classList.remove('active'); }
       showToast(msg) {
         const container = document.getElementById('toast-container');
