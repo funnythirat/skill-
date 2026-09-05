@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmniVerse Admin Backoffice - ศูนย์ควบคุมระบบและจัดการปัญหา</title>
+  
+  <link rel="stylesheet" href="./css/themes.css">
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/admin.css">
+</head>
+<body class="admin-body">
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="admin-brand">
+      <span style="font-size: 1.8rem;">🛡️</span>
+      <div>
+        <h3 style="font-size: 1.1rem; color: #fff; line-height: 1.1;">OmniVerse</h3>
+        <span style="font-size: 0.75rem; color: var(--admin-accent); font-weight: 700;">BACKOFFICE SUITE</span>
+      </div>
+    </div>
+
+    <ul class="admin-menu">
+      <li class="admin-menu-item active" data-tab="overview" onclick="adminPortal.switchTab('overview')">
+        <span>📊</span> <span>ภาพรวม & สถิติ</span>
+      </li>
+      <li class="admin-menu-item" data-tab="tickets" onclick="adminPortal.switchTab('tickets')">
+        <span>🛠️</span> <span>จัดการปัญหา (Tickets)</span>
+      </li>
+      <li class="admin-menu-item" data-tab="users" onclick="adminPortal.switchTab('users')">
+        <span>👥</span> <span>จัดการผู้ใช้งาน</span>
+      </li>
+      <li class="admin-menu-item" data-tab="curriculum" onclick="adminPortal.switchTab('curriculum')">
+        <span>📚</span> <span>จัดการหลักสูตร & โจทย์</span>
+      </li>
+    </ul>
+
+    <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--admin-border);">
+      <button class="btn btn-outline" style="width: 100%; font-size: 0.85rem;" onclick="location.href='./index.html'">
+        🌐 กลับสู่เว็บหน้าบ้าน
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="admin-main" id="admin-content-area">
+    <!-- Admin tabs render here -->
+  </main>
+
+  <!-- Modal: Admin Ticket Thread & Reply Drawer -->
+  <div id="modal-admin-ticket" class="modal-overlay">
+    <div class="modal-dialog" style="max-width: 680px;">
+      <button class="modal-close" onclick="document.getElementById('modal-admin-ticket').classList.remove('active'); adminPortal.switchTab(adminPortal.currentTab);">&times;</button>
+      <div id="admin-ticket-content">
+        <!-- Ticket content & thread injected here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Create Lesson -->
+  <div id="modal-create-lesson" class="modal-overlay">
+    <div class="modal-dialog">
+      <button class="modal-close" onclick="document.getElementById('modal-create-lesson').classList.remove('active')">&times;</button>
+      <h2 style="color: #fff; margin-bottom: 1rem;">➕ เพิ่มบทเรียนใหม่</h2>
+      
+      <form id="form-create-lesson" onsubmit="event.preventDefault(); adminPortal.handleCreateLesson();">
+        <div class="form-group">
+          <label class="form-label">สายวิชา</label>
+          <select id="new-lesson-discipline" class="form-select" required>
+            <option value="academic">วิชาการ & วิทยาศาสตร์</option>
+            <option value="survival">การเอาตัวรอด & ถิ่นทุรกันดาร</option>
+            <option value="tech">เทคโนโลยี & ดิจิทัล</option>
+            <option value="arts">ศิลปะ & นิเทศศิลป์</option>
+            <option value="combat">สมรรถภาพกาย & ศิลปะการต่อสู้</option>
+            <option value="wealth">ทักษะชีวิต & ธุรกิจการเงิน</option>
+            <option value="engineering">วิศวกรรม & งานช่าง</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">ชื่อบทเรียน (ภาษาไทย)</label>
+          <input type="text" id="new-lesson-title-th" class="form-input" required placeholder="เช่น ทฤษฎีควอนตัมเบื้องต้น">
+        </div>
+        <div class="form-group">
+          <label class="form-label">ชื่อบทเรียน (ภาษาอังกฤษ)</label>
+          <input type="text" id="new-lesson-title-en" class="form-input" placeholder="Introduction to Quantum">
+        </div>
+        <div class="form-group">
+          <label class="form-label">เนื้อหาบทเรียน (รองรับ Markdown)</label>
+          <textarea id="new-lesson-content" class="form-textarea" rows="5" required placeholder="พิมพ์เนื้อหาการเรียนรู้..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">บันทึกบทเรียนใหม่</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Create Quiz -->
+  <div id="modal-create-quiz" class="modal-overlay">
+    <div class="modal-dialog" style="max-width: 600px;">
+      <button class="modal-close" onclick="document.getElementById('modal-create-quiz').classList.remove('active')">&times;</button>
+      <h2 style="color: #fff; margin-bottom: 1rem;">➕ เพิ่มโจทย์ข้อสอบใหม่</h2>
+      
+      <form id="form-create-quiz" onsubmit="event.preventDefault(); adminPortal.handleCreateQuiz();">
+        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <div>
+            <label class="form-label">สายวิชา</label>
+            <select id="new-quiz-discipline" class="form-select" required>
+              <option value="academic">วิชาการ & วิทยาศาสตร์</option>
+              <option value="survival">การเอาตัวรอด & ถิ่นทุรกันดาร</option>
+              <option value="tech">เทคโนโลยี & ดิจิทัล</option>
+              <option value="arts">ศิลปะ & นิเทศศิลป์</option>
+              <option value="combat">สมรรถภาพกาย & การต่อสู้</option>
+              <option value="wealth">ธุรกิจ & การเงิน</option>
+              <option value="engineering">งานช่าง & วิศวกรรม</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label">รหัสบทเรียน (Lesson ID)</label>
+            <input type="number" id="new-quiz-lesson-id" class="form-input" value="1" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">คำถามโจทย์</label>
+          <input type="text" id="new-quiz-question" class="form-input" required placeholder="พิมพ์คำถาม...">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">สถานการณ์จำลอง (ถ้ามี)</label>
+          <input type="text" id="new-quiz-scenario" class="form-input" placeholder="เช่น ขณะที่คุณติดอยู่ในป่า...">
+        </div>
+
+        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <div>
+            <label class="form-label">ตัวเลือก A</label>
+            <input type="text" id="new-quiz-opt-a" class="form-input" required>
+          </div>
+          <div>
+            <label class="form-label">ตัวเลือก B</label>
+            <input type="text" id="new-quiz-opt-b" class="form-input" required>
+          </div>
+          <div>
+            <label class="form-label">ตัวเลือก C</label>
+            <input type="text" id="new-quiz-opt-c" class="form-input" required>
+          </div>
+          <div>
+            <label class="form-label">ตัวเลือก D</label>
+            <input type="text" id="new-quiz-opt-d" class="form-input" required>
+          </div>
+        </div>
+
+        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <div>
+            <label class="form-label">คำตอบที่ถูกต้อง</label>
+            <select id="new-quiz-correct" class="form-select">
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+              <option value="D">D</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label">รางวัล EXP</label>
+            <input type="number" id="new-quiz-xp" class="form-input" value="40">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">คำอธิบายเฉลย</label>
+          <textarea id="new-quiz-explanation" class="form-textarea" rows="2" placeholder="อธิบายเหตุผลว่าทำไมข้อนี้จึงถูกต้อง..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%;">บันทึกโจทย์ข้อสอบ</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="./js/api.js"></script>
+  <script src="./js/auth.js"></script>
+  <script src="./js/admin.js"></script>
+  <script>
+    // Handle Create Lesson & Quiz via Admin Controller
+    adminPortal.handleCreateLesson = async function() {
+      const data = {
+        discipline_id: document.getElementById('new-lesson-discipline').value,
+        title_th: document.getElementById('new-lesson-title-th').value,
+        title_en: document.getElementById('new-lesson-title-en').value,
+        content: document.getElementById('new-lesson-content').value,
+      };
+      try {
+        const res = await API.admin.createLesson(data);
+        if (res.success) {
+          alert('เพิ่มบทเรียนใหม่เรียบร้อยแล้ว!');
+          document.getElementById('modal-create-lesson').classList.remove('active');
+          adminPortal.renderCurriculum();
+        }
+      } catch (err) {
+        alert('เกิดข้อผิดพลาด: ' + err.message);
+      }
+    };
+
+    adminPortal.handleCreateQuiz = async function() {
+      const data = {
+        discipline_id: document.getElementById('new-quiz-discipline').value,
+        lesson_id: parseInt(document.getElementById('new-quiz-lesson-id').value),
+        question: document.getElementById('new-quiz-question').value,
+        scenario: document.getElementById('new-quiz-scenario').value,
+        option_a: document.getElementById('new-quiz-opt-a').value,
+        option_b: document.getElementById('new-quiz-opt-b').value,
+        option_c: document.getElementById('new-quiz-opt-c').value,
+        option_d: document.getElementById('new-quiz-opt-d').value,
+        correct_option: document.getElementById('new-quiz-correct').value,
+        xp_reward: parseInt(document.getElementById('new-quiz-xp').value) || 40,
+        explanation: document.getElementById('new-quiz-explanation').value,
+      };
+      try {
+        const res = await API.admin.createQuiz(data);
+        if (res.success) {
+          alert('เพิ่มโจทย์ข้อสอบเรียบร้อยแล้ว!');
+          document.getElementById('modal-create-quiz').classList.remove('active');
+          adminPortal.renderCurriculum();
+        }
+      } catch (err) {
+        alert('เกิดข้อผิดพลาด: ' + err.message);
+      }
+    };
+  </script>
+</body>
+</html>
