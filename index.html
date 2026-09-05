@@ -209,6 +209,7 @@
     .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-secondary)); color: #050b14; font-weight: 700; }
     .btn-outline { background: transparent; color: var(--text-main); border: 1px solid var(--card-border); }
     .btn-outline:hover { background: var(--badge-bg); border-color: var(--accent); color: var(--accent); }
+    .btn-danger { background: #ef4444; color: #fff; }
     .btn-icon {
       width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center;
       justify-content: center; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border);
@@ -280,6 +281,26 @@
     }
     .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.6rem; color: var(--text-muted); cursor: pointer; }
 
+    .form-group { margin-bottom: 1.1rem; }
+    .form-label { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--text-muted); }
+    .form-input, .form-textarea, .form-select {
+      width: 100%; padding: 0.75rem 1rem; background: rgba(0, 0, 0, 0.35); border: 1px solid var(--card-border);
+      border-radius: 10px; color: #fff; font-family: inherit; font-size: 0.95rem; min-height: 44px;
+    }
+    .form-input:focus, .form-textarea:focus, .form-select:focus { outline: none; border-color: var(--accent); }
+
+    /* Admin Cards & Tables */
+    .admin-stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .admin-stat-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; }
+    .admin-stat-val { font-size: 1.8rem; font-weight: 700; color: #fff; line-height: 1.1; }
+    .admin-table { width: 100%; border-collapse: collapse; min-width: 550px; }
+    .admin-table th { text-align: left; padding: 0.85rem 1rem; font-size: 0.85rem; color: var(--text-muted); border-bottom: 1px solid var(--card-border); }
+    .admin-table td { padding: 0.9rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+    .status-chip { display: inline-flex; align-items: center; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.78rem; font-weight: 700; }
+    .status-Open { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+    .status-Resolved { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); }
+
     #toast-container { position: fixed; bottom: 5rem; right: 1.5rem; z-index: 9999; display: flex; flex-direction: column; gap: 0.75rem; pointer-events: none; }
     .toast { background: rgba(15, 23, 42, 0.95); border: 1px solid var(--accent); border-radius: 10px; padding: 0.8rem 1.2rem; color: #fff; font-size: 0.9rem; pointer-events: auto; }
 
@@ -307,11 +328,20 @@
         <li class="nav-item active" data-route="#/" onclick="app.navigate('#/')"><span>📚</span> <span>คลังสายวิชา</span></li>
         <li class="nav-item" data-route="#/leaderboard" onclick="app.navigate('#/leaderboard')"><span>🏆</span> <span>ตารางอันดับ</span></li>
         <li class="nav-item" data-route="#/tickets" onclick="app.navigate('#/tickets')"><span>🛠️</span> <span>ศูนย์ช่วยเหลือ</span></li>
+        <li class="nav-item" id="nav-admin-link" style="display: none;" onclick="app.navigate('#/admin')"><span>🛡️</span> <span>หลังบ้าน (Admin)</span></li>
       </ul>
 
       <div class="nav-actions">
         <button id="btn-sound-toggle" class="btn-icon" onclick="soundEngine.toggleSound()">🔊</button>
-        <div id="nav-user-status" class="user-status-card" onclick="app.navigate('#/profile')">
+        
+        <!-- Auth Actions (When logged out) -->
+        <div id="nav-auth-actions" style="display: flex; gap: 0.4rem;">
+          <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="app.openModal('modal-login')">เข้าสู่ระบบ</button>
+          <button class="btn btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="app.openModal('modal-register')">สมัครสมาชิก</button>
+        </div>
+
+        <!-- User Profile Card (When logged in) -->
+        <div id="nav-user-status" class="user-status-card" style="display: none;" onclick="app.navigate('#/profile')">
           <div class="user-avatar-badge" id="nav-user-avatar">⚡</div>
           <div class="user-info-mini">
             <span class="user-name-mini" id="nav-user-name">PlayerOne</span>
@@ -329,13 +359,75 @@
       <div class="mobile-nav-item active" data-route="#/" onclick="app.navigate('#/')"><span>📚</span><span>คลังวิชา</span></div>
       <div class="mobile-nav-item" data-route="#/leaderboard" onclick="app.navigate('#/leaderboard')"><span>🏆</span><span>อันดับ</span></div>
       <div class="mobile-nav-item" data-route="#/tickets" onclick="app.navigate('#/tickets')"><span>🛠️</span><span>ช่วยเหลือ</span></div>
-      <div class="mobile-nav-item" data-route="#/profile" onclick="app.navigate('#/profile')"><span>👤</span><span>โปรไฟล์</span></div>
+      <div class="mobile-nav-item" id="mob-admin-item" style="display: none;" data-route="#/admin" onclick="app.navigate('#/admin')"><span>🛡️</span><span>หลังบ้าน</span></div>
+      <div class="mobile-nav-item" data-route="#/profile" onclick="if(auth.currentUser){app.navigate('#/profile')}else{app.openModal('modal-login')}"><span>👤</span><span id="mob-profile-label">โปรไฟล์</span></div>
     </nav>
   </div>
 
   <div id="toast-container"></div>
 
-  <!-- Celebration Modal -->
+  <!-- 1. Login Modal -->
+  <div id="modal-login" class="modal-overlay">
+    <div class="modal-dialog">
+      <button class="modal-close" onclick="app.closeModal('modal-login')">&times;</button>
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎮</div>
+        <h2 style="color: #fff; font-size: 1.4rem;">เข้าสู่ระบบ OmniVerse</h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">เข้าสู่ระบบเพื่อสะสม EXP และเลื่อนอันดับแรงค์</p>
+      </div>
+
+      <form id="form-login" onsubmit="event.preventDefault(); auth.login(document.getElementById('login-u').value, document.getElementById('login-p').value);">
+        <div class="form-group">
+          <label class="form-label">ชื่อผู้ใช้</label>
+          <input type="text" id="login-u" class="form-input" required placeholder="admin หรือ PlayerOne">
+        </div>
+        <div class="form-group">
+          <label class="form-label">รหัสผ่าน</label>
+          <input type="password" id="login-p" class="form-input" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">เข้าสู่ระบบ</button>
+      </form>
+
+      <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; display: flex; flex-direction: column; gap: 0.5rem;">
+        <button class="btn btn-outline" style="width: 100%; font-size: 0.85rem;" onclick="auth.login('PlayerOne', '123456');">⚡ เข้าใช้งานด่วน: ผู้เรียนทั่วไป (Demo User)</button>
+        <button class="btn btn-outline" style="width: 100%; font-size: 0.85rem; border-color: #38bdf8; color: #38bdf8;" onclick="auth.login('admin', 'admin123');">🛡️ เข้าใช้งานด่วน: ผู้ดูแลระบบ (Admin Sage)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Register Modal -->
+  <div id="modal-register" class="modal-overlay">
+    <div class="modal-dialog">
+      <button class="modal-close" onclick="app.closeModal('modal-register')">&times;</button>
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">✨</div>
+        <h2 style="color: #fff; font-size: 1.4rem;">สร้างบัญชีผู้แสวงหาความรู้</h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">เริ่มต้นเส้นทางสู่ปราชญ์แห่งสรรพวิชา</p>
+      </div>
+
+      <form id="form-reg" onsubmit="event.preventDefault(); auth.register(document.getElementById('reg-u').value, document.getElementById('reg-av').value);">
+        <div class="form-group">
+          <label class="form-label">ชื่อตัวละครของคุณ</label>
+          <input type="text" id="reg-u" class="form-input" required placeholder="ตั้งชื่อตัวละคร">
+        </div>
+        <div class="form-group">
+          <label class="form-label">เลือก Avatar ประจำตัว</label>
+          <select id="reg-av" class="form-select">
+            <option value="🧙‍♂️">🧙‍♂️ จอมเวทปราชญ์ (Scholar)</option>
+            <option value="🌲">🌲 พรานไพรผู้รอดชีวิต (Ranger)</option>
+            <option value="💻">💻 นักเจาะระบบดิจิทัล (Hacker)</option>
+            <option value="🎨">🎨 ศิลปินผู้รังสรรค์ (Artist)</option>
+            <option value="⚔️">⚔️ นักรบผู้กล้า (Warrior)</option>
+            <option value="💎">💎 สถาปนิกการเงิน (Strategist)</option>
+            <option value="⚙️">⚙️ วิศวกรจักรกล (Engineer)</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">สมัครสมาชิกและเริ่มต้นทันที</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Celebration Modal -->
   <div id="modal-celebrate" class="modal-overlay">
     <div class="modal-dialog" style="text-align: center;">
       <div style="font-size: 3.5rem; margin-bottom: 0.5rem;" id="celebrate-icon">🏆</div>
@@ -346,7 +438,87 @@
   </div>
 
   <script>
-    // 1. Web Audio Sound Engine
+    // 1. Dynamic Background Particles Engine
+    class ThemeManager {
+      constructor() {
+        this.currentTheme = 'default';
+        this.canvas = document.getElementById('canvas-background');
+        this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
+        this.particles = [];
+        this.initCanvas();
+      }
+
+      setTheme(themeId) {
+        this.currentTheme = themeId || 'default';
+        document.documentElement.setAttribute('data-theme', this.currentTheme);
+        this.resetParticles();
+      }
+
+      initCanvas() {
+        if (!this.canvas) return;
+        const resize = () => {
+          this.canvas.width = window.innerWidth;
+          this.canvas.height = window.innerHeight;
+          this.resetParticles();
+        };
+        window.addEventListener('resize', resize);
+        resize();
+        this.animate();
+      }
+
+      resetParticles() {
+        if (!this.canvas) return;
+        this.particles = [];
+        const count = Math.floor((this.canvas.width * this.canvas.height) / 14000);
+        const colors = {
+          default: ['#38bdf8', '#818cf8', '#ffffff'],
+          academic: ['#38bdf8', '#fbbf24', '#e0f2fe'],
+          survival: ['#22c55e', '#4ade80', '#eab308'],
+          tech: ['#06b6d4', '#22d3ee', '#a855f7'],
+          arts: ['#c084fc', '#f472b6', '#e879f9'],
+          combat: ['#ef4444', '#f97316', '#fca5a5'],
+          wealth: ['#10b981', '#eab308', '#34d399'],
+          engineering: ['#f59e0b', '#fbbf24', '#f97316']
+        };
+        const palette = colors[this.currentTheme] || colors.default;
+
+        for (let i = 0; i < count; i++) {
+          this.particles.push({
+            x: Math.random() * this.canvas.width,
+            y: Math.random() * this.canvas.height,
+            radius: Math.random() * 2.2 + 0.8,
+            color: palette[Math.floor(Math.random() * palette.length)],
+            vx: (Math.random() - 0.5) * 0.4,
+            vy: (Math.random() - 0.5) * 0.4 - (this.currentTheme === 'survival' || this.currentTheme === 'combat' ? 0.3 : 0),
+            alpha: Math.random() * 0.6 + 0.2
+          });
+        }
+      }
+
+      animate() {
+        if (!this.ctx || !this.canvas) return;
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        for (let p of this.particles) {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0) p.x = this.canvas.width;
+          if (p.x > this.canvas.width) p.x = 0;
+          if (p.y < 0) p.y = this.canvas.height;
+          if (p.y > this.canvas.height) p.y = 0;
+          this.ctx.save();
+          this.ctx.globalAlpha = p.alpha;
+          this.ctx.fillStyle = p.color;
+          this.ctx.beginPath();
+          this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          this.ctx.fill();
+          this.ctx.restore();
+        }
+        requestAnimationFrame(() => this.animate());
+      }
+    }
+    const themeManager = new ThemeManager();
+
+    // 2. Web Audio Sound Engine
     class SoundEngine {
       constructor() { this.enabled = true; this.ctx = null; }
       init() { if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); }
@@ -374,7 +546,51 @@
     }
     const soundEngine = new SoundEngine();
 
-    // 2. Data Store
+    // 3. User & Auth Manager
+    class AuthManager {
+      constructor() {
+        const saved = localStorage.getItem('omni_user');
+        this.currentUser = saved ? JSON.parse(saved) : {
+          username: 'PlayerOne', role: 'user', xp: 180, level: 2, rank: 'Silver Apprentice', avatar: '⚡'
+        };
+      }
+
+      login(username, password) {
+        if (username.toLowerCase() === 'admin') {
+          this.currentUser = { username: 'admin', role: 'admin', xp: 1500, level: 10, rank: 'Omniscient Sage', avatar: '🧙‍♂️' };
+        } else {
+          const curXp = parseInt(localStorage.getItem('omni_xp') || '180');
+          this.currentUser = { username: username || 'PlayerOne', role: 'user', xp: curXp, level: Math.floor(Math.sqrt(curXp/25))+1, rank: 'Silver Apprentice', avatar: '⚡' };
+        }
+        localStorage.setItem('omni_user', JSON.stringify(this.currentUser));
+        localStorage.setItem('omni_xp', this.currentUser.xp);
+        app.closeModal('modal-login');
+        app.updateUserUI();
+        app.showToast(`ยินดีต้อนรับ ${this.currentUser.username}! เข้าสู่ระบบสำเร็จ`);
+        app.handleRoute();
+      }
+
+      register(username, avatar) {
+        this.currentUser = { username: username || 'Seeker', role: 'user', xp: 0, level: 1, rank: 'Bronze Novice', avatar: avatar || '🧙‍♂️' };
+        localStorage.setItem('omni_user', JSON.stringify(this.currentUser));
+        localStorage.setItem('omni_xp', '0');
+        app.closeModal('modal-register');
+        app.updateUserUI();
+        app.showToast(`สมัครสมาชิกสำเร็จ! ยินดีต้อนรับ ${this.currentUser.username}`);
+        app.handleRoute();
+      }
+
+      logout() {
+        this.currentUser = null;
+        localStorage.removeItem('omni_user');
+        app.updateUserUI();
+        app.showToast('ออกจากระบบเรียบร้อยแล้ว');
+        app.navigate('#/');
+      }
+    }
+    const auth = new AuthManager();
+
+    // 4. Data Store
     const DISCIPLINE_DATA = [
       { id: 'academic', name_th: 'วิชาการ & วิทยาศาสตร์สากล', name_en: 'Academic & Sciences', icon: '🌌', color: '#38bdf8', desc: 'ฟิสิกส์ ดาราศาสตร์ คณิตศาสตร์ พันธุศาสตร์ CRISPR จิตวิทยา และตรรกศาสตร์สากล', quote: 'ความรู้คือแสงสว่างที่ส่องทะลุความมืดมิดของจักรวาล' },
       { id: 'survival', name_th: 'การเอาตัวรอด & ถิ่นทุรกันดาร', name_en: 'Wilderness Survival', icon: '🌲', color: '#22c55e', desc: 'กฎแห่งเลข 3 การก่อไฟ กรองน้ำ Bushcraft ปฐมพยาบาลฉุกเฉิน และนำทางธรรมชาติ', quote: 'ธรรมชาติไม่ได้ใจร้าย แต่ไม่เคยให้โอกาสคนที่ไม่เตรียมพร้อม' },
@@ -397,26 +613,31 @@
         { id: 4, title: 'Cybersecurity & Phishing Defense', desc: 'การป้องกันตนเองจากการโจมตี Phishing และ Social Engineering', content: 'เปิด 2FA เสมอ ตรวจสอบชื่อ Domain และไม่คลิกลิงก์แปลกปลอมที่ส่งมาทางอีเมล', question: 'ได้รับอีเมลแจ้งบัญชีถูกระงับให้คลิกลิงก์ยืนยันรหัสผ่านด่วน ควรทำอย่างไร?', scenario: 'อีเมลส่งจาก security-alert@paypa1-update.com', opts: ['คลิกลิงก์ทันที', 'เพิกเฉย ไม่คลิกลิงก์ ตรวจสอบ Domain และรายงาน Phishing', 'ส่งต่อให้เพื่อนช่วยคลิก', 'แนบรูปบัตรประชาชนตอบกลับ'], ans: 1, exp: 'ชื่อโดเมน paypa1 เป็น Phishing ชัดเจน ไม่ควรคลิกลิงก์ใดๆ' }
       ],
       arts: [
-        { id: 5, title: 'ทฤษฎีสีและจิตวิทยาอารมณ์', desc: 'การจับคู่สีแบบวงล้อสี และอิทธิพลของโทนสีต่อความรู้สึกมนุษย์', content: 'คู่สีตรงข้าม (Complementary) สร้างความโดดเด่น คู่สีข้างเคียง (Analogous) สร้างความกลมกลืน', question: 'หากต้องการออกแบบปุ่มเรียกร้องความสนใจ (Call to Action) บนพื้นหลังสีน้ำเงินเข้ม ควรใช้สีใด?', scenario: 'การออกแบบ Landing Page ขายคอร์สเรียน', opts: ['สีน้ำเงินอ่อน', 'สีส้ม หรือ สีเหลืองทอง (คู่สีตรงข้าม)', 'สีดำ', 'สีเทาหม่น'], ans: 1, exp: 'สีส้มเป็นคู่สีตรงข้ามกับสีน้ำเงิน ช่วยดึงดูดสายตาได้สูงสุด' }
+        { id: 5, title: 'ทฤษฎีสีและจิตวิทยาอารมณ์', desc: 'การจับคู่สีแบบวงล้อสี และอิทธิพลของโทนสีต่อความรู้สึกมนุษย์', content: 'คู่สีตรงข้าม (Complementary) สร้างความโดดเด่น', question: 'หากต้องการออกแบบปุ่ม Call to Action บนพื้นหลังสีน้ำเงินเข้ม ควรใช้สีใด?', scenario: 'การออกแบบ Landing Page', opts: ['สีน้ำเงินอ่อน', 'สีส้ม หรือ สีเหลืองทอง', 'สีดำ', 'สีเทาหม่น'], ans: 1, exp: 'สีส้มเป็นคู่สีตรงข้ามกับสีน้ำเงิน' }
       ],
       combat: [
-        { id: 6, title: 'หลักการป้องกันตัวและจุดเปราะบาง', desc: 'การควบคุมระยะ (Distance Management) และจุดอ่อนทางกายวิภาค', content: 'จุดอ่อนทางกายวิภาคของมนุษย์ที่ไม่ขึ้นกับขนาดตัว ได้แก่ ตา จมูก ลำคอ และจุดยุทธศาสตร์', question: 'ในสถานการณ์ป้องกันตัวฉุกเฉิน สิ่งแรกที่ควรทำคืออะไร?', scenario: 'มีบุคคลท่าทางคุกคามเดินเข้ามาในระยะประชิด', opts: ['ยืนนิ่งรอให้เขาเข้ามาถึงตัว', 'สร้างระยะห่าง (Keep Distance) ส่งเสียงเตือนชัดเจน และมองหาทางหนี', 'ก้มหน้าเล่นโทรศัพท์', 'ท้าทายกลับด้วยคำหยาบ'], ans: 1, exp: 'การรักษาระยะห่างและการรับรู้สถานการณ์เป็นหัวใจสำคัญอันดับแรก' }
+        { id: 6, title: 'หลักการป้องกันตัวและจุดเปราะบาง', desc: 'การควบคุมระยะ (Distance Management) และจุดอ่อนทางกายวิภาค', content: 'จุดอ่อนมนุษย์ได้แก่ ตา จมูก ลำคอ และจุดยุทธศาสตร์', question: 'ในสถานการณ์ป้องกันตัวฉุกเฉิน สิ่งแรกที่ควรทำคืออะไร?', scenario: 'มีบุคคลท่าทางคุกคามเดินเข้ามาประชิด', opts: ['ยืนนิ่ง', 'สร้างระยะห่าง (Keep Distance) ส่งเสียงเตือน และมองหาทางหนี', 'ก้มหน้าเล่นมือถือ', 'ท้าทายกลับ'], ans: 1, exp: 'การรักษาระยะห่างเป็นหัวใจสำคัญอันดับแรก' }
       ],
       wealth: [
-        { id: 7, title: 'พีระมิดการเงินและดอกเบี้ยทบต้น', desc: 'การบริหารสภาพคล่อง เงินสำรองฉุกเฉิน และพลังแห่งผลตอบแทนทบต้น', content: 'ฐานรากของพีระมิดการเงินคือเงินสำรองฉุกเฉิน 3-6 เดือน ก่อนจะเริ่มลงทุน', question: 'ก่อนเริ่มนำเงินไปลงทุนในสินทรัพย์เสี่ยง ควรเตรียมสิ่งใดเป็นอันดับแรก?', scenario: 'วางแผนการเงินหลังเริ่มทำงานเดือนแรก', opts: ['กู้เงินมาเก็งกำไรทันที', 'สร้างกองทุนเงินสำรองฉุกเฉิน 3-6 เท่าของค่าใช้จ่ายรายเดือน', 'ซื้อสินค้าแบรนด์เนมทั้งหมด', 'ไม่จำเป็นต้องเก็บเงิน'], ans: 1, exp: 'เงินสำรองฉุกเฉินช่วยป้องกันไม่ให้ต้องขายสินทรัพย์ลงทุนเมื่อเกิดเหตุไม่คาดฝัน' }
+        { id: 7, title: 'พีระมิดการเงินและดอกเบี้ยทบต้น', desc: 'การบริหารสภาพคล่อง เงินสำรองฉุกเฉิน และการลงทุน', content: 'ฐานรากคือเงินสำรองฉุกเฉิน 3-6 เดือน', question: 'ก่อนเริ่มนำเงินไปลงทุนในสินทรัพย์เสี่ยง ควรเตรียมสิ่งใดเป็นอันดับแรก?', scenario: 'วางแผนการเงินเดือนแรก', opts: ['กู้เงินมาเก็งกำไร', 'สร้างเงินสำรองฉุกเฉิน 3-6 เท่าของค่าใช้จ่าย', 'ซื้อของแบรนด์เนม', 'ไม่เก็บเงิน'], ans: 1, exp: 'เงินสำรองฉุกเฉินช่วยป้องกันความเสี่ยง' }
       ],
       engineering: [
-        { id: 8, title: 'พื้นฐานไฟฟ้าและกฎของโอห์ม (Ohm\'s Law)', desc: 'ความสัมพันธ์ของแรงดัน (V), กระแส (I) และความต้านทาน (R)', content: 'V = I x R (แรงดัน = กระแส x ความต้านทาน)', question: 'หากแรงดันไฟฟ้า 12V จ่ายให้หลอดไฟที่มีความต้านทาน 4 โอห์ม จะมีกระแสไฟฟ้าไหลกี่แอมแปร์?', scenario: 'การคำนวณวงจรไฟฟ้ารถยนต์', opts: ['12 แอมแปร์', '3 แอมแปร์', '48 แอมแปร์', '0.33 แอมแปร์'], ans: 1, exp: 'I = V / R = 12 / 4 = 3 แอมแปร์' }
+        { id: 8, title: 'พื้นฐานไฟฟ้าและกฎของโอห์ม (Ohm\'s Law)', desc: 'ความสัมพันธ์ของแรงดัน (V), กระแส (I) และความต้านทาน (R)', content: 'V = I x R', question: 'หากแรงดัน 12V จ่ายให้หลอดไฟ 4 โอห์ม จะมีกระแสไฟฟ้าไหลกี่แอมแปร์?', scenario: 'การคำนวณวงจรไฟฟ้ารถยนต์', opts: ['12 แอมแปร์', '3 แอมแปร์', '48 แอมแปร์', '0.33 แอมแปร์'], ans: 1, exp: 'I = V / R = 12 / 4 = 3 แอมแปร์' }
       ]
     };
 
-    // 3. Main Application Controller
+    // 5. Main Application Controller
     class AppController {
       constructor() {
-        this.xp = parseInt(localStorage.getItem('omni_xp') || '180');
         this.currentDiscipline = null;
         this.currentQuiz = null;
         this.combo = 1;
+        this.tickets = JSON.parse(localStorage.getItem('omni_tickets') || '[]');
+        if (this.tickets.length === 0) {
+          this.tickets = [
+            { id: 1, user: 'PlayerOne', subject: 'พบตัวเลือกโจทย์วิชาฟิสิกส์เข้าใจง่ายมาก', category: 'suggestion', status: 'Resolved', message: 'อยากให้เพิ่มข้อสอบฟิสิกส์ดาราศาสตร์เพิ่มเติมครับ', reply: 'ทีมงานได้รับเรื่องแล้วและเพิ่มโจทย์ให้เรียบร้อยครับ!' }
+          ];
+        }
       }
 
       init() {
@@ -425,25 +646,64 @@
         this.handleRoute();
       }
 
-      getLevel() { return Math.floor(Math.sqrt(this.xp / 25)) + 1; }
+      getLevel() {
+        const xp = auth.currentUser ? auth.currentUser.xp : 0;
+        return Math.floor(Math.sqrt(xp / 25)) + 1;
+      }
+
       getRank() {
-        if (this.xp >= 1500) return 'Omniscient Sage';
-        if (this.xp >= 600) return 'Platinum Expert';
-        if (this.xp >= 300) return 'Gold Adept';
-        if (this.xp >= 150) return 'Silver Apprentice';
+        const xp = auth.currentUser ? auth.currentUser.xp : 0;
+        if (xp >= 1500) return 'Omniscient Sage';
+        if (xp >= 600) return 'Platinum Expert';
+        if (xp >= 300) return 'Gold Adept';
+        if (xp >= 150) return 'Silver Apprentice';
         return 'Bronze Novice';
       }
 
       updateUserUI() {
-        document.getElementById('nav-user-level').innerText = `LV. ${this.getLevel()} • ${this.getRank()}`;
-        document.getElementById('nav-user-name').innerText = 'PlayerOne';
+        const authActions = document.getElementById('nav-auth-actions');
+        const userStatus = document.getElementById('nav-user-status');
+        const adminNav = document.getElementById('nav-admin-link');
+        const mobAdmin = document.getElementById('mob-admin-item');
+        const mobProfileLabel = document.getElementById('mob-profile-label');
+
+        if (auth.currentUser) {
+          authActions.style.display = 'none';
+          userStatus.style.display = 'flex';
+          document.getElementById('nav-user-avatar').innerText = auth.currentUser.avatar;
+          document.getElementById('nav-user-name').innerText = auth.currentUser.username;
+          document.getElementById('nav-user-level').innerText = `LV. ${this.getLevel()} • ${this.getRank()}`;
+          mobProfileLabel.innerText = 'โปรไฟล์';
+
+          const isAdmin = auth.currentUser.role === 'admin';
+          adminNav.style.display = isAdmin ? 'flex' : 'none';
+          mobAdmin.style.display = isAdmin ? 'flex' : 'none';
+        } else {
+          authActions.style.display = 'flex';
+          userStatus.style.display = 'none';
+          adminNav.style.display = 'none';
+          mobAdmin.style.display = 'none';
+          mobProfileLabel.innerText = 'ล็อกอิน';
+        }
       }
 
       navigate(hash) { window.location.hash = hash; }
 
       handleRoute() {
         const hash = window.location.hash || '#/';
-        document.body.setAttribute('data-theme', 'default');
+        themeManager.setTheme('default');
+
+        // Update nav active states
+        document.querySelectorAll('.nav-item, .mobile-nav-item').forEach((item) => {
+          const target = item.getAttribute('data-route');
+          if (target && (hash === target || (target !== '#/' && hash.startsWith(target)))) {
+            item.classList.add('active');
+          } else if (target === '#/' && (hash === '#/' || hash === '')) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
 
         if (hash === '#/' || hash === '') this.renderHome();
         else if (hash.startsWith('#/discipline/')) this.renderDiscipline(hash.replace('#/discipline/', ''));
@@ -451,6 +711,7 @@
         else if (hash === '#/leaderboard') this.renderLeaderboard();
         else if (hash === '#/profile') this.renderProfile();
         else if (hash === '#/tickets') this.renderTickets();
+        else if (hash === '#/admin') this.renderAdmin();
       }
 
       renderHome() {
@@ -479,7 +740,7 @@
 
       renderDiscipline(id) {
         const disc = DISCIPLINE_DATA.find(d => d.id === id) || DISCIPLINE_DATA[0];
-        document.body.setAttribute('data-theme', disc.id);
+        themeManager.setTheme(disc.id);
         const lessons = LESSON_DATA[disc.id] || [
           { id: 99, title: `บทเรียนพื้นฐานของ ${disc.name_th}`, desc: 'เนื้อหาและแบบฝึกหัดจำลองสถานการณ์', content: disc.desc, question: `ข้อใดคือหัวใจสำคัญของ ${disc.name_th}?`, scenario: 'การนำความรู้ไปประยุกต์ใช้ในชีวิตจริง', opts: ['การฝึกฝนและทำความเข้าใจอย่างสม่ำเสมอ', 'การท่องจำโดยไม่ทำความเข้าใจ', 'การเพิกเฉยต่อหลักการ', 'ไม่มีข้อถูก'], ans: 0, exp: 'การฝึกฝนต่อเนื่องทำให้เกิดความชำนาญ' }
         ];
@@ -512,7 +773,7 @@
       renderQuiz(param) {
         const [discId, idxStr] = param.split('_');
         const disc = DISCIPLINE_DATA.find(d => d.id === discId) || DISCIPLINE_DATA[0];
-        document.body.setAttribute('data-theme', disc.id);
+        themeManager.setTheme(disc.id);
         const lessons = LESSON_DATA[disc.id] || [
           { id: 99, title: `บทเรียนพื้นฐานของ ${disc.name_th}`, desc: 'เนื้อหาและแบบฝึกหัดจำลองสถานการณ์', content: disc.desc, question: `ข้อใดคือหัวใจสำคัญของ ${disc.name_th}?`, scenario: 'การนำความรู้ไปประยุกต์ใช้ในชีวิตจริง', opts: ['การฝึกฝนและทำความเข้าใจอย่างสม่ำเสมอ', 'การท่องจำโดยไม่ทำความเข้าใจ', 'การเพิกเฉยต่อหลักการ', 'ไม่มีข้อถูก'], ans: 0, exp: 'การฝึกฝนต่อเนื่องทำให้เกิดความชำนาญ' }
         ];
@@ -552,9 +813,12 @@
           soundEngine.playCorrect();
           document.querySelectorAll('.option-btn')[selected].classList.add('correct');
           const gained = 50 + (this.combo - 1) * 5;
-          this.xp += gained;
+          if (auth.currentUser) {
+            auth.currentUser.xp += gained;
+            localStorage.setItem('omni_user', JSON.stringify(auth.currentUser));
+            localStorage.setItem('omni_xp', auth.currentUser.xp);
+          }
           this.combo += 1;
-          localStorage.setItem('omni_xp', this.xp);
           this.updateUserUI();
 
           resultDiv.innerHTML = `
@@ -565,7 +829,7 @@
             </div>
           `;
 
-          if (this.xp >= 300 && this.xp - gained < 300) {
+          if (auth.currentUser && auth.currentUser.xp >= 300 && auth.currentUser.xp - gained < 300) {
             soundEngine.playLevelUp();
             this.openModal('modal-celebrate');
           }
@@ -587,52 +851,84 @@
 
       renderLeaderboard() {
         const view = document.getElementById('app-view');
+        const curXp = auth.currentUser ? auth.currentUser.xp : 180;
+        const curName = auth.currentUser ? auth.currentUser.username : 'PlayerOne';
         view.innerHTML = `
           <div class="hero-banner">
             <h1 class="hero-title">🏆 ตารางจัดอันดับผู้แสวงหาความรู้</h1>
             <p class="hero-quote">รายชื่อผู้เล่นที่มีคะแนน EXP สูงสุดในโลก OmniVerse</p>
           </div>
 
-          <div style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--card-border);">
-            <div style="display: flex; justify-content: space-between; padding: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-weight: 700;">
-              <span>อันดับ / ผู้เล่น</span>
-              <span>ยศ / EXP</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
-              <div><strong style="color: #fbbf24;">#1</strong> 🧙‍♂️ admin (ADMIN)</div>
-              <div><strong style="color: #fbbf24;">1,500 EXP (LV. 10)</strong></div>
-            </div>
-            <div style="display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
-              <div><strong style="color: #cbd5e1;">#2</strong> ⚡ PlayerOne (คุณ)</div>
-              <div><strong style="color: #38bdf8;">${this.xp} EXP (LV. ${this.getLevel()})</strong></div>
-            </div>
+          <div style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--card-border); overflow-x: auto;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>อันดับ</th>
+                  <th>ผู้เล่น</th>
+                  <th>ยศ / ฉายา</th>
+                  <th>เลเวล</th>
+                  <th style="text-align: right;">EXP สะสม</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong style="color: #fbbf24;">#1</strong></td>
+                  <td>🧙‍♂️ admin <span style="background: #38bdf8; color: #000; font-size: 0.7rem; font-weight: 700; padding: 0.1rem 0.4rem; border-radius: 4px;">ADMIN</span></td>
+                  <td><span style="color: var(--accent); font-weight: 600;">Omniscient Sage</span></td>
+                  <td><strong>LV. 10</strong></td>
+                  <td style="text-align: right;"><strong style="color: #fbbf24;">1,500 EXP</strong></td>
+                </tr>
+                <tr>
+                  <td><strong style="color: #cbd5e1;">#2</strong></td>
+                  <td>${auth.currentUser ? auth.currentUser.avatar : '⚡'} ${curName}</td>
+                  <td><span style="color: var(--accent); font-weight: 600;">${this.getRank()}</span></td>
+                  <td><strong>LV. ${this.getLevel()}</strong></td>
+                  <td style="text-align: right;"><strong style="color: #38bdf8;">${curXp} EXP</strong></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         `;
       }
 
       renderProfile() {
         const view = document.getElementById('app-view');
+        if (!auth.currentUser) {
+          view.innerHTML = `
+            <div style="text-align: center; padding: 4rem 1rem;">
+              <h2>กรุณาเข้าสู่ระบบเพื่อดูโปรไฟล์และสถิติ</h2>
+              <button class="btn btn-primary" style="margin-top: 1.5rem;" onclick="app.openModal('modal-login')">เข้าสู่ระบบ</button>
+            </div>
+          `;
+          return;
+        }
+
         view.innerHTML = `
           <div class="hero-banner">
-            <h1 class="hero-title">👤 โปรไฟล์ผู้เรียน & ความชำนาญ</h1>
-            <p class="hero-quote">ตรวจสอบสถิติและเหรียญรางวัลของคุณ</p>
+            <h1 class="hero-title">👤 โปรไฟล์ผู้เรียน & สถิติส่วนตัว</h1>
+            <p class="hero-quote">ยินดีต้อนรับ ${auth.currentUser.username}</p>
           </div>
 
-          <div style="background: var(--card-bg); border-radius: 16px; padding: 2rem; border: 1px solid var(--card-border); text-align: center;">
-            <div style="font-size: 4rem; margin-bottom: 0.5rem;">⚡</div>
-            <h2>PlayerOne</h2>
+          <div style="background: var(--card-bg); border-radius: 16px; padding: 2rem; border: 1px solid var(--card-border); text-align: center; max-width: 600px; margin: 0 auto;">
+            <div style="font-size: 4.5rem; margin-bottom: 0.5rem;">${auth.currentUser.avatar}</div>
+            <h2>${auth.currentUser.username}</h2>
             <div style="color: var(--accent); font-weight: 700; margin-bottom: 1.5rem;">${this.getRank()}</div>
+
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
-              <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 10px;">
+              <div style="background: rgba(0,0,0,0.3); padding: 1.25rem; border-radius: 12px;">
                 <div style="font-size: 0.8rem; color: var(--text-muted);">เลเวลรวม</div>
-                <strong style="font-size: 1.5rem; color: #fff;">LV. ${this.getLevel()}</strong>
+                <strong style="font-size: 1.6rem; color: #fff;">LV. ${this.getLevel()}</strong>
               </div>
-              <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 10px;">
+              <div style="background: rgba(0,0,0,0.3); padding: 1.25rem; border-radius: 12px;">
                 <div style="font-size: 0.8rem; color: var(--text-muted);">EXP รวม</div>
-                <strong style="font-size: 1.5rem; color: #fbbf24;">${this.xp}</strong>
+                <strong style="font-size: 1.6rem; color: #fbbf24;">${auth.currentUser.xp}</strong>
               </div>
             </div>
-            <button class="btn btn-outline" onclick="localStorage.clear(); location.reload();">🔄 รีเซ็ตข้อมูลการเล่น</button>
+
+            <div style="display: flex; gap: 0.75rem; justify-content: center;">
+              <button class="btn btn-outline" onclick="auth.logout()">🚪 ออกจากระบบ</button>
+              <button class="btn btn-outline" onclick="localStorage.clear(); location.reload();">🔄 รีเซ็ตข้อมูล</button>
+            </div>
           </div>
         `;
       }
@@ -642,20 +938,197 @@
         view.innerHTML = `
           <div class="hero-banner">
             <h1 class="hero-title">🛠️ ศูนย์ช่วยเหลือและแจ้งปัญหา</h1>
-            <p class="hero-quote">ส่งข้อเสนอแนะหรือแจ้งข้อผิดพลาดของโจทย์</p>
+            <p class="hero-quote">ส่งข้อเสนอแนะหรือแจ้งข้อผิดพลาดของโจทย์ถึงทีมงาน</p>
           </div>
-          <div style="background: var(--card-bg); border-radius: 16px; padding: 2rem; border: 1px solid var(--card-border);">
-            <div style="margin-bottom: 1rem;">
-              <label style="display: block; margin-bottom: 0.4rem;">หัวข้อเรื่อง</label>
-              <input type="text" id="t-subj" class="option-btn" style="cursor: text;" placeholder="ระบุหัวข้อ...">
+
+          <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+            <!-- Submit Form -->
+            <div style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--card-border);">
+              <h3 style="margin-bottom: 1rem;">➕ ส่งเรื่องแจ้งปัญหาใหม่</h3>
+              <div class="form-group">
+                <label class="form-label">หัวข้อเรื่อง</label>
+                <input type="text" id="t-subj" class="form-input" placeholder="เช่น พบข้อสอบเฉลยไม่ตรง">
+              </div>
+              <div class="form-group">
+                <label class="form-label">รายละเอียดปัญหา</label>
+                <textarea id="t-msg" class="form-textarea" rows="3" placeholder="อธิบายข้อความของคุณ..."></textarea>
+              </div>
+              <button class="btn btn-primary" onclick="app.submitTicket()">ส่งเรื่องแจ้งปัญหา 📤</button>
             </div>
-            <div style="margin-bottom: 1.5rem;">
-              <label style="display: block; margin-bottom: 0.4rem;">รายละเอียด</label>
-              <textarea id="t-msg" class="option-btn" style="height: 100px; cursor: text;" placeholder="อธิบายข้อความ..."></textarea>
+
+            <!-- Ticket List -->
+            <div style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--card-border); overflow-x: auto;">
+              <h3 style="margin-bottom: 1rem;">📋 ประวัติการแจ้งเรื่องของคุณ</h3>
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>หัวข้อ</th>
+                    <th>สถานะ</th>
+                    <th>การตอบกลับจากแอดมิน</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${this.tickets.map(t => `
+                    <tr>
+                      <td><strong style="color: #fff;">${t.subject}</strong><br><small style="color: var(--text-muted);">${t.message}</small></td>
+                      <td><span class="status-chip status-${t.status}">${t.status}</span></td>
+                      <td>${t.reply ? `<span style="color: #38bdf8;">💬 ${t.reply}</span>` : '<span style="color: var(--text-muted);">รอการตอบกลับ</span>'}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
             </div>
-            <button class="btn btn-primary" onclick="app.showToast('ส่งเรื่องแจ้งปัญหาเรียบร้อยแล้ว!'); app.navigate('#/')">ส่งเรื่องแจ้งปัญหา 📤</button>
           </div>
         `;
+      }
+
+      submitTicket() {
+        const subj = document.getElementById('t-subj').value.trim();
+        const msg = document.getElementById('t-msg').value.trim();
+        if (!subj || !msg) {
+          alert('กรุณากรอกหัวข้อและรายละเอียดให้ครบถ้วน');
+          return;
+        }
+        this.tickets.unshift({
+          id: Date.now(),
+          user: auth.currentUser ? auth.currentUser.username : 'Guest',
+          subject: subj,
+          category: 'general',
+          status: 'Open',
+          message: msg,
+          reply: null
+        });
+        localStorage.setItem('omni_tickets', JSON.stringify(this.tickets));
+        this.showToast('ส่งเรื่องแจ้งปัญหาเรียบร้อยแล้ว!');
+        this.renderTickets();
+      }
+
+      // ==========================================
+      // 🛡️ ADMIN BACKOFFICE SUITE
+      // ==========================================
+      renderAdmin() {
+        const view = document.getElementById('app-view');
+        if (!auth.currentUser || auth.currentUser.role !== 'admin') {
+          view.innerHTML = `
+            <div style="text-align: center; padding: 4rem 1rem;">
+              <h2>🛡️ พื้นที่เฉพาะผู้ดูแลระบบ (Admin Only)</h2>
+              <p style="color: var(--text-muted); margin-top: 0.5rem;">กรุณาเข้าสู่ระบบด้วยบัญชีแอดมิน</p>
+              <button class="btn btn-primary" style="margin-top: 1.5rem;" onclick="auth.login('admin', 'admin123')">⚡ เข้าสู่ระบบด้วยบัญชี Admin Sage</button>
+            </div>
+          `;
+          return;
+        }
+
+        view.innerHTML = `
+          <div class="hero-banner" style="background: linear-gradient(135deg, #091e3a 0%, #0f172a 100%);">
+            <div class="hero-badge" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8;">🛡️ ADMIN BACKOFFICE SUITE</div>
+            <h1 class="hero-title">ศูนย์ควบคุมระบบหลังบ้าน OmniVerse</h1>
+            <p class="hero-quote">จัดการผู้ใช้งาน, ตอบกลับปัญหา Ticket, และเพิ่มบทเรียนใหม่</p>
+          </div>
+
+          <!-- Stats Overview Cards -->
+          <div class="admin-stat-grid">
+            <div class="admin-stat-card">
+              <div style="font-size: 2rem;">👥</div>
+              <div>
+                <div class="admin-stat-val">1,248</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">ผู้เรียนทั้งหมด</div>
+              </div>
+            </div>
+            <div class="admin-stat-card">
+              <div style="font-size: 2rem;">🛠️</div>
+              <div>
+                <div class="admin-stat-val">${this.tickets.filter(t => t.status === 'Open').length}</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Ticket รอดำเนินการ</div>
+              </div>
+            </div>
+            <div class="admin-stat-card">
+              <div style="font-size: 2rem;">📚</div>
+              <div>
+                <div class="admin-stat-val">28</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">บทเรียนในระบบ</div>
+              </div>
+            </div>
+            <div class="admin-stat-card">
+              <div style="font-size: 2rem;">⚔️</div>
+              <div>
+                <div class="admin-stat-val">84</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">โจทย์ข้อสอบทั้งหมด</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Admin Ticket Management -->
+          <div style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--card-border); margin-bottom: 2rem; overflow-x: auto;">
+            <h3 style="margin-bottom: 1rem;">🛠️ รายการแจ้งปัญหาจากผู้ใช้ (Ticket Queue)</h3>
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>ผู้แจ้ง</th>
+                  <th>หัวข้อเรื่อง</th>
+                  <th>สถานะ</th>
+                  <th style="text-align: right;">การกระทำ</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${this.tickets.map((t, idx) => `
+                  <tr>
+                    <td><strong>${t.user}</strong></td>
+                    <td><strong style="color: #fff;">${t.subject}</strong><br><small style="color: var(--text-muted);">${t.message}</small></td>
+                    <td><span class="status-chip status-${t.status}">${t.status}</span></td>
+                    <td style="text-align: right;">
+                      <button class="btn btn-outline" style="padding: 0.3rem 0.7rem; font-size: 0.8rem;" onclick="app.adminReplyTicket(${idx})">💬 ตอบกลับ</button>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- User Moderation Table -->
+          <div style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--card-border); overflow-x: auto;">
+            <h3 style="margin-bottom: 1rem;">👤 จัดการผู้ใช้งาน (User Moderation)</h3>
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>บทบาท</th>
+                  <th>เลเวล / EXP</th>
+                  <th style="text-align: right;">การกระทำ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>🧙‍♂️ admin</td>
+                  <td><span style="color: #38bdf8; font-weight: 700;">ADMIN</span></td>
+                  <td>LV. 10 (1,500 EXP)</td>
+                  <td style="text-align: right;"><button class="btn btn-outline" disabled style="padding: 0.3rem 0.6rem; font-size: 0.8rem;">Superuser</button></td>
+                </tr>
+                <tr>
+                  <td>⚡ PlayerOne</td>
+                  <td>USER</td>
+                  <td>LV. 2 (180 EXP)</td>
+                  <td style="text-align: right;">
+                    <button class="btn btn-outline" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; color: #fbbf24;" onclick="app.showToast('เพิ่ม +100 EXP ให้ PlayerOne สำเร็จ!')">+100 EXP ⭐</button>
+                    <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="app.showToast('ระงับการใช้งานชั่วคราวสำเร็จ')">แบนผู้ใช้</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      adminReplyTicket(idx) {
+        const ticket = this.tickets[idx];
+        const reply = prompt(`ตอบกลับข้อความของ ${ticket.user}:\n"${ticket.message}"`, "ทีมงานตรวจสอบและแก้ไขปัญหาให้เรียบร้อยแล้วครับ ขอบคุณครับ");
+        if (reply) {
+          ticket.reply = reply;
+          ticket.status = 'Resolved';
+          localStorage.setItem('omni_tickets', JSON.stringify(this.tickets));
+          this.showToast('ตอบกลับและปิดงาน Ticket เรียบร้อยแล้ว!');
+          this.renderAdmin();
+        }
       }
 
       openModal(id) { document.getElementById(id).classList.add('active'); }
