@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="default">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#070913">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  
+  <title>OmniVerse Academy - ศูนย์รวมการเรียนรู้และฝึกฝนทุกสายวิชาบนโลก</title>
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="./css/themes.css">
+  <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+  <!-- Dynamic Particle Canvas for Atmospheric Themes -->
+  <canvas id="canvas-background"></canvas>
+
+  <div class="app-wrapper">
+    <!-- Top Navigation Bar -->
+    <nav class="navbar">
+      <a href="#/" class="nav-brand">
+        <span class="brand-icon">🌌</span>
+        <span class="brand-title">OmniVerse</span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <ul class="nav-links">
+        <li class="nav-item active" data-route="#/" onclick="location.hash='#/'">
+          <span>📚</span> <span>คลังสายวิชา</span>
+        </li>
+        <li class="nav-item" data-route="#/leaderboard" onclick="location.hash='#/leaderboard'">
+          <span>🏆</span> <span>ตารางอันดับ</span>
+        </li>
+        <li class="nav-item" data-route="#/tickets" onclick="location.hash='#/tickets'">
+          <span>🛠️</span> <span>ศูนย์ช่วยเหลือ</span>
+        </li>
+        <li class="nav-item" id="nav-admin-link" style="display: none;" onclick="location.href='./admin.html'">
+          <span>🛡️</span> <span>หลังบ้าน (Admin)</span>
+        </li>
+      </ul>
+
+      <div class="nav-actions">
+        <!-- Sound Effect Toggle -->
+        <button id="btn-sound-toggle" class="btn-icon" title="เปิด/ปิดเสียงเอฟเฟกต์">🔊</button>
+
+        <!-- Unauthenticated Buttons -->
+        <div id="nav-auth-actions" style="display: flex; gap: 0.4rem;">
+          <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="app.openModal('modal-login')">เข้าสู่ระบบ</button>
+          <button class="btn btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="app.openModal('modal-register')">สมัครสมาชิก</button>
+        </div>
+
+        <!-- Authenticated Profile Card -->
+        <div id="nav-user-status" class="user-status-card" style="display: none;" onclick="location.hash='#/profile'">
+          <div class="user-avatar-badge" id="nav-user-avatar">🧙‍♂️</div>
+          <div class="user-info-mini">
+            <span class="user-name-mini" id="nav-user-name">User</span>
+            <span class="user-level-tag" id="nav-user-level">LV. 1 • Novice</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Dynamic Content Container -->
+    <main class="main-container">
+      <div id="app-view">
+        <!-- SPA views render here -->
+      </div>
+    </main>
+
+    <!-- Mobile Bottom Navigation Bar (Touch-friendly for phones) -->
+    <nav class="mobile-bottom-nav">
+      <div class="mobile-nav-item active" data-route="#/" onclick="location.hash='#/'">
+        <span class="mobile-nav-icon">📚</span>
+        <span>คลังวิชา</span>
+      </div>
+      <div class="mobile-nav-item" data-route="#/leaderboard" onclick="location.hash='#/leaderboard'">
+        <span class="mobile-nav-icon">🏆</span>
+        <span>อันดับ</span>
+      </div>
+      <div class="mobile-nav-item" data-route="#/tickets" onclick="location.hash='#/tickets'">
+        <span class="mobile-nav-icon">🛠️</span>
+        <span>ช่วยเหลือ</span>
+      </div>
+      <div class="mobile-nav-item" data-route="#/profile" onclick="if(window.auth.currentUser){location.hash='#/profile'}else{app.openModal('modal-login')}">
+        <span class="mobile-nav-icon" id="mobile-nav-avatar">👤</span>
+        <span id="mobile-nav-profile-text">โปรไฟล์</span>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- =========================================================================
+       Modals
+       ========================================================================= -->
+
+  <!-- 1. Login Modal -->
+  <div id="modal-login" class="modal-overlay">
+    <div class="modal-dialog">
+      <button class="modal-close" onclick="app.closeModal('modal-login')">&times;</button>
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎮</div>
+        <h2 style="color: #fff; font-size: 1.4rem;">เข้าสู่ระบบ OmniVerse</h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">เข้าสู่ระบบเพื่อสะสม EXP และเลื่อนอันดับแรงค์</p>
+      </div>
+
+      <form id="form-login">
+        <div class="form-group">
+          <label class="form-label">ชื่อผู้ใช้ หรือ อีเมล</label>
+          <input type="text" id="login-username" class="form-input" required placeholder="เช่น PlayerOne หรือ admin">
+        </div>
+        <div class="form-group">
+          <label class="form-label">รหัสผ่าน</label>
+          <input type="password" id="login-password" class="form-input" required placeholder="••••••••">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">เข้าสู่ระบบ</button>
+      </form>
+
+      <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
+        <button class="btn btn-outline" style="width: 100%; margin-bottom: 0.75rem; font-size: 0.88rem;" onclick="app.quickDemoLogin(); app.closeModal('modal-login');">⚡ เข้าใช้งานด่วนด้วย Demo User</button>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          ยังไม่มีบัญชี? <a href="javascript:void(0)" onclick="app.closeModal('modal-login'); app.openModal('modal-register');" style="color: var(--accent);">สมัครสมาชิกที่นี่</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Register Modal -->
+  <div id="modal-register" class="modal-overlay">
+    <div class="modal-dialog">
+      <button class="modal-close" onclick="app.closeModal('modal-register')">&times;</button>
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">✨</div>
+        <h2 style="color: #fff; font-size: 1.4rem;">สร้างบัญชีผู้แสวงหาความรู้</h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">เริ่มต้นเส้นทางสู่ปราชญ์แห่งสรรพวิชา</p>
+      </div>
+
+      <form id="form-register">
+        <div class="form-group">
+          <label class="form-label">ชื่อผู้ใช้ (Username)</label>
+          <input type="text" id="reg-username" class="form-input" required placeholder="ตั้งชื่อตัวละครของคุณ">
+        </div>
+        <div class="form-group">
+          <label class="form-label">อีเมล (ถ้ามี)</label>
+          <input type="email" id="reg-email" class="form-input" placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">เลือก Avatar ประจำตัว</label>
+          <select id="reg-avatar" class="form-select">
+            <option value="🧙‍♂️">🧙‍♂️ จอมเวทปราชญ์ (Scholar)</option>
+            <option value="🌲">🌲 พรานไพรผู้รอดชีวิต (Ranger)</option>
+            <option value="💻">💻 นักเจาะระบบดิจิทัล (Cyber Hacker)</option>
+            <option value="🎨">🎨 ศิลปินผู้รังสรรค์ (Artist)</option>
+            <option value="⚔️">⚔️ นักรบผู้กล้า (Warrior)</option>
+            <option value="💎">💎 สถาปนิกการเงิน (Strategist)</option>
+            <option value="⚙️">⚙️ วิศวกรจักรกล (Engineer)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">รหัสผ่าน</label>
+          <input type="password" id="reg-password" class="form-input" required placeholder="ตั้งรหัสผ่านความปลอดภัย">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">สมัครสมาชิกและเริ่มต้นทันที</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Create Ticket Modal -->
+  <div id="modal-create-ticket" class="modal-overlay">
+    <div class="modal-dialog">
+      <button class="modal-close" onclick="app.closeModal('modal-create-ticket')">&times;</button>
+      <div style="margin-bottom: 1.25rem;">
+        <h2 style="color: #fff; font-size: 1.35rem;">🛠️ แจ้งปัญหา / ข้อเสนอแนะ</h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">ทีมงานหลังบ้านจะได้รับเรื่องและช่วยแก้ไขโดยเร็วที่สุด</p>
+      </div>
+
+      <form id="form-create-ticket">
+        <div class="form-group">
+          <label class="form-label">หัวข้อเรื่อง</label>
+          <input type="text" id="ticket-subject-input" class="form-input" required placeholder="เช่น พบข้อสอบคำตอบคลาดเคลื่อน">
+        </div>
+        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <div>
+            <label class="form-label">หมวดหมู่ปัญหา</label>
+            <select id="ticket-category-select" class="form-select">
+              <option value="content_error">โจทย์/เนื้อหาผิดพลาด</option>
+              <option value="bug">ข้อผิดพลาดระบบ (Bug)</option>
+              <option value="suggestion">ข้อเสนอแนะหลักสูตรใหม่</option>
+              <option value="account">ปัญหาเกี่ยวกับบัญชี</option>
+              <option value="general">อื่นๆ</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label">ความเร่งด่วน</label>
+            <select id="ticket-priority-select" class="form-select">
+              <option value="Low">Low (ทั่วไป)</option>
+              <option value="Medium" selected>Medium (ปานกลาง)</option>
+              <option value="High">High (สำคัญ)</option>
+              <option value="Urgent">Urgent (เร่งด่วนมาก)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">รายละเอียดปัญหา</label>
+          <textarea id="ticket-message-input" class="form-textarea" rows="4" required placeholder="อธิบายข้อความของคุณอย่างชัดเจน..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%;">ส่งเรื่องแจ้งปัญหา 📤</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. Celebration Modal (Level Up / Rank Up) -->
+  <div id="modal-celebrate" class="modal-overlay">
+    <div class="modal-dialog celebrate-modal">
+      <div class="celebrate-icon" id="celebrate-icon">🏆</div>
+      <h2 class="celebrate-title" id="celebrate-title">LEVEL UP!</h2>
+      <p id="celebrate-text" style="font-size: 1.05rem; color: #fff; margin-bottom: 1.5rem;">ยินดีด้วย! คุณเลเวลอัปแล้ว</p>
+      <button class="btn btn-primary" onclick="app.closeModal('modal-celebrate')">ยอดเยี่ยม! รับรางวัล ⭐</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./js/sound.js"></script>
+  <script src="./js/theme.js"></script>
+  <script src="./js/api.js"></script>
+  <script src="./js/auth.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>
