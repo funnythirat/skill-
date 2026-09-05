@@ -403,7 +403,7 @@
         <p style="font-size: 0.85rem; color: var(--text-muted);">เข้าสู่ระบบเพื่อสะสม EXP เลื่อนยศ และบันทึกประวัติการฝึกฝน</p>
       </div>
 
-      <form id="form-login" onsubmit="event.preventDefault(); auth.login(document.getElementById('login-u').value, document.getElementById('login-p').value);">
+      <form id="form-login" autocomplete="off" onsubmit="event.preventDefault(); auth.login(document.getElementById('login-u').value, document.getElementById('login-p').value);">
         <div class="form-group">
           <label class="form-label">ชื่อผู้ใช้ (Username)</label>
           <input type="text" id="login-u" class="form-input" required placeholder="ชื่อผู้ใช้ของคุณ">
@@ -434,7 +434,7 @@
         <p style="font-size: 0.85rem; color: var(--text-muted);">เลือก Avatar และตั้งชื่อเพื่อเริ่มการผจญภัย</p>
       </div>
 
-      <form id="form-reg" onsubmit="event.preventDefault(); auth.register(document.getElementById('reg-u').value, app.selectedRegAvatar, document.getElementById('reg-p').value);">
+      <form id="form-reg" autocomplete="off" onsubmit="event.preventDefault(); auth.register(document.getElementById('reg-u').value, app.selectedRegAvatar, document.getElementById('reg-p').value);">
         <div class="form-group">
           <label class="form-label">ชื่อตัวละครของคุณ</label>
           <input type="text" id="reg-u" class="form-input" required placeholder="ตั้งชื่อตัวละคร">
@@ -602,8 +602,7 @@
     // 3. User & Auth Manager
     class AuthManager {
       constructor() {
-        const saved = localStorage.getItem('omni_user');
-        this.currentUser = saved ? JSON.parse(saved) : null;
+        this.currentUser = null;
         this.users = JSON.parse(localStorage.getItem('omni_users') || '[]');
         if (!this.users.some(user => user.username.toLowerCase() === 'admin')) {
           this.users.unshift({ username: 'admin', password: 'admin123', role: 'admin', xp: 1500, level: 10, rank: 'Omniscient Sage', avatar: '🧙‍♂️', registeredAt: new Date().toISOString() });
@@ -1635,6 +1634,7 @@
       openModal(id) {
         if (id === 'modal-register') this.closeModal('modal-login');
         if (id === 'modal-login') this.closeModal('modal-register');
+        if (id === 'modal-register' || id === 'modal-login') this.resetAuthForms();
         if (id === 'modal-avatar-picker' && auth.currentUser) {
           this.selectedProfileAvatar = auth.currentUser.avatar;
           const preview = document.getElementById('profile-avatar-preview');
@@ -1645,7 +1645,20 @@
         }
         document.getElementById(id).classList.add('active');
       }
-      closeModal(id) { document.getElementById(id).classList.remove('active'); }
+      resetAuthForms() {
+        ['form-login', 'form-reg'].forEach(formId => {
+          const form = document.getElementById(formId);
+          if (form) form.reset();
+        });
+        this.selectedRegAvatar = '🧙‍♂️';
+        document.querySelectorAll('#reg-avatar-grid .avatar-opt').forEach((avatar, index) => avatar.classList.toggle('selected', index === 0));
+        const preview = document.getElementById('reg-avatar-preview');
+        if (preview) { preview.src = ''; preview.hidden = true; }
+      }
+      closeModal(id) {
+        document.getElementById(id).classList.remove('active');
+        if (id === 'modal-login' || id === 'modal-register') this.resetAuthForms();
+      }
       showToast(msg) {
         const container = document.getElementById('toast-container');
         const t = document.createElement('div');
