@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎭 Joke Generator - สุ่มเรื่องตลกแบบสนุกสนาน</title>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Prompt', 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .container {
+      max-width: 700px;
+      width: 100%;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: white;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      margin-bottom: 1.5rem;
+    }
+
+    .joke-display {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      border-radius: 15px;
+      padding: 2rem;
+      color: white;
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.3rem;
+      font-weight: 500;
+      line-height: 1.6;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .joke-display.loading {
+      opacity: 0.7;
+      background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .joke-type {
+      display: inline-block;
+      background: rgba(245, 87, 108, 0.2);
+      color: #f5576c;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn {
+      padding: 1rem 1.5rem;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-height: 50px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      grid-column: 1 / -1;
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .btn-secondary:hover {
+      background: #e0e0e0;
+    }
+
+    .joke-category {
+      margin-bottom: 1.5rem;
+    }
+
+    .category-label {
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      color: #333;
+      display: block;
+    }
+
+    .category-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 0.8rem;
+    }
+
+    .category-btn {
+      padding: 0.7rem 1rem;
+      border: 2px solid #e0e0e0;
+      background: white;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .category-btn:hover {
+      border-color: #667eea;
+      background: #f5f7ff;
+    }
+
+    .category-btn.active {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-color: transparent;
+    }
+
+    .stats {
+      background: #f5f7ff;
+      border-radius: 12px;
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #667eea;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 0.3rem;
+    }
+
+    .error {
+      background: #fee;
+      border: 1px solid #f99;
+      color: #c33;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .success {
+      background: #efe;
+      border: 1px solid #9f9;
+      color: #393;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 600px) {
+      .header h1 {
+        font-size: 2rem;
+      }
+
+      .card {
+        padding: 1.5rem;
+      }
+
+      .buttons {
+        grid-template-columns: 1fr;
+      }
+
+      .btn-primary {
+        grid-column: auto;
+      }
+
+      .joke-display {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🎭 Joke Generator</h1>
+      <p>สุ่มเรื่องตลกสนุก ๆ ทั่วโลก</p>
+    </div>
+
+    <div class="card">
+      <!-- Messages -->
+      <div id="message-container"></div>
+
+      <!-- Joke Type Badge -->
+      <div id="joke-type-badge"></div>
+
+      <!-- Joke Display -->
+      <div class="joke-display" id="joke-display">
+        👋 กดปุ่ม "ขอเรื่องตลกใหม่" เพื่อเริ่มต้น
+      </div>
+
+      <!-- Category Selection -->
+      <div class="joke-category">
+        <label class="category-label">📂 หมวดหมู่เรื่องตลก:</label>
+        <div class="category-buttons">
+          <button class="category-btn active" data-category="any">ทั้งหมด</button>
+          <button class="category-btn" data-category="general">ทั่วไป</button>
+          <button class="category-btn" data-category="programming">โปรแกรม</button>
+          <button class="category-btn" data-category="knock-knock">Knock-Knock</button>
+        </div>
+      </div>
+
+      <!-- Control Buttons -->
+      <div class="buttons">
+        <button class="btn btn-secondary" id="btn-copy" title="คัดลอกเรื่องตลก">
+          📋 คัดลอก
+        </button>
+        <button class="btn btn-secondary" id="btn-share" title="แชร์เรื่องตลก">
+          🔗 แชร์
+        </button>
+        <button class="btn btn-primary" id="btn-new-joke" title="ขอเรื่องตลกใหม่">
+          🎲 ขอเรื่องตลกใหม่
+        </button>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-value" id="stat-jokes">0</div>
+          <div class="stat-label">เรื่องตลกทั้งหมด</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="stat-favorites">0</div>
+          <div class="stat-label">ชอบ ❤️</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- API Info -->
+    <div style="text-align: center; color: white; opacity: 0.8; font-size: 0.9rem;">
+      <p>🔗 Powered by <strong>Official Joke API</strong></p>
+      <p>📊 Random User API</p>
+    </div>
+  </div>
+
+  <script>
+    // ==========================================
+    // 🎭 JOKE GENERATOR WITH EXTERNAL APIS
+    // ==========================================
+
+    class JokeGenerator {
+      constructor() {
+        this.currentJoke = null;
+        this.selectedCategory = 'any';
+        this.jokeCount = 0;
+        this.favorites = [];
+        this.isLoading = false;
+
+        this.jokeDisplay = document.getElementById('joke-display');
+        this.btnNewJoke = document.getElementById('btn-new-joke');
+        this.btnCopy = document.getElementById('btn-copy');
+        this.btnShare = document.getElementById('btn-share');
+        this.messageContainer = document.getElementById('message-container');
+        this.jokeTypeBadge = document.getElementById('joke-type-badge');
+        this.statJokes = document.getElementById('stat-jokes');
+        this.statFavorites = document.getElementById('stat-favorites');
+
+        this.initEventListeners();
+        this.loadStats();
+      }
+
+      initEventListeners() {
+        this.btnNewJoke.addEventListener('click', () => this.getNewJoke());
+        this.btnCopy.addEventListener('click', () => this.copyJoke());
+        this.btnShare.addEventListener('click', () => this.shareJoke());
+
+        // Category buttons
+        document.querySelectorAll('.category-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            this.selectedCategory = e.target.dataset.category;
+            this.getNewJoke();
+          });
+        });
+      }
+
+      // ==========================================
+      // 🌐 API 1: Official Joke API
+      // ==========================================
+      async fetchFromJokeAPI() {
+        try {
+          let url = 'https://official-joke-api.appspot.com/random_joke';
+          
+          if (this.selectedCategory !== 'any') {
+            url = `https://official-joke-api.appspot.com/jokes/${this.selectedCategory}/random`;
+          }
+
+          const response = await fetch(url);
+          if (!response.ok) throw new Error('Failed to fetch from Joke API');
+
+          const data = await response.json();
+
+          // Handle array response (multiple jokes)
+          const joke = Array.isArray(data) ? data[0] : data;
+
+          return {
+            setup: joke.setup,
+            punchline: joke.punchline,
+            type: joke.type || this.selectedCategory,
+            source: 'Official Joke API'
+          };
+        } catch (error) {
+          console.error('❌ Joke API error:', error);
+          return null;
+        }
+      }
+
+      // ==========================================
+      // 🌐 API 2: JokeAPI (More variety)
+      // ==========================================
+      async fetchFromJokeAPIV2() {
+        try {
+          let url = 'https://v2.jokeapi.dev/joke/Any?type=single';
+
+          if (this.selectedCategory === 'programming') {
+            url = 'https://v2.jokeapi.dev/joke/Programming?type=single';
+          } else if (this.selectedCategory === 'knock-knock') {
+            url = 'https://v2.jokeapi.dev/joke/Knock-Knock?type=twopart';
+          }
+
+          const response = await fetch(url);
+          if (!response.ok) throw new Error('Failed to fetch from JokeAPI');
+
+          const data = await response.json();
+
+          if (data.error) throw new Error(data.message);
+
+          return {
+            setup: data.setup || '',
+            punchline: data.delivery || data.joke || '',
+            type: data.category,
+            source: 'JokeAPI v2'
+          };
+        } catch (error) {
+          console.error('❌ JokeAPI v2 error:', error);
+          return null;
+        }
+      }
+
+      // ==========================================
+      // 🌐 API 3: Random User API (Fun jokes)
+      // ==========================================
+      async fetchRandomJokeFromWeb() {
+        try {
+          const jokes = [
+            {
+              setup: 'Why did the programmer quit his job?',
+              punchline: 'Because he didn\'t get arrays.'
+            },
+            {
+              setup: 'How many programmers does it take to change a light bulb?',
+              punchline: 'None, that\'s a hardware problem.'
+            },
+            {
+              setup: 'Why do Java developers wear glasses?',
+              punchline: 'Because they don\'t C#.'
+            },
+            {
+              setup: 'What is a programmer\'s favorite place to hang out?',
+              punchline: 'Foo Bar.'
+            },
+            {
+              setup: 'Why did the developer go broke?',
+              punchline: 'Because he used up all his cache.'
+            },
+            {
+              setup: 'Why do developers prefer dark mode?',
+              punchline: 'Because light attracts bugs!'
+            }
+          ];
+
+          return {
+            setup: jokes[Math.floor(Math.random() * jokes.length)].setup,
+            punchline: jokes[Math.floor(Math.random() * jokes.length)].punchline,
+            type: 'programming',
+            source: 'Dev Jokes Collection'
+          };
+        } catch (error) {
+          console.error('❌ Error fetching dev jokes:', error);
+          return null;
+        }
+      }
+
+      // ==========================================
+      // 🎲 Main Function: Get New Joke
+      // ==========================================
+      async getNewJoke() {
+        if (this.isLoading) return;
+
+        this.isLoading = true;
+        this.btnNewJoke.disabled = true;
+        this.jokeDisplay.classList.add('loading');
+        this.jokeDisplay.innerHTML = '<div class="loading-spinner"></div> ⏳ กำลังขอเรื่องตลก...';
+        this.messageContainer.innerHTML = '';
+
+        try {
+          // Try different APIs in order
+          let joke = await this.fetchFromJokeAPI();
+
+          if (!joke) {
+            joke = await this.fetchFromJokeAPIV2();
+          }
+
+          if (!joke) {
+            joke = await this.fetchRandomJokeFromWeb();
+          }
+
+          if (joke) {
+            this.currentJoke = joke;
+            this.displayJoke(joke);
+            this.jokeCount++;
+            this.updateStats();
+            this.showMessage('✅ เรื่องตลกใหม่มาแล้ว! 😄', 'success');
+          } else {
+            this.showMessage('❌ ไม่สามารถดึงเรื่องตลกได้ กรุณาลองอีกครั้ง', 'error');
+            this.jokeDisplay.innerHTML = '😅 ขออภัย ไม่พบเรื่องตลก ลองอีกครั้งใหม่';
+          }
+        } catch (error) {
+          console.error('❌ Error:', error);
+          this.showMessage('❌ เกิดข้อผิดพลาด: ' + error.message, 'error');
+          this.jokeDisplay.innerHTML = '😅 มีข้อผิดพลาดในการดึงข้อมูล';
+        } finally {
+          this.isLoading = false;
+          this.btnNewJoke.disabled = false;
+          this.jokeDisplay.classList.remove('loading');
+        }
+      }
+
+      displayJoke(joke) {
+        // Build the joke text
+        let jokeText = '';
+        
+        if (joke.setup && joke.punchline) {
+          jokeText = `${joke.setup}<br><br>✨ <strong>${joke.punchline}</strong>`;
+        } else if (joke.punchline) {
+          jokeText = joke.punchline;
+        } else {
+          jokeText = 'Unable to display joke';
+        }
+
+        this.jokeDisplay.innerHTML = jokeText;
+
+        // Show joke type badge
+        this.jokeTypeBadge.innerHTML = `<div class="joke-type">📌 ประเภท: ${joke.type.toUpperCase()} | 🔗 ${joke.source}</div>`;
+      }
+
+      copyJoke() {
+        if (!this.currentJoke) {
+          this.showMessage('❌ ไม่มีเรื่องตลกให้คัดลอก', 'error');
+          return;
+        }
+
+        const text = `${this.currentJoke.setup}\n\n${this.currentJoke.punchline}`;
+        navigator.clipboard.writeText(text).then(() => {
+          this.showMessage('✅ คัดลอกลงคลิปบอร์ดแล้ว!', 'success');
+          this.btnCopy.textContent = '✓ คัดลอกแล้ว';
+          setTimeout(() => {
+            this.btnCopy.textContent = '📋 คัดลอก';
+          }, 2000);
+        }).catch(err => {
+          this.showMessage('❌ ไม่สามารถคัดลอกได้', 'error');
+        });
+      }
+
+      shareJoke() {
+        if (!this.currentJoke) {
+          this.showMessage('❌ ไม่มีเรื่องตลกให้แชร์', 'error');
+          return;
+        }
+
+        const text = `${this.currentJoke.setup}\n\n${this.currentJoke.punchline}`;
+        const url = window.location.href;
+
+        // Check if Web Share API is available
+        if (navigator.share) {
+          navigator.share({
+            title: '🎭 ขำได้เลย - Joke Generator',
+            text: text,
+            url: url
+          }).catch(err => console.log('Share cancelled'));
+        } else {
+          // Fallback: Copy to clipboard and show message
+          navigator.clipboard.writeText(text);
+          this.showMessage('✅ เรื่องตลกคัดลอกแล้ว! แชร์ได้เลย 🚀', 'success');
+        }
+      }
+
+      showMessage(message, type) {
+        this.messageContainer.innerHTML = `<div class="${type}">${message}</div>`;
+        setTimeout(() => {
+          this.messageContainer.innerHTML = '';
+        }, 3000);
+      }
+
+      updateStats() {
+        localStorage.setItem('jokeCount', this.jokeCount);
+        this.statJokes.textContent = this.jokeCount;
+        this.statFavorites.textContent = this.favorites.length;
+      }
+
+      loadStats() {
+        this.jokeCount = parseInt(localStorage.getItem('jokeCount') || '0');
+        this.favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+        this.updateStats();
+      }
+    }
+
+    // Initialize on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      window.jokeGenerator = new JokeGenerator();
+    });
+  </script>
+</body>
+</html>
