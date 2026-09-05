@@ -1,607 +1,1675 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" data-theme="default">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🎭 Joke Generator - สุ่มเรื่องตลกแบบสนุกสนาน</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#070913">
+  <title>OmniVerse Academy - ศูนย์รวมการเรียนรู้และฝึกฝนทุกสายวิชาบนโลก</title>
   
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+    :root {
+      --bg-primary: #070913;
+      --bg-secondary: #0d1224;
+      --card-bg: rgba(18, 24, 43, 0.82);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --card-hover-border: rgba(99, 102, 241, 0.5);
+      --accent: #6366f1;
+      --accent-secondary: #a855f7;
+      --accent-glow: rgba(99, 102, 241, 0.35);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --badge-bg: rgba(99, 102, 241, 0.18);
+      --hero-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #090d16 100%);
     }
+
+    [data-theme="academic"] {
+      --bg-primary: #050b14;
+      --bg-secondary: #0b1329;
+      --card-bg: rgba(15, 23, 42, 0.82);
+      --card-border: rgba(56, 189, 248, 0.25);
+      --card-hover-border: rgba(56, 189, 248, 0.7);
+      --accent: #38bdf8;
+      --accent-secondary: #3b82f6;
+      --accent-glow: rgba(56, 189, 248, 0.4);
+      --badge-bg: rgba(56, 189, 248, 0.18);
+      --hero-gradient: linear-gradient(135deg, #0b1329 0%, #1e293b 50%, #172554 100%);
+    }
+
+    [data-theme="survival"] {
+      --bg-primary: #050f07;
+      --bg-secondary: #0a180d;
+      --card-bg: rgba(20, 42, 23, 0.82);
+      --card-border: rgba(34, 197, 94, 0.25);
+      --card-hover-border: rgba(34, 197, 94, 0.7);
+      --accent: #22c55e;
+      --accent-secondary: #15803d;
+      --accent-glow: rgba(34, 197, 94, 0.4);
+      --badge-bg: rgba(34, 197, 94, 0.18);
+      --hero-gradient: linear-gradient(135deg, #0a180d 0%, #142a17 50%, #1b3d1f 100%);
+    }
+
+    [data-theme="tech"] {
+      --bg-primary: #030c14;
+      --bg-secondary: #051622;
+      --card-bg: rgba(13, 40, 56, 0.82);
+      --card-border: rgba(6, 182, 212, 0.25);
+      --card-hover-border: rgba(6, 182, 212, 0.7);
+      --accent: #06b6d4;
+      --accent-secondary: #0284c7;
+      --accent-glow: rgba(6, 182, 212, 0.4);
+      --badge-bg: rgba(6, 182, 212, 0.18);
+      --hero-gradient: linear-gradient(135deg, #051622 0%, #0d2838 50%, #0f172a 100%);
+    }
+
+    [data-theme="arts"] {
+      --bg-primary: #0e0517;
+      --bg-secondary: #1b0a2a;
+      --card-bg: rgba(47, 21, 71, 0.82);
+      --card-border: rgba(192, 132, 252, 0.25);
+      --card-hover-border: rgba(192, 132, 252, 0.7);
+      --accent: #c084fc;
+      --accent-secondary: #d946ef;
+      --accent-glow: rgba(192, 132, 252, 0.4);
+      --badge-bg: rgba(192, 132, 252, 0.18);
+      --hero-gradient: linear-gradient(135deg, #1b0a2a 0%, #2f1547 50%, #3b0764 100%);
+    }
+
+    [data-theme="combat"] {
+      --bg-primary: #140505;
+      --bg-secondary: #240a0a;
+      --card-bg: rgba(62, 18, 18, 0.82);
+      --card-border: rgba(239, 68, 68, 0.25);
+      --card-hover-border: rgba(239, 68, 68, 0.7);
+      --accent: #ef4444;
+      --accent-secondary: #b91c1c;
+      --accent-glow: rgba(239, 68, 68, 0.4);
+      --badge-bg: rgba(239, 68, 68, 0.18);
+      --hero-gradient: linear-gradient(135deg, #240a0a 0%, #3e1212 50%, #450a0a 100%);
+    }
+
+    [data-theme="wealth"] {
+      --bg-primary: #03140d;
+      --bg-secondary: #062016;
+      --card-bg: rgba(15, 56, 38, 0.82);
+      --card-border: rgba(16, 185, 129, 0.25);
+      --card-hover-border: rgba(16, 185, 129, 0.7);
+      --accent: #10b981;
+      --accent-secondary: #059669;
+      --accent-glow: rgba(16, 185, 129, 0.4);
+      --badge-bg: rgba(16, 185, 129, 0.18);
+      --hero-gradient: linear-gradient(135deg, #062016 0%, #0f3826 50%, #064e3b 100%);
+    }
+
+    [data-theme="engineering"] {
+      --bg-primary: #140c03;
+      --bg-secondary: #231505;
+      --card-bg: rgba(61, 36, 7, 0.82);
+      --card-border: rgba(245, 158, 11, 0.25);
+      --card-hover-border: rgba(245, 158, 11, 0.7);
+      --accent: #f59e0b;
+      --accent-secondary: #d97706;
+      --accent-glow: rgba(245, 158, 11, 0.4);
+      --badge-bg: rgba(245, 158, 11, 0.18);
+      --hero-gradient: linear-gradient(135deg, #231505 0%, #3d2407 50%, #451a03 100%);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
     body {
-      font-family: 'Prompt', 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: 'Prompt', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-main);
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
-
-    .container {
-      max-width: 700px;
-      width: 100%;
-    }
-
-    .header {
-      text-align: center;
-      margin-bottom: 2rem;
-      color: white;
-    }
-
-    .header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    .header p {
-      font-size: 1.1rem;
-      opacity: 0.9;
-    }
-
-    .card {
-      background: white;
-      border-radius: 20px;
-      padding: 2rem;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-      margin-bottom: 1.5rem;
-    }
-
-    .joke-display {
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      border-radius: 15px;
-      padding: 2rem;
-      color: white;
-      min-height: 120px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.5rem;
-      font-size: 1.3rem;
-      font-weight: 500;
       line-height: 1.6;
-      text-align: center;
-      transition: all 0.3s ease;
+      overflow-x: hidden;
+      transition: background-color 0.4s ease, color 0.3s ease;
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
-    .joke-display.loading {
-      opacity: 0.7;
-      background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
+    #canvas-background {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 0; pointer-events: none; opacity: 0.65;
     }
 
-    @keyframes shimmer {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
+    .app-wrapper {
+      position: relative; z-index: 1; display: flex; flex-direction: column; min-height: 100vh;
     }
 
-    .joke-type {
-      display: inline-block;
-      background: rgba(245, 87, 108, 0.2);
-      color: #f5576c;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      background: rgba(10, 15, 30, 0.9);
+      border-bottom: 1px solid var(--card-border);
+      padding: 0.75rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
     }
 
-    .buttons {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
+    .nav-brand {
+      display: flex; align-items: center; gap: 0.6rem; cursor: pointer; text-decoration: none;
     }
+
+    .brand-icon { font-size: 1.8rem; filter: drop-shadow(0 0 10px var(--accent)); }
+    .brand-title {
+      font-family: 'Cinzel', 'Prompt', serif; font-weight: 700; font-size: 1.3rem;
+      background: linear-gradient(90deg, #ffffff, var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 0.5rem; list-style: none; }
+    .nav-item {
+      display: flex; align-items: center; gap: 0.4rem; padding: 0.5rem 0.9rem;
+      border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: var(--text-muted);
+      cursor: pointer; transition: all 0.2s ease; border: 1px solid transparent;
+    }
+    .nav-item:hover, .nav-item.active {
+      color: var(--text-main); background: var(--badge-bg); border-color: var(--card-border);
+    }
+
+    .nav-actions { display: flex; align-items: center; gap: 0.6rem; }
+
+    .user-status-card {
+      display: flex; align-items: center; gap: 0.6rem;
+      background: rgba(255, 255, 255, 0.06); padding: 0.35rem 0.75rem;
+      border-radius: 30px; border: 1px solid var(--card-border); cursor: pointer;
+    }
+
+    .user-avatar-badge {
+      font-size: 1.3rem; width: 34px; height: 34px; display: flex; align-items: center;
+      justify-content: center; background: var(--badge-bg); border-radius: 50%; border: 1.5px solid var(--accent);
+    }
+
+    .user-info-mini { display: flex; flex-direction: column; }
+    .user-name-mini { font-weight: 600; font-size: 0.85rem; color: #fff; line-height: 1.1; }
+    .user-level-tag { font-size: 0.7rem; color: var(--accent); font-weight: 700; }
+
+    .mobile-bottom-nav {
+      display: none; position: fixed; bottom: 0; left: 0; width: 100%;
+      background: rgba(10, 15, 30, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--card-border); z-index: 999;
+      padding: 0.4rem 0.5rem calc(0.4rem + env(safe-area-inset-bottom));
+      justify-content: space-around; align-items: center;
+    }
+
+    .mobile-nav-item {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 0.2rem; color: var(--text-muted); font-size: 0.72rem; font-weight: 500;
+      padding: 0.35rem 0.6rem; border-radius: 10px; flex: 1; text-align: center; cursor: pointer;
+    }
+    .mobile-nav-item.active { color: var(--accent); background: var(--badge-bg); }
 
     .btn {
-      padding: 1rem 1.5rem;
-      border: none;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      min-height: 50px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      padding: 0.65rem 1.25rem; border-radius: 10px; font-family: inherit; font-size: 0.95rem;
+      font-weight: 600; cursor: pointer; transition: all 0.2s ease; border: none; outline: none; min-height: 44px;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-secondary)); color: #050b14; font-weight: 700; }
+    .btn-outline { background: transparent; color: var(--text-main); border: 1px solid var(--card-border); }
+    .btn-outline:hover { background: var(--badge-bg); border-color: var(--accent); color: var(--accent); }
+    .btn-danger { background: #ef4444; color: #fff; }
+    .btn-icon {
+      width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border);
+      color: var(--text-main); cursor: pointer; font-size: 1.1rem;
     }
 
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    .main-container { max-width: 1240px; margin: 0 auto; padding: 2rem 1.5rem 5rem; width: 100%; flex: 1; }
+
+    .hero-banner {
+      background: var(--hero-gradient); border: 1px solid var(--card-border);
+      border-radius: 20px; padding: 2.2rem 2rem; margin-bottom: 2rem; position: relative; overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem; background: var(--badge-bg);
+      color: var(--accent); padding: 0.35rem 0.9rem; border-radius: 20px; font-size: 0.82rem; font-weight: 700; margin-bottom: 1rem;
+    }
+    .hero-title { font-size: 2.2rem; font-weight: 700; line-height: 1.25; margin-bottom: 0.75rem; color: #fff; }
+    .hero-quote { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 1.5rem; font-style: italic; border-left: 3px solid var(--accent); padding-left: 1rem; }
+
+    .disciplines-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+    .discipline-card {
+      background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px;
+      padding: 1.5rem; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; backdrop-filter: blur(12px);
+    }
+    .discipline-card:hover { transform: translateY(-4px); border-color: var(--card-hover-border); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .discipline-icon-box {
+      width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center;
+      justify-content: center; font-size: 1.8rem; background: var(--badge-bg); border: 1px solid var(--card-border); margin-bottom: 1rem;
+    }
+    .discipline-name { font-size: 1.2rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem; }
+    .discipline-name-en { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem; font-family: 'Cinzel', serif; }
+    .discipline-desc { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.25rem; flex: 1; }
+
+    /* Lesson Lecture & Theory Box */
+    .theory-box {
+      background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 18px;
+      padding: 2rem; margin-bottom: 2rem; line-height: 1.8; backdrop-filter: blur(12px);
+    }
+    .theory-section-title {
+      font-size: 1.2rem; font-weight: 700; color: var(--accent); margin: 1.5rem 0 0.75rem;
+      display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--card-border); padding-bottom: 0.5rem;
+    }
+    .theory-section-title:first-child { margin-top: 0; }
+    .example-card {
+      background: rgba(0, 0, 0, 0.3); border-left: 4px solid var(--accent);
+      padding: 1.1rem 1.3rem; border-radius: 0 12px 12px 0; margin: 1rem 0; font-size: 0.95rem;
     }
 
-    .btn:active {
-      transform: translateY(0);
+    .lesson-card {
+      background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px;
+      padding: 1.3rem; transition: all 0.2s ease; display: flex; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 1rem;
     }
+    .lesson-card:hover { border-color: var(--accent); background: rgba(255, 255, 255, 0.04); transform: translateX(4px); }
 
-    .btn-primary {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      grid-column: 1 / -1;
+    .quiz-card {
+      background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px;
+      padding: 2rem; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5); backdrop-filter: blur(16px);
     }
-
-    .btn-primary:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
+    .scenario-box { background: rgba(0,0,0,0.3); border-left: 4px solid var(--accent); padding: 0.9rem 1.1rem; border-radius: 0 10px 10px 0; margin-bottom: 1.25rem; font-size: 0.92rem; color: var(--text-muted); }
+    .quiz-question-text { font-size: 1.25rem; font-weight: 600; color: #fff; margin-bottom: 1.5rem; }
+    .option-btn {
+      display: flex; align-items: center; gap: 0.85rem; padding: 0.9rem 1.1rem; border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04); border: 1px solid var(--card-border); color: var(--text-main);
+      font-family: inherit; font-size: 0.95rem; text-align: left; cursor: pointer; transition: all 0.2s ease; min-height: 52px; width: 100%; margin-bottom: 0.75rem;
     }
+    .option-btn:hover:not(:disabled) { background: var(--badge-bg); border-color: var(--accent); transform: translateX(3px); }
+    .option-btn.correct { border-color: #22c55e !important; background: rgba(34, 197, 94, 0.2) !important; color: #4ade80 !important; }
+    .option-btn.wrong { border-color: #ef4444 !important; background: rgba(239, 68, 68, 0.2) !important; color: #f87171 !important; }
+    .option-key { width: 32px; height: 32px; min-width: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; background: rgba(255,255,255,0.08); }
 
-    .btn-secondary {
-      background: #f0f0f0;
-      color: #333;
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.88);
+      backdrop-filter: blur(12px); z-index: 1000; display: flex; align-items: center; justify-content: center;
+      padding: 1rem; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
     }
-
-    .btn-secondary:hover {
-      background: #e0e0e0;
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .modal-dialog {
+      background: var(--bg-secondary); border: 1px solid var(--card-border); border-radius: 20px;
+      width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; padding: 2rem; position: relative;
     }
+    .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.6rem; color: var(--text-muted); cursor: pointer; }
 
-    .joke-category {
-      margin-bottom: 1.5rem;
+    .form-group { margin-bottom: 1.1rem; }
+    .form-label { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--text-muted); }
+    .form-input, .form-textarea, .form-select {
+      width: 100%; padding: 0.75rem 1rem; background: rgba(0, 0, 0, 0.35); border: 1px solid var(--card-border);
+      border-radius: 10px; color: #fff; font-family: inherit; font-size: 0.95rem; min-height: 44px;
     }
+    .form-input:focus, .form-textarea:focus, .form-select:focus { outline: none; border-color: var(--accent); }
 
-    .category-label {
-      font-weight: 600;
-      margin-bottom: 0.8rem;
-      color: #333;
-      display: block;
+    /* Avatar Grid Picker */
+    .avatar-picker-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1.5rem;
     }
-
-    .category-buttons {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      gap: 0.8rem;
+    .avatar-opt {
+      font-size: 2.2rem; background: rgba(255,255,255,0.05); border: 1.5px solid var(--card-border);
+      border-radius: 14px; padding: 0.75rem; cursor: pointer; transition: all 0.2s ease; text-align: center;
     }
-
-    .category-btn {
-      padding: 0.7rem 1rem;
-      border: 2px solid #e0e0e0;
-      background: white;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
+    .avatar-opt:hover, .avatar-opt.selected {
+      background: var(--badge-bg); border-color: var(--accent); transform: scale(1.08); box-shadow: 0 0 15px var(--accent-glow);
     }
+    .avatar-upload-preview { width: 72px; height: 72px; object-fit: cover; border-radius: 50%; border: 2px solid var(--accent); display: block; margin: 0.75rem auto; }
+    .avatar-image { width: 34px; height: 34px; object-fit: cover; border-radius: 50%; vertical-align: middle; }
 
-    .category-btn:hover {
-      border-color: #667eea;
-      background: #f5f7ff;
-    }
+    /* Admin Cards & Tables */
+    .admin-stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .admin-stat-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; }
+    .admin-stat-val { font-size: 1.8rem; font-weight: 700; color: #fff; line-height: 1.1; }
+    .admin-table { width: 100%; border-collapse: collapse; min-width: 550px; }
+    .admin-table th { text-align: left; padding: 0.85rem 1rem; font-size: 0.85rem; color: var(--text-muted); border-bottom: 1px solid var(--card-border); }
+    .admin-table td { padding: 0.9rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
 
-    .category-btn.active {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border-color: transparent;
-    }
+    .status-chip { display: inline-flex; align-items: center; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.78rem; font-weight: 700; }
+    .status-Open { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+    .status-Resolved { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); }
 
-    .stats {
-      background: #f5f7ff;
-      border-radius: 12px;
-      padding: 1rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
+    #toast-container { position: fixed; bottom: 5rem; right: 1.5rem; z-index: 9999; display: flex; flex-direction: column; gap: 0.75rem; pointer-events: none; }
+    .toast { background: rgba(15, 23, 42, 0.95); border: 1px solid var(--accent); border-radius: 10px; padding: 0.8rem 1.2rem; color: #fff; font-size: 0.9rem; pointer-events: auto; }
 
-    .stat-item {
-      text-align: center;
-    }
-
-    .stat-value {
-      font-size: 1.8rem;
-      font-weight: bold;
-      color: #667eea;
-    }
-
-    .stat-label {
-      font-size: 0.9rem;
-      color: #666;
-      margin-top: 0.3rem;
-    }
-
-    .error {
-      background: #fee;
-      border: 1px solid #f99;
-      color: #c33;
-      padding: 1rem;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-    }
-
-    .success {
-      background: #efe;
-      border: 1px solid #9f9;
-      color: #393;
-      padding: 1rem;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-    }
-
-    .loading-spinner {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(255, 255, 255, 0.3);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    @media (max-width: 600px) {
-      .header h1 {
-        font-size: 2rem;
-      }
-
-      .card {
-        padding: 1.5rem;
-      }
-
-      .buttons {
-        grid-template-columns: 1fr;
-      }
-
-      .btn-primary {
-        grid-column: auto;
-      }
-
-      .joke-display {
-        font-size: 1.1rem;
-      }
+    @media (max-width: 768px) {
+      .mobile-bottom-nav { display: flex; }
+      .nav-links { display: none; }
+      .main-container { padding: 1.25rem 1rem 5.5rem; }
+      .disciplines-grid { grid-template-columns: 1fr; }
+      .hero-title { font-size: 1.55rem; }
+      .modal-dialog { border-radius: 20px 20px 0 0; position: fixed; bottom: 0; margin: 0; max-height: 85vh; }
+      .avatar-picker-grid { grid-template-columns: repeat(4, 1fr); }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>🎭 Joke Generator</h1>
-      <p>สุ่มเรื่องตลกสนุก ๆ ทั่วโลก</p>
+  <canvas id="canvas-background"></canvas>
+
+  <div class="app-wrapper">
+    <nav class="navbar">
+      <a href="#/" class="nav-brand" onclick="app.navigate('#/')">
+        <span class="brand-icon">🌌</span>
+        <span class="brand-title">OmniVerse</span>
+      </a>
+
+      <ul class="nav-links">
+        <li class="nav-item active" data-route="#/" onclick="app.navigate('#/')"><span>📚</span> <span>คลังสายวิชา</span></li>
+        <li class="nav-item" data-route="#/leaderboard" onclick="app.navigate('#/leaderboard')"><span>🏆</span> <span>ตารางอันดับ</span></li>
+        <li class="nav-item" data-route="#/tickets" onclick="app.navigate('#/tickets')"><span>🛠️</span> <span>ศูนย์ช่วยเหลือ</span></li>
+        <li class="nav-item" id="nav-admin-link" style="display: none;" onclick="app.navigate('#/admin')"><span>🛡️</span> <span>หลังบ้าน (Admin)</span></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button id="btn-sound-toggle" class="btn-icon" onclick="soundEngine.toggleSound()">🔊</button>
+        
+        <!-- Auth Actions (When logged out) -->
+        <div id="nav-auth-actions" style="display: flex; gap: 0.4rem;">
+          <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="app.openModal('modal-login')">เข้าสู่ระบบ</button>
+          <button class="btn btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="app.openModal('modal-register')">สมัครสมาชิก</button>
+        </div>
+
+        <!-- User Profile Card (When logged in) -->
+        <div id="nav-user-status" class="user-status-card" style="display: none;" onclick="app.navigate('#/profile')">
+          <div class="user-avatar-badge" id="nav-user-avatar">⚡</div>
+          <div class="user-info-mini">
+            <span class="user-name-mini" id="nav-user-name">PlayerOne</span>
+            <span class="user-level-tag" id="nav-user-level">LV. 2 • Silver</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="main-container">
+      <div id="app-view"></div>
+    </main>
+
+    <nav class="mobile-bottom-nav">
+      <div class="mobile-nav-item active" data-route="#/" onclick="app.navigate('#/')"><span>📚</span><span>คลังวิชา</span></div>
+      <div class="mobile-nav-item" data-route="#/leaderboard" onclick="app.navigate('#/leaderboard')"><span>🏆</span><span>อันดับ</span></div>
+      <div class="mobile-nav-item" data-route="#/tickets" onclick="app.navigate('#/tickets')"><span>🛠️</span><span>ช่วยเหลือ</span></div>
+      <div class="mobile-nav-item" id="mob-admin-item" style="display: none;" data-route="#/admin" onclick="app.navigate('#/admin')"><span>🛡️</span><span>หลังบ้าน</span></div>
+      <div class="mobile-nav-item" data-route="#/profile" onclick="if(auth.currentUser){app.navigate('#/profile')}else{app.openModal('modal-login')}"><span>👤</span><span id="mob-profile-label">โปรไฟล์</span></div>
+    </nav>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <!-- 1. Login Modal -->
+  <div id="modal-login" class="modal-overlay">
+    <div class="modal-dialog">
+      <button class="modal-close" onclick="app.closeModal('modal-login')">&times;</button>
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div style="font-size: 2.8rem; margin-bottom: 0.5rem;">🌌</div>
+        <h2 style="color: #fff; font-size: 1.45rem;">เข้าสู่ประตู OmniVerse Academy</h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">เข้าสู่ระบบเพื่อสะสม EXP เลื่อนยศ และบันทึกประวัติการฝึกฝน</p>
+      </div>
+
+      <form id="form-login" autocomplete="off" onsubmit="event.preventDefault(); auth.login(document.getElementById('login-u').value, document.getElementById('login-p').value);">
+        <div class="form-group">
+          <label class="form-label">ชื่อผู้ใช้ (Username)</label>
+          <input type="text" id="login-u" class="form-input" required placeholder="ชื่อผู้ใช้ของคุณ">
+        </div>
+        <div class="form-group">
+          <label class="form-label">รหัสผ่าน</label>
+          <input type="password" id="login-p" class="form-input" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">เข้าสู่ระบบ 🚀</button>
+      </form>
+
+      <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; display: flex; flex-direction: column; gap: 0.6rem;">
+        <button class="btn btn-outline" style="width: 100%; font-size: 0.88rem;" onclick="auth.login('PlayerOne', '123456');">⚡ เข้าใช้งานด่วน: ผู้เรียนทั่วไป (Demo Player)</button>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">
+          ยังไม่มีตัวละคร? <a href="javascript:void(0)" onclick="app.closeModal('modal-login'); app.openModal('modal-register');" style="color: var(--accent); font-weight: 600;">สมัครสมาชิกสร้างตัวละครใหม่</a>
+        </p>
+      </div>
     </div>
+  </div>
 
-    <div class="card">
-      <!-- Messages -->
-      <div id="message-container"></div>
-
-      <!-- Joke Type Badge -->
-      <div id="joke-type-badge"></div>
-
-      <!-- Joke Display -->
-      <div class="joke-display" id="joke-display">
-        👋 กดปุ่ม "ขอเรื่องตลกใหม่" เพื่อเริ่มต้น
+  <!-- 2. Register Modal -->
+  <div id="modal-register" class="modal-overlay">
+    <div class="modal-dialog">
+      <button class="modal-close" onclick="app.closeModal('modal-register')">&times;</button>
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">✨</div>
+        <h2 style="color: #fff; font-size: 1.4rem;">สร้างตัวละครผู้แสวงหาความรู้</h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">เลือก Avatar และตั้งชื่อเพื่อเริ่มการผจญภัย</p>
       </div>
 
-      <!-- Category Selection -->
-      <div class="joke-category">
-        <label class="category-label">📂 หมวดหมู่เรื่องตลก:</label>
-        <div class="category-buttons">
-          <button class="category-btn active" data-category="any">ทั้งหมด</button>
-          <button class="category-btn" data-category="general">ทั่วไป</button>
-          <button class="category-btn" data-category="programming">โปรแกรม</button>
-          <button class="category-btn" data-category="knock-knock">Knock-Knock</button>
+      <form id="form-reg" autocomplete="off" onsubmit="event.preventDefault(); auth.register(document.getElementById('reg-u').value, app.selectedRegAvatar, document.getElementById('reg-p').value);">
+        <div class="form-group">
+          <label class="form-label">ชื่อตัวละครของคุณ</label>
+          <input type="text" id="reg-u" class="form-input" required placeholder="ตั้งชื่อตัวละคร">
         </div>
-      </div>
-
-      <!-- Control Buttons -->
-      <div class="buttons">
-        <button class="btn btn-secondary" id="btn-copy" title="คัดลอกเรื่องตลก">
-          📋 คัดลอก
-        </button>
-        <button class="btn btn-secondary" id="btn-share" title="แชร์เรื่องตลก">
-          🔗 แชร์
-        </button>
-        <button class="btn btn-primary" id="btn-new-joke" title="ขอเรื่องตลกใหม่">
-          🎲 ขอเรื่องตลกใหม่
-        </button>
-      </div>
-
-      <!-- Stats -->
-      <div class="stats">
-        <div class="stat-item">
-          <div class="stat-value" id="stat-jokes">0</div>
-          <div class="stat-label">เรื่องตลกทั้งหมด</div>
+        <div class="form-group">
+          <label class="form-label">รหัสผ่าน</label>
+          <input type="password" id="reg-p" class="form-input" required minlength="6" placeholder="อย่างน้อย 6 ตัวอักษร">
         </div>
-        <div class="stat-item">
-          <div class="stat-value" id="stat-favorites">0</div>
-          <div class="stat-label">ชอบ ❤️</div>
+        <div class="form-group">
+          <label class="form-label">เลือก Avatar ประจำตัว</label>
+          <div class="avatar-picker-grid" id="reg-avatar-grid">
+            <!-- Avatars dynamically generated -->
+          </div>
+          <label class="form-label" for="reg-avatar-file">หรืออัปโหลดรูปจากอุปกรณ์</label>
+          <input type="file" id="reg-avatar-file" class="form-input" accept="image/*" onchange="app.previewUploadedAvatar(this, 'register')">
+          <img id="reg-avatar-preview" class="avatar-upload-preview" alt="ตัวอย่าง Avatar ที่อัปโหลด" hidden>
         </div>
-      </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">สร้างตัวละครและเริ่มฝึกฝนทันที 🌟</button>
+      </form>
     </div>
+  </div>
 
-    <!-- API Info -->
-    <div style="text-align: center; color: white; opacity: 0.8; font-size: 0.9rem;">
-      <p>🔗 Powered by <strong>Official Joke API</strong></p>
-      <p>📊 Random User API</p>
+  <!-- 3. Avatar Customizer Modal (From Profile) -->
+  <div id="modal-avatar-picker" class="modal-overlay">
+    <div class="modal-dialog">
+      <button class="modal-close" onclick="app.closeModal('modal-avatar-picker')">&times;</button>
+      <div style="text-align: center; margin-bottom: 1.25rem;">
+        <h2 style="color: #fff; font-size: 1.35rem;">🎨 เปลี่ยนรูปโปรไฟล์ Avatar</h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">เลือกรูปโฉมใหม่ของคุณในโลก OmniVerse</p>
+      </div>
+
+      <div class="avatar-picker-grid" id="profile-avatar-grid">
+        <!-- 16 Avatars -->
+      </div>
+
+      <label class="form-label" for="profile-avatar-file">หรืออัปโหลดรูปจากอุปกรณ์</label>
+      <input type="file" id="profile-avatar-file" class="form-input" accept="image/*" onchange="app.previewUploadedAvatar(this, 'profile')">
+      <img id="profile-avatar-preview" class="avatar-upload-preview" alt="ตัวอย่าง Avatar ที่อัปโหลด" hidden>
+
+      <button class="btn btn-primary" style="width: 100%;" onclick="app.saveProfileAvatar()">บันทึกรูปโปรไฟล์ใหม่ ✨</button>
+    </div>
+  </div>
+
+  <!-- 4. Celebration Modal -->
+  <div id="modal-celebrate" class="modal-overlay">
+    <div class="modal-dialog" style="text-align: center;">
+      <div style="font-size: 3.5rem; margin-bottom: 0.5rem;" id="celebrate-icon">🏆</div>
+      <h2 style="color: #fbbf24; margin-bottom: 0.5rem;" id="celebrate-title">LEVEL UP!</h2>
+      <p id="celebrate-text" style="color: #fff; margin-bottom: 1.5rem;">ยินดีด้วย! คุณเลเวลอัปแล้ว</p>
+      <button class="btn btn-primary" onclick="app.closeModal('modal-celebrate')">ยอดเยี่ยม! รับรางวัล ⭐</button>
     </div>
   </div>
 
   <script>
-    // ==========================================
-    // 🎭 JOKE GENERATOR WITH EXTERNAL APIS
-    // ==========================================
+    const AVATAR_LIST = ['🧙‍♂️', '🌲', '💻', '🎨', '⚔️', '💎', '⚙️', '🚀', '🛡️', '👑', '🏹', '🥋', '🧠', '⚡', '🐉', '🦅'];
 
-    class JokeGenerator {
+    // 1. Dynamic Background Particles Engine
+    class ThemeManager {
       constructor() {
-        this.currentJoke = null;
-        this.selectedCategory = 'any';
-        this.jokeCount = 0;
-        this.favorites = [];
-        this.isLoading = false;
-
-        this.jokeDisplay = document.getElementById('joke-display');
-        this.btnNewJoke = document.getElementById('btn-new-joke');
-        this.btnCopy = document.getElementById('btn-copy');
-        this.btnShare = document.getElementById('btn-share');
-        this.messageContainer = document.getElementById('message-container');
-        this.jokeTypeBadge = document.getElementById('joke-type-badge');
-        this.statJokes = document.getElementById('stat-jokes');
-        this.statFavorites = document.getElementById('stat-favorites');
-
-        this.initEventListeners();
-        this.loadStats();
+        this.currentTheme = 'default';
+        this.canvas = document.getElementById('canvas-background');
+        this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
+        this.particles = [];
+        this.initCanvas();
       }
 
-      initEventListeners() {
-        this.btnNewJoke.addEventListener('click', () => this.getNewJoke());
-        this.btnCopy.addEventListener('click', () => this.copyJoke());
-        this.btnShare.addEventListener('click', () => this.shareJoke());
+      setTheme(themeId) {
+        this.currentTheme = themeId || 'default';
+        document.documentElement.setAttribute('data-theme', this.currentTheme);
+        this.resetParticles();
+      }
 
-        // Category buttons
-        document.querySelectorAll('.category-btn').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-            e.target.classList.add('active');
-            this.selectedCategory = e.target.dataset.category;
-            this.getNewJoke();
+      initCanvas() {
+        if (!this.canvas) return;
+        const resize = () => {
+          this.canvas.width = window.innerWidth;
+          this.canvas.height = window.innerHeight;
+          this.resetParticles();
+        };
+        window.addEventListener('resize', resize);
+        resize();
+        this.animate();
+      }
+
+      resetParticles() {
+        if (!this.canvas) return;
+        this.particles = [];
+        const count = Math.floor((this.canvas.width * this.canvas.height) / 14000);
+        const colors = {
+          default: ['#38bdf8', '#818cf8', '#ffffff'],
+          academic: ['#38bdf8', '#fbbf24', '#e0f2fe'],
+          survival: ['#22c55e', '#4ade80', '#eab308'],
+          tech: ['#06b6d4', '#22d3ee', '#a855f7'],
+          arts: ['#c084fc', '#f472b6', '#e879f9'],
+          combat: ['#ef4444', '#f97316', '#fca5a5'],
+          wealth: ['#10b981', '#eab308', '#34d399'],
+          engineering: ['#f59e0b', '#fbbf24', '#f97316']
+        };
+        const palette = colors[this.currentTheme] || colors.default;
+
+        for (let i = 0; i < count; i++) {
+          this.particles.push({
+            x: Math.random() * this.canvas.width,
+            y: Math.random() * this.canvas.height,
+            radius: Math.random() * 2.2 + 0.8,
+            color: palette[Math.floor(Math.random() * palette.length)],
+            vx: (Math.random() - 0.5) * 0.4,
+            vy: (Math.random() - 0.5) * 0.4 - (this.currentTheme === 'survival' || this.currentTheme === 'combat' ? 0.3 : 0),
+            alpha: Math.random() * 0.6 + 0.2
           });
+        }
+      }
+
+      animate() {
+        if (!this.ctx || !this.canvas) return;
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        for (let p of this.particles) {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0) p.x = this.canvas.width;
+          if (p.x > this.canvas.width) p.x = 0;
+          if (p.y < 0) p.y = this.canvas.height;
+          if (p.y > this.canvas.height) p.y = 0;
+          this.ctx.save();
+          this.ctx.globalAlpha = p.alpha;
+          this.ctx.fillStyle = p.color;
+          this.ctx.beginPath();
+          this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          this.ctx.fill();
+          this.ctx.restore();
+        }
+        requestAnimationFrame(() => this.animate());
+      }
+    }
+    const themeManager = new ThemeManager();
+
+    // 2. Web Audio Sound Engine
+    class SoundEngine {
+      constructor() { this.enabled = true; this.ctx = null; }
+      init() { if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); }
+      toggleSound() {
+        this.enabled = !this.enabled;
+        document.getElementById('btn-sound-toggle').innerText = this.enabled ? '🔊' : '🔇';
+        app.showToast(this.enabled ? 'เปิดเสียงแล้ว' : 'ปิดเสียงแล้ว');
+      }
+      playTone(freq, duration = 0.1, type = 'sine') {
+        if (!this.enabled) return;
+        try {
+          this.init();
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = type; osc.frequency.value = freq;
+          gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+          osc.connect(gain); gain.connect(this.ctx.destination);
+          osc.start(); osc.stop(this.ctx.currentTime + duration);
+        } catch(e){}
+      }
+      playCorrect() { this.playTone(523.25, 0.08); setTimeout(() => this.playTone(659.25, 0.15), 90); }
+      playWrong() { this.playTone(200, 0.2, 'sawtooth'); }
+      playLevelUp() { [400, 500, 600, 800].forEach((f, i) => setTimeout(() => this.playTone(f, 0.15), i * 120)); }
+    }
+    const soundEngine = new SoundEngine();
+
+    // 3. User & Auth Manager
+    class AuthManager {
+      constructor() {
+        this.currentUser = null;
+        this.users = JSON.parse(localStorage.getItem('omni_users') || '[]');
+        if (!this.users.some(user => user.username.toLowerCase() === 'admin')) {
+          this.users.unshift({ username: 'admin', password: 'admin123', role: 'admin', xp: 1500, level: 10, rank: 'Omniscient Sage', avatar: '🧙‍♂️', registeredAt: new Date().toISOString() });
+          this.saveUsers();
+        }
+        if (this.currentUser && !this.users.some(user => user.username.toLowerCase() === this.currentUser.username.toLowerCase())) {
+          this.users.push({ ...this.currentUser, registeredAt: new Date().toISOString() });
+          this.saveUsers();
+        }
+      }
+
+      saveUsers() {
+        localStorage.setItem('omni_users', JSON.stringify(this.users));
+      }
+
+      saveCurrentUser() {
+        if (!this.currentUser) return;
+        const userIndex = this.users.findIndex(user => user.username.toLowerCase() === this.currentUser.username.toLowerCase());
+        if (userIndex >= 0) this.users[userIndex] = { ...this.users[userIndex], ...this.currentUser };
+        else this.users.push({ ...this.currentUser, registeredAt: new Date().toISOString() });
+        this.saveUsers();
+        localStorage.setItem('omni_user', JSON.stringify(this.currentUser));
+      }
+
+      deleteUser(index) {
+        const user = this.users[index];
+        if (!user || user.role === 'admin') {
+          app.showToast('ไม่สามารถลบบัญชีผู้ดูแลระบบได้');
+          return;
+        }
+        if (!confirm(`ต้องการลบบัญชี ${user.username} ใช่หรือไม่?`)) return;
+        this.users.splice(index, 1);
+        this.saveUsers();
+        app.showToast(`ลบบัญชี ${user.username} เรียบร้อยแล้ว`);
+        app.renderAdmin();
+      }
+
+      login(username, password) {
+        const requestedName = (username || '').trim();
+        const savedUser = this.users.find(user => user.username.toLowerCase() === requestedName.toLowerCase());
+        if (savedUser && savedUser.password && savedUser.password !== password) {
+          app.showToast('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+          return;
+        }
+        if (savedUser) {
+          this.currentUser = { ...savedUser };
+        } else {
+          const curXp = parseInt(localStorage.getItem('omni_xp') || '180');
+          const savedAvatar = localStorage.getItem('omni_avatar') || '⚡';
+          this.currentUser = { username: requestedName || 'PlayerOne', role: 'user', xp: curXp, level: Math.floor(Math.sqrt(curXp/25))+1, rank: 'Silver Apprentice', avatar: savedAvatar };
+        }
+        localStorage.setItem('omni_user', JSON.stringify(this.currentUser));
+        localStorage.setItem('omni_xp', this.currentUser.xp);
+        this.saveCurrentUser();
+        app.closeModal('modal-login');
+        app.updateUserUI();
+        app.showToast(`ยินดีต้อนรับ ${this.currentUser.username}! เข้าสู่ระบบสำเร็จ`);
+        app.handleRoute();
+      }
+
+      register(username, avatar, password) {
+        const requestedName = (username || '').trim() || 'Seeker';
+        if (!password || password.length < 6) {
+          app.showToast('รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร');
+          return;
+        }
+        if (this.users.some(user => user.username.toLowerCase() === requestedName.toLowerCase())) {
+          app.showToast('ชื่อนี้มีผู้ใช้งานแล้ว กรุณาเลือกชื่อใหม่');
+          return;
+        }
+        this.currentUser = { username: requestedName, password, role: 'user', xp: 0, level: 1, rank: 'Bronze Novice', avatar: avatar || '🧙‍♂️', registeredAt: new Date().toISOString() };
+        this.users.push({ ...this.currentUser });
+        this.saveUsers();
+        localStorage.setItem('omni_user', JSON.stringify(this.currentUser));
+        localStorage.setItem('omni_xp', '0');
+        localStorage.setItem('omni_avatar', this.currentUser.avatar);
+        app.closeModal('modal-register');
+        app.updateUserUI();
+        app.showToast(`สร้างตัวละครสำเร็จ! ยินดีต้อนรับ ${this.currentUser.username}`);
+        app.navigate('#/profile');
+      }
+
+      logout() {
+        this.currentUser = null;
+        localStorage.removeItem('omni_user');
+        app.updateUserUI();
+        app.showToast('ออกจากระบบเรียบร้อยแล้ว');
+        app.renderHome();
+      }
+    }
+    const auth = new AuthManager();
+
+    // 4. In-depth Curriculum Data with Theory, Thinking Framework, and Case Studies
+    const DISCIPLINE_DATA = [
+      { id: 'academic', name_th: 'วิชาการ & วิทยาศาสตร์สากล', name_en: 'Academic & Sciences', icon: '🌌', color: '#38bdf8', desc: 'ฟิสิกส์สัมพัทธภาพ ดาราศาสตร์ ตรรกศาสตร์สากล พันธุศาสตร์ CRISPR และจิตวิทยาการรู้คิด', quote: 'ความรู้คือแสงสว่างที่ส่องทะลุความมืดมิดของจักรวาล' },
+      { id: 'survival', name_th: 'การเอาตัวรอด & ถิ่นทุรกันดาร', name_en: 'Wilderness Survival', icon: '🌲', color: '#22c55e', desc: 'กฎแห่งเลข 3 การก่อไฟ กรองน้ำ Bushcraft ปฐมพยาบาลฉุกเฉิน และนำทางธรรมชาติ', quote: 'ธรรมชาติไม่ได้ใจร้าย แต่ไม่เคยให้โอกาสคนที่ไม่เตรียมพร้อม' },
+      { id: 'tech', name_th: 'เทคโนโลยี & ไซเบอร์เนติกส์', name_en: 'Technology & Cybernetics', icon: '💻', color: '#06b6d4', desc: 'Cybersecurity & Phishing, Data Structures, AI LLMs Prompting และ Cloud Computing', quote: 'ในโลกดิจิทัล โค้ดคือเวทมนตร์ที่กำหนดความเป็นจริง' },
+      { id: 'arts', name_th: 'ศิลปะ & นิเทศศิลป์สร้างสรรค์', name_en: 'Creative Arts & Media', icon: '🎨', color: '#c084fc', desc: 'ทฤษฎีสี โครงสร้างการเล่าเรื่อง 3 องก์ UI/UX Heuristics และการออกแบบเสียง', quote: 'ศิลปะคือการถ่ายทอดจิตวิญญาณและความรู้สึกที่ภาษาพูดไม่อาจเอื้อมถึง' },
+      { id: 'combat', name_th: 'สมรรถภาพกาย & ศิลปะการต่อสู้', name_en: 'Combat Mastery', icon: '🥋', color: '#ef4444', desc: 'การป้องกันตัว จุดเปราะบางทางกายวิภาค Progressive Overload และโภชนาการกีฬา', quote: 'ร่างกายที่แข็งแกร่งและจิตใจที่นิ่งสงบคือเกราะกำบังที่ดีที่สุด' },
+      { id: 'wealth', name_th: 'ทักษะชีวิต & ธุรกิจการเงิน', name_en: 'Life Mastery & Wealth', icon: '💼', color: '#10b981', desc: 'พีระมิดการเงิน ดอกเบี้ยทบต้น เจรจาต่อรอง BATNA วิเคราะห์งบการเงิน และ Deep Work', quote: 'อิสรภาพทางการเงินไม่ได้เกิดจากโชค แต่เกิดจากวินัยและกลยุทธ์' },
+      { id: 'engineering', name_th: 'วิศวกรรม & งานช่างประดิษฐ์', name_en: 'Engineering & Craftsmanship', icon: '🔧', color: '#f59e0b', desc: 'กฎของโอห์ม เครื่องยนต์สันดาป 4 จังหวะ 3D CAD และระบบอัตโนมัติ IoT ESP32', quote: 'สิ่งที่มองเห็นรอบตัว มนุษย์เราสามารถเข้าใจ แก้ไข และสร้างมันขึ้นมาใหม่ได้เสมอ' }
+    ];
+
+    const LESSON_DATA = {
+      academic: [
+        {
+          id: 1,
+          title: 'ทฤษฎีสัมพัทธภาพและกาลอวกาศ (General Relativity)',
+          desc: 'เข้าใจการบิดโค้งของกาลอวกาศ (Spacetime), การยืดของเวลา และหลุมดำ',
+          theory: `
+            <div class="theory-section-title">📜 1. ทฤษฎีบทและหลักการสำคัญ (Core Principles)</div>
+            <p>อัลเบิร์ต ไอน์สไตน์ ได้เสนอว่า <strong>อวกาศ (Space)</strong> และ <strong>เวลา (Time)</strong> ไม่ได้แยกจากกันอย่างเป็นเอกเทศ แต่ถูกถักทอเข้าด้วยกันเป็นผืนผ้า 4 มิติ เรียกว่า <strong>Spacetime (กาลอวกาศ)</strong></p>
+            <p>วัตถุที่มีมวลมหาศาล เช่น ดวงอาทิตย์ หรือ หลุมดำ จะทำให้ผืนผ้ากาลอวกาศนี้ <strong>บิดโค้งงอลงไป</strong> ซึ่งการโค้งงอนี้เองคือสิ่งที่เราสัมผัสได้ในรูปของ <em>แรงโน้มถ่วง (Gravity)</em></p>
+
+            <div class="theory-section-title">🧠 2. วิธีคิดและกระบวนการวิเคราะห์ (Analytical Thinking)</div>
+            <p>• <strong>Gravitational Time Dilation:</strong> เวลาจะเดินช้าลงเมื่ออยู่ใกล้บริเวณที่มีสนามโน้มถ่วงเข้มข้น ยิ่งอยู่ใกล้มวลมาก เวลาของผู้นั้นจะยิ่งเดินช้ากว่าผู้สังเกตการณ์ที่อยู่ห่างออกไป</p>
+            <p>• <strong>Gravitational Lensing:</strong> แสงจะเดินทางเป็นเส้นตรงในกาลอวกาศที่บิดโค้ง ส่งผลให้แสงจากดาวฤกษ์ด้านหลังเบี่ยงเบนเสมือนมีเลนส์ขนาดยักษ์คั่นกลาง</p>
+
+            <div class="theory-section-title">💡 3. ตัวอย่างสถานการณ์จริง (Real-World Case Study)</div>
+            <div class="example-card">
+              <strong>🛰️ ตัวอย่างระบบดาวเทียม GPS:</strong><br>
+              ดาวเทียม GPS โคจรอยู่สูงจากโลก 20,200 กม. ซึ่งมีแรงโน้มถ่วงน้อยกว่าบนพื้นผิวโลก ส่งผลให้นาฬิกาบนดาวเทียมเดิน <em>เร็วกว่า</em> นาฬิกาบนโลกวันละประมาณ 45 ไมโครวินาที หากวิศวกรไม่คำนวณชดเชยทฤษฎีสัมพัทธภาพ ระบบพิกัด GPS จะคลาดเคลื่อนวันละกว่า 11 กิโลเมตรทันที!
+            </div>
+          `,
+          question: 'ตามทฤษฎีสัมพัทธภาพทั่วไปของไอน์สไตน์ แรงโน้มถ่วงเกิดขึ้นจากสิ่งใด?',
+          scenario: 'การสังเกตแสงจากดาวฤกษ์ที่เดินทางเฉียดดวงอาทิตย์เกิดการเบี่ยงเบนแนววิถี',
+          opts: [
+            'การดูดกันของอนุภาคแม่เหล็กไฟฟ้าขั้วตรงข้าม',
+            'การบิดโค้งงอของผืนผ้ากาลอวกาศ (Spacetime) อันเนื่องมาจากมวลของวัตถุ',
+            'ความกดอากาศและความหนาแน่นของก๊าซในอวกาศ',
+            'การเสียดสีของอนุภาคสสารมืด (Dark Matter)'
+          ],
+          ans: 1,
+          exp: 'มวลมหาศาลจะทำให้ผืนผ้ากาลอวกาศ (Spacetime) โค้งงอ วัตถุและแสงที่เคลื่อนที่ผ่านจึงเคลื่อนที่เป็นเส้นโค้งตามโครงสร้างกาลอวกาศนั้น'
+        },
+        {
+          id: 2,
+          title: 'ตรรกศาสตร์และการจับตรรกะวิบัติ (Logical Fallacies)',
+          desc: 'ฝึกคิดวิเคราะห์และจับผิด Ad Hominem, Strawman, และ Appeal to Emotion',
+          theory: `
+            <div class="theory-section-title">📜 1. ทฤษฎีบทและประเภทตรรกะวิบัติ (Core Concepts)</div>
+            <p><strong>ตรรกะวิบัติ (Fallacy)</strong> คือข้อบกพร่องในกระบวนการให้เหตุผลที่ทำให้ข้อสรุปไร้น้ำหนัก แม้ข้ออ้างนั้นจะฟังดูน่าเชื่อถือในมุมของจิตวิทยาก็ตาม</p>
+
+            <div class="theory-section-title">🧠 2. วิธีคิดและหลักการจำแนก (Classification Framework)</div>
+            <p>• <strong>Ad Hominem (โจมตีตัวบุคคล):</strong> การพุ่งเป้าไปที่สถานะ นิสัย อายุ หรือคุณลักษณะส่วนตัวของผู้พูด แทนการหักล้างด้วยข้อเท็จจริง</p>
+            <p>• <strong>Strawman Fallacy (หุ่นฟาง):</strong> การบิดเบือนคำพูดของคู่สนทนาให้ดูสุดโต่งหรือไร้สาระเกินจริง แล้วจึงโจมตีสิ่งที่ตนเองบิดเบือนนั้น</p>
+            <p>• <strong>Appeal to Emotion:</strong> การใช้อารมณ์ความสงสาร ความกลัว มาเป็นข้ออ้างหลักแทนหลักฐาน</p>
+
+            <div class="theory-section-title">💡 3. ตัวอย่างบทสนทนา (Worked Example)</div>
+            <div class="example-card">
+              <strong>นาย ก:</strong> "เราควรจัดสรรงบประมาณพัฒนาการศึกษาให้มากขึ้นเพื่ออนาคตของเด็ก"<br>
+              <strong>นาย ข:</strong> "คุณพูดแบบนี้แปลว่าคุณต้องการตัดงบโรงพยาบาลปล่อยให้ผู้ป่วยเสียชีวิตใช่ไหม!" <em>(นี่คือ Strawman Fallacy ชัดเจน เพราะนาย ก ไม่เคยพูดถึงการตัดงบแพทย์เลย)</em>
+            </div>
+          `,
+          question: 'การโต้เถียงที่กล่าวว่า "คุณยังเด็กและเรียนไม่จบ จะมารู้อะไรเรื่องการบริหารประเทศ" จัดเป็นตรรกะวิบัติชนิดใด?',
+          scenario: 'การอภิปรายนโยบายสาธารณะในเวทีเสวนา',
+          opts: [
+            'Strawman Fallacy (ตรรกะวิบัติหุ่นฟาง)',
+            'Ad Hominem (การโจมตีที่ตัวบุคคลแทนเหตุผล)',
+            'Appeal to Emotion (การอ้างอารมณ์ความสงสาร)',
+            'Bandwagon Fallacy (การอ้างคนส่วนมาก)'
+          ],
+          ans: 1,
+          exp: 'Ad Hominem คือการปฏิเสธเหตุผลโดยพุ่งเป้าไปที่สถานะทางอายุหรือคุณสมบัติของผู้พูด แทนที่จะตรวจสอบว่าข้อเสนอนั้นถูกต้องตามหลักการหรือไม่'
+        }
+      ],
+      survival: [
+        {
+          id: 3,
+          title: 'กฎแห่งเลข 3 ในภาวะวิกฤต (The Rule of 3s)',
+          desc: 'ลำดับความสำคัญในการตัดสินใจเพื่อเอาตัวรอดในสถานการณ์ฉุกเฉิน',
+          theory: `
+            <div class="theory-section-title">📜 1. ทฤษฎีบทกฎแห่งเลข 3 (The Rule of 3s)</div>
+            <p>มนุษย์สามารถมีชีวิตอยู่รอดได้ภายใต้ขีดจำกัดทางสรีรวิทยาตามลำดับเวลาดังนี้:</p>
+            <p>• <strong>3 นาที:</strong> ไร้ออกซิเจนหายใจ</p>
+            <p>• <strong>3 ชั่วโมง:</strong> ในสภาวะอากาศสุดขั้ว (หนาวจัด/ร้อนจัด) โดยไร้ที่พักพิง</p>
+            <p>• <strong>3 วัน:</strong> โดยปราศจากน้ำดื่มสะอาด</p>
+            <p>• <strong>3 สัปดาห์:</strong> โดยปราศจากอาหาร</p>
+
+            <div class="theory-section-title">🧠 2. ลำดับความสำคัญในการจัดการ (Priority of Survival)</div>
+            <p>เมื่อตกอยู่ในสถานการณ์เอาชีวิตรอด ให้ใช้หลักการ <strong>S.T.O.P.</strong> (Stop, Think, Observe, Plan) โดยเริ่มจากสิ่งที่คร่าชีวิตเราได้เร็วที่สุดก่อนเสมอ: <em>ที่กำบัง (Shelter) ➡️ น้ำดื่ม (Water) ➡️ สัญญาณขอความช่วยเหลือ (Signaling) ➡️ อาหาร (Food)</em></p>
+
+            <div class="theory-section-title">💡 3. ตัวอย่างสถานการณ์จริง (Case Study)</div>
+            <div class="example-card">
+              <strong>🌲 สถานการณ์หลงป่าในฤดูหนาว:</strong> อุณหภูมิ 2 องศาเซลเซียสพร้อมฝนตกหนัก ความผิดพลาดที่พบบ่อยคือคนมักเดินหาน้ำหรืออาหารก่อน จนร่างกายสูญเสียความร้อนเกิดภาวะ <strong>Hypothermia</strong> หมดสติภายใน 2-3 ชั่วโมง สิ่งที่ถูกต้องคือต้องสร้างที่กำบังลมและก่อไฟเพื่อรักษาอุณหภูมิแกนกลางร่างกายเป็นอันดับแรกสุด!
+            </div>
+          `,
+          question: 'ตามกฎแห่งเลข 3 สิ่งใดเป็นสาเหตุที่ทำให้มนุษย์เสียชีวิตได้เร็วที่สุดเมื่อหลงป่าในสภาพอากาศหนาวจัดและฝนตก?',
+          scenario: 'หลงอยู่ในป่าดิบเขา เสื้อผ้าเปียกชื้น อุณหภูมิ 2 องศาเซลเซียส',
+          opts: [
+            'การขาดอาหารประทังชีวิต',
+            'การขาดน้ำดื่มบริสุทธิ์',
+            'ภาวะอุณหภูมิร่างกายต่ำเกินไป (Hypothermia) ภายใน 3 ชั่วโมง',
+            'ความเหนื่อยล้าจากการอดนอน'
+          ],
+          ans: 2,
+          exp: 'ในสภาพอากาศหนาวจัดเปียกชื้น ร่างกายจะสูญเสียความร้อนเร็วกว่าปกติถึง 25 เท่า ทำให้เกิด Hypothermia และหัวใจล้มเหลวได้ในเวลาเพียง 3 ชั่วโมง'
+        }
+      ],
+      tech: [
+        {
+          id: 4,
+          title: 'Cybersecurity & Phishing Threat Defense',
+          desc: 'การป้องกันตนเองจากการโจมตี Phishing, Social Engineering และความปลอดภัยของข้อมูล',
+          theory: `
+            <div class="theory-section-title">📜 1. หลักการ Phishing & Social Engineering</div>
+            <p><strong>Phishing</strong> คือเทคนิคการหลอกลวงทางวิศวกรรมสังคม (Social Engineering) ที่ผู้โจมตีแอบอ้างเป็นองค์กรที่น่าเชื่อถือ (เช่น ธนาคาร, PayPal, หรือบริษัทไอที) เพื่อหลอกให้เหยื่อกรอกรหัสผ่าน ข้อมูลบัตรเครดิต หรือดาวน์โหลดมัลแวร์</p>
+
+            <div class="theory-section-title">🧠 2. วิธีคิดและหลักเกณฑ์การตรวจสอบ (Verification Checklist)</div>
+            <p>• <strong>ตรวจสอบ Domain URL:</strong> มองหาตัวสะกดแปลกปลอม เช่น <code>paypa1.com</code> หรือ <code>google-security-auth.net</code></p>
+            <p>• <strong>จับสัญญาณความเร่งด่วนเท็จ (Urgency):</strong> ข้อความมักขู่ว่า "บัญชีจะถูกระงับภายใน 24 ชม." เพื่อกดดันให้เหยื่อขาดความรอบคอบ</p>
+            <p>• <strong>ระบบ 2FA / MFA:</strong> เปิดใช้งานการยืนยันตัวตนสองชั้นเสมอเพื่อป้องกันเมื่อรหัสผ่านรั่วไหล</p>
+
+            <div class="theory-section-title">💡 3. ตัวอย่างการโจมตี (Attack Scenario)</div>
+            <div class="example-card">
+              <strong>📧 ข้อความจำลอง:</strong> "แจ้งเตือนด่วนจาก Apple Security! บัญชีของคุณถูกเข้าสู่ระบบจากรัสเซีย กรุณาคลิกลิงก์ <code>http://apple-id-verify.com</code> เพื่อเปลี่ยนรหัสผ่านทันที" <em>(ข้อสังเกต: โดเมนไม่ใช่ apple.com และมีเจตนาเร่งเร้าให้ตื่นตระหนก)</em>
+            </div>
+          `,
+          question: 'คุณได้รับอีเมลแจ้งว่า "บัญชีของคุณถูกระงับ กรุณาคลิกลิงก์ด้านล่างเพื่อยืนยันรหัสผ่านทันที" จากโดเมน security-alert@paypa1-update.com ควรรับมืออย่างไร?',
+          scenario: 'ได้รับอีเมลน่าสงสัยพร้อมปุ่มคลิกยืนยันตัวตนด่วน',
+          opts: [
+            'คลิกลิงก์ทันทีเพื่อรีบปลดล็อกบัญชี',
+            'เพิกเฉย ไม่คลิกลิงก์ ตรวจสอบ Domain และรายงานเป็น Phishing ทันที',
+            'ส่งต่ออีเมลให้เพื่อนช่วยคลิกตรวจสอบ',
+            'แนบรูปบัตรประชาชนตอบกลับอีเมลเพื่อยืนยันความบริสุทธิ์ใจ'
+          ],
+          ans: 1,
+          exp: 'โดเมน paypa1-update.com เป็นชื่อปลอมแปลงอย่างชัดเจน การไม่คลิกลิงก์และเปิดเว็บไซต์ทางการโดยตรงคือวิธีรับมือที่ถูกต้องและปลอดภัยที่สุด'
+        }
+      ],
+      arts: [
+        {
+          id: 5,
+          title: 'ทฤษฎีสีและจิตวิทยาการออกแบบ (Color Psychology)',
+          desc: 'การจับคู่วงล้อสี และอิทธิพลของโทนสีต่ออารมณ์ความรู้สึกในการสื่อสาร',
+          theory: `
+            <div class="theory-section-title">📜 1. ทฤษฎีวงล้อสี (Color Wheel Harmony)</div>
+            <p>• <strong>Complementary Colors (สีตรงข้าม):</strong> สีที่อยู่ตรงข้ามกัน 180 องศา เช่น น้ำเงิน-ส้ม, แดง-เขียว ให้ความรู้สึกตัดกันอย่างรุนแรง ดึงดูดสายตาทันที</p>
+            <p>• <strong>Analogous Colors (สีข้างเคียง):</strong> สีที่อยู่ติดกันบนวงล้อสี ให้ความรู้สึกกลมกลืน สบายตา</p>
+
+            <div class="theory-section-title">🧠 2. จิตวิทยาการใช้สีใน UX/UI (Practical Psychology)</div>
+            <p>• <strong>สีน้ำเงิน:</strong> สื่อถึงความมั่นคง ความน่าเชื่อถือ ความเป็นมืออาชีพ (นิยมในธนาคาร, เทคโนโลยี)</p>
+            <p>• <strong>สีส้ม/เหลือง:</strong> สื่อถึงพลัง ความกระตือรือร้น ความคิดสร้างสรรค์ (นิยมใช้เป็นปุ่ม Call-to-Action)</p>
+
+            <div class="theory-section-title">💡 3. ตัวอย่างการออกแบบ (Case Study)</div>
+            <div class="example-card">
+              <strong>🎨 การออกแบบเว็บไซต์การเงิน:</strong> พื้นหลังใช้โทนสีกรมท่า (Navy Blue) สื่อถึงความน่าเชื่อถือ และใช้ปุ่มกดสมัครสมาชิก (CTA) เป็นสีส้มสดหรือเหลืองทอง ซึ่งเป็นสีคู่ตรงข้าม ช่วยเพิ่มอัตราการคลิก (Conversion Rate) ได้สูงขึ้นอย่างมีนัยสำคัญ
+            </div>
+          `,
+          question: 'หากคุณต้องการออกแบบปุ่มเรียกร้องความสนใจ (Call-to-Action) บนหน้าเว็บที่มีพื้นหลังเป็นสีกรมท่าเข้ม (Deep Navy Blue) ควรเลือกใช้สีใดเพื่อดึงดูดสายตาได้สูงสุด?',
+          scenario: 'การออกแบบ Landing Page ผลิตภัณฑ์ระดับพรีเมียม',
+          opts: [
+            'สีน้ำเงินโทนสว่างใกล้เคียงกัน',
+            'สีส้มสด หรือ สีเหลืองทอง (คู่สีตรงข้าม Complementary)',
+            'สีดำสนิท',
+            'สีเทาควันบุหรี่'
+          ],
+          ans: 1,
+          exp: 'สีส้มและเหลืองเป็นคู่สีตรงข้าม (Complementary) กับสีน้ำเงิน ทำให้เกิด Contrast สูงสุด ช่วยนำสายตาของผู้ใช้งานไปยังปุ่มสำคัญได้อย่างแม่นยำ'
+        }
+      ],
+      combat: [
+        {
+          id: 6,
+          title: 'หลักการป้องกันตัวและการควบคุมระยะ (Distance Management)',
+          desc: 'ยุทธวิธีการควบคุมระยะห่าง (Spatial Awareness) และจุดเปราะบางทางกายวิภาค',
+          theory: `
+            <div class="theory-section-title">📜 1. หลักการควบคุมระยะ (Distance Zones)</div>
+            <p>ในการป้องกันตัว ระยะห่างคือความปลอดภัยสูงสุด แบ่งออกเป็น 3 โซน:</p>
+            <p>• <strong>Zone 1 (Out of Range):</strong> ระยะเกิน 2 ช่วงแขน ปลอดภัยที่สุด สามารถมองหาทางหนีหรือสื่อสารเตือนได้</p>
+            <p>• <strong>Zone 2 (Striking Range):</strong> ระยะ 1 ช่วงแขน อันตรายเพราะคู่ต่อสู้สามารถเข้าถึงตัวได้ทันที</p>
+            <p>• <strong>Zone 3 (Clinch / Grappling):</strong> ระยะประชิดตัว ต้องเน้นการป้องกันศีรษะและลำคอ</p>
+
+            <div class="theory-section-title">🧠 2. จุดเปราะบางทางกายวิภาค (Vulnerable Targets)</div>
+            <p>มนุษย์ทุกคนมีจุดเปราะบางที่ไม่ขึ้นกับขนาดตัวหรือกล้ามเนื้อ ได้แก่: <em>ดวงตา, สันจมูก, ลำคอ (ลูกกระเดือก), ลิ้นปี่, และหัวเข่า</em></p>
+
+            <div class="theory-section-title">💡 3. ตัวอย่างสถานการณ์จริง (Scenario)</div>
+            <div class="example-card">
+              <strong>🥋 ยุทธวิธีเอาตัวรอด:</strong> เมื่อพบผู้มีท่าทางคุกคามเดินเข้ามา ให้ถอยหลังรักษาระยะห่างทันที ยกมือขึ้นในท่าเจรจา (Open Palms Guard) ส่งเสียงเตือนชัดเจน ไม่ก้มหน้ามองพื้น และมองหาทางออกฉุกเฉินตลอดเวลา
+            </div>
+          `,
+          question: 'ในสถานการณ์ป้องกันตัวฉุกเฉินเมื่อมีบุคคลท่าทางคุกคามกำลังเดินเข้ามาในระยะใกล้ สิ่งที่ควรปฏิบัติเป็นอันดับแรกคืออะไร?',
+          scenario: 'เดินอยู่ในซอยเปลี่ยวและสังเกตเห็นบุคคลต้องสงสัยเดินตรงเข้ามา',
+          opts: [
+            'ยืนนิ่งรอให้คู่กรณีเข้ามาประชิดตัวเพื่อรอดูท่าทีก่อน',
+            'สร้างระยะห่าง (Keep Distance) ยกมือตั้งการ์ดเจรจา ส่งเสียงเตือน และมองหาทางหนี',
+            'ก้มหน้าก้มตาเดินต่อโดยไม่สนใจสิ่งแวดล้อมรอบข้าง',
+            'ท้าทายด้วยคำหยาบคายเพื่อข่มขวัญ'
+          ],
+          ans: 1,
+          exp: 'การรักษาระยะห่างและการตระหนักรู้สถานการณ์ (Situational Awareness) เป็นกฎเหล็กอันดับหนึ่งของการป้องกันตัวเพื่อไม่ให้ตกเป็นเป้าหมายในระยะโจมตี'
+        }
+      ],
+      wealth: [
+        {
+          id: 7,
+          title: 'พีระมิดการเงินและดอกเบี้ยทบต้น (Compound Interest)',
+          desc: 'โครงสร้างการวางแผนการเงินส่วนบุคคล สภาพคล่อง และพลังของเวลาในการลงทุน',
+          theory: `
+            <div class="theory-section-title">📜 1. โครงสร้างพีระมิดการเงิน (Financial Pyramid)</div>
+            <p>การวางแผนการเงินที่มั่นคงต้องสร้างจากฐานรากขึ้นไป:</p>
+            <p>• <strong>ฐานราก (Foundation):</strong> สภาพคล่องและเงินสำรองฉุกเฉิน 3-6 เดือน + ประกันความเสี่ยง</p>
+            <p>• <strong>ชั้นกลาง (Wealth Accumulation):</strong> การลงทุนเพื่อเป้าหมายระยะกลางและระยะยาว (กองทุนรวม, ดัชนีหุ้น)</p>
+            <p>• <strong>ยอดพีระมิด (Wealth Growth):</strong> สินทรัพย์เสี่ยงสูงเพื่อเก็งกำไร</p>
+
+            <div class="theory-section-title">🧠 2. กฎของดอกเบี้ยทบต้น (Rule of 72)</div>
+            <p>สูตรคำนวณระยะเวลาที่เงินจะเพิ่มเป็น 2 เท่า: <code>จำนวนปี = 72 / อัตราผลตอบแทนต่อปี (%)</code></p>
+            <p>ตัวอย่าง: หากลงทุนได้ผลตอบแทน 8% ต่อปี เงินจะทวีคูณเป็น 2 เท่าในทุกๆ <code>72 / 8 = 9 ปี</code></p>
+
+            <div class="theory-section-title">💡 3. ตัวอย่างการวางแผนจริง (Case Study)</div>
+            <div class="example-card">
+              <strong>💼 ตัวอย่างบัณฑิตจบใหม่:</strong> มีรายได้ 25,000 บาท/เดือน ควรจัดสรรเงิน 5,000 บาทแรกเข้าบัญชีเงินสำรองฉุกเฉินจนครบ 100,000 บาทก่อน จึงเริ่มนำเงินส่วนเกินไปลงทุนในกองทุนดัชนี เพื่อป้องกันไม่ให้เกิดภาวะหนี้สินเมื่อตกงานหรือเจ็บป่วย
+            </div>
+          `,
+          question: 'ตามหลักการวางแผนการเงินส่วนบุคคล (Financial Planning Pyramid) สิ่งใดคือฐานรากที่ควรเตรียมพร้อมก่อนเริ่มนำเงินไปลงทุนในสินทรัพย์เสี่ยงสูง?',
+          scenario: 'การจัดสรรเงินเดือนเพื่อสร้างความมั่นคงในชีวิตระยะยาว',
+          opts: [
+            'การกู้เงินมาเก็งกำไรในหุ้นปั่นเพื่อสร้างผลตอบแทนเร่งด่วน',
+            'การสะสมกองทุนเงินสำรองฉุกเฉิน 3-6 เท่าของค่าใช้จ่ายรายเดือน และป้องกันความเสี่ยง',
+            'การซื้อสินค้าฟุ่มเฟือยเพื่อสร้างภาพลักษณ์',
+            'การเก็บเงินทั้งหมดไว้ในกระเป๋าสตางค์โดยไม่ฝากธนาคาร'
+          ],
+          ans: 1,
+          exp: 'เงินสำรองฉุกเฉิน 3-6 เดือนคือปราการด่านแรกที่ปกป้องสุขภาพทางการเงิน ทำให้คุณไม่ต้องขายสินทรัพย์ลงทุนในยามขาดทุนเมื่อเกิดวิกฤตชีวิต'
+        }
+      ],
+      engineering: [
+        {
+          id: 8,
+          title: 'วิศวกรรมไฟฟ้าและกฎของโอห์ม (Ohm\'s Law & Circuits)',
+          desc: 'ความสัมพันธ์ระหว่างแรงดัน (V), กระแส (I), ความต้านทาน (R) และกำลังไฟฟ้า (P)',
+          theory: `
+            <div class="theory-section-title">📜 1. กฎของโอห์ม (Ohm's Law)</div>
+            <p>ความสัมพันธ์พื้นฐานของวงจรไฟฟ้ากระแสตรง:</p>
+            <p><code>V = I × R</code> (แรงดันไฟฟ้า = กระแสไฟฟ้า × ความต้านทาน)</p>
+            <p>• <strong>V (Voltage):</strong> แรงดันไฟฟ้า มีหน่วยเป็น โวลต์ (Volt: V)</p>
+            <p>• <strong>I (Current):</strong> กระแสไฟฟ้า มีหน่วยเป็น แอมแปร์ (Ampere: A)</p>
+            <p>• <strong>R (Resistance):</strong> ความต้านทาน มีหน่วยเป็น โอห์ม (Ohm: Ω)</p>
+
+            <div class="theory-section-title">🧠 2. การคำนวณกำลังไฟฟ้า (Power Calculation)</div>
+            <p><code>P = V × I = I² × R</code> (กำลังไฟฟ้า มีหน่วยเป็น วัตต์: W)</p>
+
+            <div class="theory-section-title">💡 3. ตัวอย่างการคำนวณจริง (Engineering Example)</div>
+            <div class="example-card">
+              <strong>🔧 ตัวอย่างวงจรไฟฟ้ารถยนต์:</strong> แบตเตอรี่รถยนต์จ่ายแรงดัน 12V ให้กับหลอดไฟหน้ารถที่มีความต้านทาน 4 โอห์ม<br>
+              คำนวณกระแสไฟฟ้าที่ไหลในวงจร: <code>I = V / R = 12 / 4 = 3 แอมแปร์</code><br>
+              กำลังไฟฟ้าที่หลอดไฟใช้: <code>P = V × I = 12 × 3 = 36 วัตต์</code> (จึงต้องเลือกใช้ฟิวส์ขนาดไม่ต่ำกว่า 5A เพื่อความปลอดภัย)
+            </div>
+          `,
+          question: 'หากแหล่งจ่ายไฟมีแรงดันไฟฟ้า 12 โวลต์ (V) ต่อเข้ากับอุปกรณ์ที่มีความต้านทาน 4 โอห์ม (Ω) จะมีกระแสไฟฟ้า (I) ไหลผ่านวงจรกี่แอมแปร์?',
+          scenario: 'การออกแบบระบบวงจรไฟฟ้าขนาดเล็ก',
+          opts: [
+            '12 แอมแปร์',
+            '3 แอมแปร์ (คำนวณจากสูตร I = V / R = 12 / 4)',
+            '48 แอมแปร์',
+            '0.33 แอมแปร์'
+          ],
+          ans: 1,
+          exp: 'ตามกฎของโอห์ม I = V / R เมื่อแทนค่า V = 12V และ R = 4Ω จะได้กระแสไฟฟ้าเท่ากับ 3 แอมแปร์ (A)'
+        }
+      ]
+    };
+
+    const EXPANSION_TOPICS = {
+      academic: [
+        ['คณิตศาสตร์และการคิดเชิงปริมาณ', 'สมการ ฟังก์ชัน ความน่าจะเป็น และการตรวจคำตอบ', 'กำหนดตัวแปรจากสิ่งที่โจทย์ถาม แยกข้อมูลที่ทราบ เลือกแบบจำลอง แล้วตรวจคำตอบด้วยหน่วยและขนาดของตัวเลข การเขียนเหตุผลทุกขั้นทำให้ผู้อื่นตรวจสอบได้', 'แปลงปัญหาเป็นสมการ ทดลองกรณีเล็ก และตรวจกรณีขอบก่อนสรุป'],
+        ['ชีววิทยา เซลล์ และพันธุศาสตร์', 'เซลล์ DNA การถ่ายทอดลักษณะ และการออกแบบการทดลอง', 'DNA เก็บข้อมูลทางพันธุกรรม ส่วนการแสดงออกของยีนได้รับอิทธิพลจากทั้งพันธุกรรมและสิ่งแวดล้อม การทดลองที่ดีต้องมีกลุ่มควบคุม ทำซ้ำ และรายงานความไม่แน่นอน', 'แยกความสัมพันธ์ออกจากเหตุผลเชิงสาเหตุ และไม่สรุปจากตัวอย่างเดียว'],
+        ['โลก ภูมิอากาศ และความยั่งยืน', 'วัฏจักรคาร์บอน พลังงาน และการใช้ทรัพยากรอย่างรับผิดชอบ', 'ภูมิอากาศเป็นผลจากสมดุลพลังงานของโลก การวิเคราะห์จึงต้องดูข้อมูลระยะยาว แหล่งที่มา และผลกระทบตลอดวงจรชีวิต ไม่ตัดสินจากภาพเหตุการณ์เดียว', 'เปรียบเทียบทางเลือกด้วยข้อมูล ผลกระทบ และความไม่แน่นอน']
+      ],
+      survival: [
+        ['ปฐมพยาบาลและประเมินเหตุฉุกเฉิน', 'ตรวจความปลอดภัย การตอบสนอง การหายใจ และขอความช่วยเหลือ', 'ผู้ช่วยต้องดูความปลอดภัยของพื้นที่ก่อน ประเมินผู้บาดเจ็บ โทรขอความช่วยเหลือ และทำตามคำแนะนำหน่วยฉุกเฉิน การห้ามเลือดใช้แรงกดตรงด้วยผ้าสะอาดและเฝ้าดูอาการ', 'อย่าเคลื่อนย้ายผู้บาดเจ็บโดยไม่จำเป็น โดยเฉพาะเมื่อสงสัยการบาดเจ็บคอหรือหลัง'],
+        ['น้ำ อาหาร และสุขอนามัยภาคสนาม', 'จัดการน้ำ อาหาร และของเสียเพื่อลดการเจ็บป่วย', 'น้ำใสจากธรรมชาติยังอาจมีเชื้อโรค ควรกรองและฆ่าเชื้อตามอุปกรณ์ที่มี แยกพื้นที่อาหารจากของเสีย และวางแผนปริมาณตามจำนวนคนกับระยะเวลา', 'เตรียมแหล่งน้ำสำรองและภาชนะปิดสนิท ไม่พึ่งแหล่งเดียว'],
+        ['การนำทางและสัญญาณขอความช่วยเหลือ', 'ใช้แผนที่ ทิศ จุดสังเกต และสัญญาณอย่างเป็นระบบ', 'เมื่อหลงทางให้หยุด บันทึกตำแหน่งล่าสุด ใช้แผนที่ร่วมกับภูมิประเทศ และทำเครื่องหมายเส้นทาง สัญญาณควรเด่น สม่ำเสมอ และประหยัดพลังงาน', 'คงอยู่ในพื้นที่ปลอดภัยเมื่อไม่มีแผนที่ชัดเจน แทนการเดินสุ่ม']
+      ],
+      tech: [
+        ['การเขียนโปรแกรมและอัลกอริทึม', 'แยกปัญหา ข้อมูลเข้า ผลลัพธ์ และกรณีขอบ', 'อัลกอริทึมที่ดีระบุขั้นตอนชัดเจน ทดสอบค่าปกติ ค่าว่าง ค่ามาก และข้อมูลผิดรูปแบบ แล้ววิเคราะห์เวลาและหน่วยความจำก่อนปรับปรุง', 'เริ่มจากกรณีเล็กและเขียนการทดสอบก่อนเพิ่มความซับซ้อน'],
+        ['ฐานข้อมูลและการจัดการข้อมูล', 'ตาราง คีย์ ความสัมพันธ์ ดัชนี และความถูกต้องของข้อมูล', 'ฐานข้อมูลเชิงสัมพันธ์ใช้ตารางและคีย์เชื่อมความสัมพันธ์ การออกแบบที่ดีลดข้อมูลซ้ำ กำหนดข้อจำกัด และสำรองข้อมูลพร้อมทดสอบการกู้คืน', 'เก็บข้อมูลเท่าที่จำเป็น จำกัดสิทธิ์ และตรวจสอบข้อมูลก่อนบันทึก'],
+        ['เครือข่าย คลาวด์ และความเป็นส่วนตัว', 'การเข้ารหัส การยืนยันตัวตน และสิทธิ์แบบ least privilege', 'ระบบออนไลน์ควรแบ่งชั้นเครือข่าย เข้ารหัสข้อมูลระหว่างส่งและขณะเก็บ บันทึกเหตุการณ์ และให้แต่ละบัญชีเข้าถึงเท่าที่จำเป็น', 'ทบทวนสิทธิ์เมื่อบทบาทเปลี่ยนและไม่เปิดทรัพยากรเป็นสาธารณะโดยไม่จำเป็น']
+      ],
+      arts: [
+        ['การวาดภาพ องค์ประกอบ และแสง', 'เส้น รูปร่าง น้ำหนักภาพ พื้นที่ว่าง และจุดสนใจ', 'องค์ประกอบภาพเกิดจากความสัมพันธ์ของจุด เส้น รูปร่าง น้ำหนัก และจังหวะ การทำภาพร่างขนาดเล็กหลายแบบก่อนลงรายละเอียดช่วยให้ภาพอ่านง่าย', 'วางลำดับสายตาและพื้นที่ว่างก่อนปรับรายละเอียด'],
+        ['การเขียนและการเล่าเรื่อง', 'ตัวละคร เป้าหมาย ความขัดแย้ง และจังหวะการสื่อสาร', 'เรื่องที่ดีมีผู้รับสารชัดเจน ตัวละครต้องการบางอย่าง และเหตุการณ์เปลี่ยนสถานะ การตัดส่วนที่ไม่ช่วยเป้าหมายทำให้เนื้อหากระชับ', 'อ่านงานออกเสียงและให้ผู้อื่นเล่าว่าเข้าใจอะไรเพื่อค้นหาจุดสับสน'],
+        ['ภาพยนตร์ เสียง และการตัดต่อ', 'ใช้ภาพ จังหวะ เสียง และความต่อเนื่องสร้างความหมาย', 'การตัดต่อกำหนดจังหวะและอารมณ์ เสียงบรรยากาศช่วยสร้างพื้นที่ และความต่อเนื่องช่วยให้ผู้ชมไม่สับสน ควรทำ rough cut ก่อนตกแต่ง', 'ทำโครงเรื่องให้ชัดก่อนเพิ่มสีหรือเอฟเฟกต์']
+      ],
+      combat: [
+        ['การฝึกกำลังและการเคลื่อนไหว', 'แรง ความยืดหยุ่น การทรงตัว และการฟื้นตัว', 'เริ่มจากท่าที่ควบคุมได้ เพิ่มภาระทีละน้อย และมีวันพัก กล้ามเนื้อ เอ็น และระบบประสาทปรับตัวต่างจังหวะ จึงไม่ควรเร่งน้ำหนัก', 'บันทึกจำนวนครั้ง ความเหนื่อย และอาการเจ็บ หากผิดปกติให้หยุดและปรึกษาผู้เชี่ยวชาญ'],
+        ['การป้องกันตัวเชิงหลีกเลี่ยง', 'อ่านสภาพแวดล้อม สื่อสารขอบเขต และเลือกทางหนี', 'เป้าหมายคือกลับสู่ความปลอดภัย ไม่ใช่ชนะการต่อสู้ ให้รักษาระยะ ไปยังพื้นที่มีคน ใช้น้ำเสียงชัดเจน และขอความช่วยเหลือเมื่อทำได้', 'การฝึกควรอยู่ภายใต้ผู้สอนที่มีคุณสมบัติและเน้นการหลบหนี'],
+        ['โภชนาการ การนอน และการฟื้นตัว', 'สมดุลอาหาร น้ำ การนอน และวันพักให้เหมาะกับการฝึก', 'สมรรถภาพไม่ได้เกิดจากการฝึกอย่างเดียว ร่างกายต้องได้รับพลังงาน โปรตีน น้ำ และการนอนเพียงพอ การเพิ่มทุกอย่างพร้อมกันทำให้แยกสาเหตุความล้าได้ยาก', 'ใช้ตารางฝึกที่มีวันเบาและติดตามคุณภาพการนอน']
+      ],
+      wealth: [
+        ['งบประมาณ ภาษี และกระแสเงินสด', 'แยกรายรับ รายจ่าย หนี้ และเงินสำรอง', 'งบประมาณเริ่มจากข้อมูลจริง แยกค่าใช้จ่ายจำเป็นกับยืดหยุ่น กระแสเงินสดบอกความสามารถระยะสั้น ส่วนทรัพย์สินสุทธิบอกภาพรวมระยะยาว', 'ทบทวนงบทุกเดือนและกันเงินสำหรับภาษี ค่าซ่อม และเหตุฉุกเฉิน'],
+        ['การตลาดและผู้ประกอบการ', 'ค้นหาปัญหาจริง ทดสอบคุณค่า และวัดผลก่อนขยาย', 'ธุรกิจเริ่มจากปัญหาของลูกค้า การสัมภาษณ์และต้นแบบราคาถูกช่วยตรวจสมมติฐานก่อนลงทุน ตัวชี้วัดควรเชื่อมกับคุณค่าที่ลูกค้าได้รับ', 'แยกคำชมออกจากพฤติกรรมซื้อจริงและปรับข้อเสนอจากข้อมูล'],
+        ['การเจรจา จริยธรรม และการตัดสินใจ', 'เตรียม BATNA ฟังความต้องการ และรักษาความโปร่งใส', 'การเจรจาที่ดีแยกคนออกจากปัญหา ใช้ข้อมูลและทางเลือกสำรอง รู้ขอบเขตที่ยอมรับได้ และคำนึงถึงผลกระทบต่อผู้เกี่ยวข้อง', 'ระบุเงื่อนไขเป็นลายลักษณ์อักษรและไม่ปิดบังข้อมูลสำคัญ']
+      ],
+      engineering: [
+        ['กลศาสตร์ วัสดุ และความปลอดภัย', 'แรง โมเมนต์ ความเค้น และปัจจัยความปลอดภัย', 'การออกแบบต้องดูแรง จุดรับแรง การเสียรูป และโหมดการพัง วัสดุแต่ละชนิดมีความแข็งแรง น้ำหนัก และความทนทานต่างกัน จึงต้องเลือกจากภาระจริง', 'ทดสอบต้นแบบในเงื่อนไขควบคุมและใช้อุปกรณ์ป้องกัน'],
+        ['อิเล็กทรอนิกส์และไมโครคอนโทรลเลอร์', 'แหล่งจ่าย อินพุต การประมวลผล เอาต์พุต และเซนเซอร์', 'ต้องตรวจแรงดัน กระแส ขั้ว และกราวด์ก่อนจ่ายไฟ การอ่านเซนเซอร์ควรสอบเทียบและจัดการค่าผิดปกติ แยกวงจรแรงดันสูงจากส่วนทดลอง', 'ตรวจขั้วและจำกัดกระแสก่อนเชื่อมต่ออุปกรณ์'],
+        ['การออกแบบผลิตภัณฑ์และคุณภาพ', 'เปลี่ยนความต้องการเป็นแบบ ทดสอบซ้ำ และปรับปรุง', 'กระบวนการวิศวกรรมเริ่มจากความต้องการที่วัดได้ สร้างแบบ กำหนดเกณฑ์ยอมรับ ทดสอบ และบันทึกผล การป้องกันปัญหาที่ต้นเหตุลดงานแก้', 'ใช้รายการตรวจสอบและการทดสอบอิสระเมื่อมีผลต่อความปลอดภัย']
+      ]
+    };
+
+    Object.entries(EXPANSION_TOPICS).forEach(([disciplineId, topics]) => {
+      topics.forEach(([title, desc, theory, practice], index) => {
+        LESSON_DATA[disciplineId].push({
+          id: `${disciplineId}-expanded-${index + 1}`,
+          title,
+          desc,
+          theory: `<div class="theory-section-title">📜 หลักการสำคัญ</div><p>${theory}</p><div class="theory-section-title">🧠 วิธีคิดและการฝึกปฏิบัติ</div><p>${practice}</p><div class="theory-section-title">💡 สรุปนำไปใช้</div><div class="example-card"><strong>แนวทาง:</strong> ${practice} ควรตรวจสอบผลและคำนึงถึงความปลอดภัยทุกครั้ง</div>`,
+          question: `ข้อใดเป็นแนวทางที่เหมาะสมที่สุดสำหรับเรื่อง ${title}?`,
+          scenario: `กำลังนำความรู้เรื่อง ${title} ไปใช้ในชีวิตจริง`,
+          opts: [practice, 'ข้ามขั้นตอนตรวจสอบเพื่อให้เสร็จเร็ว', 'ทำตามผู้อื่นโดยไม่ดูบริบท', 'ละเลยข้อมูลและความปลอดภัย'],
+          ans: 0,
+          exp: `${practice} เพราะช่วยให้วางแผน ตรวจสอบผล และลดความเสี่ยงจากการนำความรู้ไปใช้ผิดบริบท`
         });
-      }
+      });
+    });
 
-      // ==========================================
-      // 🌐 API 1: Official Joke API
-      // ==========================================
-      async fetchFromJokeAPI() {
-        try {
-          let url = 'https://official-joke-api.appspot.com/random_joke';
-          
-          if (this.selectedCategory !== 'any') {
-            url = `https://official-joke-api.appspot.com/jokes/${this.selectedCategory}/random`;
-          }
-
-          const response = await fetch(url);
-          if (!response.ok) throw new Error('Failed to fetch from Joke API');
-
-          const data = await response.json();
-
-          // Handle array response (multiple jokes)
-          const joke = Array.isArray(data) ? data[0] : data;
-
-          return {
-            setup: joke.setup,
-            punchline: joke.punchline,
-            type: joke.type || this.selectedCategory,
-            source: 'Official Joke API'
-          };
-        } catch (error) {
-          console.error('❌ Joke API error:', error);
-          return null;
-        }
-      }
-
-      // ==========================================
-      // 🌐 API 2: JokeAPI (More variety)
-      // ==========================================
-      async fetchFromJokeAPIV2() {
-        try {
-          let url = 'https://v2.jokeapi.dev/joke/Any?type=single';
-
-          if (this.selectedCategory === 'programming') {
-            url = 'https://v2.jokeapi.dev/joke/Programming?type=single';
-          } else if (this.selectedCategory === 'knock-knock') {
-            url = 'https://v2.jokeapi.dev/joke/Knock-Knock?type=twopart';
-          }
-
-          const response = await fetch(url);
-          if (!response.ok) throw new Error('Failed to fetch from JokeAPI');
-
-          const data = await response.json();
-
-          if (data.error) throw new Error(data.message);
-
-          return {
-            setup: data.setup || '',
-            punchline: data.delivery || data.joke || '',
-            type: data.category,
-            source: 'JokeAPI v2'
-          };
-        } catch (error) {
-          console.error('❌ JokeAPI v2 error:', error);
-          return null;
-        }
-      }
-
-      // ==========================================
-      // 🌐 API 3: Random User API (Fun jokes)
-      // ==========================================
-      async fetchRandomJokeFromWeb() {
-        try {
-          const jokes = [
-            {
-              setup: 'Why did the programmer quit his job?',
-              punchline: 'Because he didn\'t get arrays.'
-            },
-            {
-              setup: 'How many programmers does it take to change a light bulb?',
-              punchline: 'None, that\'s a hardware problem.'
-            },
-            {
-              setup: 'Why do Java developers wear glasses?',
-              punchline: 'Because they don\'t C#.'
-            },
-            {
-              setup: 'What is a programmer\'s favorite place to hang out?',
-              punchline: 'Foo Bar.'
-            },
-            {
-              setup: 'Why did the developer go broke?',
-              punchline: 'Because he used up all his cache.'
-            },
-            {
-              setup: 'Why do developers prefer dark mode?',
-              punchline: 'Because light attracts bugs!'
-            }
+    // 5. Main Application Controller
+    class AppController {
+      constructor() {
+        this.currentDiscipline = null;
+        this.currentQuiz = null;
+        this.combo = 1;
+        this.selectedRegAvatar = '🧙‍♂️';
+        this.selectedProfileAvatar = '🧙‍♂️';
+        this.tickets = JSON.parse(localStorage.getItem('omni_tickets') || '[]');
+        if (this.tickets.length === 0) {
+          this.tickets = [
+            { id: 1, user: 'PlayerOne', subject: 'พบตัวเลือกโจทย์วิชาฟิสิกส์เข้าใจง่ายมาก', category: 'suggestion', status: 'Resolved', message: 'อยากให้เพิ่มข้อสอบฟิสิกส์ดาราศาสตร์เพิ่มเติมครับ', reply: 'ทีมงานได้รับเรื่องแล้วและเพิ่มโจทย์ให้เรียบร้อยครับ!' }
           ];
-
-          return {
-            setup: jokes[Math.floor(Math.random() * jokes.length)].setup,
-            punchline: jokes[Math.floor(Math.random() * jokes.length)].punchline,
-            type: 'programming',
-            source: 'Dev Jokes Collection'
-          };
-        } catch (error) {
-          console.error('❌ Error fetching dev jokes:', error);
-          return null;
         }
       }
 
-      // ==========================================
-      // 🎲 Main Function: Get New Joke
-      // ==========================================
-      async getNewJoke() {
-        if (this.isLoading) return;
+      init() {
+        this.initAvatarPickers();
+        window.addEventListener('hashchange', () => this.handleRoute());
+        this.updateUserUI();
 
-        this.isLoading = true;
-        this.btnNewJoke.disabled = true;
-        this.jokeDisplay.classList.add('loading');
-        this.jokeDisplay.innerHTML = '<div class="loading-spinner"></div> ⏳ กำลังขอเรื่องตลก...';
-        this.messageContainer.innerHTML = '';
+        // New visitors start by creating a learner profile.
+        if (!auth.currentUser) {
+          setTimeout(() => this.openModal('modal-register'), 400);
+        }
 
-        try {
-          // Try different APIs in order
-          let joke = await this.fetchFromJokeAPI();
+        this.handleRoute();
+      }
 
-          if (!joke) {
-            joke = await this.fetchFromJokeAPIV2();
-          }
+      initAvatarPickers() {
+        const regGrid = document.getElementById('reg-avatar-grid');
+        const profGrid = document.getElementById('profile-avatar-grid');
 
-          if (!joke) {
-            joke = await this.fetchRandomJokeFromWeb();
-          }
+        if (regGrid) {
+          regGrid.innerHTML = AVATAR_LIST.map((av, i) => `
+            <div class="avatar-opt ${i === 0 ? 'selected' : ''}" onclick="app.selectRegAvatar('${av}', this)">${av}</div>
+          `).join('');
+        }
 
-          if (joke) {
-            this.currentJoke = joke;
-            this.displayJoke(joke);
-            this.jokeCount++;
-            this.updateStats();
-            this.showMessage('✅ เรื่องตลกใหม่มาแล้ว! 😄', 'success');
+        if (profGrid) {
+          profGrid.innerHTML = AVATAR_LIST.map((av, i) => `
+            <div class="avatar-opt ${i === 0 ? 'selected' : ''}" onclick="app.selectProfileAvatar('${av}', this)">${av}</div>
+          `).join('');
+        }
+      }
+
+      selectRegAvatar(av, el) {
+        this.selectedRegAvatar = av;
+        document.querySelectorAll('#reg-avatar-grid .avatar-opt').forEach(a => a.classList.remove('selected'));
+        el.classList.add('selected');
+      }
+
+      selectProfileAvatar(av, el) {
+        this.selectedProfileAvatar = av;
+        const preview = document.getElementById('profile-avatar-preview');
+        if (preview) preview.hidden = true;
+        document.querySelectorAll('#profile-avatar-grid .avatar-opt').forEach(a => a.classList.remove('selected'));
+        el.classList.add('selected');
+      }
+
+      previewUploadedAvatar(input, target) {
+        const file = input.files && input.files[0];
+        if (!file || !file.type.startsWith('image/')) return;
+        if (file.size > 2 * 1024 * 1024) {
+          this.showToast('รูป Avatar ต้องมีขนาดไม่เกิน 2 MB');
+          input.value = '';
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = () => {
+          const avatar = reader.result;
+          const preview = document.getElementById(`${target === 'register' ? 'reg' : 'profile'}-avatar-preview`);
+          if (preview) { preview.src = avatar; preview.hidden = false; }
+          if (target === 'register') this.selectedRegAvatar = avatar;
+          else this.selectedProfileAvatar = avatar;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      saveProfileAvatar() {
+        if (auth.currentUser) {
+          auth.currentUser.avatar = this.selectedProfileAvatar;
+          localStorage.setItem('omni_user', JSON.stringify(auth.currentUser));
+          localStorage.setItem('omni_avatar', this.selectedProfileAvatar);
+          this.updateUserUI();
+          this.closeModal('modal-avatar-picker');
+          this.showToast(`เปลี่ยนรูปโปรไฟล์เป็น ${this.selectedProfileAvatar} สำเร็จ! ✨`);
+          this.renderProfile();
+        }
+      }
+
+      avatarMarkup(avatar, className = '') {
+        return typeof avatar === 'string' && avatar.startsWith('data:image/')
+          ? `<img class="avatar-image ${className}" src="${avatar}" alt="Avatar">`
+          : `<span class="${className}">${avatar}</span>`;
+      }
+
+      getLevel() {
+        const xp = auth.currentUser ? auth.currentUser.xp : 0;
+        return Math.floor(Math.sqrt(xp / 25)) + 1;
+      }
+
+      getRank() {
+        const xp = auth.currentUser ? auth.currentUser.xp : 0;
+        return this.getRankForXp(xp);
+      }
+
+      getRankForXp(xp) {
+        if (xp >= 1500) return 'Omniscient Sage';
+        if (xp >= 600) return 'Platinum Expert';
+        if (xp >= 300) return 'Gold Adept';
+        if (xp >= 150) return 'Silver Apprentice';
+        return 'Bronze Novice';
+      }
+
+      updateUserUI() {
+        const authActions = document.getElementById('nav-auth-actions');
+        const userStatus = document.getElementById('nav-user-status');
+        const adminNav = document.getElementById('nav-admin-link');
+        const mobAdmin = document.getElementById('mob-admin-item');
+        const mobProfileLabel = document.getElementById('mob-profile-label');
+
+        if (auth.currentUser) {
+          authActions.style.display = 'none';
+          userStatus.style.display = 'flex';
+          document.getElementById('nav-user-avatar').innerHTML = this.avatarMarkup(auth.currentUser.avatar);
+          document.getElementById('nav-user-name').innerText = auth.currentUser.username;
+          document.getElementById('nav-user-level').innerText = `LV. ${this.getLevel()} • ${this.getRank()}`;
+          mobProfileLabel.innerText = 'โปรไฟล์';
+
+          const isAdmin = auth.currentUser.role === 'admin';
+          adminNav.style.display = isAdmin ? 'flex' : 'none';
+          mobAdmin.style.display = isAdmin ? 'flex' : 'none';
+        } else {
+          authActions.style.display = 'flex';
+          userStatus.style.display = 'none';
+          adminNav.style.display = 'none';
+          mobAdmin.style.display = 'none';
+          mobProfileLabel.innerText = 'ล็อกอิน';
+        }
+      }
+
+      navigate(hash) { window.location.hash = hash; }
+
+      handleRoute() {
+        const hash = window.location.hash || '#/';
+        themeManager.setTheme('default');
+
+        // Update nav active states
+        document.querySelectorAll('.nav-item, .mobile-nav-item').forEach((item) => {
+          const target = item.getAttribute('data-route');
+          if (target && (hash === target || (target !== '#/' && hash.startsWith(target)))) {
+            item.classList.add('active');
+          } else if (target === '#/' && (hash === '#/' || hash === '')) {
+            item.classList.add('active');
           } else {
-            this.showMessage('❌ ไม่สามารถดึงเรื่องตลกได้ กรุณาลองอีกครั้ง', 'error');
-            this.jokeDisplay.innerHTML = '😅 ขออภัย ไม่พบเรื่องตลก ลองอีกครั้งใหม่';
+            item.classList.remove('active');
           }
-        } catch (error) {
-          console.error('❌ Error:', error);
-          this.showMessage('❌ เกิดข้อผิดพลาด: ' + error.message, 'error');
-          this.jokeDisplay.innerHTML = '😅 มีข้อผิดพลาดในการดึงข้อมูล';
-        } finally {
-          this.isLoading = false;
-          this.btnNewJoke.disabled = false;
-          this.jokeDisplay.classList.remove('loading');
-        }
-      }
-
-      displayJoke(joke) {
-        // Build the joke text
-        let jokeText = '';
-        
-        if (joke.setup && joke.punchline) {
-          jokeText = `${joke.setup}<br><br>✨ <strong>${joke.punchline}</strong>`;
-        } else if (joke.punchline) {
-          jokeText = joke.punchline;
-        } else {
-          jokeText = 'Unable to display joke';
-        }
-
-        this.jokeDisplay.innerHTML = jokeText;
-
-        // Show joke type badge
-        this.jokeTypeBadge.innerHTML = `<div class="joke-type">📌 ประเภท: ${joke.type.toUpperCase()} | 🔗 ${joke.source}</div>`;
-      }
-
-      copyJoke() {
-        if (!this.currentJoke) {
-          this.showMessage('❌ ไม่มีเรื่องตลกให้คัดลอก', 'error');
-          return;
-        }
-
-        const text = `${this.currentJoke.setup}\n\n${this.currentJoke.punchline}`;
-        navigator.clipboard.writeText(text).then(() => {
-          this.showMessage('✅ คัดลอกลงคลิปบอร์ดแล้ว!', 'success');
-          this.btnCopy.textContent = '✓ คัดลอกแล้ว';
-          setTimeout(() => {
-            this.btnCopy.textContent = '📋 คัดลอก';
-          }, 2000);
-        }).catch(err => {
-          this.showMessage('❌ ไม่สามารถคัดลอกได้', 'error');
         });
+
+        if (hash === '#/' || hash === '') this.renderHome();
+        else if (hash.startsWith('#/discipline/')) this.renderDiscipline(hash.replace('#/discipline/', ''));
+        else if (hash.startsWith('#/theory/')) this.renderTheory(hash.replace('#/theory/', ''));
+        else if (hash.startsWith('#/quiz/')) this.renderQuiz(hash.replace('#/quiz/', ''));
+        else if (hash === '#/leaderboard') this.renderLeaderboard();
+        else if (hash === '#/profile') this.renderProfile();
+        else if (hash === '#/tickets') this.renderTickets();
+        else if (hash === '#/admin') this.renderAdmin();
       }
 
-      shareJoke() {
-        if (!this.currentJoke) {
-          this.showMessage('❌ ไม่มีเรื่องตลกให้แชร์', 'error');
+      renderHome() {
+        const view = document.getElementById('app-view');
+        view.innerHTML = `
+          <div class="hero-banner">
+            <div class="hero-badge">🌌 OMNIVERSE ACADEMY</div>
+            <h1 class="hero-title">ศูนย์รวมการเรียนรู้และฝึกฝนทุกสายวิชาบนโลก</h1>
+            <p class="hero-quote">"ความรู้และทักษะรอบด้าน คือกุญแจสำคัญสู่การอยู่รอดและความสำเร็จอันไร้ขีดจำกัด"</p>
+          </div>
+
+          <h2 style="margin-bottom: 1.25rem;">📚 เลือกหมวดหมู่สายวิชาเพื่อเริ่มต้นฝึกฝน</h2>
+          <div class="disciplines-grid">
+            ${DISCIPLINE_DATA.map(d => `
+              <div class="discipline-card" onclick="app.navigate('#/discipline/${d.id}')">
+                <div class="discipline-icon-box" style="color: ${d.color};">${d.icon}</div>
+                <h3 class="discipline-name">${d.name_th}</h3>
+                <div class="discipline-name-en">${d.name_en}</div>
+                <p class="discipline-desc">${d.desc}</p>
+                <button class="btn btn-primary" style="margin-top: auto; width: 100%;">เข้าสู่สายวิชา ➡️</button>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      renderDiscipline(id) {
+        const disc = DISCIPLINE_DATA.find(d => d.id === id) || DISCIPLINE_DATA[0];
+        themeManager.setTheme(disc.id);
+        const lessons = LESSON_DATA[disc.id] || [
+          { id: 99, title: `บทเรียนพื้นฐานของ ${disc.name_th}`, desc: 'เนื้อหาและแบบฝึกหัดจำลองสถานการณ์', theory: `<p>${disc.desc}</p>`, question: `ข้อใดคือหัวใจสำคัญของ ${disc.name_th}?`, scenario: 'การนำความรู้ไปประยุกต์ใช้ในชีวิตจริง', opts: ['การฝึกฝนและทำความเข้าใจอย่างสม่ำเสมอ', 'การท่องจำโดยไม่ทำความเข้าใจ', 'การเพิกเฉยต่อหลักการ', 'ไม่มีข้อถูก'], ans: 0, exp: 'การฝึกฝนต่อเนื่องทำให้เกิดความชำนาญ' }
+        ];
+
+        const view = document.getElementById('app-view');
+        view.innerHTML = `
+          <button class="btn btn-outline" style="margin-bottom: 1.5rem;" onclick="app.navigate('#/')">⬅️ กลับหน้าหลัก</button>
+          <div class="hero-banner">
+            <div class="hero-badge">${disc.icon} ${disc.name_en}</div>
+            <h1 class="hero-title">${disc.name_th}</h1>
+            <p class="hero-quote">"${disc.quote}"</p>
+          </div>
+
+          <h3 style="margin-bottom: 1.25rem;">📖 รายการบทเรียน & ทฤษฎีความรู้</h3>
+          <div>
+            ${lessons.map((l, idx) => `
+              <div class="lesson-card" onclick="app.navigate('#/theory/${disc.id}_${idx}')">
+                <div>
+                  <span class="hero-badge" style="margin-bottom: 0.3rem;">บทเรียนที่ ${idx + 1}</span>
+                  <h4 style="font-size: 1.15rem; color: #fff;">${l.title}</h4>
+                  <p style="font-size: 0.85rem; color: var(--text-muted);">${l.desc}</p>
+                </div>
+                <button class="btn btn-primary">📖 อ่านทฤษฎี & ทำโจทย์ ➡️</button>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      // Detailed Theory & Lecture Reader
+      renderTheory(param) {
+        const [discId, idxStr] = param.split('_');
+        const disc = DISCIPLINE_DATA.find(d => d.id === discId) || DISCIPLINE_DATA[0];
+        themeManager.setTheme(disc.id);
+        const lessons = LESSON_DATA[disc.id] || [];
+        const lesson = lessons[parseInt(idxStr) || 0] || lessons[0];
+
+        const view = document.getElementById('app-view');
+        view.innerHTML = `
+          <button class="btn btn-outline" style="margin-bottom: 1.5rem;" onclick="app.navigate('#/discipline/${disc.id}')">⬅️ ย้อนกลับไปรายการบทเรียน</button>
+          
+          <div class="theory-box">
+            <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem;">
+              <span class="hero-badge" style="margin: 0;">${disc.icon} ${disc.name_th}</span>
+            </div>
+            <h1 style="color: #fff; font-size: 1.8rem; margin-bottom: 0.5rem;">${lesson.title}</h1>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">${lesson.desc}</p>
+            
+            <div style="color: var(--text-main); font-size: 1rem;">
+              ${lesson.theory}
+            </div>
+
+            <div style="margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--card-border); text-align: center;">
+              <button class="btn btn-primary" style="font-size: 1.1rem; padding: 0.85rem 2rem;" onclick="app.navigate('#/quiz/${disc.id}_${idxStr}')">⚔️ เข้าใจทฤษฎีแล้ว! เริ่มทำโจทย์แบบฝึกหัด ➡️</button>
+            </div>
+          </div>
+        `;
+      }
+
+      // Interactive Quiz View
+      renderQuiz(param) {
+        const [discId, idxStr] = param.split('_');
+        const disc = DISCIPLINE_DATA.find(d => d.id === discId) || DISCIPLINE_DATA[0];
+        themeManager.setTheme(disc.id);
+        const lessons = LESSON_DATA[disc.id] || [];
+        const lesson = lessons[parseInt(idxStr) || 0] || lessons[0];
+
+        const view = document.getElementById('app-view');
+        view.innerHTML = `
+          <button class="btn btn-outline" style="margin-bottom: 1.5rem;" onclick="app.navigate('#/theory/${disc.id}_${idxStr}')">⬅️ กลับไปทบทวนทฤษฎี</button>
+          <div class="quiz-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <span class="hero-badge">${disc.icon} ${lesson.title}</span>
+              <span style="background: #ef4444; color: #fff; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.8rem; font-weight: 700;">🔥 Combo x${this.combo}</span>
+            </div>
+
+            <div class="scenario-box">📌 <strong>สถานการณ์จำลอง:</strong> ${lesson.scenario}</div>
+            <h3 class="quiz-question-text">${lesson.question}</h3>
+
+            <div id="options-area">
+              ${lesson.opts.map((opt, i) => `
+                <button class="option-btn" onclick="app.answerQuiz(${i}, ${lesson.ans}, '${lesson.exp}', '${disc.id}', '${idxStr}')">
+                  <span class="option-key">${String.fromCharCode(65 + i)}</span>
+                  <span>${opt}</span>
+                </button>
+              `).join('')}
+            </div>
+
+            <div id="quiz-result"></div>
+          </div>
+        `;
+      }
+
+      answerQuiz(selected, correct, exp, discId, idxStr) {
+        document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+        const resultDiv = document.getElementById('quiz-result');
+
+        if (selected === correct) {
+          soundEngine.playCorrect();
+          document.querySelectorAll('.option-btn')[selected].classList.add('correct');
+          const gained = 50 + (this.combo - 1) * 5;
+          if (auth.currentUser) {
+            auth.currentUser.xp += gained;
+            localStorage.setItem('omni_xp', auth.currentUser.xp);
+            auth.saveCurrentUser();
+          }
+          this.combo += 1;
+          this.updateUserUI();
+
+          resultDiv.innerHTML = `
+            <div style="background: rgba(34,197,94,0.2); border: 1px solid #22c55e; border-radius: 12px; padding: 1rem; margin-top: 1.25rem;">
+              <h4 style="color: #4ade80;">✅ ถูกต้องยอดเยี่ยม! (+${gained} EXP)</h4>
+              <p style="font-size: 0.9rem; color: #fff; margin-top: 0.4rem;"><strong>💡 เหตุผลและหลักวิชาการ:</strong> ${exp}</p>
+              <button class="btn btn-primary" style="margin-top: 0.8rem;" onclick="app.navigate('#/discipline/${discId}')">ทำโจทย์วิชาอื่นต่อ ➡️</button>
+            </div>
+          `;
+
+          if (auth.currentUser && auth.currentUser.xp >= 300 && auth.currentUser.xp - gained < 300) {
+            soundEngine.playLevelUp();
+            this.openModal('modal-celebrate');
+          }
+        } else {
+          soundEngine.playWrong();
+          document.querySelectorAll('.option-btn')[selected].classList.add('wrong');
+          document.querySelectorAll('.option-btn')[correct].classList.add('correct');
+          this.combo = 1;
+
+          resultDiv.innerHTML = `
+            <div style="background: rgba(239,68,68,0.2); border: 1px solid #ef4444; border-radius: 12px; padding: 1rem; margin-top: 1.25rem;">
+              <h4 style="color: #f87171;">❌ ยังไม่ถูกต้อง (Combo รีเซ็ต)</h4>
+              <p style="font-size: 0.9rem; color: #fff; margin-top: 0.4rem;"><strong>💡 เฉลยและคำอธิบาย:</strong> ${exp}</p>
+              <div style="margin-top: 0.8rem; display: flex; gap: 0.5rem;">
+                <button class="btn btn-outline" onclick="app.navigate('#/quiz/${discId}_${idxStr}')">ลองทำใหม่อีกครั้ง 🔄</button>
+                <button class="btn btn-outline" onclick="app.navigate('#/theory/${discId}_${idxStr}')">📖 กลับไปอ่านทฤษฎี</button>
+              </div>
+            </div>
+          `;
+        }
+      }
+
+      renderLeaderboard() {
+        const view = document.getElementById('app-view');
+        const users = [...auth.users].sort((first, second) => (second.xp || 0) - (first.xp || 0));
+
+        view.innerHTML = `
+          <div class="hero-banner">
+            <h1 class="hero-title">🏆 ตารางจัดอันดับผู้แสวงหาความรู้</h1>
+            <p class="hero-quote">รายชื่อผู้เล่นที่มีคะแนน EXP สูงสุดในโลก OmniVerse</p>
+          </div>
+
+          <div style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--card-border); overflow-x: auto;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>อันดับ</th>
+                  <th>ผู้เล่น</th>
+                  <th>ยศ / ฉายา</th>
+                  <th>เลเวล</th>
+                  <th style="text-align: right;">EXP สะสม</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${users.map((user, index) => `
+                  <tr>
+                    <td><strong style="color: ${index === 0 ? '#fbbf24' : '#cbd5e1'};">#${index + 1}</strong></td>
+                    <td>${this.avatarMarkup(user.avatar)} ${user.username} ${user.role === 'admin' ? '<span style="background: #38bdf8; color: #000; font-size: 0.7rem; font-weight: 700; padding: 0.1rem 0.4rem; border-radius: 4px;">ADMIN</span>' : ''}</td>
+                    <td><span style="color: var(--accent); font-weight: 600;">${this.getRankForXp(user.xp || 0)}</span></td>
+                    <td><strong>LV. ${user.level || 1}</strong></td>
+                    <td style="text-align: right;"><strong style="color: #38bdf8;">${user.xp || 0} EXP</strong></td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      renderProfile() {
+        const view = document.getElementById('app-view');
+        if (!auth.currentUser) {
+          view.innerHTML = `
+            <div style="text-align: center; padding: 4rem 1rem;">
+              <h2>กรุณาเข้าสู่ระบบเพื่อดูโปรไฟล์และสถิติ</h2>
+              <button class="btn btn-primary" style="margin-top: 1.5rem;" onclick="app.openModal('modal-login')">เข้าสู่ระบบ</button>
+            </div>
+          `;
           return;
         }
 
-        const text = `${this.currentJoke.setup}\n\n${this.currentJoke.punchline}`;
-        const url = window.location.href;
+        view.innerHTML = `
+          <div class="hero-banner">
+            <h1 class="hero-title">👤 โปรไฟล์ผู้เรียน & สถิติส่วนตัว</h1>
+            <p class="hero-quote">จัดการตัวละครและตรวจสอบระดับความชำนาญของคุณ</p>
+          </div>
 
-        // Check if Web Share API is available
-        if (navigator.share) {
-          navigator.share({
-            title: '🎭 ขำได้เลย - Joke Generator',
-            text: text,
-            url: url
-          }).catch(err => console.log('Share cancelled'));
-        } else {
-          // Fallback: Copy to clipboard and show message
-          navigator.clipboard.writeText(text);
-          this.showMessage('✅ เรื่องตลกคัดลอกแล้ว! แชร์ได้เลย 🚀', 'success');
+          <div style="background: var(--card-bg); border-radius: 16px; padding: 2rem; border: 1px solid var(--card-border); text-align: center; max-width: 600px; margin: 0 auto;">
+            <div style="font-size: 4.5rem; margin-bottom: 0.25rem;">${this.avatarMarkup(auth.currentUser.avatar)}</div>
+            <button class="btn btn-outline" style="padding: 0.35rem 0.8rem; font-size: 0.82rem; margin-bottom: 1.25rem;" onclick="app.openModal('modal-avatar-picker')">🎨 เปลี่ยนรูปโปรไฟล์ (Avatar)</button>
+
+            <h2>${auth.currentUser.username}</h2>
+            <div style="color: var(--accent); font-weight: 700; margin-bottom: 1.5rem;">${this.getRank()}</div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+              <div style="background: rgba(0,0,0,0.3); padding: 1.25rem; border-radius: 12px;">
+                <div style="font-size: 0.8rem; color: var(--text-muted);">เลเวลรวม</div>
+                <strong style="font-size: 1.6rem; color: #fff;">LV. ${this.getLevel()}</strong>
+              </div>
+              <div style="background: rgba(0,0,0,0.3); padding: 1.25rem; border-radius: 12px;">
+                <div style="font-size: 0.8rem; color: var(--text-muted);">EXP รวม</div>
+                <strong style="font-size: 1.6rem; color: #fbbf24;">${auth.currentUser.xp}</strong>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+              <button class="btn btn-outline" onclick="auth.logout()">🚪 ออกจากระบบ</button>
+              <button class="btn btn-outline" onclick="localStorage.clear(); location.reload();">🔄 รีเซ็ตข้อมูล</button>
+            </div>
+          </div>
+        `;
+      }
+
+      renderTickets() {
+        const view = document.getElementById('app-view');
+        view.innerHTML = `
+          <div class="hero-banner">
+            <h1 class="hero-title">🛠️ ศูนย์ช่วยเหลือและแจ้งปัญหา</h1>
+            <p class="hero-quote">ส่งข้อเสนอแนะหรือแจ้งข้อผิดพลาดของโจทย์ถึงทีมงาน</p>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+            <!-- Submit Form -->
+            <div style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--card-border);">
+              <h3 style="margin-bottom: 1rem;">➕ ส่งเรื่องแจ้งปัญหาใหม่</h3>
+              <div class="form-group">
+                <label class="form-label">หัวข้อเรื่อง</label>
+                <input type="text" id="t-subj" class="form-input" placeholder="เช่น พบข้อสอบเฉลยไม่ตรง">
+              </div>
+              <div class="form-group">
+                <label class="form-label">รายละเอียดปัญหา</label>
+                <textarea id="t-msg" class="form-textarea" rows="3" placeholder="อธิบายข้อความของคุณ..."></textarea>
+              </div>
+              <button class="btn btn-primary" onclick="app.submitTicket()">ส่งเรื่องแจ้งปัญหา 📤</button>
+            </div>
+
+            <!-- Ticket List -->
+            <div style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--card-border); overflow-x: auto;">
+              <h3 style="margin-bottom: 1rem;">📋 ประวัติการแจ้งเรื่องของคุณ</h3>
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>หัวข้อ</th>
+                    <th>สถานะ</th>
+                    <th>การตอบกลับจากแอดมิน</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${this.tickets.map(t => `
+                    <tr>
+                      <td><strong style="color: #fff;">${t.subject}</strong><br><small style="color: var(--text-muted);">${t.message}</small></td>
+                      <td><span class="status-chip status-${t.status}">${t.status}</span></td>
+                      <td>${t.reply ? `<span style="color: #38bdf8;">💬 ${t.reply}</span>` : '<span style="color: var(--text-muted);">รอการตอบกลับ</span>'}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      }
+
+      submitTicket() {
+        const subj = document.getElementById('t-subj').value.trim();
+        const msg = document.getElementById('t-msg').value.trim();
+        if (!subj || !msg) {
+          alert('กรุณากรอกหัวข้อและรายละเอียดให้ครบถ้วน');
+          return;
+        }
+        this.tickets.unshift({
+          id: Date.now(),
+          user: auth.currentUser ? auth.currentUser.username : 'Guest',
+          subject: subj,
+          category: 'general',
+          status: 'Open',
+          message: msg,
+          reply: null
+        });
+        localStorage.setItem('omni_tickets', JSON.stringify(this.tickets));
+        this.showToast('ส่งเรื่องแจ้งปัญหาเรียบร้อยแล้ว!');
+        this.renderTickets();
+      }
+
+      // ==========================================
+      // 🛡️ ADMIN BACKOFFICE SUITE
+      // ==========================================
+      renderAdmin() {
+        const view = document.getElementById('app-view');
+        if (!auth.currentUser || auth.currentUser.role !== 'admin') {
+          view.innerHTML = `
+            <div style="text-align: center; padding: 4rem 1rem;">
+              <h2>🛡️ พื้นที่เฉพาะผู้ดูแลระบบ (Admin Only)</h2>
+              <p style="color: var(--text-muted); margin-top: 0.5rem;">กรุณาเข้าสู่ระบบด้วยบัญชีแอดมิน</p>
+              <button class="btn btn-primary" style="margin-top: 1.5rem;" onclick="app.openModal('modal-login')">เข้าสู่ระบบด้วยแบบฟอร์มปกติ</button>
+            </div>
+          `;
+          return;
+        }
+
+        view.innerHTML = `
+          <div class="hero-banner" style="background: linear-gradient(135deg, #091e3a 0%, #0f172a 100%);">
+            <div class="hero-badge" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8;">🛡️ ADMIN BACKOFFICE SUITE</div>
+            <h1 class="hero-title">ศูนย์ควบคุมระบบหลังบ้าน OmniVerse</h1>
+            <p class="hero-quote">จัดการผู้ใช้งาน, ตอบกลับปัญหา Ticket, และเพิ่มบทเรียนใหม่</p>
+          </div>
+
+          <!-- Stats Overview Cards -->
+          <div class="admin-stat-grid">
+            <div class="admin-stat-card">
+              <div style="font-size: 2rem;">👥</div>
+              <div>
+                <div class="admin-stat-val">${auth.users.length}</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">ผู้เรียนทั้งหมด</div>
+              </div>
+            </div>
+            <div class="admin-stat-card">
+              <div style="font-size: 2rem;">🛠️</div>
+              <div>
+                <div class="admin-stat-val">${this.tickets.filter(t => t.status === 'Open').length}</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Ticket รอดำเนินการ</div>
+              </div>
+            </div>
+            <div class="admin-stat-card">
+              <div style="font-size: 2rem;">📚</div>
+              <div>
+                <div class="admin-stat-val">28</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">บทเรียนในระบบ</div>
+              </div>
+            </div>
+            <div class="admin-stat-card">
+              <div style="font-size: 2rem;">⚔️</div>
+              <div>
+                <div class="admin-stat-val">84</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">โจทย์ข้อสอบทั้งหมด</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Admin Ticket Management -->
+          <div style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--card-border); margin-bottom: 2rem; overflow-x: auto;">
+            <h3 style="margin-bottom: 1rem;">🛠️ รายการแจ้งปัญหาจากผู้ใช้ (Ticket Queue)</h3>
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>ผู้แจ้ง</th>
+                  <th>หัวข้อเรื่อง</th>
+                  <th>สถานะ</th>
+                  <th style="text-align: right;">การกระทำ</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${this.tickets.map((t, idx) => `
+                  <tr>
+                    <td><strong>${t.user}</strong></td>
+                    <td><strong style="color: #fff;">${t.subject}</strong><br><small style="color: var(--text-muted);">${t.message}</small></td>
+                    <td><span class="status-chip status-${t.status}">${t.status}</span></td>
+                    <td style="text-align: right;">
+                      <button class="btn btn-outline" style="padding: 0.3rem 0.7rem; font-size: 0.8rem;" onclick="app.adminReplyTicket(${idx})">💬 ตอบกลับ</button>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- User Moderation Table -->
+          <div style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--card-border); overflow-x: auto;">
+            <h3 style="margin-bottom: 1rem;">👤 จัดการผู้ใช้งาน (User Moderation)</h3>
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>บทบาท</th>
+                  <th>เลเวล / EXP</th>
+                  <th style="text-align: right;">การกระทำ</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${auth.users.map((user, index) => `
+                  <tr>
+                    <td>${this.avatarMarkup(user.avatar)} ${user.username}</td>
+                    <td>${user.role === 'admin' ? '<span style="color: #38bdf8; font-weight: 700;">ADMIN</span>' : 'USER'}</td>
+                    <td>LV. ${user.level || 1} (${user.xp || 0} EXP)</td>
+                    <td style="text-align: right;">
+                      ${user.role === 'admin' ? '<button class="btn btn-outline" disabled style="padding: 0.3rem 0.6rem; font-size: 0.8rem;">Superuser</button>' : `<button class="btn btn-outline" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; color: #fbbf24;" onclick="app.showToast('จัดการ EXP ให้ ${user.username} สำเร็จ!')">จัดการ EXP ⭐</button><button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="auth.deleteUser(${index})">ลบบัญชี</button>`}
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      adminReplyTicket(idx) {
+        const ticket = this.tickets[idx];
+        const reply = prompt(`ตอบกลับข้อความของ ${ticket.user}:\n"${ticket.message}"`, "ทีมงานตรวจสอบและแก้ไขปัญหาให้เรียบร้อยแล้วครับ ขอบคุณครับ");
+        if (reply) {
+          ticket.reply = reply;
+          ticket.status = 'Resolved';
+          localStorage.setItem('omni_tickets', JSON.stringify(this.tickets));
+          this.showToast('ตอบกลับและปิดงาน Ticket เรียบร้อยแล้ว!');
+          this.renderAdmin();
         }
       }
 
-      showMessage(message, type) {
-        this.messageContainer.innerHTML = `<div class="${type}">${message}</div>`;
-        setTimeout(() => {
-          this.messageContainer.innerHTML = '';
-        }, 3000);
+      openModal(id) {
+        if (id === 'modal-register') this.closeModal('modal-login');
+        if (id === 'modal-login') this.closeModal('modal-register');
+        if (id === 'modal-register' || id === 'modal-login') this.resetAuthForms();
+        if (id === 'modal-avatar-picker' && auth.currentUser) {
+          this.selectedProfileAvatar = auth.currentUser.avatar;
+          const preview = document.getElementById('profile-avatar-preview');
+          if (preview && this.selectedProfileAvatar.startsWith('data:image/')) {
+            preview.src = this.selectedProfileAvatar;
+            preview.hidden = false;
+          }
+        }
+        document.getElementById(id).classList.add('active');
       }
-
-      updateStats() {
-        localStorage.setItem('jokeCount', this.jokeCount);
-        this.statJokes.textContent = this.jokeCount;
-        this.statFavorites.textContent = this.favorites.length;
+      resetAuthForms() {
+        ['form-login', 'form-reg'].forEach(formId => {
+          const form = document.getElementById(formId);
+          if (form) form.reset();
+        });
+        this.selectedRegAvatar = '🧙‍♂️';
+        document.querySelectorAll('#reg-avatar-grid .avatar-opt').forEach((avatar, index) => avatar.classList.toggle('selected', index === 0));
+        const preview = document.getElementById('reg-avatar-preview');
+        if (preview) { preview.src = ''; preview.hidden = true; }
       }
-
-      loadStats() {
-        this.jokeCount = parseInt(localStorage.getItem('jokeCount') || '0');
-        this.favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-        this.updateStats();
+      closeModal(id) {
+        document.getElementById(id).classList.remove('active');
+        if (id === 'modal-login' || id === 'modal-register') this.resetAuthForms();
+      }
+      showToast(msg) {
+        const container = document.getElementById('toast-container');
+        const t = document.createElement('div');
+        t.className = 'toast'; t.innerText = msg;
+        container.appendChild(t);
+        setTimeout(() => t.remove(), 3000);
       }
     }
 
-    // Initialize on page load
-    window.addEventListener('DOMContentLoaded', () => {
-      window.jokeGenerator = new JokeGenerator();
-    });
+    const app = new AppController();
+    window.onload = () => app.init();
   </script>
 </body>
 </html>
