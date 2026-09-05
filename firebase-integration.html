@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Integration - How to Add to index12.html</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      color: #f8fafc;
+      font-family: 'Prompt', sans-serif;
+      padding: 2rem 1rem;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(18, 24, 43, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 2rem;
+    }
+    h1 { font-size: 2rem; margin-bottom: 1rem; color: #38bdf8; }
+    h2 { font-size: 1.4rem; margin-top: 2rem; margin-bottom: 1rem; color: #c084fc; }
+    h3 { color: #fbbf24; }
+    code {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+    }
+    pre {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      border-left: 3px solid #38bdf8;
+      margin: 1rem 0;
+    }
+    .step {
+      background: rgba(99, 102, 241, 0.1);
+      border-left: 4px solid #6366f1;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 8px;
+    }
+    .warning {
+      background: rgba(239, 68, 68, 0.1);
+      border-left: 4px solid #ef4444;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 8px;
+    }
+    .success {
+      background: rgba(34, 197, 94, 0.1);
+      border-left: 4px solid #22c55e;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔥 Firebase Integration Step-by-Step</h1>
+    <p>วิธีเพิ่ม Firebase เข้าไปใน index12.html ของคุณให้ซิงค์ข้อมูลหลายเครื่อง</p>
+
+    <h2>📋 ที่ต้องทำ:</h2>
+
+    <div class="step">
+      <h3>ขั้นตอนที่ 1: เพิ่ม Firebase Library</h3>
+      <p>ใน <code>&lt;head&gt;</code> ของไฟล์ <code>index12.html</code> เพิ่ม:</p>
+      <pre>&lt;!-- Firebase SDK --&gt;
+&lt;script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"&gt;&lt;/script&gt;
+&lt;script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"&gt;&lt;/script&gt;</pre>
+    </div>
+
+    <div class="step">
+      <h3>ขั้นตอนที่ 2: เพิ่ม Firebase Config</h3>
+      <p>ในส่วน <code>&lt;script&gt;</code> ที่มี AuthManager ให้เพิ่มก่อนบรรทัด <code>class AuthManager</code>:</p>
+      <pre>// ==========================================
+// 🔥 FIREBASE CONFIGURATION
+// ==========================================
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY_HERE",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  databaseURL: "https://YOUR_PROJECT.firebaseio.com",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+// Initialize Firebase
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+const database = firebase.database();</pre>
+    </div>
+
+    <div class="step">
+      <h3>ขั้นตอนที่ 3: แทนที่ AuthManager ด้วย CloudAuthManager</h3>
+      <p>คัดลอกโค้ดจาก <code>firebase-sync.js</code> และแทนที่ <code>class AuthManager</code> เดิม</p>
+      <p>หรือ เพิ่มบรรทัดนี้ก่อน <code>const auth = new AuthManager()</code>:</p>
+      <pre>&lt;script src="firebase-sync.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  const auth = new CloudAuthManager();
+&lt;/script&gt;</pre>
+    </div>
+
+    <div class="step">
+      <h3>ขั้นตอนที่ 4: แก้ไข answerQuiz function</h3>
+      <p>หา function <code>answerQuiz</code> และแทนที่ XP update:</p>
+      <pre>// เก่า:
+auth.currentUser.xp += gained;
+localStorage.setItem('omni_xp', auth.currentUser.xp);
+auth.saveCurrentUser();
+
+// ใหม่:
+await auth.updateUserXP(gained);</pre>
+    </div>
+
+    <h2>🧪 ทดสอบการทำงาน:</h2>
+
+    <div class="success">
+      <h3>✅ ค้นหา Console Errors:</h3>
+      <ol>
+        <li>เปิด DevTools (F12)</li>
+        <li>ไปที่ Tab <code>Console</code></li>
+        <li>มองหา "✅ Users synced" หรือ errors แดง</li>
+        <li>ถ้ามี error เก็บโค้ด 1-2 บรรทัดมา debug</li>
+      </ol>
+    </div>
+
+    <div class="success">
+      <h3>✅ ทดสอบเล็ก ๆ :</h3>
+      <ol>
+        <li>เปิด 2 browser tabs
+        <li>Tab ที่ 1: สมัครสมาชิก
+        <li>Tab ที่ 2: ดู Leaderboard (F5 refresh)
+        <li>ผู้ใช้ใหม่ควรปรากฏใน Tab ที่ 2 ใน 1-2 วินาที
+      </ol>
+    </div>
+
+    <h2>⚠️ Common Issues:</h2>
+
+    <div class="warning">
+      <strong>❌ "Cannot read property 'database' of undefined"</strong>
+      <p>→ ตรวจสอบว่า Firebase library script ถูกเพิ่มก่อน initializeApp()</p>
+    </div>
+
+    <div class="warning">
+      <strong>❌ "Permission denied" error</strong>
+      <p>→ ตรวจสอบ Database Rules ใน Firebase Console (ต้องเป็น test mode)</p>
+    </div>
+
+    <div class="warning">
+      <strong>❌ Data ไม่ sync</strong>
+      <p>→ ตรวจสอบ Database URL ว่า match config หรือไม่</p>
+    </div>
+
+    <h2>🚀 Production Checklist:</h2>
+    <ul>
+      <li>☐ เปลี่ยน Database Rules จาก test mode เป็น authenticated</li>
+      <li>☐ Hash passwords ด้วย bcrypt หรือ SHA-256 (ห้ามเก็บ plain text)</li>
+      <li>☐ ใช้ Firebase Authentication แทน custom login</li>
+      <li>☐ เพิ่ม HTTPS enforcement</li>
+      <li>☐ ทดสอบ offline mode</li>
+    </ul>
+
+    <h2>📞 Support:</h2>
+    <p>❓ หากมีปัญหา ลอง:</p>
+    <ol>
+      <li>เปิด Firebase Console > Realtime Database > Data เพื่อดูข้อมูล</li>
+      <li>ตรวจสอบ DevTools Console สำหรับ error messages</li>
+      <li>ตรวจสอบ Network tab ว่ามี requests ไป firebase.io หรือไม่</li>
+    </ol>
+  </div>
+</body>
+</html>
