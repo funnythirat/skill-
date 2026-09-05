@@ -4,232 +4,673 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#070913">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  
   <title>OmniVerse Academy - ศูนย์รวมการเรียนรู้และฝึกฝนทุกสายวิชาบนโลก</title>
   
-  <!-- CSS Stylesheets -->
-  <link rel="stylesheet" href="./css/themes.css">
-  <link rel="stylesheet" href="./css/main.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+    :root {
+      --bg-primary: #070913;
+      --bg-secondary: #0d1224;
+      --card-bg: rgba(18, 24, 43, 0.8);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --card-hover-border: rgba(99, 102, 241, 0.5);
+      --accent: #6366f1;
+      --accent-secondary: #a855f7;
+      --accent-glow: rgba(99, 102, 241, 0.35);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --badge-bg: rgba(99, 102, 241, 0.18);
+      --hero-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #090d16 100%);
+    }
+
+    [data-theme="academic"] {
+      --bg-primary: #050b14;
+      --bg-secondary: #0b1329;
+      --card-bg: rgba(15, 23, 42, 0.8);
+      --card-border: rgba(56, 189, 248, 0.25);
+      --card-hover-border: rgba(56, 189, 248, 0.7);
+      --accent: #38bdf8;
+      --accent-secondary: #3b82f6;
+      --accent-glow: rgba(56, 189, 248, 0.4);
+      --badge-bg: rgba(56, 189, 248, 0.18);
+      --hero-gradient: linear-gradient(135deg, #0b1329 0%, #1e293b 50%, #172554 100%);
+    }
+
+    [data-theme="survival"] {
+      --bg-primary: #050f07;
+      --bg-secondary: #0a180d;
+      --card-bg: rgba(20, 42, 23, 0.8);
+      --card-border: rgba(34, 197, 94, 0.25);
+      --card-hover-border: rgba(34, 197, 94, 0.7);
+      --accent: #22c55e;
+      --accent-secondary: #15803d;
+      --accent-glow: rgba(34, 197, 94, 0.4);
+      --badge-bg: rgba(34, 197, 94, 0.18);
+      --hero-gradient: linear-gradient(135deg, #0a180d 0%, #142a17 50%, #1b3d1f 100%);
+    }
+
+    [data-theme="tech"] {
+      --bg-primary: #030c14;
+      --bg-secondary: #051622;
+      --card-bg: rgba(13, 40, 56, 0.8);
+      --card-border: rgba(6, 182, 212, 0.25);
+      --card-hover-border: rgba(6, 182, 212, 0.7);
+      --accent: #06b6d4;
+      --accent-secondary: #0284c7;
+      --accent-glow: rgba(6, 182, 212, 0.4);
+      --badge-bg: rgba(6, 182, 212, 0.18);
+      --hero-gradient: linear-gradient(135deg, #051622 0%, #0d2838 50%, #0f172a 100%);
+    }
+
+    [data-theme="arts"] {
+      --bg-primary: #0e0517;
+      --bg-secondary: #1b0a2a;
+      --card-bg: rgba(47, 21, 71, 0.8);
+      --card-border: rgba(192, 132, 252, 0.25);
+      --card-hover-border: rgba(192, 132, 252, 0.7);
+      --accent: #c084fc;
+      --accent-secondary: #d946ef;
+      --accent-glow: rgba(192, 132, 252, 0.4);
+      --badge-bg: rgba(192, 132, 252, 0.18);
+      --hero-gradient: linear-gradient(135deg, #1b0a2a 0%, #2f1547 50%, #3b0764 100%);
+    }
+
+    [data-theme="combat"] {
+      --bg-primary: #140505;
+      --bg-secondary: #240a0a;
+      --card-bg: rgba(62, 18, 18, 0.8);
+      --card-border: rgba(239, 68, 68, 0.25);
+      --card-hover-border: rgba(239, 68, 68, 0.7);
+      --accent: #ef4444;
+      --accent-secondary: #b91c1c;
+      --accent-glow: rgba(239, 68, 68, 0.4);
+      --badge-bg: rgba(239, 68, 68, 0.18);
+      --hero-gradient: linear-gradient(135deg, #240a0a 0%, #3e1212 50%, #450a0a 100%);
+    }
+
+    [data-theme="wealth"] {
+      --bg-primary: #03140d;
+      --bg-secondary: #062016;
+      --card-bg: rgba(15, 56, 38, 0.8);
+      --card-border: rgba(16, 185, 129, 0.25);
+      --card-hover-border: rgba(16, 185, 129, 0.7);
+      --accent: #10b981;
+      --accent-secondary: #059669;
+      --accent-glow: rgba(16, 185, 129, 0.4);
+      --badge-bg: rgba(16, 185, 129, 0.18);
+      --hero-gradient: linear-gradient(135deg, #062016 0%, #0f3826 50%, #064e3b 100%);
+    }
+
+    [data-theme="engineering"] {
+      --bg-primary: #140c03;
+      --bg-secondary: #231505;
+      --card-bg: rgba(61, 36, 7, 0.8);
+      --card-border: rgba(245, 158, 11, 0.25);
+      --card-hover-border: rgba(245, 158, 11, 0.7);
+      --accent: #f59e0b;
+      --accent-secondary: #d97706;
+      --accent-glow: rgba(245, 158, 11, 0.4);
+      --badge-bg: rgba(245, 158, 11, 0.18);
+      --hero-gradient: linear-gradient(135deg, #231505 0%, #3d2407 50%, #451a03 100%);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      font-family: 'Prompt', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background-color 0.4s ease, color 0.3s ease;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    #canvas-background {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 0; pointer-events: none; opacity: 0.65;
+    }
+
+    .app-wrapper {
+      position: relative; z-index: 1; display: flex; flex-direction: column; min-height: 100vh;
+    }
+
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      background: rgba(10, 15, 30, 0.88);
+      border-bottom: 1px solid var(--card-border);
+      padding: 0.75rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .nav-brand {
+      display: flex; align-items: center; gap: 0.6rem; cursor: pointer; text-decoration: none;
+    }
+
+    .brand-icon { font-size: 1.8rem; filter: drop-shadow(0 0 10px var(--accent)); }
+    .brand-title {
+      font-family: 'Cinzel', 'Prompt', serif; font-weight: 700; font-size: 1.3rem;
+      background: linear-gradient(90deg, #ffffff, var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 0.5rem; list-style: none; }
+    .nav-item {
+      display: flex; align-items: center; gap: 0.4rem; padding: 0.5rem 0.9rem;
+      border-radius: 8px; font-size: 0.95rem; font-weight: 500; color: var(--text-muted);
+      cursor: pointer; transition: all 0.2s ease; border: 1px solid transparent;
+    }
+    .nav-item:hover, .nav-item.active {
+      color: var(--text-main); background: var(--badge-bg); border-color: var(--card-border);
+    }
+
+    .nav-actions { display: flex; align-items: center; gap: 0.6rem; }
+
+    .user-status-card {
+      display: flex; align-items: center; gap: 0.6rem;
+      background: rgba(255, 255, 255, 0.06); padding: 0.35rem 0.75rem;
+      border-radius: 30px; border: 1px solid var(--card-border); cursor: pointer;
+    }
+
+    .user-avatar-badge {
+      font-size: 1.3rem; width: 32px; height: 32px; display: flex; align-items: center;
+      justify-content: center; background: var(--badge-bg); border-radius: 50%; border: 1.5px solid var(--accent);
+    }
+
+    .user-info-mini { display: flex; flex-direction: column; }
+    .user-name-mini { font-weight: 600; font-size: 0.85rem; color: #fff; line-height: 1.1; }
+    .user-level-tag { font-size: 0.7rem; color: var(--accent); font-weight: 700; }
+
+    .mobile-bottom-nav {
+      display: none; position: fixed; bottom: 0; left: 0; width: 100%;
+      background: rgba(10, 15, 30, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--card-border); z-index: 999;
+      padding: 0.4rem 0.5rem calc(0.4rem + env(safe-area-inset-bottom));
+      justify-content: space-around; align-items: center;
+    }
+
+    .mobile-nav-item {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 0.2rem; color: var(--text-muted); font-size: 0.72rem; font-weight: 500;
+      padding: 0.35rem 0.6rem; border-radius: 10px; flex: 1; text-align: center; cursor: pointer;
+    }
+    .mobile-nav-item.active { color: var(--accent); background: var(--badge-bg); }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      padding: 0.65rem 1.25rem; border-radius: 10px; font-family: inherit; font-size: 0.95rem;
+      font-weight: 600; cursor: pointer; transition: all 0.2s ease; border: none; outline: none; min-height: 44px;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-secondary)); color: #050b14; font-weight: 700; }
+    .btn-outline { background: transparent; color: var(--text-main); border: 1px solid var(--card-border); }
+    .btn-outline:hover { background: var(--badge-bg); border-color: var(--accent); color: var(--accent); }
+    .btn-icon {
+      width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--card-border);
+      color: var(--text-main); cursor: pointer; font-size: 1.1rem;
+    }
+
+    .main-container { max-width: 1240px; margin: 0 auto; padding: 2rem 1.5rem 5rem; width: 100%; flex: 1; }
+
+    .hero-banner {
+      background: var(--hero-gradient); border: 1px solid var(--card-border);
+      border-radius: 20px; padding: 2.2rem 2rem; margin-bottom: 2.5rem; position: relative; overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem; background: var(--badge-bg);
+      color: var(--accent); padding: 0.35rem 0.9rem; border-radius: 20px; font-size: 0.82rem; font-weight: 700; margin-bottom: 1rem;
+    }
+    .hero-title { font-size: 2.2rem; font-weight: 700; line-height: 1.25; margin-bottom: 0.75rem; color: #fff; }
+    .hero-quote { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 1.5rem; font-style: italic; border-left: 3px solid var(--accent); padding-left: 1rem; }
+
+    .disciplines-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+    .discipline-card {
+      background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px;
+      padding: 1.5rem; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; backdrop-filter: blur(12px);
+    }
+    .discipline-card:hover { transform: translateY(-4px); border-color: var(--card-hover-border); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .discipline-icon-box {
+      width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center;
+      justify-content: center; font-size: 1.8rem; background: var(--badge-bg); border: 1px solid var(--card-border); margin-bottom: 1rem;
+    }
+    .discipline-name { font-size: 1.2rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem; }
+    .discipline-name-en { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem; font-family: 'Cinzel', serif; }
+    .discipline-desc { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.25rem; flex: 1; }
+
+    .progress-bar-container { width: 100%; height: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 10px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-secondary)); border-radius: 10px; transition: width 0.6s ease; }
+
+    .lesson-card {
+      background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px;
+      padding: 1.3rem; transition: all 0.2s ease; display: flex; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 1rem;
+    }
+    .lesson-card:hover { border-color: var(--accent); background: rgba(255, 255, 255, 0.04); transform: translateX(4px); }
+
+    .quiz-card {
+      background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px;
+      padding: 2rem; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5); backdrop-filter: blur(16px);
+    }
+    .scenario-box { background: rgba(0,0,0,0.3); border-left: 4px solid var(--accent); padding: 0.9rem 1.1rem; border-radius: 0 10px 10px 0; margin-bottom: 1.25rem; font-size: 0.92rem; color: var(--text-muted); }
+    .quiz-question-text { font-size: 1.25rem; font-weight: 600; color: #fff; margin-bottom: 1.5rem; }
+    .option-btn {
+      display: flex; align-items: center; gap: 0.85rem; padding: 0.9rem 1.1rem; border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04); border: 1px solid var(--card-border); color: var(--text-main);
+      font-family: inherit; font-size: 0.95rem; text-align: left; cursor: pointer; transition: all 0.2s ease; min-height: 52px; width: 100%; margin-bottom: 0.75rem;
+    }
+    .option-btn:hover:not(:disabled) { background: var(--badge-bg); border-color: var(--accent); transform: translateX(3px); }
+    .option-btn.correct { border-color: #22c55e !important; background: rgba(34, 197, 94, 0.2) !important; color: #4ade80 !important; }
+    .option-btn.wrong { border-color: #ef4444 !important; background: rgba(239, 68, 68, 0.2) !important; color: #f87171 !important; }
+    .option-key { width: 32px; height: 32px; min-width: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; background: rgba(255,255,255,0.08); }
+
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(10px); z-index: 1000; display: flex; align-items: center; justify-content: center;
+      padding: 1rem; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .modal-dialog {
+      background: var(--bg-secondary); border: 1px solid var(--card-border); border-radius: 20px;
+      width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; padding: 2rem; position: relative;
+    }
+    .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.6rem; color: var(--text-muted); cursor: pointer; }
+
+    #toast-container { position: fixed; bottom: 5rem; right: 1.5rem; z-index: 9999; display: flex; flex-direction: column; gap: 0.75rem; pointer-events: none; }
+    .toast { background: rgba(15, 23, 42, 0.95); border: 1px solid var(--accent); border-radius: 10px; padding: 0.8rem 1.2rem; color: #fff; font-size: 0.9rem; pointer-events: auto; }
+
+    @media (max-width: 768px) {
+      .mobile-bottom-nav { display: flex; }
+      .nav-links { display: none; }
+      .main-container { padding: 1.25rem 1rem 5.5rem; }
+      .disciplines-grid { grid-template-columns: 1fr; }
+      .hero-title { font-size: 1.55rem; }
+      .modal-dialog { border-radius: 20px 20px 0 0; position: fixed; bottom: 0; margin: 0; max-height: 85vh; }
+    }
+  </style>
 </head>
 <body>
-  <!-- Dynamic Particle Canvas for Atmospheric Themes -->
   <canvas id="canvas-background"></canvas>
 
   <div class="app-wrapper">
-    <!-- Top Navigation Bar -->
     <nav class="navbar">
-      <a href="#/" class="nav-brand">
+      <a href="#/" class="nav-brand" onclick="app.navigate('#/')">
         <span class="brand-icon">🌌</span>
         <span class="brand-title">OmniVerse</span>
       </a>
 
-      <!-- Desktop Nav Links -->
       <ul class="nav-links">
-        <li class="nav-item active" data-route="#/" onclick="location.hash='#/'">
-          <span>📚</span> <span>คลังสายวิชา</span>
-        </li>
-        <li class="nav-item" data-route="#/leaderboard" onclick="location.hash='#/leaderboard'">
-          <span>🏆</span> <span>ตารางอันดับ</span>
-        </li>
-        <li class="nav-item" data-route="#/tickets" onclick="location.hash='#/tickets'">
-          <span>🛠️</span> <span>ศูนย์ช่วยเหลือ</span>
-        </li>
-        <li class="nav-item" id="nav-admin-link" style="display: none;" onclick="location.href='./admin.html'">
-          <span>🛡️</span> <span>หลังบ้าน (Admin)</span>
-        </li>
+        <li class="nav-item active" data-route="#/" onclick="app.navigate('#/')"><span>📚</span> <span>คลังสายวิชา</span></li>
+        <li class="nav-item" data-route="#/leaderboard" onclick="app.navigate('#/leaderboard')"><span>🏆</span> <span>ตารางอันดับ</span></li>
+        <li class="nav-item" data-route="#/tickets" onclick="app.navigate('#/tickets')"><span>🛠️</span> <span>ศูนย์ช่วยเหลือ</span></li>
       </ul>
 
       <div class="nav-actions">
-        <!-- Sound Effect Toggle -->
-        <button id="btn-sound-toggle" class="btn-icon" title="เปิด/ปิดเสียงเอฟเฟกต์">🔊</button>
-
-        <!-- Unauthenticated Buttons -->
-        <div id="nav-auth-actions" style="display: flex; gap: 0.4rem;">
-          <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="app.openModal('modal-login')">เข้าสู่ระบบ</button>
-          <button class="btn btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="app.openModal('modal-register')">สมัครสมาชิก</button>
-        </div>
-
-        <!-- Authenticated Profile Card -->
-        <div id="nav-user-status" class="user-status-card" style="display: none;" onclick="location.hash='#/profile'">
-          <div class="user-avatar-badge" id="nav-user-avatar">🧙‍♂️</div>
+        <button id="btn-sound-toggle" class="btn-icon" onclick="soundEngine.toggleSound()">🔊</button>
+        <div id="nav-user-status" class="user-status-card" onclick="app.navigate('#/profile')">
+          <div class="user-avatar-badge" id="nav-user-avatar">⚡</div>
           <div class="user-info-mini">
-            <span class="user-name-mini" id="nav-user-name">User</span>
-            <span class="user-level-tag" id="nav-user-level">LV. 1 • Novice</span>
+            <span class="user-name-mini" id="nav-user-name">PlayerOne</span>
+            <span class="user-level-tag" id="nav-user-level">LV. 2 • Silver</span>
           </div>
         </div>
       </div>
     </nav>
 
-    <!-- Main Dynamic Content Container -->
     <main class="main-container">
-      <div id="app-view">
-        <!-- SPA views render here -->
-      </div>
+      <div id="app-view"></div>
     </main>
 
-    <!-- Mobile Bottom Navigation Bar (Touch-friendly for phones) -->
     <nav class="mobile-bottom-nav">
-      <div class="mobile-nav-item active" data-route="#/" onclick="location.hash='#/'">
-        <span class="mobile-nav-icon">📚</span>
-        <span>คลังวิชา</span>
-      </div>
-      <div class="mobile-nav-item" data-route="#/leaderboard" onclick="location.hash='#/leaderboard'">
-        <span class="mobile-nav-icon">🏆</span>
-        <span>อันดับ</span>
-      </div>
-      <div class="mobile-nav-item" data-route="#/tickets" onclick="location.hash='#/tickets'">
-        <span class="mobile-nav-icon">🛠️</span>
-        <span>ช่วยเหลือ</span>
-      </div>
-      <div class="mobile-nav-item" data-route="#/profile" onclick="if(window.auth.currentUser){location.hash='#/profile'}else{app.openModal('modal-login')}">
-        <span class="mobile-nav-icon" id="mobile-nav-avatar">👤</span>
-        <span id="mobile-nav-profile-text">โปรไฟล์</span>
-      </div>
+      <div class="mobile-nav-item active" data-route="#/" onclick="app.navigate('#/')"><span>📚</span><span>คลังวิชา</span></div>
+      <div class="mobile-nav-item" data-route="#/leaderboard" onclick="app.navigate('#/leaderboard')"><span>🏆</span><span>อันดับ</span></div>
+      <div class="mobile-nav-item" data-route="#/tickets" onclick="app.navigate('#/tickets')"><span>🛠️</span><span>ช่วยเหลือ</span></div>
+      <div class="mobile-nav-item" data-route="#/profile" onclick="app.navigate('#/profile')"><span>👤</span><span>โปรไฟล์</span></div>
     </nav>
   </div>
 
-  <!-- Toast Notification Container -->
   <div id="toast-container"></div>
 
-  <!-- =========================================================================
-       Modals
-       ========================================================================= -->
-
-  <!-- 1. Login Modal -->
-  <div id="modal-login" class="modal-overlay">
-    <div class="modal-dialog">
-      <button class="modal-close" onclick="app.closeModal('modal-login')">&times;</button>
-      <div style="text-align: center; margin-bottom: 1.5rem;">
-        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎮</div>
-        <h2 style="color: #fff; font-size: 1.4rem;">เข้าสู่ระบบ OmniVerse</h2>
-        <p style="font-size: 0.85rem; color: var(--text-muted);">เข้าสู่ระบบเพื่อสะสม EXP และเลื่อนอันดับแรงค์</p>
-      </div>
-
-      <form id="form-login">
-        <div class="form-group">
-          <label class="form-label">ชื่อผู้ใช้ หรือ อีเมล</label>
-          <input type="text" id="login-username" class="form-input" required placeholder="เช่น PlayerOne หรือ admin">
-        </div>
-        <div class="form-group">
-          <label class="form-label">รหัสผ่าน</label>
-          <input type="password" id="login-password" class="form-input" required placeholder="••••••••">
-        </div>
-
-        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">เข้าสู่ระบบ</button>
-      </form>
-
-      <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
-        <button class="btn btn-outline" style="width: 100%; margin-bottom: 0.75rem; font-size: 0.88rem;" onclick="app.quickDemoLogin(); app.closeModal('modal-login');">⚡ เข้าใช้งานด่วนด้วย Demo User</button>
-        <p style="font-size: 0.85rem; color: var(--text-muted);">
-          ยังไม่มีบัญชี? <a href="javascript:void(0)" onclick="app.closeModal('modal-login'); app.openModal('modal-register');" style="color: var(--accent);">สมัครสมาชิกที่นี่</a>
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 2. Register Modal -->
-  <div id="modal-register" class="modal-overlay">
-    <div class="modal-dialog">
-      <button class="modal-close" onclick="app.closeModal('modal-register')">&times;</button>
-      <div style="text-align: center; margin-bottom: 1.5rem;">
-        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">✨</div>
-        <h2 style="color: #fff; font-size: 1.4rem;">สร้างบัญชีผู้แสวงหาความรู้</h2>
-        <p style="font-size: 0.85rem; color: var(--text-muted);">เริ่มต้นเส้นทางสู่ปราชญ์แห่งสรรพวิชา</p>
-      </div>
-
-      <form id="form-register">
-        <div class="form-group">
-          <label class="form-label">ชื่อผู้ใช้ (Username)</label>
-          <input type="text" id="reg-username" class="form-input" required placeholder="ตั้งชื่อตัวละครของคุณ">
-        </div>
-        <div class="form-group">
-          <label class="form-label">อีเมล (ถ้ามี)</label>
-          <input type="email" id="reg-email" class="form-input" placeholder="you@example.com">
-        </div>
-        <div class="form-group">
-          <label class="form-label">เลือก Avatar ประจำตัว</label>
-          <select id="reg-avatar" class="form-select">
-            <option value="🧙‍♂️">🧙‍♂️ จอมเวทปราชญ์ (Scholar)</option>
-            <option value="🌲">🌲 พรานไพรผู้รอดชีวิต (Ranger)</option>
-            <option value="💻">💻 นักเจาะระบบดิจิทัล (Cyber Hacker)</option>
-            <option value="🎨">🎨 ศิลปินผู้รังสรรค์ (Artist)</option>
-            <option value="⚔️">⚔️ นักรบผู้กล้า (Warrior)</option>
-            <option value="💎">💎 สถาปนิกการเงิน (Strategist)</option>
-            <option value="⚙️">⚙️ วิศวกรจักรกล (Engineer)</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">รหัสผ่าน</label>
-          <input type="password" id="reg-password" class="form-input" required placeholder="ตั้งรหัสผ่านความปลอดภัย">
-        </div>
-
-        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">สมัครสมาชิกและเริ่มต้นทันที</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- 3. Create Ticket Modal -->
-  <div id="modal-create-ticket" class="modal-overlay">
-    <div class="modal-dialog">
-      <button class="modal-close" onclick="app.closeModal('modal-create-ticket')">&times;</button>
-      <div style="margin-bottom: 1.25rem;">
-        <h2 style="color: #fff; font-size: 1.35rem;">🛠️ แจ้งปัญหา / ข้อเสนอแนะ</h2>
-        <p style="font-size: 0.85rem; color: var(--text-muted);">ทีมงานหลังบ้านจะได้รับเรื่องและช่วยแก้ไขโดยเร็วที่สุด</p>
-      </div>
-
-      <form id="form-create-ticket">
-        <div class="form-group">
-          <label class="form-label">หัวข้อเรื่อง</label>
-          <input type="text" id="ticket-subject-input" class="form-input" required placeholder="เช่น พบข้อสอบคำตอบคลาดเคลื่อน">
-        </div>
-        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-          <div>
-            <label class="form-label">หมวดหมู่ปัญหา</label>
-            <select id="ticket-category-select" class="form-select">
-              <option value="content_error">โจทย์/เนื้อหาผิดพลาด</option>
-              <option value="bug">ข้อผิดพลาดระบบ (Bug)</option>
-              <option value="suggestion">ข้อเสนอแนะหลักสูตรใหม่</option>
-              <option value="account">ปัญหาเกี่ยวกับบัญชี</option>
-              <option value="general">อื่นๆ</option>
-            </select>
-          </div>
-          <div>
-            <label class="form-label">ความเร่งด่วน</label>
-            <select id="ticket-priority-select" class="form-select">
-              <option value="Low">Low (ทั่วไป)</option>
-              <option value="Medium" selected>Medium (ปานกลาง)</option>
-              <option value="High">High (สำคัญ)</option>
-              <option value="Urgent">Urgent (เร่งด่วนมาก)</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">รายละเอียดปัญหา</label>
-          <textarea id="ticket-message-input" class="form-textarea" rows="4" required placeholder="อธิบายข้อความของคุณอย่างชัดเจน..."></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-primary" style="width: 100%;">ส่งเรื่องแจ้งปัญหา 📤</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- 4. Celebration Modal (Level Up / Rank Up) -->
+  <!-- Celebration Modal -->
   <div id="modal-celebrate" class="modal-overlay">
-    <div class="modal-dialog celebrate-modal">
-      <div class="celebrate-icon" id="celebrate-icon">🏆</div>
-      <h2 class="celebrate-title" id="celebrate-title">LEVEL UP!</h2>
-      <p id="celebrate-text" style="font-size: 1.05rem; color: #fff; margin-bottom: 1.5rem;">ยินดีด้วย! คุณเลเวลอัปแล้ว</p>
+    <div class="modal-dialog" style="text-align: center;">
+      <div style="font-size: 3.5rem; margin-bottom: 0.5rem;" id="celebrate-icon">🏆</div>
+      <h2 style="color: #fbbf24; margin-bottom: 0.5rem;" id="celebrate-title">LEVEL UP!</h2>
+      <p id="celebrate-text" style="color: #fff; margin-bottom: 1.5rem;">ยินดีด้วย! คุณเลเวลอัปแล้ว</p>
       <button class="btn btn-primary" onclick="app.closeModal('modal-celebrate')">ยอดเยี่ยม! รับรางวัล ⭐</button>
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script src="./js/sound.js"></script>
-  <script src="./js/theme.js"></script>
-  <script src="./js/api.js"></script>
-  <script src="./js/auth.js"></script>
-  <script src="./js/app.js"></script>
+  <script>
+    // 1. Web Audio Sound Engine
+    class SoundEngine {
+      constructor() { this.enabled = true; this.ctx = null; }
+      init() { if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); }
+      toggleSound() {
+        this.enabled = !this.enabled;
+        document.getElementById('btn-sound-toggle').innerText = this.enabled ? '🔊' : '🔇';
+        app.showToast(this.enabled ? 'เปิดเสียงแล้ว' : 'ปิดเสียงแล้ว');
+      }
+      playTone(freq, duration = 0.1, type = 'sine') {
+        if (!this.enabled) return;
+        try {
+          this.init();
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = type; osc.frequency.value = freq;
+          gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+          osc.connect(gain); gain.connect(this.ctx.destination);
+          osc.start(); osc.stop(this.ctx.currentTime + duration);
+        } catch(e){}
+      }
+      playCorrect() { this.playTone(523.25, 0.08); setTimeout(() => this.playTone(659.25, 0.15), 90); }
+      playWrong() { this.playTone(200, 0.2, 'sawtooth'); }
+      playLevelUp() { [400, 500, 600, 800].forEach((f, i) => setTimeout(() => this.playTone(f, 0.15), i * 120)); }
+    }
+    const soundEngine = new SoundEngine();
+
+    // 2. Data Store
+    const DISCIPLINE_DATA = [
+      { id: 'academic', name_th: 'วิชาการ & วิทยาศาสตร์สากล', name_en: 'Academic & Sciences', icon: '🌌', color: '#38bdf8', desc: 'ฟิสิกส์ ดาราศาสตร์ คณิตศาสตร์ พันธุศาสตร์ CRISPR จิตวิทยา และตรรกศาสตร์สากล', quote: 'ความรู้คือแสงสว่างที่ส่องทะลุความมืดมิดของจักรวาล' },
+      { id: 'survival', name_th: 'การเอาตัวรอด & ถิ่นทุรกันดาร', name_en: 'Wilderness Survival', icon: '🌲', color: '#22c55e', desc: 'กฎแห่งเลข 3 การก่อไฟ กรองน้ำ Bushcraft ปฐมพยาบาลฉุกเฉิน และนำทางธรรมชาติ', quote: 'ธรรมชาติไม่ได้ใจร้าย แต่ไม่เคยให้โอกาสคนที่ไม่เตรียมพร้อม' },
+      { id: 'tech', name_th: 'เทคโนโลยี & ไซเบอร์เนติกส์', name_en: 'Technology & Cybernetics', icon: '💻', color: '#06b6d4', desc: 'Cybersecurity, Data Structures, AI LLMs Prompting และ Cloud Computing', quote: 'ในโลกดิจิทัล โค้ดคือเวทมนตร์ที่กำหนดความเป็นจริง' },
+      { id: 'arts', name_th: 'ศิลปะ & นิเทศศิลป์สร้างสรรค์', name_en: 'Creative Arts & Media', icon: '🎨', color: '#c084fc', desc: 'ทฤษฎีสี โครงสร้างการเล่าเรื่อง 3 องก์ UI/UX Heuristics และดนตรี', quote: 'ศิลปะคือการถ่ายทอดจิตวิญญาณและความรู้สึกที่ภาษาพูดไม่อาจเอื้อมถึง' },
+      { id: 'combat', name_th: 'สมรรถภาพกาย & ศิลปะการต่อสู้', name_en: 'Combat Mastery', icon: '🥋', color: '#ef4444', desc: 'การป้องกันตัว จุดเปราะบาง Progressive Overload และโภชนาการกีฬา', quote: 'ร่างกายที่แข็งแกร่งและจิตใจที่นิ่งสงบคือเกราะกำบังที่ดีที่สุด' },
+      { id: 'wealth', name_th: 'ทักษะชีวิต & ธุรกิจการเงิน', name_en: 'Life Mastery & Wealth', icon: '💼', color: '#10b981', desc: 'พีระมิดการเงิน ดอกเบี้ยทบต้น เจรจาต่อรอง BATNA วิเคราะห์งบการเงิน และ Deep Work', quote: 'อิสรภาพทางการเงินไม่ได้เกิดจากโชค แต่เกิดจากวินัยและกลยุทธ์' },
+      { id: 'engineering', name_th: 'วิศวกรรม & งานช่างประดิษฐ์', name_en: 'Engineering & Craftsmanship', icon: '🔧', color: '#f59e0b', desc: 'กฎของโอห์ม เครื่องยนต์ 4 จังหวะ 3D CAD และระบบอัตโนมัติ IoT ESP32', quote: 'สิ่งที่มองเห็นรอบตัว มนุษย์เราสามารถเข้าใจ แก้ไข และสร้างมันขึ้นมาใหม่ได้เสมอ' }
+    ];
+
+    const LESSON_DATA = {
+      academic: [
+        { id: 1, title: 'ทฤษฎีสัมพัทธภาพและกาลอวกาศ', desc: 'เข้าใจการบิดโค้งของกาลอวกาศ (Spacetime) และหลุมดำ', content: 'ไอน์สไตน์เสนอว่าอวกาศและเวลาถักทอเป็นผืนผ้า 4 มิติ มวลมหาศาลทำให้กาลอวกาศโค้งงอเกิดเป็นแรงโน้มถ่วง', question: 'ตามทฤษฎีสัมพัทธภาพทั่วไป แรงโน้มถ่วงเกิดขึ้นจากสิ่งใด?', scenario: 'การสังเกตแสงดาวที่เบี่ยงเบนเฉียดดวงอาทิตย์', opts: ['การดูดของแม่เหล็กไฟฟ้า', 'การบิดโค้งงอของผืนผ้ากาลอวกาศ (Spacetime)', 'ความดันอากาศในอวกาศ', 'การเสียดสีของอนุภาคมืด'], ans: 1, exp: 'มวลของวัตถุทำให้อวกาศและเวลาโค้งงอ' },
+        { id: 2, title: 'ตรรกศาสตร์และการจับตรรกะวิบัติ (Fallacies)', desc: 'ฝึกคิดวิเคราะห์และจับผิด Ad Hominem, Strawman', content: 'ตรรกะวิบัติคือข้อบกพร่องในกระบวนการให้เหตุผล เช่น การโจมตีตัวบุคคลแทนเหตุผล', question: 'การโจมตีตัวผู้พูดแทนการหักล้างเหตุผล เรียกว่าตรรกะวิบัติใด?', scenario: 'คุณยังเรียนไม่จบ จะมารู้อะไรเรื่องการเงิน', opts: ['Strawman Fallacy', 'Ad Hominem', 'Appeal to Emotion', 'Bandwagon Fallacy'], ans: 1, exp: 'Ad Hominem คือการพุ่งเป้าโจมตีคุณลักษณะส่วนตัวของผู้พูด' }
+      ],
+      survival: [
+        { id: 3, title: 'กฎแห่งเลข 3 ในภาวะวิกฤต', desc: 'ลำดับความสำคัญในการเอาตัวรอดในสถานการณ์ฉุกเฉิน', content: '1. 3 นาที ไร้อากาศ\n2. 3 ชั่วโมง ไร้ที่กำบังในอากาศสุดขั้ว\n3. 3 วัน ไร้น้ำดื่ม\n4. 3 สัปดาห์ ไร้อาหาร', question: 'ในสภาพอากาศหนาวจัดฝนตกหนัก สิ่งใดทำให้เสียชีวิตเร็วที่สุด?', scenario: 'หลงป่า อุณหภูมิ 2 องศา เสื้อผ้าเปียกโชก', opts: ['การขาดอาหาร', 'การขาดน้ำดื่ม', 'ภาวะอุณหภูมิร่างกายต่ำเกินไป (Hypothermia) ใน 3 ชั่วโมง', 'ความอดนอน'], ans: 2, exp: 'Hypothermia สามารถทำให้หมดสติและเสียชีวิตได้ในเวลาเพียง 3 ชั่วโมง' }
+      ],
+      tech: [
+        { id: 4, title: 'Cybersecurity & Phishing Defense', desc: 'การป้องกันตนเองจากการโจมตี Phishing และ Social Engineering', content: 'เปิด 2FA เสมอ ตรวจสอบชื่อ Domain และไม่คลิกลิงก์แปลกปลอมที่ส่งมาทางอีเมล', question: 'ได้รับอีเมลแจ้งบัญชีถูกระงับให้คลิกลิงก์ยืนยันรหัสผ่านด่วน ควรทำอย่างไร?', scenario: 'อีเมลส่งจาก security-alert@paypa1-update.com', opts: ['คลิกลิงก์ทันที', 'เพิกเฉย ไม่คลิกลิงก์ ตรวจสอบ Domain และรายงาน Phishing', 'ส่งต่อให้เพื่อนช่วยคลิก', 'แนบรูปบัตรประชาชนตอบกลับ'], ans: 1, exp: 'ชื่อโดเมน paypa1 เป็น Phishing ชัดเจน ไม่ควรคลิกลิงก์ใดๆ' }
+      ],
+      arts: [
+        { id: 5, title: 'ทฤษฎีสีและจิตวิทยาอารมณ์', desc: 'การจับคู่สีแบบวงล้อสี และอิทธิพลของโทนสีต่อความรู้สึกมนุษย์', content: 'คู่สีตรงข้าม (Complementary) สร้างความโดดเด่น คู่สีข้างเคียง (Analogous) สร้างความกลมกลืน', question: 'หากต้องการออกแบบปุ่มเรียกร้องความสนใจ (Call to Action) บนพื้นหลังสีน้ำเงินเข้ม ควรใช้สีใด?', scenario: 'การออกแบบ Landing Page ขายคอร์สเรียน', opts: ['สีน้ำเงินอ่อน', 'สีส้ม หรือ สีเหลืองทอง (คู่สีตรงข้าม)', 'สีดำ', 'สีเทาหม่น'], ans: 1, exp: 'สีส้มเป็นคู่สีตรงข้ามกับสีน้ำเงิน ช่วยดึงดูดสายตาได้สูงสุด' }
+      ],
+      combat: [
+        { id: 6, title: 'หลักการป้องกันตัวและจุดเปราะบาง', desc: 'การควบคุมระยะ (Distance Management) และจุดอ่อนทางกายวิภาค', content: 'จุดอ่อนทางกายวิภาคของมนุษย์ที่ไม่ขึ้นกับขนาดตัว ได้แก่ ตา จมูก ลำคอ และจุดยุทธศาสตร์', question: 'ในสถานการณ์ป้องกันตัวฉุกเฉิน สิ่งแรกที่ควรทำคืออะไร?', scenario: 'มีบุคคลท่าทางคุกคามเดินเข้ามาในระยะประชิด', opts: ['ยืนนิ่งรอให้เขาเข้ามาถึงตัว', 'สร้างระยะห่าง (Keep Distance) ส่งเสียงเตือนชัดเจน และมองหาทางหนี', 'ก้มหน้าเล่นโทรศัพท์', 'ท้าทายกลับด้วยคำหยาบ'], ans: 1, exp: 'การรักษาระยะห่างและการรับรู้สถานการณ์เป็นหัวใจสำคัญอันดับแรก' }
+      ],
+      wealth: [
+        { id: 7, title: 'พีระมิดการเงินและดอกเบี้ยทบต้น', desc: 'การบริหารสภาพคล่อง เงินสำรองฉุกเฉิน และพลังแห่งผลตอบแทนทบต้น', content: 'ฐานรากของพีระมิดการเงินคือเงินสำรองฉุกเฉิน 3-6 เดือน ก่อนจะเริ่มลงทุน', question: 'ก่อนเริ่มนำเงินไปลงทุนในสินทรัพย์เสี่ยง ควรเตรียมสิ่งใดเป็นอันดับแรก?', scenario: 'วางแผนการเงินหลังเริ่มทำงานเดือนแรก', opts: ['กู้เงินมาเก็งกำไรทันที', 'สร้างกองทุนเงินสำรองฉุกเฉิน 3-6 เท่าของค่าใช้จ่ายรายเดือน', 'ซื้อสินค้าแบรนด์เนมทั้งหมด', 'ไม่จำเป็นต้องเก็บเงิน'], ans: 1, exp: 'เงินสำรองฉุกเฉินช่วยป้องกันไม่ให้ต้องขายสินทรัพย์ลงทุนเมื่อเกิดเหตุไม่คาดฝัน' }
+      ],
+      engineering: [
+        { id: 8, title: 'พื้นฐานไฟฟ้าและกฎของโอห์ม (Ohm\'s Law)', desc: 'ความสัมพันธ์ของแรงดัน (V), กระแส (I) และความต้านทาน (R)', content: 'V = I x R (แรงดัน = กระแส x ความต้านทาน)', question: 'หากแรงดันไฟฟ้า 12V จ่ายให้หลอดไฟที่มีความต้านทาน 4 โอห์ม จะมีกระแสไฟฟ้าไหลกี่แอมแปร์?', scenario: 'การคำนวณวงจรไฟฟ้ารถยนต์', opts: ['12 แอมแปร์', '3 แอมแปร์', '48 แอมแปร์', '0.33 แอมแปร์'], ans: 1, exp: 'I = V / R = 12 / 4 = 3 แอมแปร์' }
+      ]
+    };
+
+    // 3. Main Application Controller
+    class AppController {
+      constructor() {
+        this.xp = parseInt(localStorage.getItem('omni_xp') || '180');
+        this.currentDiscipline = null;
+        this.currentQuiz = null;
+        this.combo = 1;
+      }
+
+      init() {
+        window.addEventListener('hashchange', () => this.handleRoute());
+        this.updateUserUI();
+        this.handleRoute();
+      }
+
+      getLevel() { return Math.floor(Math.sqrt(this.xp / 25)) + 1; }
+      getRank() {
+        if (this.xp >= 1500) return 'Omniscient Sage';
+        if (this.xp >= 600) return 'Platinum Expert';
+        if (this.xp >= 300) return 'Gold Adept';
+        if (this.xp >= 150) return 'Silver Apprentice';
+        return 'Bronze Novice';
+      }
+
+      updateUserUI() {
+        document.getElementById('nav-user-level').innerText = `LV. ${this.getLevel()} • ${this.getRank()}`;
+        document.getElementById('nav-user-name').innerText = 'PlayerOne';
+      }
+
+      navigate(hash) { window.location.hash = hash; }
+
+      handleRoute() {
+        const hash = window.location.hash || '#/';
+        document.body.setAttribute('data-theme', 'default');
+
+        if (hash === '#/' || hash === '') this.renderHome();
+        else if (hash.startsWith('#/discipline/')) this.renderDiscipline(hash.replace('#/discipline/', ''));
+        else if (hash.startsWith('#/quiz/')) this.renderQuiz(hash.replace('#/quiz/', ''));
+        else if (hash === '#/leaderboard') this.renderLeaderboard();
+        else if (hash === '#/profile') this.renderProfile();
+        else if (hash === '#/tickets') this.renderTickets();
+      }
+
+      renderHome() {
+        const view = document.getElementById('app-view');
+        view.innerHTML = `
+          <div class="hero-banner">
+            <div class="hero-badge">🌌 OMNIVERSE ACADEMY</div>
+            <h1 class="hero-title">ศูนย์รวมการเรียนรู้และฝึกฝนทุกสายวิชาบนโลก</h1>
+            <p class="hero-quote">"ความรู้และทักษะรอบด้าน คือกุญแจสำคัญสู่การอยู่รอดและความสำเร็จอันไร้ขีดจำกัด"</p>
+          </div>
+
+          <h2 style="margin-bottom: 1.25rem;">📚 เลือกหมวดหมู่สายวิชาเพื่อเริ่มต้นฝึกฝน</h2>
+          <div class="disciplines-grid">
+            ${DISCIPLINE_DATA.map(d => `
+              <div class="discipline-card" onclick="app.navigate('#/discipline/${d.id}')">
+                <div class="discipline-icon-box" style="color: ${d.color};">${d.icon}</div>
+                <h3 class="discipline-name">${d.name_th}</h3>
+                <div class="discipline-name-en">${d.name_en}</div>
+                <p class="discipline-desc">${d.desc}</p>
+                <button class="btn btn-primary" style="margin-top: auto; width: 100%;">เข้าสู่สายวิชา ➡️</button>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      renderDiscipline(id) {
+        const disc = DISCIPLINE_DATA.find(d => d.id === id) || DISCIPLINE_DATA[0];
+        document.body.setAttribute('data-theme', disc.id);
+        const lessons = LESSON_DATA[disc.id] || [
+          { id: 99, title: `บทเรียนพื้นฐานของ ${disc.name_th}`, desc: 'เนื้อหาและแบบฝึกหัดจำลองสถานการณ์', content: disc.desc, question: `ข้อใดคือหัวใจสำคัญของ ${disc.name_th}?`, scenario: 'การนำความรู้ไปประยุกต์ใช้ในชีวิตจริง', opts: ['การฝึกฝนและทำความเข้าใจอย่างสม่ำเสมอ', 'การท่องจำโดยไม่ทำความเข้าใจ', 'การเพิกเฉยต่อหลักการ', 'ไม่มีข้อถูก'], ans: 0, exp: 'การฝึกฝนต่อเนื่องทำให้เกิดความชำนาญ' }
+        ];
+
+        const view = document.getElementById('app-view');
+        view.innerHTML = `
+          <button class="btn btn-outline" style="margin-bottom: 1.5rem;" onclick="app.navigate('#/')">⬅️ กลับหน้าหลัก</button>
+          <div class="hero-banner">
+            <div class="hero-badge">${disc.icon} ${disc.name_en}</div>
+            <h1 class="hero-title">${disc.name_th}</h1>
+            <p class="hero-quote">"${disc.quote}"</p>
+          </div>
+
+          <h3 style="margin-bottom: 1.25rem;">📖 รายการบทเรียน & โจทย์ฝึกฝน</h3>
+          <div>
+            ${lessons.map((l, idx) => `
+              <div class="lesson-card" onclick="app.navigate('#/quiz/${disc.id}_${idx}')">
+                <div>
+                  <span class="hero-badge" style="margin-bottom: 0.3rem;">บทเรียนที่ ${idx + 1}</span>
+                  <h4 style="font-size: 1.15rem; color: #fff;">${l.title}</h4>
+                  <p style="font-size: 0.85rem; color: var(--text-muted);">${l.desc}</p>
+                </div>
+                <button class="btn btn-primary">เริ่มทำโจทย์ ⚔️</button>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      renderQuiz(param) {
+        const [discId, idxStr] = param.split('_');
+        const disc = DISCIPLINE_DATA.find(d => d.id === discId) || DISCIPLINE_DATA[0];
+        document.body.setAttribute('data-theme', disc.id);
+        const lessons = LESSON_DATA[disc.id] || [
+          { id: 99, title: `บทเรียนพื้นฐานของ ${disc.name_th}`, desc: 'เนื้อหาและแบบฝึกหัดจำลองสถานการณ์', content: disc.desc, question: `ข้อใดคือหัวใจสำคัญของ ${disc.name_th}?`, scenario: 'การนำความรู้ไปประยุกต์ใช้ในชีวิตจริง', opts: ['การฝึกฝนและทำความเข้าใจอย่างสม่ำเสมอ', 'การท่องจำโดยไม่ทำความเข้าใจ', 'การเพิกเฉยต่อหลักการ', 'ไม่มีข้อถูก'], ans: 0, exp: 'การฝึกฝนต่อเนื่องทำให้เกิดความชำนาญ' }
+        ];
+        const lesson = lessons[parseInt(idxStr) || 0] || lessons[0];
+
+        const view = document.getElementById('app-view');
+        view.innerHTML = `
+          <button class="btn btn-outline" style="margin-bottom: 1.5rem;" onclick="app.navigate('#/discipline/${disc.id}')">⬅️ ย้อนกลับ</button>
+          <div class="quiz-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <span class="hero-badge">${disc.icon} ${lesson.title}</span>
+              <span style="background: #ef4444; color: #fff; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.8rem; font-weight: 700;">🔥 Combo x${this.combo}</span>
+            </div>
+
+            <div class="scenario-box">📌 <strong>สถานการณ์จำลอง:</strong> ${lesson.scenario}</div>
+            <h3 class="quiz-question-text">${lesson.question}</h3>
+
+            <div id="options-area">
+              ${lesson.opts.map((opt, i) => `
+                <button class="option-btn" onclick="app.answerQuiz(${i}, ${lesson.ans}, '${lesson.exp}')">
+                  <span class="option-key">${String.fromCharCode(65 + i)}</span>
+                  <span>${opt}</span>
+                </button>
+              `).join('')}
+            </div>
+
+            <div id="quiz-result"></div>
+          </div>
+        `;
+      }
+
+      answerQuiz(selected, correct, exp) {
+        document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+        const resultDiv = document.getElementById('quiz-result');
+
+        if (selected === correct) {
+          soundEngine.playCorrect();
+          document.querySelectorAll('.option-btn')[selected].classList.add('correct');
+          const gained = 50 + (this.combo - 1) * 5;
+          this.xp += gained;
+          this.combo += 1;
+          localStorage.setItem('omni_xp', this.xp);
+          this.updateUserUI();
+
+          resultDiv.innerHTML = `
+            <div style="background: rgba(34,197,94,0.2); border: 1px solid #22c55e; border-radius: 12px; padding: 1rem; margin-top: 1.25rem;">
+              <h4 style="color: #4ade80;">✅ ถูกต้องยอดเยี่ยม! (+${gained} EXP)</h4>
+              <p style="font-size: 0.9rem; color: #fff; margin-top: 0.4rem;">${exp}</p>
+              <button class="btn btn-primary" style="margin-top: 0.8rem;" onclick="app.navigate('#/')">ทำโจทย์วิชาอื่นต่อ ➡️</button>
+            </div>
+          `;
+
+          if (this.xp >= 300 && this.xp - gained < 300) {
+            soundEngine.playLevelUp();
+            this.openModal('modal-celebrate');
+          }
+        } else {
+          soundEngine.playWrong();
+          document.querySelectorAll('.option-btn')[selected].classList.add('wrong');
+          document.querySelectorAll('.option-btn')[correct].classList.add('correct');
+          this.combo = 1;
+
+          resultDiv.innerHTML = `
+            <div style="background: rgba(239,68,68,0.2); border: 1px solid #ef4444; border-radius: 12px; padding: 1rem; margin-top: 1.25rem;">
+              <h4 style="color: #f87171;">❌ ยังไม่ถูกต้อง (Combo รีเซ็ต)</h4>
+              <p style="font-size: 0.9rem; color: #fff; margin-top: 0.4rem;">คำอธิบาย: ${exp}</p>
+              <button class="btn btn-outline" style="margin-top: 0.8rem;" onclick="app.handleRoute()">ลองทำใหม่อีกครั้ง 🔄</button>
+            </div>
+          `;
+        }
+      }
+
+      renderLeaderboard() {
+        const view = document.getElementById('app-view');
+        view.innerHTML = `
+          <div class="hero-banner">
+            <h1 class="hero-title">🏆 ตารางจัดอันดับผู้แสวงหาความรู้</h1>
+            <p class="hero-quote">รายชื่อผู้เล่นที่มีคะแนน EXP สูงสุดในโลก OmniVerse</p>
+          </div>
+
+          <div style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--card-border);">
+            <div style="display: flex; justify-content: space-between; padding: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-weight: 700;">
+              <span>อันดับ / ผู้เล่น</span>
+              <span>ยศ / EXP</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+              <div><strong style="color: #fbbf24;">#1</strong> 🧙‍♂️ admin (ADMIN)</div>
+              <div><strong style="color: #fbbf24;">1,500 EXP (LV. 10)</strong></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+              <div><strong style="color: #cbd5e1;">#2</strong> ⚡ PlayerOne (คุณ)</div>
+              <div><strong style="color: #38bdf8;">${this.xp} EXP (LV. ${this.getLevel()})</strong></div>
+            </div>
+          </div>
+        `;
+      }
+
+      renderProfile() {
+        const view = document.getElementById('app-view');
+        view.innerHTML = `
+          <div class="hero-banner">
+            <h1 class="hero-title">👤 โปรไฟล์ผู้เรียน & ความชำนาญ</h1>
+            <p class="hero-quote">ตรวจสอบสถิติและเหรียญรางวัลของคุณ</p>
+          </div>
+
+          <div style="background: var(--card-bg); border-radius: 16px; padding: 2rem; border: 1px solid var(--card-border); text-align: center;">
+            <div style="font-size: 4rem; margin-bottom: 0.5rem;">⚡</div>
+            <h2>PlayerOne</h2>
+            <div style="color: var(--accent); font-weight: 700; margin-bottom: 1.5rem;">${this.getRank()}</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+              <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 10px;">
+                <div style="font-size: 0.8rem; color: var(--text-muted);">เลเวลรวม</div>
+                <strong style="font-size: 1.5rem; color: #fff;">LV. ${this.getLevel()}</strong>
+              </div>
+              <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 10px;">
+                <div style="font-size: 0.8rem; color: var(--text-muted);">EXP รวม</div>
+                <strong style="font-size: 1.5rem; color: #fbbf24;">${this.xp}</strong>
+              </div>
+            </div>
+            <button class="btn btn-outline" onclick="localStorage.clear(); location.reload();">🔄 รีเซ็ตข้อมูลการเล่น</button>
+          </div>
+        `;
+      }
+
+      renderTickets() {
+        const view = document.getElementById('app-view');
+        view.innerHTML = `
+          <div class="hero-banner">
+            <h1 class="hero-title">🛠️ ศูนย์ช่วยเหลือและแจ้งปัญหา</h1>
+            <p class="hero-quote">ส่งข้อเสนอแนะหรือแจ้งข้อผิดพลาดของโจทย์</p>
+          </div>
+          <div style="background: var(--card-bg); border-radius: 16px; padding: 2rem; border: 1px solid var(--card-border);">
+            <div style="margin-bottom: 1rem;">
+              <label style="display: block; margin-bottom: 0.4rem;">หัวข้อเรื่อง</label>
+              <input type="text" id="t-subj" class="option-btn" style="cursor: text;" placeholder="ระบุหัวข้อ...">
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+              <label style="display: block; margin-bottom: 0.4rem;">รายละเอียด</label>
+              <textarea id="t-msg" class="option-btn" style="height: 100px; cursor: text;" placeholder="อธิบายข้อความ..."></textarea>
+            </div>
+            <button class="btn btn-primary" onclick="app.showToast('ส่งเรื่องแจ้งปัญหาเรียบร้อยแล้ว!'); app.navigate('#/')">ส่งเรื่องแจ้งปัญหา 📤</button>
+          </div>
+        `;
+      }
+
+      openModal(id) { document.getElementById(id).classList.add('active'); }
+      closeModal(id) { document.getElementById(id).classList.remove('active'); }
+      showToast(msg) {
+        const container = document.getElementById('toast-container');
+        const t = document.createElement('div');
+        t.className = 'toast'; t.innerText = msg;
+        container.appendChild(t);
+        setTimeout(() => t.remove(), 3000);
+      }
+    }
+
+    const app = new AppController();
+    window.onload = () => app.init();
+  </script>
 </body>
 </html>
