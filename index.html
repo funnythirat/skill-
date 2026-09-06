@@ -421,8 +421,8 @@
 
       <form id="form-login" autocomplete="off" onsubmit="event.preventDefault(); auth.login(document.getElementById('login-u').value, document.getElementById('login-p').value);">
         <div class="form-group">
-          <label class="form-label">ชื่อผู้ใช้ (Username)</label>
-          <input type="text" id="login-u" class="form-input" required placeholder="ชื่อผู้ใช้ของคุณ">
+          <label class="form-label">อีเมล Firebase หรือชื่อผู้ใช้</label>
+          <input type="text" id="login-u" class="form-input" required placeholder="อีเมลที่สร้างใน Firebase หรือชื่อผู้ใช้">
         </div>
         <div class="form-group">
           <label class="form-label">รหัสผ่าน</label>
@@ -717,11 +717,21 @@
           return;
         }
         try {
-          await firebase.auth().signInWithEmailAndPassword(this.emailForUsername(requestedName), password);
+          const loginEmail = requestedName.includes('@')
+            ? requestedName
+            : this.emailForUsername(requestedName);
+          await firebase.auth().signInWithEmailAndPassword(loginEmail, password);
           app.closeModal('modal-login');
           app.showToast(`ยินดีต้อนรับ ${requestedName}! เข้าสู่ระบบสำเร็จ`);
         } catch (error) {
-          app.showToast('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+          const messages = {
+            'auth/user-not-found': 'ไม่พบบัญชีนี้ใน Firebase Authentication',
+            'auth/wrong-password': 'รหัสผ่านไม่ถูกต้อง',
+            'auth/invalid-credential': 'อีเมลหรือรหัสผ่านไม่ถูกต้อง',
+            'auth/invalid-email': 'รูปแบบอีเมลไม่ถูกต้อง',
+            'auth/operation-not-allowed': 'ยังไม่ได้เปิด Email/Password ใน Firebase'
+          };
+          app.showToast(messages[error.code] || `เข้าสู่ระบบไม่สำเร็จ (${error.code || 'unknown-error'})`);
           console.error('Firebase login failed:', error);
         }
       }
