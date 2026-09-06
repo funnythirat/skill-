@@ -155,7 +155,6 @@
     .brand-title {
       font-family: 'Cinzel', 'Prompt', serif; font-weight: 700; font-size: 1.3rem;
       background: linear-gradient(90deg, #ffffff, var(--accent));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
 
     .nav-links { display: flex; align-items: center; gap: 0.5rem; list-style: none; }
@@ -488,6 +487,26 @@
     </div>
   </div>
 
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+    import { getAnalytics, isSupported } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js';
+
+    const firebaseConfig = {
+      apiKey: 'AIzaSyCVjiR282K2JQxXdghJQ2FMn5ytGlIMf8',
+      authDomain: 'skill-3d6c1.firebaseapp.com',
+      projectId: 'skill-3d6c1',
+      storageBucket: 'skill-3d6c1.firebasestorage.app',
+      messagingSenderId: '792517450119',
+      appId: '1:792517450119:web:25f83458db1dae94469b22',
+      measurementId: 'G-5C0C6K9BLT'
+    };
+
+    const firebaseApp = initializeApp(firebaseConfig);
+    window.firebaseApp = firebaseApp;
+    window.firebaseAnalytics = isSupported().then((supported) => (
+      supported ? getAnalytics(firebaseApp) : null
+    ));
+  </script>
   <script>
     const AVATAR_LIST = ['🧙‍♂️', '🌲', '💻', '🎨', '⚔️', '💎', '⚙️', '🚀', '🛡️', '👑', '🏹', '🥋', '🧠', '⚡', '🐉', '🦅'];
 
@@ -1667,7 +1686,6 @@
         setTimeout(() => t.remove(), 3000);
       }
     }
-
     const app = new AppController();
     window.onload = () => app.init();
   </script>
