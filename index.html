@@ -738,8 +738,17 @@
             ? requestedName
             : this.emailForUsername(requestedName);
           await firebase.auth().signInWithEmailAndPassword(loginEmail, password);
+          await new Promise((resolve) => {
+            const startedAt = Date.now();
+            const waitForProfile = () => {
+              if (this.currentUser || Date.now() - startedAt >= 5000) resolve();
+              else setTimeout(waitForProfile, 50);
+            };
+            waitForProfile();
+          });
           app.closeModal('modal-login');
           app.showToast(`ยินดีต้อนรับ ${requestedName}! เข้าสู่ระบบสำเร็จ`);
+          app.navigate(this.currentUser && this.currentUser.role === 'admin' ? '#/admin' : '#/profile');
         } catch (error) {
           const messages = {
             'auth/user-not-found': 'ไม่พบบัญชีนี้ใน Firebase Authentication',
