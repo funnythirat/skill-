@@ -718,6 +718,14 @@
         return `user-${hash}@skill-3d6c1.firebaseapp.com`;
       }
 
+      loginEmailsFor(username) {
+        const requestedName = String(username).trim();
+        if (requestedName.includes('@')) return [requestedName];
+        const emails = [this.emailForUsername(requestedName)];
+        if (requestedName.toLowerCase() === 'admin') emails.push(SUPPORT_EMAIL);
+        return [...new Set(emails)];
+      }
+
       async saveCurrentUser() {
         if (!this.currentUser || !this.currentUser.id) return;
         const { id, ...profile } = this.currentUser;
@@ -751,10 +759,17 @@
           return;
         }
         try {
-          const loginEmail = requestedName.includes('@')
-            ? requestedName
-            : this.emailForUsername(requestedName);
-          await firebase.auth().signInWithEmailAndPassword(loginEmail, password);
+          let lastError = null;
+          for (const loginEmail of this.loginEmailsFor(requestedName)) {
+            try {
+              await firebase.auth().signInWithEmailAndPassword(loginEmail, password);
+              lastError = null;
+              break;
+            } catch (error) {
+              lastError = error;
+            }
+          }
+          if (lastError) throw lastError;
           await new Promise((resolve) => {
             const startedAt = Date.now();
             const waitForProfile = () => {
@@ -1346,7 +1361,7 @@
           document.getElementById('nav-user-level').innerText = `${rank.icon} LV. ${this.getLevel()} • ${rank.name}`;
           mobProfileLabel.innerText = 'โปรไฟล์';
 
-          const isAdmin = auth.currentUser.role === 'admin';
+          const isAdmin = String(auth.currentUser.role || '').toLowerCase() === 'admin';
           adminNav.style.display = isAdmin ? 'flex' : 'none';
           mobAdmin.style.display = isAdmin ? 'flex' : 'none';
         } else {
@@ -1716,7 +1731,7 @@
       }
 
       async createLessonFromProfile() {
-        if (!auth.currentUser || auth.currentUser.role !== 'admin') {
+        if (!auth.currentUser || String(auth.currentUser.role || '').toLowerCase() !== 'admin') {
           this.showToast('เฉพาะแอดมินเท่านั้นที่เพิ่มบทเรียนได้');
           return;
         }
@@ -1743,7 +1758,7 @@
       }
 
       async createQuizFromProfile() {
-        if (!auth.currentUser || auth.currentUser.role !== 'admin') {
+        if (!auth.currentUser || String(auth.currentUser.role || '').toLowerCase() !== 'admin') {
           this.showToast('เฉพาะแอดมินเท่านั้นที่เพิ่มโจทย์ได้');
           return;
         }
@@ -1781,7 +1796,7 @@
       // ==========================================
       renderAdmin() {
         const view = document.getElementById('app-view');
-        if (!auth.currentUser || auth.currentUser.role !== 'admin') {
+        if (!auth.currentUser || String(auth.currentUser.role || '').toLowerCase() !== 'admin') {
           view.innerHTML = `
             <div style="text-align: center; padding: 4rem 1rem;">
               <h2>🛡️ พื้นที่เฉพาะผู้ดูแลระบบ (Admin Only)</h2>
