@@ -624,7 +624,7 @@
     // 2. Web Audio Sound Engine
     class SoundEngine {
       constructor() { this.enabled = true; this.ctx = null; }
-      init() { if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); }
+      async init() { if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); }
       toggleSound() {
         this.enabled = !this.enabled;
         document.getElementById('btn-sound-toggle').innerText = this.enabled ? '🔊' : '🔇';
@@ -655,10 +655,15 @@
         this.currentUser = null;
         this.users = [];
         this.unsubscribeUsers = null;
+        this.authReady = new Promise((resolve) => { this.resolveAuthReady = resolve; });
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch((error) => {
+          console.error('Firebase session persistence setup failed:', error);
+        });
         firebase.auth().onAuthStateChanged(async (firebaseUser) => {
           if (!firebaseUser) {
             this.currentUser = null;
             if (window.app) window.app.subscribeToTickets();
+            this.resolveAuthReady();
             this.updateUiAfterAuthChange();
             return;
           }
@@ -685,6 +690,7 @@
           }
           localStorage.setItem('omni_user', JSON.stringify(this.currentUser));
           if (window.app) window.app.subscribeToTickets();
+          this.resolveAuthReady();
           this.updateUiAfterAuthChange();
         });
         this.unsubscribeUsers = firebase.firestore().collection('users').orderBy('xp', 'desc').onSnapshot((snapshot) => {
@@ -1145,7 +1151,8 @@
         this.unsubscribeTickets = null;
       }
 
-      init() {
+      async init() {
+        await auth.authReady;
         this.initAvatarPickers();
         window.addEventListener('hashchange', () => this.handleRoute());
         this.updateUserUI();
@@ -1155,8 +1162,10 @@
           setTimeout(() => this.openModal('modal-register'), 400);
         }
 
-        subscribeToTickets() 
-      {
+        this.handleRoute();
+      }
+
+      subscribeToTickets() {
           if (this.unsubscribeTickets) this.unsubscribeTickets();
           this.tickets = [];
           if (!auth.currentUser) return;
@@ -1173,9 +1182,6 @@
             if (window.app) window.app.showToast('โหลดคำร้องไม่ได้: ตรวจสอบ Firestore Rules');
           });
         }
-
-        this.handleRoute();
-      }
 
       initAvatarPickers() {
         const regGrid = document.getElementById('reg-avatar-grid');
