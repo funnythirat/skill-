@@ -658,6 +658,7 @@
         firebase.auth().onAuthStateChanged(async (firebaseUser) => {
           if (!firebaseUser) {
             this.currentUser = null;
+            if (window.app) window.app.subscribeToTickets();
             this.updateUiAfterAuthChange();
             return;
           }
@@ -683,6 +684,7 @@
             if (window.app) window.app.showToast('เข้าสู่ระบบแล้ว แต่โหลดโปรไฟล์ไม่ได้');
           }
           localStorage.setItem('omni_user', JSON.stringify(this.currentUser));
+          if (window.app) window.app.subscribeToTickets();
           this.updateUiAfterAuthChange();
         });
         this.unsubscribeUsers = firebase.firestore().collection('users').orderBy('xp', 'desc').onSnapshot((snapshot) => {
@@ -748,7 +750,7 @@
           });
           app.closeModal('modal-login');
           app.showToast(`ยินดีต้อนรับ ${requestedName}! เข้าสู่ระบบสำเร็จ`);
-          app.navigate(this.currentUser && this.currentUser.role === 'admin' ? '#/admin' : '#/profile');
+          app.navigate('#/profile');
         } catch (error) {
           const messages = {
             'auth/user-not-found': 'ไม่พบบัญชีนี้ใน Firebase Authentication',
@@ -1139,12 +1141,8 @@
         this.selectedRegAvatar = '🧙‍♂️';
         this.selectedProfileAvatar = '🧙‍♂️';
         this.selectedProfileFrame = 'default';
-        this.tickets = JSON.parse(localStorage.getItem('omni_tickets') || '[]');
-        if (this.tickets.length === 0) {
-          this.tickets = [
-            { id: 1, user: 'PlayerOne', subject: 'พบตัวเลือกโจทย์วิชาฟิสิกส์เข้าใจง่ายมาก', category: 'suggestion', status: 'Resolved', message: 'อยากให้เพิ่มข้อสอบฟิสิกส์ดาราศาสตร์เพิ่มเติมครับ', reply: 'ทีมงานได้รับเรื่องแล้วและเพิ่มโจทย์ให้เรียบร้อยครับ!' }
-          ];
-        }
+        this.tickets = [];
+        this.unsubscribeTickets = null;
       }
 
       init() {
@@ -1155,6 +1153,24 @@
         // New visitors start by creating a learner profile.
         if (!auth.currentUser) {
           setTimeout(() => this.openModal('modal-register'), 400);
+        }
+
+        subscribeToTickets() {
+          if (this.unsubscribeTickets) this.unsubscribeTickets();
+          this.tickets = [];
+          if (!auth.currentUser) return;
+          let ticketsQuery = firebase.firestore().collection('tickets');
+          if (auth.currentUser.role !== 'admin') {
+            ticketsQuery = ticketsQuery.where('userId', '==', auth.currentUser.id);
+          }
+          this.unsubscribeTickets = ticketsQuery.onSnapshot((snapshot) => {
+            this.tickets = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            this.tickets.sort((first, second) => String(second.createdAt || '').localeCompare(String(first.createdAt || '')));
+            if (window.app && ['#/tickets', '#/admin'].includes(window.location.hash)) window.app.handleRoute();
+          }, (error) => {
+            console.error('ไม่สามารถโหลด Ticket จาก Firestore ได้:', error);
+            if (window.app) window.app.showToast('โหลดคำร้องไม่ได้: ตรวจสอบ Firestore Rules');
+          });
         }
 
         this.handleRoute();
@@ -1530,7 +1546,7 @@
 
         view.innerHTML = `
           <div class="hero-banner">
-            <h1 class="hero-title">👤 โปรไฟล์ผู้เรียน & สถิติส่วนตัว</h1>
+            <h1 class="hero-title">👤 โปรไฟล์ผู้ใช้ & สถิติส่วนตัว</h1>
             <p class="hero-quote">จัดการตัวละครและตรวจสอบระดับความชำนาญของคุณ</p>
           </div>
 
@@ -1538,7 +1554,7 @@
             <div style="margin-bottom: 1rem;">${this.profileAvatarMarkup(auth.currentUser)}</div>
             <button class="btn btn-outline" style="padding: 0.35rem 0.8rem; font-size: 0.82rem; margin-bottom: 1.25rem;" onclick="app.openModal('modal-avatar-picker')">🎨 เปลี่ยนรูปโปรไฟล์ (Avatar)</button>
 
-            <h2>${auth.currentUser.username}</h2>
+            <h2>${auth.currentUser.username} ${auth.currentUser.role === 'admin' ? '<span style="background: #38bdf8; color: #000; font-size: 0.75rem; vertical-align: middle; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 5px;">ADMIN</span>' : ''}</h2>
             <div style="color: var(--accent); font-weight: 700; margin-bottom: 1.5rem;">${this.getRank()}</div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
@@ -1626,7 +1642,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  ${this.tickets.map(t => `
+                    ${(auth.currentUser ? this.tickets.filter(t => t.userId === auth.currentUser.id) : []).map(t => `
                     <tr>
                       <td><strong style="color: #fff;">${t.subject}</strong><br><small style="color: var(--text-muted);">${t.message}</small></td>
                       <td><span class="status-chip status-${t.status}">${t.status}</span></td>
@@ -1640,25 +1656,35 @@
         `;
       }
 
-      submitTicket() {
+      async submitTicket() {
+        if (!auth.currentUser) {
+          this.showToast('กรุณาเข้าสู่ระบบก่อนส่งคำร้อง');
+          return;
+        }
         const subj = document.getElementById('t-subj').value.trim();
         const msg = document.getElementById('t-msg').value.trim();
         if (!subj || !msg) {
-          alert('กรุณากรอกหัวข้อและรายละเอียดให้ครบถ้วน');
+          this.showToast('กรุณากรอกหัวข้อและรายละเอียดให้ครบถ้วน');
           return;
         }
-        this.tickets.unshift({
-          id: Date.now(),
-          user: auth.currentUser ? auth.currentUser.username : 'Guest',
-          subject: subj,
-          category: 'general',
-          status: 'Open',
-          message: msg,
-          reply: null
-        });
-        localStorage.setItem('omni_tickets', JSON.stringify(this.tickets));
-        this.showToast('ส่งเรื่องแจ้งปัญหาเรียบร้อยแล้ว!');
-        this.renderTickets();
+        try {
+          await firebase.firestore().collection('tickets').add({
+            userId: auth.currentUser.id,
+            user: auth.currentUser.username,
+            subject: subj,
+            category: 'general',
+            status: 'Open',
+            message: msg,
+            reply: null,
+            createdAt: new Date().toISOString()
+          });
+          document.getElementById('t-subj').value = '';
+          document.getElementById('t-msg').value = '';
+          this.showToast('ส่งเรื่องแจ้งปัญหาเรียบร้อยแล้ว!');
+        } catch (error) {
+          console.error('Submit ticket failed:', error);
+          this.showToast(`ส่งคำร้องไม่สำเร็จ (${error.code || 'unknown-error'})`);
+        }
       }
 
       async createLessonFromProfile() {
@@ -1833,15 +1859,21 @@
         `;
       }
 
-      adminReplyTicket(idx) {
+      async adminReplyTicket(idx) {
         const ticket = this.tickets[idx];
         const reply = prompt(`ตอบกลับข้อความของ ${ticket.user}:\n"${ticket.message}"`, "ทีมงานตรวจสอบและแก้ไขปัญหาให้เรียบร้อยแล้วครับ ขอบคุณครับ");
         if (reply) {
-          ticket.reply = reply;
-          ticket.status = 'Resolved';
-          localStorage.setItem('omni_tickets', JSON.stringify(this.tickets));
-          this.showToast('ตอบกลับและปิดงาน Ticket เรียบร้อยแล้ว!');
-          this.renderAdmin();
+          try {
+            await firebase.firestore().collection('tickets').doc(ticket.id).update({
+              reply,
+              status: 'Resolved',
+              updatedAt: new Date().toISOString()
+            });
+            this.showToast('ตอบกลับและปิดงาน Ticket เรียบร้อยแล้ว!');
+          } catch (error) {
+            console.error('Reply ticket failed:', error);
+            this.showToast(`ตอบคำร้องไม่สำเร็จ (${error.code || 'unknown-error'})`);
+          }
         }
       }
 
