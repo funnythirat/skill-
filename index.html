@@ -1155,7 +1155,8 @@
           setTimeout(() => this.openModal('modal-register'), 400);
         }
 
-        subscribeToTickets() {
+        subscribeToTickets() 
+      {
           if (this.unsubscribeTickets) this.unsubscribeTickets();
           this.tickets = [];
           if (!auth.currentUser) return;
@@ -1923,4 +1924,4 @@
     window.onload = () => app.init();
   </script>
 </body>
-</html>
+    </html>
