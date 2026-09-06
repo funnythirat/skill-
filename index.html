@@ -523,8 +523,8 @@
       projectId: 'skill-3d6c1',
       storageBucket: 'skill-3d6c1.firebasestorage.app',
       messagingSenderId: '792517450119',
-      appId: '1:792517450119:web:25f83458db1dae94469b22',
-      measurementId: 'G-5C0C6K9BLT'
+      appId: '1:792517450119:web:ea64e33d2611adc7469b22',
+      measurementId: 'G-1SF78C57RD'
     };
 
     const firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -747,7 +747,15 @@
           app.showToast(`สร้างตัวละครสำเร็จ! ยินดีต้อนรับ ${this.currentUser.username}`);
           app.navigate('#/profile');
         } catch (error) {
-          app.showToast(error.code === 'auth/email-already-in-use' ? 'ชื่อนี้มีผู้ใช้งานแล้ว กรุณาเลือกชื่อใหม่' : 'สมัครสมาชิกไม่สำเร็จ');
+          const messages = {
+            'auth/email-already-in-use': 'ชื่อนี้มีผู้ใช้งานแล้ว กรุณาเลือกชื่อใหม่',
+            'auth/operation-not-allowed': 'ยังไม่ได้เปิด Email/Password ใน Firebase Authentication',
+            'auth/unauthorized-domain': 'โดเมนนี้ยังไม่ได้เพิ่มใน Authorized domains',
+            'auth/network-request-failed': 'เชื่อมต่อ Firebase ไม่ได้ กรุณาตรวจสอบอินเทอร์เน็ต',
+            'permission-denied': 'Firestore Rules ไม่อนุญาตให้บันทึกโปรไฟล์',
+            'failed-precondition': 'ยังไม่ได้สร้าง Firestore Database'
+          };
+          app.showToast(messages[error.code] || `สมัครสมาชิกไม่สำเร็จ (${error.code || 'unknown-error'})`);
           console.error('Firebase registration failed:', error);
         }
       }
