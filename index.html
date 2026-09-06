@@ -1552,6 +1552,37 @@
               </div>
             </div>
 
+            ${auth.currentUser.role === 'admin' ? `
+              <div style="text-align: left; background: rgba(56,189,248,0.08); border: 1px solid #38bdf8; border-radius: 14px; padding: 1.25rem; margin-bottom: 1.5rem;">
+                <h3 style="color: #38bdf8; margin-bottom: 0.35rem;">🛡️ สิทธิ์ผู้ดูแลระบบ</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">เพิ่มเนื้อหาและโจทย์ใหม่ลงฐานข้อมูลกลาง</p>
+                <div class="form-group">
+                  <label class="form-label">เพิ่มบทเรียน</label>
+                  <input id="admin-lesson-title" class="form-input" placeholder="ชื่อบทเรียน" required>
+                  <textarea id="admin-lesson-content" class="form-textarea" rows="3" placeholder="เนื้อหาบทเรียน" style="margin-top: 0.5rem;" required></textarea>
+                  <button class="btn btn-primary" style="margin-top: 0.6rem;" onclick="app.createLessonFromProfile()">บันทึกบทเรียน</button>
+                </div>
+                <div class="form-group" style="border-top: 1px solid var(--card-border); padding-top: 1rem;">
+                  <label class="form-label">เพิ่มโจทย์แบบเลือกตอบ</label>
+                  <input id="admin-quiz-question" class="form-input" placeholder="คำถาม" required>
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem;">
+                    <input id="admin-quiz-a" class="form-input" placeholder="ตัวเลือก A" required>
+                    <input id="admin-quiz-b" class="form-input" placeholder="ตัวเลือก B" required>
+                    <input id="admin-quiz-c" class="form-input" placeholder="ตัวเลือก C" required>
+                    <input id="admin-quiz-d" class="form-input" placeholder="ตัวเลือก D" required>
+                  </div>
+                  <select id="admin-quiz-answer" class="form-select" style="margin-top: 0.5rem;">
+                    <option value="A">คำตอบที่ถูก: A</option>
+                    <option value="B">คำตอบที่ถูก: B</option>
+                    <option value="C">คำตอบที่ถูก: C</option>
+                    <option value="D">คำตอบที่ถูก: D</option>
+                  </select>
+                  <textarea id="admin-quiz-explanation" class="form-textarea" rows="2" placeholder="คำอธิบายเฉลย" style="margin-top: 0.5rem;" required></textarea>
+                  <button class="btn btn-primary" style="margin-top: 0.6rem;" onclick="app.createQuizFromProfile()">บันทึกโจทย์</button>
+                </div>
+              </div>
+            ` : ''}
+
             <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
               <button class="btn btn-outline" onclick="auth.logout()">🚪 ออกจากระบบ</button>
               <button class="btn btn-outline" onclick="localStorage.clear(); location.reload();">🔄 รีเซ็ตข้อมูล</button>
@@ -1628,6 +1659,67 @@
         localStorage.setItem('omni_tickets', JSON.stringify(this.tickets));
         this.showToast('ส่งเรื่องแจ้งปัญหาเรียบร้อยแล้ว!');
         this.renderTickets();
+      }
+
+      async createLessonFromProfile() {
+        if (!auth.currentUser || auth.currentUser.role !== 'admin') {
+          this.showToast('เฉพาะแอดมินเท่านั้นที่เพิ่มบทเรียนได้');
+          return;
+        }
+        const title = document.getElementById('admin-lesson-title').value.trim();
+        const content = document.getElementById('admin-lesson-content').value.trim();
+        if (!title || !content) {
+          this.showToast('กรุณากรอกชื่อและเนื้อหาบทเรียน');
+          return;
+        }
+        try {
+          await firebase.firestore().collection('lessons').add({
+            title,
+            content,
+            createdBy: auth.currentUser.id,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          document.getElementById('admin-lesson-title').value = '';
+          document.getElementById('admin-lesson-content').value = '';
+          this.showToast('เพิ่มบทเรียนลง Firestore แล้ว');
+        } catch (error) {
+          console.error('Create lesson failed:', error);
+          this.showToast(`เพิ่มบทเรียนไม่สำเร็จ (${error.code || 'unknown-error'})`);
+        }
+      }
+
+      async createQuizFromProfile() {
+        if (!auth.currentUser || auth.currentUser.role !== 'admin') {
+          this.showToast('เฉพาะแอดมินเท่านั้นที่เพิ่มโจทย์ได้');
+          return;
+        }
+        const question = document.getElementById('admin-quiz-question').value.trim();
+        const explanation = document.getElementById('admin-quiz-explanation').value.trim();
+        const options = ['a', 'b', 'c', 'd'].map((key) => document.getElementById(`admin-quiz-${key}`).value.trim());
+        if (!question || !explanation || options.some(option => !option)) {
+          this.showToast('กรุณากรอกคำถาม ตัวเลือก และคำอธิบายให้ครบ');
+          return;
+        }
+        try {
+          await firebase.firestore().collection('quizzes').add({
+            question,
+            option_a: options[0],
+            option_b: options[1],
+            option_c: options[2],
+            option_d: options[3],
+            correct_option: document.getElementById('admin-quiz-answer').value,
+            explanation,
+            createdBy: auth.currentUser.id,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          ['question', 'a', 'b', 'c', 'd', 'explanation'].forEach((key) => {
+            document.getElementById(`admin-quiz-${key}`).value = '';
+          });
+          this.showToast('เพิ่มโจทย์ลง Firestore แล้ว');
+        } catch (error) {
+          console.error('Create quiz failed:', error);
+          this.showToast(`เพิ่มโจทย์ไม่สำเร็จ (${error.code || 'unknown-error'})`);
+        }
       }
 
       // ==========================================
