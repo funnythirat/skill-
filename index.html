@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#070913">
-  <title>วิถีฝึกตนไปสู่ผู้รอบรู้-The Path of Self-Cultivation Toward Becoming Knowledgeable
-  </title>
+  <title>OmniVerse Academy - ศูนย์รวมการเรียนรู้และฝึกฝนทุกสายวิชาบนโลก</title>
   
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
@@ -314,6 +313,31 @@
     }
     .avatar-upload-preview { width: 72px; height: 72px; object-fit: cover; border-radius: 50%; border: 2px solid var(--accent); display: block; margin: 0.75rem auto; }
     .avatar-image { width: 34px; height: 34px; object-fit: cover; border-radius: 50%; vertical-align: middle; }
+    .profile-avatar-frame {
+      width: 118px; height: 118px; padding: 7px; display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 50%; background: linear-gradient(135deg, #38bdf8, #a855f7, #fbbf24);
+      box-shadow: 0 0 24px var(--accent-glow); position: relative;
+    }
+    .profile-avatar-frame::after { content: ''; position: absolute; inset: 4px; border: 2px solid rgba(255,255,255,0.75); border-radius: inherit; pointer-events: none; }
+    .profile-avatar-frame.square { border-radius: 24px; background: linear-gradient(135deg, #22c55e, #06b6d4); }
+    .profile-avatar-frame.diamond { border-radius: 22px; transform: rotate(45deg); background: linear-gradient(135deg, #f59e0b, #ef4444); }
+    .profile-avatar-frame.diamond > * { transform: rotate(-45deg); }
+    .profile-avatar-frame.neon { background: linear-gradient(135deg, #06b6d4, #6366f1, #ec4899); box-shadow: 0 0 12px #06b6d4, 0 0 32px #a855f7; }
+    .profile-avatar-frame.gold { background: linear-gradient(135deg, #fef08a, #f59e0b, #92400e); }
+    .profile-avatar-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+    .profile-avatar-frame .avatar-image { width: 100%; height: 100%; }
+    .profile-avatar-frame > span { font-size: 4rem; line-height: 1; }
+    .rank-emblem {
+      display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.35rem 0.8rem;
+      border: 1px solid var(--rank-color, #38bdf8); border-radius: 999px;
+      color: var(--rank-color, #38bdf8); background: color-mix(in srgb, var(--rank-color, #38bdf8) 14%, transparent);
+      box-shadow: 0 0 18px color-mix(in srgb, var(--rank-color, #38bdf8) 30%, transparent);
+      font-weight: 800;
+    }
+    .rank-emblem-icon { font-size: 1.35rem; filter: drop-shadow(0 0 5px currentColor); }
+    .avatar-frame-picker { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin: 0.75rem 0 1rem; }
+    .frame-opt { padding: 0.45rem 0.7rem; border: 1px solid var(--card-border); border-radius: 9px; background: rgba(255,255,255,0.05); color: #fff; cursor: pointer; }
+    .frame-opt.selected { border-color: var(--accent); background: var(--badge-bg); }
 
     /* Admin Cards & Tables */
     .admin-stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
@@ -354,7 +378,7 @@
       <ul class="nav-links">
         <li class="nav-item active" data-route="#/" onclick="app.navigate('#/')"><span>📚</span> <span>คลังสายวิชา</span></li>
         <li class="nav-item" data-route="#/leaderboard" onclick="app.navigate('#/leaderboard')"><span>🏆</span> <span>ตารางอันดับ</span></li>
-        <li class="nav-item" data-route="#/tickets" onclick="app.navigate('#/tickets')"><span>🛠️</span> <span>ศูนย์ช่วยเหลือ</span></li>
+        <li class="nav-item" data-route="#/tickets" onclick="app.navigate('#/tickets')"><span>✉️</span> <span>ติดต่อทางอีเมล</span></li>
         <li class="nav-item" id="nav-admin-link" style="display: none;" onclick="app.navigate('#/admin')"><span>🛡️</span> <span>หลังบ้าน (Admin)</span></li>
       </ul>
 
@@ -385,7 +409,7 @@
     <nav class="mobile-bottom-nav">
       <div class="mobile-nav-item active" data-route="#/" onclick="app.navigate('#/')"><span>📚</span><span>คลังวิชา</span></div>
       <div class="mobile-nav-item" data-route="#/leaderboard" onclick="app.navigate('#/leaderboard')"><span>🏆</span><span>อันดับ</span></div>
-      <div class="mobile-nav-item" data-route="#/tickets" onclick="app.navigate('#/tickets')"><span>🛠️</span><span>ช่วยเหลือ</span></div>
+      <div class="mobile-nav-item" data-route="#/tickets" onclick="app.navigate('#/tickets')"><span>✉️</span><span>ติดต่ออีเมล</span></div>
       <div class="mobile-nav-item" id="mob-admin-item" style="display: none;" data-route="#/admin" onclick="app.navigate('#/admin')"><span>🛡️</span><span>หลังบ้าน</span></div>
       <div class="mobile-nav-item" data-route="#/profile" onclick="if(auth.currentUser){app.navigate('#/profile')}else{app.openModal('modal-login')}"><span>👤</span><span id="mob-profile-label">โปรไฟล์</span></div>
     </nav>
@@ -405,8 +429,8 @@
 
       <form id="form-login" autocomplete="off" onsubmit="event.preventDefault(); auth.login(document.getElementById('login-u').value, document.getElementById('login-p').value);">
         <div class="form-group">
-          <label class="form-label">ชื่อผู้ใช้ (Username)</label>
-          <input type="text" id="login-u" class="form-input" required placeholder="ชื่อผู้ใช้ของคุณ">
+          <label class="form-label">อีเมล Firebase หรือชื่อผู้ใช้</label>
+          <input type="text" id="login-u" class="form-input" required placeholder="อีเมลที่สร้างใน Firebase หรือชื่อผู้ใช้">
         </div>
         <div class="form-group">
           <label class="form-label">รหัสผ่าน</label>
@@ -469,6 +493,14 @@
       <div class="avatar-picker-grid" id="profile-avatar-grid">
         <!-- 16 Avatars -->
       </div>
+      <label class="form-label">เลือกกรอบโปรไฟล์</label>
+      <div class="avatar-frame-picker" id="profile-frame-grid">
+        <button type="button" class="frame-opt selected" onclick="app.selectProfileFrame('default', this)">วงกลม</button>
+        <button type="button" class="frame-opt" onclick="app.selectProfileFrame('square', this)">สี่เหลี่ยม</button>
+        <button type="button" class="frame-opt" onclick="app.selectProfileFrame('diamond', this)">เพชร</button>
+        <button type="button" class="frame-opt" onclick="app.selectProfileFrame('neon', this)">นีออน</button>
+        <button type="button" class="frame-opt" onclick="app.selectProfileFrame('gold', this)">ทอง</button>
+      </div>
 
       <label class="form-label" for="profile-avatar-file">หรืออัปโหลดรูปจากอุปกรณ์</label>
       <input type="file" id="profile-avatar-file" class="form-input" accept="image/*" onchange="app.previewUploadedAvatar(this, 'profile')">
@@ -488,7 +520,34 @@
     </div>
   </div>
 
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script>
+    const firebaseConfig = {
+      apiKey: 'AIzaSyC4a7pr0L7cmLNYo_KKAoRpsupe50UMKCw',
+      authDomain: 'namemyskill.firebaseapp.com',
+      projectId: 'namemyskill',
+      storageBucket: 'namemyskill.firebasestorage.app',
+      messagingSenderId: '10655085158',
+      appId: '1:10655085158:web:ba7653f66c1577162bb3a7',
+      measurementId: 'G-1G94150W3S'
+    };
+
+    const firebaseApp = firebase.initializeApp(firebaseConfig);
+    window.firebaseApp = firebaseApp;
+    window.firebaseAuth = firebase.auth();
+    window.firebaseDb = firebase.firestore();
+    window.firebaseAnalytics = firebase.analytics.isSupported().then((supported) => (
+      supported ? firebase.analytics() : null
+    )).catch((error) => {
+      console.warn('Firebase Analytics is unavailable:', error.message);
+      return null;
+    });
+  </script>
+  <script>
+    const SUPPORT_EMAIL = 'Thiratsarapakdee@gmail.com';
     const AVATAR_LIST = ['🧙‍♂️', '🌲', '💻', '🎨', '⚔️', '💎', '⚙️', '🚀', '🛡️', '👑', '🏹', '🥋', '🧠', '⚡', '🐉', '🦅'];
 
     // 1. Dynamic Background Particles Engine
@@ -574,7 +633,7 @@
     // 2. Web Audio Sound Engine
     class SoundEngine {
       constructor() { this.enabled = true; this.ctx = null; }
-      init() { if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); }
+      async init() { if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); }
       toggleSound() {
         this.enabled = !this.enabled;
         document.getElementById('btn-sound-toggle').innerText = this.enabled ? '🔊' : '🔇';
@@ -603,67 +662,124 @@
     class AuthManager {
       constructor() {
         this.currentUser = null;
-        this.users = JSON.parse(localStorage.getItem('omni_users') || '[]');
-        if (!this.users.some(user => user.username.toLowerCase() === 'admin')) {
-          this.users.unshift({ username: 'admin', password: 'admin123', role: 'admin', xp: 1500, level: 10, rank: 'Omniscient Sage', avatar: '🧙‍♂️', registeredAt: new Date().toISOString() });
-          this.saveUsers();
-        }
-        if (this.currentUser && !this.users.some(user => user.username.toLowerCase() === this.currentUser.username.toLowerCase())) {
-          this.users.push({ ...this.currentUser, registeredAt: new Date().toISOString() });
-          this.saveUsers();
-        }
+        this.users = [];
+        this.unsubscribeUsers = null;
+        this.authReady = new Promise((resolve) => { this.resolveAuthReady = resolve; });
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch((error) => {
+          console.error('Firebase session persistence setup failed:', error);
+        });
+        firebase.auth().onAuthStateChanged(async (firebaseUser) => {
+          if (!firebaseUser) {
+            this.currentUser = null;
+            if (window.app) window.app.subscribeToTickets();
+            this.resolveAuthReady();
+            this.updateUiAfterAuthChange();
+            return;
+          }
+          const fallbackProfile = {
+            id: firebaseUser.uid,
+            username: firebaseUser.email ? firebaseUser.email.split('@')[0] : 'user',
+            email: firebaseUser.email || '',
+            role: 'user',
+            xp: 0,
+            level: 1,
+            rank: 'Bronze Novice',
+            avatar: '🧙‍♂️',
+            frame: 'default'
+          };
+          try {
+            const profile = await firebase.firestore().collection('users').doc(firebaseUser.uid).get();
+            this.currentUser = profile.exists
+              ? { ...fallbackProfile, ...profile.data(), id: firebaseUser.uid }
+              : fallbackProfile;
+          } catch (error) {
+            console.error('Firebase profile load failed:', error);
+            this.currentUser = fallbackProfile;
+            if (window.app) window.app.showToast('เข้าสู่ระบบแล้ว แต่โหลดโปรไฟล์ไม่ได้');
+          }
+          localStorage.setItem('omni_user', JSON.stringify(this.currentUser));
+          if (window.app) window.app.subscribeToTickets();
+          this.resolveAuthReady();
+          this.updateUiAfterAuthChange();
+        });
+        this.unsubscribeUsers = firebase.firestore().collection('users').orderBy('xp', 'desc').onSnapshot((snapshot) => {
+          this.users = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          if (window.app && (window.location.hash === '#/leaderboard' || window.location.hash === '#/admin')) {
+            window.app.handleRoute();
+          }
+        }, (error) => console.error('ไม่สามารถโหลดรายชื่อผู้ใช้แบบเรียลไทม์ได้:', error));
       }
 
-      saveUsers() {
-        localStorage.setItem('omni_users', JSON.stringify(this.users));
+      emailForUsername(username) {
+        const normalized = String(username).trim().toLowerCase();
+        const hash = Array.from(normalized).reduce((value, character) => (
+          ((value * 31) + character.charCodeAt(0)) >>> 0
+        ), 7);
+        return `user-${hash}@skill-3d6c1.firebaseapp.com`;
       }
 
-      saveCurrentUser() {
-        if (!this.currentUser) return;
-        const userIndex = this.users.findIndex(user => user.username.toLowerCase() === this.currentUser.username.toLowerCase());
-        if (userIndex >= 0) this.users[userIndex] = { ...this.users[userIndex], ...this.currentUser };
-        else this.users.push({ ...this.currentUser, registeredAt: new Date().toISOString() });
-        this.saveUsers();
+      async saveCurrentUser() {
+        if (!this.currentUser || !this.currentUser.id) return;
+        const { id, ...profile } = this.currentUser;
+        await firebase.firestore().collection('users').doc(id).set(profile, { merge: true });
         localStorage.setItem('omni_user', JSON.stringify(this.currentUser));
       }
 
-      deleteUser(index) {
+      updateUiAfterAuthChange() {
+        if (window.app) {
+          window.app.updateUserUI();
+          window.app.handleRoute();
+        }
+      }
+
+      async deleteUser(index) {
         const user = this.users[index];
         if (!user || user.role === 'admin') {
           app.showToast('ไม่สามารถลบบัญชีผู้ดูแลระบบได้');
           return;
         }
         if (!confirm(`ต้องการลบบัญชี ${user.username} ใช่หรือไม่?`)) return;
-        this.users.splice(index, 1);
-        this.saveUsers();
+        await firebase.firestore().collection('users').doc(user.id).delete();
         app.showToast(`ลบบัญชี ${user.username} เรียบร้อยแล้ว`);
         app.renderAdmin();
       }
 
-      login(username, password) {
+      async login(username, password) {
         const requestedName = (username || '').trim();
-        const savedUser = this.users.find(user => user.username.toLowerCase() === requestedName.toLowerCase());
-        if (savedUser && savedUser.password && savedUser.password !== password) {
-          app.showToast('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+        if (!requestedName || !password) {
+          app.showToast('กรุณากรอกชื่อผู้ใช้และรหัสผ่าน');
           return;
         }
-        if (savedUser) {
-          this.currentUser = { ...savedUser };
-        } else {
-          const curXp = parseInt(localStorage.getItem('omni_xp') || '180');
-          const savedAvatar = localStorage.getItem('omni_avatar') || '⚡';
-          this.currentUser = { username: requestedName || 'PlayerOne', role: 'user', xp: curXp, level: Math.floor(Math.sqrt(curXp/25))+1, rank: 'Silver Apprentice', avatar: savedAvatar };
+        try {
+          const loginEmail = requestedName.includes('@')
+            ? requestedName
+            : this.emailForUsername(requestedName);
+          await firebase.auth().signInWithEmailAndPassword(loginEmail, password);
+          await new Promise((resolve) => {
+            const startedAt = Date.now();
+            const waitForProfile = () => {
+              if (this.currentUser || Date.now() - startedAt >= 5000) resolve();
+              else setTimeout(waitForProfile, 50);
+            };
+            waitForProfile();
+          });
+          app.closeModal('modal-login');
+          app.showToast(`ยินดีต้อนรับ ${requestedName}! เข้าสู่ระบบสำเร็จ`);
+          app.navigate('#/profile');
+        } catch (error) {
+          const messages = {
+            'auth/user-not-found': 'ไม่พบบัญชีนี้ใน Firebase Authentication',
+            'auth/wrong-password': 'รหัสผ่านไม่ถูกต้อง',
+            'auth/invalid-credential': 'อีเมลหรือรหัสผ่านไม่ถูกต้อง',
+            'auth/invalid-email': 'รูปแบบอีเมลไม่ถูกต้อง',
+            'auth/operation-not-allowed': 'ยังไม่ได้เปิด Email/Password ใน Firebase'
+          };
+          app.showToast(messages[error.code] || `เข้าสู่ระบบไม่สำเร็จ (${error.code || 'unknown-error'})`);
+          console.error('Firebase login failed:', error);
         }
-        localStorage.setItem('omni_user', JSON.stringify(this.currentUser));
-        localStorage.setItem('omni_xp', this.currentUser.xp);
-        this.saveCurrentUser();
-        app.closeModal('modal-login');
-        app.updateUserUI();
-        app.showToast(`ยินดีต้อนรับ ${this.currentUser.username}! เข้าสู่ระบบสำเร็จ`);
-        app.handleRoute();
       }
 
-      register(username, avatar, password) {
+      async register(username, avatar, password) {
         const requestedName = (username || '').trim() || 'Seeker';
         if (!password || password.length < 6) {
           app.showToast('รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร');
@@ -673,24 +789,35 @@
           app.showToast('ชื่อนี้มีผู้ใช้งานแล้ว กรุณาเลือกชื่อใหม่');
           return;
         }
-        this.currentUser = { username: requestedName, password, role: 'user', xp: 0, level: 1, rank: 'Bronze Novice', avatar: avatar || '🧙‍♂️', registeredAt: new Date().toISOString() };
-        this.users.push({ ...this.currentUser });
-        this.saveUsers();
-        localStorage.setItem('omni_user', JSON.stringify(this.currentUser));
-        localStorage.setItem('omni_xp', '0');
-        localStorage.setItem('omni_avatar', this.currentUser.avatar);
-        app.closeModal('modal-register');
-        app.updateUserUI();
-        app.showToast(`สร้างตัวละครสำเร็จ! ยินดีต้อนรับ ${this.currentUser.username}`);
-        app.navigate('#/profile');
+        try {
+          const credential = await firebase.auth().createUserWithEmailAndPassword(this.emailForUsername(requestedName), password);
+          const profile = { username: requestedName, role: 'user', xp: 0, level: 1, rank: 'Bronze Novice', avatar: avatar || '🧙‍♂️', frame: 'default', registeredAt: new Date().toISOString() };
+          await firebase.firestore().collection('users').doc(credential.user.uid).set(profile);
+          this.currentUser = { id: credential.user.uid, ...profile };
+          localStorage.setItem('omni_user', JSON.stringify(this.currentUser));
+          app.closeModal('modal-register');
+          app.updateUserUI();
+          app.showToast(`สร้างตัวละครสำเร็จ! ยินดีต้อนรับ ${this.currentUser.username}`);
+          app.navigate('#/profile');
+        } catch (error) {
+          const messages = {
+            'auth/email-already-in-use': 'ชื่อนี้มีผู้ใช้งานแล้ว กรุณาเลือกชื่อใหม่',
+            'auth/operation-not-allowed': 'ยังไม่ได้เปิด Email/Password ใน Firebase Authentication',
+            'auth/unauthorized-domain': 'โดเมนนี้ยังไม่ได้เพิ่มใน Authorized domains',
+            'auth/network-request-failed': 'เชื่อมต่อ Firebase ไม่ได้ กรุณาตรวจสอบอินเทอร์เน็ต',
+            'permission-denied': 'Firestore Rules ไม่อนุญาตให้บันทึกโปรไฟล์',
+            'failed-precondition': 'ยังไม่ได้สร้าง Firestore Database'
+          };
+          app.showToast(messages[error.code] || `สมัครสมาชิกไม่สำเร็จ (${error.code || 'unknown-error'})`);
+          console.error('Firebase registration failed:', error);
+        }
       }
 
-      logout() {
+      async logout() {
+        await firebase.auth().signOut();
         this.currentUser = null;
         localStorage.removeItem('omni_user');
-        app.updateUserUI();
         app.showToast('ออกจากระบบเรียบร้อยแล้ว');
-        app.renderHome();
       }
     }
     const auth = new AuthManager();
@@ -713,7 +840,7 @@
           title: 'ทฤษฎีสัมพัทธภาพและกาลอวกาศ (General Relativity)',
           desc: 'เข้าใจการบิดโค้งของกาลอวกาศ (Spacetime), การยืดของเวลา และหลุมดำ',
           theory: `
-            <div class="theory-section-title"> 1. ทฤษฎีบทและหลักการสำคัญ (Core Principles)</div>
+            <div class="theory-section-title">📜 1. ทฤษฎีบทและหลักการสำคัญ (Core Principles)</div>
             <p>อัลเบิร์ต ไอน์สไตน์ ได้เสนอว่า <strong>อวกาศ (Space)</strong> และ <strong>เวลา (Time)</strong> ไม่ได้แยกจากกันอย่างเป็นเอกเทศ แต่ถูกถักทอเข้าด้วยกันเป็นผืนผ้า 4 มิติ เรียกว่า <strong>Spacetime (กาลอวกาศ)</strong></p>
             <p>วัตถุที่มีมวลมหาศาล เช่น ดวงอาทิตย์ หรือ หลุมดำ จะทำให้ผืนผ้ากาลอวกาศนี้ <strong>บิดโค้งงอลงไป</strong> ซึ่งการโค้งงอนี้เองคือสิ่งที่เราสัมผัสได้ในรูปของ <em>แรงโน้มถ่วง (Gravity)</em></p>
 
@@ -1017,6 +1144,33 @@
           ans: 0,
           exp: `${practice} เพราะช่วยให้วางแผน ตรวจสอบผล และลดความเสี่ยงจากการนำความรู้ไปใช้ผิดบริบท`
         });
+
+        const HARD_CHALLENGES = {
+          academic: ['กลศาสตร์ควอนตัมและความน่าจะเป็น', 'สถิติแบบเบย์และการอนุมาน', 'จักรวาลวิทยาและการขยายตัวของเอกภพ'],
+          survival: ['การวางแผนเอาตัวรอดหลายวัน', 'การจัดการความเสี่ยงในสภาพอากาศรุนแรง', 'การนำทางจากแผนที่และภูมิประเทศ'],
+          tech: ['การออกแบบระบบกระจายศูนย์', 'การวิเคราะห์ความปลอดภัยของระบบ', 'การปรับปรุงอัลกอริทึมและความซับซ้อน'],
+          arts: ['การออกแบบประสบการณ์ผู้ใช้ขั้นสูง', 'การเล่าเรื่องหลายชั้นและจังหวะอารมณ์', 'การกำกับภาพ แสง และเสียงเพื่อสื่อความหมาย'],
+          combat: ['การวางโปรแกรมฝึกแบบ periodization', 'ชีวกลศาสตร์และการลดความเสี่ยงบาดเจ็บ', 'โภชนาการและการฟื้นตัวของนักกีฬา'],
+          wealth: ['การประเมินมูลค่าและความเสี่ยงของธุรกิจ', 'การจัดพอร์ตและการกระจายความเสี่ยง', 'กลยุทธ์เจรจาภายใต้ข้อมูลไม่สมบูรณ์'],
+          engineering: ['การออกแบบระบบควบคุมป้อนกลับ', 'การวิเคราะห์ความล้าและความปลอดภัยของวัสดุ', 'การออกแบบต้นแบบ IoT ที่ประหยัดพลังงาน']
+        };
+
+        Object.entries(HARD_CHALLENGES).forEach(([disciplineId, titles]) => {
+          titles.forEach((title, index) => {
+            const correct = `วิเคราะห์เงื่อนไข ตั้งสมมติฐาน ตรวจสอบข้อมูล และทดสอบความปลอดภัยก่อนสรุปผลเรื่อง${title}`;
+            LESSON_DATA[disciplineId].push({
+              id: `${disciplineId}-mastery-${index + 1}`,
+              title: `ระดับท้าทายมาก: ${title}`,
+              desc: 'บทเรียนระดับ Mastery เน้นวิเคราะห์หลายปัจจัย แก้โจทย์ปลายเปิด และตรวจสอบข้อจำกัดของคำตอบ',
+              theory: `<div class="theory-section-title">🔥 Mastery Challenge</div><p>บทนี้ต้องเชื่อมโยงความรู้หลายด้านและยอมรับว่าข้อมูลจริงมีความไม่แน่นอน จึงควรระบุสมมติฐาน แยกข้อเท็จจริงออกจากการคาดการณ์ และเปรียบเทียบทางเลือกก่อนตัดสินใจ</p><div class="theory-section-title">🧠 กรอบการวิเคราะห์</div><p>${correct}</p><div class="example-card"><strong>ภารกิจ:</strong> สร้างคำตอบอย่างน้อยสองแนวทาง ระบุข้อดีข้อจำกัด และเสนอวิธีทดสอบที่ตรวจสอบซ้ำได้</div>`,
+              question: `เมื่อแก้โจทย์ระดับ Mastery เรื่อง${title} ควรเริ่มต้นอย่างไรจึงน่าเชื่อถือที่สุด?`,
+              scenario: `สถานการณ์จำลองระดับสูง: ${title}`,
+              opts: [correct, 'เลือกคำตอบแรกที่ดูง่ายโดยไม่ตรวจสอบข้อมูล', 'ตัดข้อจำกัดออกเพื่อให้คำตอบสั้นลง', 'ทำตามตัวอย่างเดิมโดยไม่พิจารณาบริบท'],
+              ans: 0,
+              exp: 'โจทย์ระดับสูงต้องเริ่มจากสมมติฐานและข้อมูลที่ตรวจสอบได้ พร้อมทดสอบความเสี่ยงและข้อจำกัดก่อนสรุปผล'
+            });
+          });
+        });
       });
     });
 
@@ -1028,15 +1182,14 @@
         this.combo = 1;
         this.selectedRegAvatar = '🧙‍♂️';
         this.selectedProfileAvatar = '🧙‍♂️';
-        this.tickets = JSON.parse(localStorage.getItem('omni_tickets') || '[]');
-        if (this.tickets.length === 0) {
-          this.tickets = [
-            { id: 1, user: 'PlayerOne', subject: 'พบตัวเลือกโจทย์วิชาฟิสิกส์เข้าใจง่ายมาก', category: 'suggestion', status: 'Resolved', message: 'อยากให้เพิ่มข้อสอบฟิสิกส์ดาราศาสตร์เพิ่มเติมครับ', reply: 'ทีมงานได้รับเรื่องแล้วและเพิ่มโจทย์ให้เรียบร้อยครับ!' }
-          ];
-        }
+        this.selectedProfileFrame = 'default';
+        this.tickets = [];
+        this.unsubscribeTickets = null;
+        this.ticketLoadError = null;
       }
 
-      init() {
+      async init() {
+        await auth.authReady;
         this.initAvatarPickers();
         window.addEventListener('hashchange', () => this.handleRoute());
         this.updateUserUI();
@@ -1047,6 +1200,24 @@
         }
 
         this.handleRoute();
+      }
+
+      subscribeToTickets() {
+        if (this.unsubscribeTickets) this.unsubscribeTickets();
+        this.tickets = [];
+        if (!auth.currentUser) return;
+        const isAdmin = String(auth.currentUser.role || '').toLowerCase() === 'admin';
+        const query = isAdmin
+          ? firebase.firestore().collection('tickets')
+          : firebase.firestore().collection('tickets').where('userId', '==', auth.currentUser.id);
+        this.unsubscribeTickets = query.onSnapshot((snapshot) => {
+          this.tickets = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          this.tickets.sort((a, b) => String(b.createdAt || '').localeCompare(String(a.createdAt || '')));
+          if (window.app && window.location.hash === '#/admin') window.app.handleRoute();
+        }, (error) => {
+          this.ticketLoadError = error;
+          console.error('ไม่สามารถโหลดคำร้องได้:', error);
+        });
       }
 
       initAvatarPickers() {
@@ -1069,6 +1240,12 @@
       selectRegAvatar(av, el) {
         this.selectedRegAvatar = av;
         document.querySelectorAll('#reg-avatar-grid .avatar-opt').forEach(a => a.classList.remove('selected'));
+        el.classList.add('selected');
+      }
+
+      selectProfileFrame(frame, el) {
+        this.selectedProfileFrame = frame;
+        document.querySelectorAll('#profile-frame-grid .frame-opt').forEach(option => option.classList.remove('selected'));
         el.classList.add('selected');
       }
 
@@ -1102,8 +1279,8 @@
       saveProfileAvatar() {
         if (auth.currentUser) {
           auth.currentUser.avatar = this.selectedProfileAvatar;
-          localStorage.setItem('omni_user', JSON.stringify(auth.currentUser));
-          localStorage.setItem('omni_avatar', this.selectedProfileAvatar);
+          auth.currentUser.frame = this.selectedProfileFrame || 'default';
+          auth.saveCurrentUser().catch((error) => console.error('บันทึกโปรไฟล์ไม่สำเร็จ:', error));
           this.updateUserUI();
           this.closeModal('modal-avatar-picker');
           this.showToast(`เปลี่ยนรูปโปรไฟล์เป็น ${this.selectedProfileAvatar} สำเร็จ! ✨`);
@@ -1115,6 +1292,11 @@
         return typeof avatar === 'string' && avatar.startsWith('data:image/')
           ? `<img class="avatar-image ${className}" src="${avatar}" alt="Avatar">`
           : `<span class="${className}">${avatar}</span>`;
+      }
+
+      profileAvatarMarkup(user, className = '') {
+        const avatar = this.avatarMarkup(user.avatar, '', user.frame);
+        return `<span class="profile-avatar-frame ${user.frame || 'default'} ${className}">${avatar}</span>`;
       }
 
       getLevel() {
@@ -1135,6 +1317,19 @@
         return 'Bronze Novice';
       }
 
+      getRankInfo(xp) {
+        if (xp >= 1500) return { name: 'Omniscient Sage', icon: '🌌', color: '#fbbf24' };
+        if (xp >= 600) return { name: 'Platinum Expert', icon: '💠', color: '#67e8f9' };
+        if (xp >= 300) return { name: 'Gold Adept', icon: '👑', color: '#facc15' };
+        if (xp >= 150) return { name: 'Silver Apprentice', icon: '⚔️', color: '#cbd5e1' };
+        return { name: 'Bronze Novice', icon: '🛡️', color: '#d97706' };
+      }
+
+      rankEmblem(xp) {
+        const rank = this.getRankInfo(xp);
+        return `<span class="rank-emblem" style="--rank-color: ${rank.color};"><span class="rank-emblem-icon">${rank.icon}</span>${rank.name}</span>`;
+      }
+
       updateUserUI() {
         const authActions = document.getElementById('nav-auth-actions');
         const userStatus = document.getElementById('nav-user-status');
@@ -1147,7 +1342,8 @@
           userStatus.style.display = 'flex';
           document.getElementById('nav-user-avatar').innerHTML = this.avatarMarkup(auth.currentUser.avatar);
           document.getElementById('nav-user-name').innerText = auth.currentUser.username;
-          document.getElementById('nav-user-level').innerText = `LV. ${this.getLevel()} • ${this.getRank()}`;
+          const rank = this.getRankInfo(auth.currentUser.xp || 0);
+          document.getElementById('nav-user-level').innerText = `${rank.icon} LV. ${this.getLevel()} • ${rank.name}`;
           mobProfileLabel.innerText = 'โปรไฟล์';
 
           const isAdmin = auth.currentUser.role === 'admin';
@@ -1383,7 +1579,7 @@
                   <tr>
                     <td><strong style="color: ${index === 0 ? '#fbbf24' : '#cbd5e1'};">#${index + 1}</strong></td>
                     <td>${this.avatarMarkup(user.avatar)} ${user.username} ${user.role === 'admin' ? '<span style="background: #38bdf8; color: #000; font-size: 0.7rem; font-weight: 700; padding: 0.1rem 0.4rem; border-radius: 4px;">ADMIN</span>' : ''}</td>
-                    <td><span style="color: var(--accent); font-weight: 600;">${this.getRankForXp(user.xp || 0)}</span></td>
+                    <td>${this.rankEmblem(user.xp || 0)}</td>
                     <td><strong>LV. ${user.level || 1}</strong></td>
                     <td style="text-align: right;"><strong style="color: #38bdf8;">${user.xp || 0} EXP</strong></td>
                   </tr>
@@ -1408,16 +1604,16 @@
 
         view.innerHTML = `
           <div class="hero-banner">
-            <h1 class="hero-title">👤 โปรไฟล์ผู้เรียน & สถิติส่วนตัว</h1>
+            <h1 class="hero-title">👤 โปรไฟล์ผู้ใช้ & สถิติส่วนตัว</h1>
             <p class="hero-quote">จัดการตัวละครและตรวจสอบระดับความชำนาญของคุณ</p>
           </div>
 
           <div style="background: var(--card-bg); border-radius: 16px; padding: 2rem; border: 1px solid var(--card-border); text-align: center; max-width: 600px; margin: 0 auto;">
-            <div style="font-size: 4.5rem; margin-bottom: 0.25rem;">${this.avatarMarkup(auth.currentUser.avatar)}</div>
+            <div style="margin-bottom: 1rem;">${this.profileAvatarMarkup(auth.currentUser)}</div>
             <button class="btn btn-outline" style="padding: 0.35rem 0.8rem; font-size: 0.82rem; margin-bottom: 1.25rem;" onclick="app.openModal('modal-avatar-picker')">🎨 เปลี่ยนรูปโปรไฟล์ (Avatar)</button>
 
-            <h2>${auth.currentUser.username}</h2>
-            <div style="color: var(--accent); font-weight: 700; margin-bottom: 1.5rem;">${this.getRank()}</div>
+            <h2>${auth.currentUser.username} ${auth.currentUser.role === 'admin' ? '<span style="background: #38bdf8; color: #000; font-size: 0.75rem; vertical-align: middle; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 5px;">ADMIN</span>' : ''}</h2>
+            <div style="margin-bottom: 1.5rem;">${this.rankEmblem(auth.currentUser.xp || 0)}</div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
               <div style="background: rgba(0,0,0,0.3); padding: 1.25rem; border-radius: 12px;">
@@ -1429,6 +1625,37 @@
                 <strong style="font-size: 1.6rem; color: #fbbf24;">${auth.currentUser.xp}</strong>
               </div>
             </div>
+
+            ${auth.currentUser.role === 'admin' ? `
+              <div style="text-align: left; background: rgba(56,189,248,0.08); border: 1px solid #38bdf8; border-radius: 14px; padding: 1.25rem; margin-bottom: 1.5rem;">
+                <h3 style="color: #38bdf8; margin-bottom: 0.35rem;">🛡️ สิทธิ์ผู้ดูแลระบบ</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">เพิ่มเนื้อหาและโจทย์ใหม่ลงฐานข้อมูลกลาง</p>
+                <div class="form-group">
+                  <label class="form-label">เพิ่มบทเรียน</label>
+                  <input id="admin-lesson-title" class="form-input" placeholder="ชื่อบทเรียน" required>
+                  <textarea id="admin-lesson-content" class="form-textarea" rows="3" placeholder="เนื้อหาบทเรียน" style="margin-top: 0.5rem;" required></textarea>
+                  <button class="btn btn-primary" style="margin-top: 0.6rem;" onclick="app.createLessonFromProfile()">บันทึกบทเรียน</button>
+                </div>
+                <div class="form-group" style="border-top: 1px solid var(--card-border); padding-top: 1rem;">
+                  <label class="form-label">เพิ่มโจทย์แบบเลือกตอบ</label>
+                  <input id="admin-quiz-question" class="form-input" placeholder="คำถาม" required>
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem;">
+                    <input id="admin-quiz-a" class="form-input" placeholder="ตัวเลือก A" required>
+                    <input id="admin-quiz-b" class="form-input" placeholder="ตัวเลือก B" required>
+                    <input id="admin-quiz-c" class="form-input" placeholder="ตัวเลือก C" required>
+                    <input id="admin-quiz-d" class="form-input" placeholder="ตัวเลือก D" required>
+                  </div>
+                  <select id="admin-quiz-answer" class="form-select" style="margin-top: 0.5rem;">
+                    <option value="A">คำตอบที่ถูก: A</option>
+                    <option value="B">คำตอบที่ถูก: B</option>
+                    <option value="C">คำตอบที่ถูก: C</option>
+                    <option value="D">คำตอบที่ถูก: D</option>
+                  </select>
+                  <textarea id="admin-quiz-explanation" class="form-textarea" rows="2" placeholder="คำอธิบายเฉลย" style="margin-top: 0.5rem;" required></textarea>
+                  <button class="btn btn-primary" style="margin-top: 0.6rem;" onclick="app.createQuizFromProfile()">บันทึกโจทย์</button>
+                </div>
+              </div>
+            ` : ''}
 
             <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
               <button class="btn btn-outline" onclick="auth.logout()">🚪 ออกจากระบบ</button>
@@ -1442,70 +1669,111 @@
         const view = document.getElementById('app-view');
         view.innerHTML = `
           <div class="hero-banner">
-            <h1 class="hero-title">🛠️ ศูนย์ช่วยเหลือและแจ้งปัญหา</h1>
-            <p class="hero-quote">ส่งข้อเสนอแนะหรือแจ้งข้อผิดพลาดของโจทย์ถึงทีมงาน</p>
+            <h1 class="hero-title">✉️ ติดต่อทีมงานทางอีเมล</h1>
+            <p class="hero-quote">ส่งข้อเสนอแนะหรือแจ้งข้อผิดพลาดถึงทีมงานโดยตรง</p>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
-            <!-- Submit Form -->
+          <div style="max-width: 760px; margin: 0 auto;">
             <div style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--card-border);">
-              <h3 style="margin-bottom: 1rem;">➕ ส่งเรื่องแจ้งปัญหาใหม่</h3>
+              <h3 style="margin-bottom: 1rem;">📨 เขียนอีเมลถึงทีมงาน</h3>
               <div class="form-group">
                 <label class="form-label">หัวข้อเรื่อง</label>
                 <input type="text" id="t-subj" class="form-input" placeholder="เช่น พบข้อสอบเฉลยไม่ตรง">
               </div>
               <div class="form-group">
-                <label class="form-label">รายละเอียดปัญหา</label>
+                <label class="form-label">รายละเอียด</label>
                 <textarea id="t-msg" class="form-textarea" rows="3" placeholder="อธิบายข้อความของคุณ..."></textarea>
               </div>
-              <button class="btn btn-primary" onclick="app.submitTicket()">ส่งเรื่องแจ้งปัญหา 📤</button>
-            </div>
-
-            <!-- Ticket List -->
-            <div style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--card-border); overflow-x: auto;">
-              <h3 style="margin-bottom: 1rem;">📋 ประวัติการแจ้งเรื่องของคุณ</h3>
-              <table class="admin-table">
-                <thead>
-                  <tr>
-                    <th>หัวข้อ</th>
-                    <th>สถานะ</th>
-                    <th>การตอบกลับจากแอดมิน</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${this.tickets.map(t => `
-                    <tr>
-                      <td><strong style="color: #fff;">${t.subject}</strong><br><small style="color: var(--text-muted);">${t.message}</small></td>
-                      <td><span class="status-chip status-${t.status}">${t.status}</span></td>
-                      <td>${t.reply ? `<span style="color: #38bdf8;">💬 ${t.reply}</span>` : '<span style="color: var(--text-muted);">รอการตอบกลับ</span>'}</td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
+              <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">อีเมลผู้รับ: ${SUPPORT_EMAIL}</p>
+              <button class="btn btn-primary" onclick="app.sendSupportEmail()">เปิดโปรแกรมอีเมล 📤</button>
             </div>
           </div>
         `;
       }
 
-      submitTicket() {
+      sendSupportEmail() {
         const subj = document.getElementById('t-subj').value.trim();
         const msg = document.getElementById('t-msg').value.trim();
         if (!subj || !msg) {
-          alert('กรุณากรอกหัวข้อและรายละเอียดให้ครบถ้วน');
+          this.showToast('กรุณากรอกหัวข้อและรายละเอียดให้ครบถ้วน');
           return;
         }
-        this.tickets.unshift({
-          id: Date.now(),
-          user: auth.currentUser ? auth.currentUser.username : 'Guest',
-          subject: subj,
-          category: 'general',
-          status: 'Open',
-          message: msg,
-          reply: null
-        });
-        localStorage.setItem('omni_tickets', JSON.stringify(this.tickets));
-        this.showToast('ส่งเรื่องแจ้งปัญหาเรียบร้อยแล้ว!');
-        this.renderTickets();
+        const username = auth.currentUser ? auth.currentUser.username : 'ผู้เยี่ยมชม';
+        const body = `ชื่อผู้ใช้: ${username}\n\nรายละเอียด:\n${msg}`;
+        if (auth.currentUser) {
+          firebase.firestore().collection('tickets').add({
+            userId: auth.currentUser.id,
+            user: username,
+            subject: subj,
+            category: 'general',
+            status: 'Open',
+            message: msg,
+            reply: null,
+            createdAt: new Date().toISOString()
+          }).catch((error) => console.error('บันทึกคำร้องไม่สำเร็จ:', error));
+        }
+        window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;
+      }
+
+      async createLessonFromProfile() {
+        if (!auth.currentUser || auth.currentUser.role !== 'admin') {
+          this.showToast('เฉพาะแอดมินเท่านั้นที่เพิ่มบทเรียนได้');
+          return;
+        }
+        const title = document.getElementById('admin-lesson-title').value.trim();
+        const content = document.getElementById('admin-lesson-content').value.trim();
+        if (!title || !content) {
+          this.showToast('กรุณากรอกชื่อและเนื้อหาบทเรียน');
+          return;
+        }
+        try {
+          await firebase.firestore().collection('lessons').add({
+            title,
+            content,
+            createdBy: auth.currentUser.id,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          document.getElementById('admin-lesson-title').value = '';
+          document.getElementById('admin-lesson-content').value = '';
+          this.showToast('เพิ่มบทเรียนลง Firestore แล้ว');
+        } catch (error) {
+          console.error('Create lesson failed:', error);
+          this.showToast(`เพิ่มบทเรียนไม่สำเร็จ (${error.code || 'unknown-error'})`);
+        }
+      }
+
+      async createQuizFromProfile() {
+        if (!auth.currentUser || auth.currentUser.role !== 'admin') {
+          this.showToast('เฉพาะแอดมินเท่านั้นที่เพิ่มโจทย์ได้');
+          return;
+        }
+        const question = document.getElementById('admin-quiz-question').value.trim();
+        const explanation = document.getElementById('admin-quiz-explanation').value.trim();
+        const options = ['a', 'b', 'c', 'd'].map((key) => document.getElementById(`admin-quiz-${key}`).value.trim());
+        if (!question || !explanation || options.some(option => !option)) {
+          this.showToast('กรุณากรอกคำถาม ตัวเลือก และคำอธิบายให้ครบ');
+          return;
+        }
+        try {
+          await firebase.firestore().collection('quizzes').add({
+            question,
+            option_a: options[0],
+            option_b: options[1],
+            option_c: options[2],
+            option_d: options[3],
+            correct_option: document.getElementById('admin-quiz-answer').value,
+            explanation,
+            createdBy: auth.currentUser.id,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          ['question', 'a', 'b', 'c', 'd', 'explanation'].forEach((key) => {
+            document.getElementById(`admin-quiz-${key}`).value = '';
+          });
+          this.showToast('เพิ่มโจทย์ลง Firestore แล้ว');
+        } catch (error) {
+          console.error('Create quiz failed:', error);
+          this.showToast(`เพิ่มโจทย์ไม่สำเร็จ (${error.code || 'unknown-error'})`);
+        }
       }
 
       // ==========================================
@@ -1528,7 +1796,7 @@
           <div class="hero-banner" style="background: linear-gradient(135deg, #091e3a 0%, #0f172a 100%);">
             <div class="hero-badge" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8;">🛡️ ADMIN BACKOFFICE SUITE</div>
             <h1 class="hero-title">ศูนย์ควบคุมระบบหลังบ้าน OmniVerse</h1>
-            <p class="hero-quote">จัดการผู้ใช้งาน, ตอบกลับปัญหา Ticket, และเพิ่มบทเรียนใหม่</p>
+            <p class="hero-quote">จัดการผู้ใช้งาน เพิ่มบทเรียน และสร้างโจทย์ใหม่จากระบบหลังบ้าน</p>
           </div>
 
           <!-- Stats Overview Cards -->
@@ -1541,10 +1809,10 @@
               </div>
             </div>
             <div class="admin-stat-card">
-              <div style="font-size: 2rem;">🛠️</div>
+              <div style="font-size: 2rem;">✉️</div>
               <div>
-                <div class="admin-stat-val">${this.tickets.filter(t => t.status === 'Open').length}</div>
-                <div style="font-size: 0.8rem; color: var(--text-muted);">Ticket รอดำเนินการ</div>
+                <div class="admin-stat-val">Email</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">${SUPPORT_EMAIL}</div>
               </div>
             </div>
             <div class="admin-stat-card">
@@ -1563,27 +1831,18 @@
             </div>
           </div>
 
-          <!-- Admin Ticket Management -->
           <div style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--card-border); margin-bottom: 2rem; overflow-x: auto;">
-            <h3 style="margin-bottom: 1rem;">🛠️ รายการแจ้งปัญหาจากผู้ใช้ (Ticket Queue)</h3>
+            <h3 style="margin-bottom: 1rem;">🛠️ รายการแจ้งปัญหาจากผู้ใช้</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">ผู้ใช้จะได้รับอีเมลสำหรับส่งรายละเอียดไปที่ ${SUPPORT_EMAIL} และรายการที่บันทึกในระบบจะแสดงที่นี่</p>
             <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>ผู้แจ้ง</th>
-                  <th>หัวข้อเรื่อง</th>
-                  <th>สถานะ</th>
-                  <th style="text-align: right;">การกระทำ</th>
-                </tr>
-              </thead>
+              <thead><tr><th>ผู้แจ้ง</th><th>หัวข้อเรื่อง</th><th>สถานะ</th><th style="text-align: right;">การกระทำ</th></tr></thead>
               <tbody>
-                ${this.tickets.map((t, idx) => `
+                ${this.ticketLoadError ? `<tr><td colspan="4" style="color: #f87171;">โหลดรายการไม่ได้ (${this.ticketLoadError.code || 'unknown-error'})</td></tr>` : this.tickets.length === 0 ? `<tr><td colspan="4" style="color: var(--text-muted);">ยังไม่มีรายการแจ้งปัญหา</td></tr>` : this.tickets.map((ticket, index) => `
                   <tr>
-                    <td><strong>${t.user}</strong></td>
-                    <td><strong style="color: #fff;">${t.subject}</strong><br><small style="color: var(--text-muted);">${t.message}</small></td>
-                    <td><span class="status-chip status-${t.status}">${t.status}</span></td>
-                    <td style="text-align: right;">
-                      <button class="btn btn-outline" style="padding: 0.3rem 0.7rem; font-size: 0.8rem;" onclick="app.adminReplyTicket(${idx})">💬 ตอบกลับ</button>
-                    </td>
+                    <td><strong>${ticket.user || 'ผู้ใช้'}</strong></td>
+                    <td><strong style="color: #fff;">${ticket.subject}</strong><br><small style="color: var(--text-muted);">${ticket.message}</small></td>
+                    <td><span class="status-chip status-${ticket.status}">${ticket.status}</span></td>
+                    <td style="text-align: right;"><button class="btn btn-outline" style="padding: 0.3rem 0.7rem; font-size: 0.8rem;" onclick="app.adminReplyTicket(${index})">💬 ตอบกลับ</button></td>
                   </tr>
                 `).join('')}
               </tbody>
@@ -1619,15 +1878,21 @@
         `;
       }
 
-      adminReplyTicket(idx) {
-        const ticket = this.tickets[idx];
-        const reply = prompt(`ตอบกลับข้อความของ ${ticket.user}:\n"${ticket.message}"`, "ทีมงานตรวจสอบและแก้ไขปัญหาให้เรียบร้อยแล้วครับ ขอบคุณครับ");
-        if (reply) {
-          ticket.reply = reply;
-          ticket.status = 'Resolved';
-          localStorage.setItem('omni_tickets', JSON.stringify(this.tickets));
-          this.showToast('ตอบกลับและปิดงาน Ticket เรียบร้อยแล้ว!');
-          this.renderAdmin();
+      async adminReplyTicket(index) {
+        const ticket = this.tickets[index];
+        if (!ticket) return;
+        const reply = prompt(`ตอบกลับข้อความของ ${ticket.user || 'ผู้ใช้'}:`, 'ทีมงานได้รับเรื่องแล้ว ขอบคุณสำหรับข้อมูลครับ');
+        if (!reply) return;
+        try {
+          await firebase.firestore().collection('tickets').doc(ticket.id).update({
+            reply,
+            status: 'Resolved',
+            updatedAt: new Date().toISOString()
+          });
+          this.showToast('บันทึกการตอบกลับแล้ว');
+        } catch (error) {
+          console.error('ตอบกลับคำร้องไม่สำเร็จ:', error);
+          this.showToast(`ตอบกลับไม่สำเร็จ (${error.code || 'unknown-error'})`);
         }
       }
 
@@ -1637,6 +1902,12 @@
         if (id === 'modal-register' || id === 'modal-login') this.resetAuthForms();
         if (id === 'modal-avatar-picker' && auth.currentUser) {
           this.selectedProfileAvatar = auth.currentUser.avatar;
+          this.selectedProfileFrame = auth.currentUser.frame || 'default';
+          document.querySelectorAll('#profile-frame-grid .frame-opt').forEach((option) => {
+            option.classList.toggle('selected', option.textContent.includes({
+              default: 'วงกลม', square: 'สี่เหลี่ยม', diamond: 'เพชร', neon: 'นีออน', gold: 'ทอง'
+            }[this.selectedProfileFrame]));
+          });
           const preview = document.getElementById('profile-avatar-preview');
           if (preview && this.selectedProfileAvatar.startsWith('data:image/')) {
             preview.src = this.selectedProfileAvatar;
@@ -1671,4 +1942,4 @@
     window.onload = () => app.init();
   </script>
 </body>
-</html>
+    </html>
