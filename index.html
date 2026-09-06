@@ -1149,6 +1149,7 @@
         this.selectedProfileFrame = 'default';
         this.tickets = [];
         this.unsubscribeTickets = null;
+        this.ticketLoadError = null;
       }
 
       async init() {
@@ -1168,18 +1169,23 @@
       subscribeToTickets() {
         if (this.unsubscribeTickets) this.unsubscribeTickets();
         this.tickets = [];
+        this.ticketLoadError = null;
         if (!auth.currentUser) return;
 
         const isAdmin = String(auth.currentUser.role || '').toLowerCase() === 'admin';
+        const firebaseUid = firebase.auth().currentUser && firebase.auth().currentUser.uid;
+        if (!firebaseUid) return;
         const ticketsQuery = isAdmin
           ? firebase.firestore().collection('tickets')
-          : firebase.firestore().collection('tickets').where('userId', '==', auth.currentUser.id);
+          : firebase.firestore().collection('tickets').where('userId', '==', firebaseUid);
 
         this.unsubscribeTickets = ticketsQuery.onSnapshot((snapshot) => {
+          this.ticketLoadError = null;
           this.tickets = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
           this.tickets.sort((first, second) => String(second.createdAt || '').localeCompare(String(first.createdAt || '')));
           if (window.app && ['#/tickets', '#/admin'].includes(window.location.hash)) window.app.handleRoute();
         }, (error) => {
+          this.ticketLoadError = error;
           console.error('ไม่สามารถโหลด Ticket จาก Firestore ได้:', error);
           if (window.app) {
             window.app.showToast(isAdmin
@@ -1829,7 +1835,15 @@
                 </tr>
               </thead>
               <tbody>
-                ${this.tickets.map((t, idx) => `
+                ${this.ticketLoadError ? `
+                  <tr><td colspan="4" style="color: #f87171; padding: 1.5rem;">
+                    โหลดคำร้องไม่สำเร็จ (${this.ticketLoadError.code || 'permission-denied'}) — ตรวจสอบว่าได้ Publish Firestore Rules แล้ว
+                  </td></tr>
+                ` : this.tickets.length === 0 ? `
+                  <tr><td colspan="4" style="color: var(--text-muted); padding: 1.5rem;">
+                    ยังไม่มีคำร้องจากผู้ใช้ คำร้องใหม่จะแสดงที่นี่แบบเรียลไทม์
+                  </td></tr>
+                ` : this.tickets.map((t, idx) => `
                   <tr>
                     <td><strong>${t.user}</strong></td>
                     <td><strong style="color: #fff;">${t.subject}</strong><br><small style="color: var(--text-muted);">${t.message}</small></td>
