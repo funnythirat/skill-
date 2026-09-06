@@ -1166,22 +1166,28 @@
       }
 
       subscribeToTickets() {
-          if (this.unsubscribeTickets) this.unsubscribeTickets();
-          this.tickets = [];
-          if (!auth.currentUser) return;
-          let ticketsQuery = firebase.firestore().collection('tickets');
-          if (auth.currentUser.role !== 'admin') {
-            ticketsQuery = ticketsQuery.where('userId', '==', auth.currentUser.id);
+        if (this.unsubscribeTickets) this.unsubscribeTickets();
+        this.tickets = [];
+        if (!auth.currentUser) return;
+
+        const isAdmin = String(auth.currentUser.role || '').toLowerCase() === 'admin';
+        const ticketsQuery = isAdmin
+          ? firebase.firestore().collection('tickets')
+          : firebase.firestore().collection('tickets').where('userId', '==', auth.currentUser.id);
+
+        this.unsubscribeTickets = ticketsQuery.onSnapshot((snapshot) => {
+          this.tickets = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          this.tickets.sort((first, second) => String(second.createdAt || '').localeCompare(String(first.createdAt || '')));
+          if (window.app && ['#/tickets', '#/admin'].includes(window.location.hash)) window.app.handleRoute();
+        }, (error) => {
+          console.error('ไม่สามารถโหลด Ticket จาก Firestore ได้:', error);
+          if (window.app) {
+            window.app.showToast(isAdmin
+              ? 'แอดมินอ่านคำร้องไม่ได้: กรุณา Publish Firestore Rules'
+              : 'โหลดคำร้องไม่ได้: ตรวจสอบ Firestore Rules');
           }
-          this.unsubscribeTickets = ticketsQuery.onSnapshot((snapshot) => {
-            this.tickets = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            this.tickets.sort((first, second) => String(second.createdAt || '').localeCompare(String(first.createdAt || '')));
-            if (window.app && ['#/tickets', '#/admin'].includes(window.location.hash)) window.app.handleRoute();
-          }, (error) => {
-            console.error('ไม่สามารถโหลด Ticket จาก Firestore ได้:', error);
-            if (window.app) window.app.showToast('โหลดคำร้องไม่ได้: ตรวจสอบ Firestore Rules');
-          });
-        }
+        });
+      }
 
       initAvatarPickers() {
         const regGrid = document.getElementById('reg-avatar-grid');
