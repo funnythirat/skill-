@@ -313,6 +313,23 @@
     }
     .avatar-upload-preview { width: 72px; height: 72px; object-fit: cover; border-radius: 50%; border: 2px solid var(--accent); display: block; margin: 0.75rem auto; }
     .avatar-image { width: 34px; height: 34px; object-fit: cover; border-radius: 50%; vertical-align: middle; }
+    .profile-avatar-frame {
+      width: 118px; height: 118px; padding: 7px; display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 50%; background: linear-gradient(135deg, #38bdf8, #a855f7, #fbbf24);
+      box-shadow: 0 0 24px var(--accent-glow); position: relative;
+    }
+    .profile-avatar-frame::after { content: ''; position: absolute; inset: 4px; border: 2px solid rgba(255,255,255,0.75); border-radius: inherit; pointer-events: none; }
+    .profile-avatar-frame.square { border-radius: 24px; background: linear-gradient(135deg, #22c55e, #06b6d4); }
+    .profile-avatar-frame.diamond { border-radius: 22px; transform: rotate(45deg); background: linear-gradient(135deg, #f59e0b, #ef4444); }
+    .profile-avatar-frame.diamond > * { transform: rotate(-45deg); }
+    .profile-avatar-frame.neon { background: linear-gradient(135deg, #06b6d4, #6366f1, #ec4899); box-shadow: 0 0 12px #06b6d4, 0 0 32px #a855f7; }
+    .profile-avatar-frame.gold { background: linear-gradient(135deg, #fef08a, #f59e0b, #92400e); }
+    .profile-avatar-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+    .profile-avatar-frame .avatar-image { width: 100%; height: 100%; }
+    .profile-avatar-frame > span { font-size: 4rem; line-height: 1; }
+    .avatar-frame-picker { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin: 0.75rem 0 1rem; }
+    .frame-opt { padding: 0.45rem 0.7rem; border: 1px solid var(--card-border); border-radius: 9px; background: rgba(255,255,255,0.05); color: #fff; cursor: pointer; }
+    .frame-opt.selected { border-color: var(--accent); background: var(--badge-bg); }
 
     /* Admin Cards & Tables */
     .admin-stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
@@ -468,6 +485,14 @@
       <div class="avatar-picker-grid" id="profile-avatar-grid">
         <!-- 16 Avatars -->
       </div>
+      <label class="form-label">เลือกกรอบโปรไฟล์</label>
+      <div class="avatar-frame-picker" id="profile-frame-grid">
+        <button type="button" class="frame-opt selected" onclick="app.selectProfileFrame('default', this)">วงกลม</button>
+        <button type="button" class="frame-opt" onclick="app.selectProfileFrame('square', this)">สี่เหลี่ยม</button>
+        <button type="button" class="frame-opt" onclick="app.selectProfileFrame('diamond', this)">เพชร</button>
+        <button type="button" class="frame-opt" onclick="app.selectProfileFrame('neon', this)">นีออน</button>
+        <button type="button" class="frame-opt" onclick="app.selectProfileFrame('gold', this)">ทอง</button>
+      </div>
 
       <label class="form-label" for="profile-avatar-file">หรืออัปโหลดรูปจากอุปกรณ์</label>
       <input type="file" id="profile-avatar-file" class="form-input" accept="image/*" onchange="app.previewUploadedAvatar(this, 'profile')">
@@ -487,10 +512,11 @@
     </div>
   </div>
 
-  <script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-    import { getAnalytics, isSupported } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js';
-
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script>
     const firebaseConfig = {
       apiKey: 'AIzaSyCVjiR282K2JQxXdghJQ2FMn5ytGlIMf8',
       authDomain: 'skill-3d6c1.firebaseapp.com',
@@ -501,11 +527,16 @@
       measurementId: 'G-5C0C6K9BLT'
     };
 
-    const firebaseApp = initializeApp(firebaseConfig);
+    const firebaseApp = firebase.initializeApp(firebaseConfig);
     window.firebaseApp = firebaseApp;
-    window.firebaseAnalytics = isSupported().then((supported) => (
-      supported ? getAnalytics(firebaseApp) : null
-    ));
+    window.firebaseAuth = firebase.auth();
+    window.firebaseDb = firebase.firestore();
+    window.firebaseAnalytics = firebase.analytics.isSupported().then((supported) => (
+      supported ? firebase.analytics() : null
+    )).catch((error) => {
+      console.warn('Firebase Analytics is unavailable:', error.message);
+      return null;
+    });
   </script>
   <script>
     const AVATAR_LIST = ['🧙‍♂️', '🌲', '💻', '🎨', '⚔️', '💎', '⚙️', '🚀', '🛡️', '👑', '🏹', '🥋', '🧠', '⚡', '🐉', '🦅'];
@@ -622,67 +653,80 @@
     class AuthManager {
       constructor() {
         this.currentUser = null;
-        this.users = JSON.parse(localStorage.getItem('omni_users') || '[]');
-        if (!this.users.some(user => user.username.toLowerCase() === 'admin')) {
-          this.users.unshift({ username: 'admin', password: 'admin123', role: 'admin', xp: 1500, level: 10, rank: 'Omniscient Sage', avatar: '🧙‍♂️', registeredAt: new Date().toISOString() });
-          this.saveUsers();
-        }
-        if (this.currentUser && !this.users.some(user => user.username.toLowerCase() === this.currentUser.username.toLowerCase())) {
-          this.users.push({ ...this.currentUser, registeredAt: new Date().toISOString() });
-          this.saveUsers();
-        }
+        this.users = [];
+        this.unsubscribeUsers = null;
+        firebase.auth().onAuthStateChanged(async (firebaseUser) => {
+          if (!firebaseUser) {
+            this.currentUser = null;
+            this.updateUiAfterAuthChange();
+            return;
+          }
+          const profile = await firebase.firestore().collection('users').doc(firebaseUser.uid).get();
+          this.currentUser = profile.exists
+            ? { id: firebaseUser.uid, ...profile.data() }
+            : { id: firebaseUser.uid, username: firebaseUser.email.split('@')[0], role: 'user', xp: 0, level: 1, rank: 'Bronze Novice', avatar: '🧙‍♂️', frame: 'default' };
+          localStorage.setItem('omni_user', JSON.stringify(this.currentUser));
+          this.updateUiAfterAuthChange();
+        });
+        this.unsubscribeUsers = firebase.firestore().collection('users').orderBy('xp', 'desc').onSnapshot((snapshot) => {
+          this.users = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          if (window.app && (window.location.hash === '#/leaderboard' || window.location.hash === '#/admin')) {
+            window.app.handleRoute();
+          }
+        }, (error) => console.error('ไม่สามารถโหลดรายชื่อผู้ใช้แบบเรียลไทม์ได้:', error));
       }
 
-      saveUsers() {
-        localStorage.setItem('omni_users', JSON.stringify(this.users));
+      emailForUsername(username) {
+        const normalized = String(username).trim().toLowerCase();
+        const hash = Array.from(normalized).reduce((value, character) => (
+          ((value * 31) + character.charCodeAt(0)) >>> 0
+        ), 7);
+        return `user-${hash}@skill-3d6c1.firebaseapp.com`;
       }
 
-      saveCurrentUser() {
-        if (!this.currentUser) return;
-        const userIndex = this.users.findIndex(user => user.username.toLowerCase() === this.currentUser.username.toLowerCase());
-        if (userIndex >= 0) this.users[userIndex] = { ...this.users[userIndex], ...this.currentUser };
-        else this.users.push({ ...this.currentUser, registeredAt: new Date().toISOString() });
-        this.saveUsers();
+      async saveCurrentUser() {
+        if (!this.currentUser || !this.currentUser.id) return;
+        const { id, ...profile } = this.currentUser;
+        await firebase.firestore().collection('users').doc(id).set(profile, { merge: true });
         localStorage.setItem('omni_user', JSON.stringify(this.currentUser));
       }
 
-      deleteUser(index) {
+      updateUiAfterAuthChange() {
+        if (window.app) {
+          window.app.updateUserUI();
+          window.app.handleRoute();
+        }
+      }
+
+      async deleteUser(index) {
         const user = this.users[index];
         if (!user || user.role === 'admin') {
           app.showToast('ไม่สามารถลบบัญชีผู้ดูแลระบบได้');
           return;
         }
         if (!confirm(`ต้องการลบบัญชี ${user.username} ใช่หรือไม่?`)) return;
-        this.users.splice(index, 1);
-        this.saveUsers();
+        await firebase.firestore().collection('users').doc(user.id).delete();
         app.showToast(`ลบบัญชี ${user.username} เรียบร้อยแล้ว`);
         app.renderAdmin();
       }
 
-      login(username, password) {
+      async login(username, password) {
         const requestedName = (username || '').trim();
-        const savedUser = this.users.find(user => user.username.toLowerCase() === requestedName.toLowerCase());
-        if (savedUser && savedUser.password && savedUser.password !== password) {
-          app.showToast('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+        if (!requestedName || !password) {
+          app.showToast('กรุณากรอกชื่อผู้ใช้และรหัสผ่าน');
           return;
         }
-        if (savedUser) {
-          this.currentUser = { ...savedUser };
-        } else {
-          const curXp = parseInt(localStorage.getItem('omni_xp') || '180');
-          const savedAvatar = localStorage.getItem('omni_avatar') || '⚡';
-          this.currentUser = { username: requestedName || 'PlayerOne', role: 'user', xp: curXp, level: Math.floor(Math.sqrt(curXp/25))+1, rank: 'Silver Apprentice', avatar: savedAvatar };
+        try {
+          await firebase.auth().signInWithEmailAndPassword(this.emailForUsername(requestedName), password);
+          app.closeModal('modal-login');
+          app.showToast(`ยินดีต้อนรับ ${requestedName}! เข้าสู่ระบบสำเร็จ`);
+        } catch (error) {
+          app.showToast('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+          console.error('Firebase login failed:', error);
         }
-        localStorage.setItem('omni_user', JSON.stringify(this.currentUser));
-        localStorage.setItem('omni_xp', this.currentUser.xp);
-        this.saveCurrentUser();
-        app.closeModal('modal-login');
-        app.updateUserUI();
-        app.showToast(`ยินดีต้อนรับ ${this.currentUser.username}! เข้าสู่ระบบสำเร็จ`);
-        app.handleRoute();
       }
 
-      register(username, avatar, password) {
+      async register(username, avatar, password) {
         const requestedName = (username || '').trim() || 'Seeker';
         if (!password || password.length < 6) {
           app.showToast('รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร');
@@ -692,24 +736,27 @@
           app.showToast('ชื่อนี้มีผู้ใช้งานแล้ว กรุณาเลือกชื่อใหม่');
           return;
         }
-        this.currentUser = { username: requestedName, password, role: 'user', xp: 0, level: 1, rank: 'Bronze Novice', avatar: avatar || '🧙‍♂️', registeredAt: new Date().toISOString() };
-        this.users.push({ ...this.currentUser });
-        this.saveUsers();
-        localStorage.setItem('omni_user', JSON.stringify(this.currentUser));
-        localStorage.setItem('omni_xp', '0');
-        localStorage.setItem('omni_avatar', this.currentUser.avatar);
-        app.closeModal('modal-register');
-        app.updateUserUI();
-        app.showToast(`สร้างตัวละครสำเร็จ! ยินดีต้อนรับ ${this.currentUser.username}`);
-        app.navigate('#/profile');
+        try {
+          const credential = await firebase.auth().createUserWithEmailAndPassword(this.emailForUsername(requestedName), password);
+          const profile = { username: requestedName, role: 'user', xp: 0, level: 1, rank: 'Bronze Novice', avatar: avatar || '🧙‍♂️', frame: 'default', registeredAt: new Date().toISOString() };
+          await firebase.firestore().collection('users').doc(credential.user.uid).set(profile);
+          this.currentUser = { id: credential.user.uid, ...profile };
+          localStorage.setItem('omni_user', JSON.stringify(this.currentUser));
+          app.closeModal('modal-register');
+          app.updateUserUI();
+          app.showToast(`สร้างตัวละครสำเร็จ! ยินดีต้อนรับ ${this.currentUser.username}`);
+          app.navigate('#/profile');
+        } catch (error) {
+          app.showToast(error.code === 'auth/email-already-in-use' ? 'ชื่อนี้มีผู้ใช้งานแล้ว กรุณาเลือกชื่อใหม่' : 'สมัครสมาชิกไม่สำเร็จ');
+          console.error('Firebase registration failed:', error);
+        }
       }
 
-      logout() {
+      async logout() {
+        await firebase.auth().signOut();
         this.currentUser = null;
         localStorage.removeItem('omni_user');
-        app.updateUserUI();
         app.showToast('ออกจากระบบเรียบร้อยแล้ว');
-        app.renderHome();
       }
     }
     const auth = new AuthManager();
@@ -1047,6 +1094,7 @@
         this.combo = 1;
         this.selectedRegAvatar = '🧙‍♂️';
         this.selectedProfileAvatar = '🧙‍♂️';
+        this.selectedProfileFrame = 'default';
         this.tickets = JSON.parse(localStorage.getItem('omni_tickets') || '[]');
         if (this.tickets.length === 0) {
           this.tickets = [
@@ -1091,6 +1139,12 @@
         el.classList.add('selected');
       }
 
+      selectProfileFrame(frame, el) {
+        this.selectedProfileFrame = frame;
+        document.querySelectorAll('#profile-frame-grid .frame-opt').forEach(option => option.classList.remove('selected'));
+        el.classList.add('selected');
+      }
+
       selectProfileAvatar(av, el) {
         this.selectedProfileAvatar = av;
         const preview = document.getElementById('profile-avatar-preview');
@@ -1121,8 +1175,8 @@
       saveProfileAvatar() {
         if (auth.currentUser) {
           auth.currentUser.avatar = this.selectedProfileAvatar;
-          localStorage.setItem('omni_user', JSON.stringify(auth.currentUser));
-          localStorage.setItem('omni_avatar', this.selectedProfileAvatar);
+          auth.currentUser.frame = this.selectedProfileFrame || 'default';
+          auth.saveCurrentUser().catch((error) => console.error('บันทึกโปรไฟล์ไม่สำเร็จ:', error));
           this.updateUserUI();
           this.closeModal('modal-avatar-picker');
           this.showToast(`เปลี่ยนรูปโปรไฟล์เป็น ${this.selectedProfileAvatar} สำเร็จ! ✨`);
@@ -1134,6 +1188,11 @@
         return typeof avatar === 'string' && avatar.startsWith('data:image/')
           ? `<img class="avatar-image ${className}" src="${avatar}" alt="Avatar">`
           : `<span class="${className}">${avatar}</span>`;
+      }
+
+      profileAvatarMarkup(user, className = '') {
+        const avatar = this.avatarMarkup(user.avatar, '', user.frame);
+        return `<span class="profile-avatar-frame ${user.frame || 'default'} ${className}">${avatar}</span>`;
       }
 
       getLevel() {
@@ -1432,7 +1491,7 @@
           </div>
 
           <div style="background: var(--card-bg); border-radius: 16px; padding: 2rem; border: 1px solid var(--card-border); text-align: center; max-width: 600px; margin: 0 auto;">
-            <div style="font-size: 4.5rem; margin-bottom: 0.25rem;">${this.avatarMarkup(auth.currentUser.avatar)}</div>
+            <div style="margin-bottom: 1rem;">${this.profileAvatarMarkup(auth.currentUser)}</div>
             <button class="btn btn-outline" style="padding: 0.35rem 0.8rem; font-size: 0.82rem; margin-bottom: 1.25rem;" onclick="app.openModal('modal-avatar-picker')">🎨 เปลี่ยนรูปโปรไฟล์ (Avatar)</button>
 
             <h2>${auth.currentUser.username}</h2>
@@ -1656,6 +1715,12 @@
         if (id === 'modal-register' || id === 'modal-login') this.resetAuthForms();
         if (id === 'modal-avatar-picker' && auth.currentUser) {
           this.selectedProfileAvatar = auth.currentUser.avatar;
+          this.selectedProfileFrame = auth.currentUser.frame || 'default';
+          document.querySelectorAll('#profile-frame-grid .frame-opt').forEach((option) => {
+            option.classList.toggle('selected', option.textContent.includes({
+              default: 'วงกลม', square: 'สี่เหลี่ยม', diamond: 'เพชร', neon: 'นีออน', gold: 'ทอง'
+            }[this.selectedProfileFrame]));
+          });
           const preview = document.getElementById('profile-avatar-preview');
           if (preview && this.selectedProfileAvatar.startsWith('data:image/')) {
             preview.src = this.selectedProfileAvatar;
