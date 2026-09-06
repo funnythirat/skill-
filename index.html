@@ -370,7 +370,7 @@
       <ul class="nav-links">
         <li class="nav-item active" data-route="#/" onclick="app.navigate('#/')"><span>📚</span> <span>คลังสายวิชา</span></li>
         <li class="nav-item" data-route="#/leaderboard" onclick="app.navigate('#/leaderboard')"><span>🏆</span> <span>ตารางอันดับ</span></li>
-        <li class="nav-item" data-route="#/tickets" onclick="app.navigate('#/tickets')"><span>🛠️</span> <span>ศูนย์ช่วยเหลือ</span></li>
+        <li class="nav-item" data-route="#/tickets" onclick="app.navigate('#/tickets')"><span>✉️</span> <span>ติดต่อทางอีเมล</span></li>
         <li class="nav-item" id="nav-admin-link" style="display: none;" onclick="app.navigate('#/admin')"><span>🛡️</span> <span>หลังบ้าน (Admin)</span></li>
       </ul>
 
@@ -401,7 +401,7 @@
     <nav class="mobile-bottom-nav">
       <div class="mobile-nav-item active" data-route="#/" onclick="app.navigate('#/')"><span>📚</span><span>คลังวิชา</span></div>
       <div class="mobile-nav-item" data-route="#/leaderboard" onclick="app.navigate('#/leaderboard')"><span>🏆</span><span>อันดับ</span></div>
-      <div class="mobile-nav-item" data-route="#/tickets" onclick="app.navigate('#/tickets')"><span>🛠️</span><span>ช่วยเหลือ</span></div>
+      <div class="mobile-nav-item" data-route="#/tickets" onclick="app.navigate('#/tickets')"><span>✉️</span><span>ติดต่ออีเมล</span></div>
       <div class="mobile-nav-item" id="mob-admin-item" style="display: none;" data-route="#/admin" onclick="app.navigate('#/admin')"><span>🛡️</span><span>หลังบ้าน</span></div>
       <div class="mobile-nav-item" data-route="#/profile" onclick="if(auth.currentUser){app.navigate('#/profile')}else{app.openModal('modal-login')}"><span>👤</span><span id="mob-profile-label">โปรไฟล์</span></div>
     </nav>
@@ -539,6 +539,7 @@
     });
   </script>
   <script>
+    const SUPPORT_EMAIL = 'Thiratsarapakdee@gmail.com';
     const AVATAR_LIST = ['🧙‍♂️', '🌲', '💻', '🎨', '⚔️', '💎', '⚙️', '🚀', '🛡️', '👑', '🏹', '🥋', '🧠', '⚡', '🐉', '🦅'];
 
     // 1. Dynamic Background Particles Engine
@@ -1630,80 +1631,38 @@
         const view = document.getElementById('app-view');
         view.innerHTML = `
           <div class="hero-banner">
-            <h1 class="hero-title">🛠️ ศูนย์ช่วยเหลือและแจ้งปัญหา</h1>
-            <p class="hero-quote">ส่งข้อเสนอแนะหรือแจ้งข้อผิดพลาดของโจทย์ถึงทีมงาน</p>
+            <h1 class="hero-title">✉️ ติดต่อทีมงานทางอีเมล</h1>
+            <p class="hero-quote">ส่งข้อเสนอแนะหรือแจ้งข้อผิดพลาดถึงทีมงานโดยตรง</p>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
-            <!-- Submit Form -->
+          <div style="max-width: 760px; margin: 0 auto;">
             <div style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--card-border);">
-              <h3 style="margin-bottom: 1rem;">➕ ส่งเรื่องแจ้งปัญหาใหม่</h3>
+              <h3 style="margin-bottom: 1rem;">📨 เขียนอีเมลถึงทีมงาน</h3>
               <div class="form-group">
                 <label class="form-label">หัวข้อเรื่อง</label>
                 <input type="text" id="t-subj" class="form-input" placeholder="เช่น พบข้อสอบเฉลยไม่ตรง">
               </div>
               <div class="form-group">
-                <label class="form-label">รายละเอียดปัญหา</label>
+                <label class="form-label">รายละเอียด</label>
                 <textarea id="t-msg" class="form-textarea" rows="3" placeholder="อธิบายข้อความของคุณ..."></textarea>
               </div>
-              <button class="btn btn-primary" onclick="app.submitTicket()">ส่งเรื่องแจ้งปัญหา 📤</button>
-            </div>
-
-            <!-- Ticket List -->
-            <div style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--card-border); overflow-x: auto;">
-              <h3 style="margin-bottom: 1rem;">📋 ประวัติการแจ้งเรื่องของคุณ</h3>
-              <table class="admin-table">
-                <thead>
-                  <tr>
-                    <th>หัวข้อ</th>
-                    <th>สถานะ</th>
-                    <th>การตอบกลับจากแอดมิน</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    ${(auth.currentUser ? this.tickets.filter(t => t.userId === auth.currentUser.id) : []).map(t => `
-                    <tr>
-                      <td><strong style="color: #fff;">${t.subject}</strong><br><small style="color: var(--text-muted);">${t.message}</small></td>
-                      <td><span class="status-chip status-${t.status}">${t.status}</span></td>
-                      <td>${t.reply ? `<span style="color: #38bdf8;">💬 ${t.reply}</span>` : '<span style="color: var(--text-muted);">รอการตอบกลับ</span>'}</td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
+              <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">อีเมลผู้รับ: ${SUPPORT_EMAIL}</p>
+              <button class="btn btn-primary" onclick="app.sendSupportEmail()">เปิดโปรแกรมอีเมล 📤</button>
             </div>
           </div>
         `;
       }
 
-      async submitTicket() {
-        if (!auth.currentUser) {
-          this.showToast('กรุณาเข้าสู่ระบบก่อนส่งคำร้อง');
-          return;
-        }
+      sendSupportEmail() {
         const subj = document.getElementById('t-subj').value.trim();
         const msg = document.getElementById('t-msg').value.trim();
         if (!subj || !msg) {
           this.showToast('กรุณากรอกหัวข้อและรายละเอียดให้ครบถ้วน');
           return;
         }
-        try {
-          await firebase.firestore().collection('tickets').add({
-            userId: auth.currentUser.id,
-            user: auth.currentUser.username,
-            subject: subj,
-            category: 'general',
-            status: 'Open',
-            message: msg,
-            reply: null,
-            createdAt: new Date().toISOString()
-          });
-          document.getElementById('t-subj').value = '';
-          document.getElementById('t-msg').value = '';
-          this.showToast('ส่งเรื่องแจ้งปัญหาเรียบร้อยแล้ว!');
-        } catch (error) {
-          console.error('Submit ticket failed:', error);
-          this.showToast(`ส่งคำร้องไม่สำเร็จ (${error.code || 'unknown-error'})`);
-        }
+        const username = auth.currentUser ? auth.currentUser.username : 'ผู้เยี่ยมชม';
+        const body = `ชื่อผู้ใช้: ${username}\n\nรายละเอียด:\n${msg}`;
+        window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;
       }
 
       async createLessonFromProfile() {
@@ -1800,10 +1759,10 @@
               </div>
             </div>
             <div class="admin-stat-card">
-              <div style="font-size: 2rem;">🛠️</div>
+              <div style="font-size: 2rem;">✉️</div>
               <div>
-                <div class="admin-stat-val">${this.tickets.filter(t => t.status === 'Open').length}</div>
-                <div style="font-size: 0.8rem; color: var(--text-muted);">Ticket รอดำเนินการ</div>
+                <div class="admin-stat-val">Email</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">${SUPPORT_EMAIL}</div>
               </div>
             </div>
             <div class="admin-stat-card">
@@ -1820,41 +1779,6 @@
                 <div style="font-size: 0.8rem; color: var(--text-muted);">โจทย์ข้อสอบทั้งหมด</div>
               </div>
             </div>
-          </div>
-
-          <!-- Admin Ticket Management -->
-          <div style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--card-border); margin-bottom: 2rem; overflow-x: auto;">
-            <h3 style="margin-bottom: 1rem;">🛠️ รายการแจ้งปัญหาจากผู้ใช้ (Ticket Queue)</h3>
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>ผู้แจ้ง</th>
-                  <th>หัวข้อเรื่อง</th>
-                  <th>สถานะ</th>
-                  <th style="text-align: right;">การกระทำ</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${this.ticketLoadError ? `
-                  <tr><td colspan="4" style="color: #f87171; padding: 1.5rem;">
-                    โหลดคำร้องไม่สำเร็จ (${this.ticketLoadError.code || 'permission-denied'}) — ตรวจสอบว่าได้ Publish Firestore Rules แล้ว
-                  </td></tr>
-                ` : this.tickets.length === 0 ? `
-                  <tr><td colspan="4" style="color: var(--text-muted); padding: 1.5rem;">
-                    ยังไม่มีคำร้องจากผู้ใช้ คำร้องใหม่จะแสดงที่นี่แบบเรียลไทม์
-                  </td></tr>
-                ` : this.tickets.map((t, idx) => `
-                  <tr>
-                    <td><strong>${t.user}</strong></td>
-                    <td><strong style="color: #fff;">${t.subject}</strong><br><small style="color: var(--text-muted);">${t.message}</small></td>
-                    <td><span class="status-chip status-${t.status}">${t.status}</span></td>
-                    <td style="text-align: right;">
-                      <button class="btn btn-outline" style="padding: 0.3rem 0.7rem; font-size: 0.8rem;" onclick="app.adminReplyTicket(${idx})">💬 ตอบกลับ</button>
-                    </td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
           </div>
 
           <!-- User Moderation Table -->
