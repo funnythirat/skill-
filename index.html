@@ -1639,6 +1639,307 @@
       box-shadow: 0 4px 12px rgba(56, 189, 248, 0.15);
     }
 
+  
+    /* ============================================================
+       OMNI-AI SAGE CHATBOT WIDGET STYLES
+       ============================================================ */
+    .omni-ai-fab {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.7rem 1.1rem;
+      background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+      color: #fff;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(6, 182, 212, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.2);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+    }
+    .omni-ai-fab:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 8px 30px rgba(6, 182, 212, 0.6), 0 0 0 2px rgba(0, 242, 254, 0.6);
+    }
+    .ai-fab-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ai-fab-icon svg { width: 100%; height: 100%; }
+    .ai-fab-badge {
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .omni-ai-widget {
+      position: fixed;
+      bottom: 84px;
+      right: 24px;
+      width: 400px;
+      max-width: calc(100vw - 32px);
+      height: 580px;
+      max-height: calc(100vh - 110px);
+      background: rgba(11, 15, 29, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      border-radius: 20px;
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(6, 182, 212, 0.2);
+      z-index: 1001;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: slideUpAi 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideUpAi {
+      from { opacity: 0; transform: translateY(20px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .ai-header {
+      padding: 0.9rem 1.2rem;
+      background: rgba(15, 23, 42, 0.9);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .ai-header-info {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .ai-avatar-badge {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #6366f1, #06b6d4);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      box-shadow: 0 0 12px rgba(6, 182, 212, 0.3);
+    }
+    .ai-name {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 0.5px;
+    }
+    .ai-status {
+      font-size: 0.72rem;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .ai-status-dot {
+      width: 7px;
+      height: 7px;
+      background: #22c55e;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #22c55e;
+    }
+    .ai-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .ai-btn-icon {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-secondary);
+      border-radius: 8px;
+      padding: 0.3rem 0.5rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .ai-btn-icon:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    .ai-settings-panel {
+      padding: 0.85rem 1.1rem;
+      background: rgba(15, 23, 42, 0.98);
+      border-bottom: 1px solid rgba(0, 242, 254, 0.2);
+    }
+
+    .ai-messages-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      scroll-behavior: smooth;
+    }
+    .ai-messages-area::-webkit-scrollbar { width: 6px; }
+    .ai-messages-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+
+    .ai-msg {
+      display: flex;
+      gap: 0.6rem;
+      max-width: 88%;
+      animation: fadeInMsg 0.25s ease;
+    }
+    @keyframes fadeInMsg {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .ai-msg-user {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+    .ai-msg-bot {
+      align-self: flex-start;
+    }
+    .ai-msg-bubble {
+      padding: 0.75rem 1rem;
+      border-radius: 14px;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+    .ai-msg-user .ai-msg-bubble {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #fff;
+      border-bottom-right-radius: 2px;
+    }
+    .ai-msg-bot .ai-msg-bubble {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
+      border-bottom-left-radius: 2px;
+    }
+    .ai-msg-bubble a { color: #38bdf8; text-decoration: underline; }
+    .ai-msg-bubble code {
+      background: rgba(0, 0, 0, 0.35);
+      color: #00f2fe;
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.82rem;
+    }
+
+    .ai-typing-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0.5rem 0.8rem;
+    }
+    .ai-typing-dot {
+      width: 6px;
+      height: 6px;
+      background: #38bdf8;
+      border-radius: 50%;
+      animation: typingBlink 1.4s infinite;
+    }
+    .ai-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .ai-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typingBlink {
+      0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+      40% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .ai-quick-chips {
+      display: flex;
+      gap: 0.4rem;
+      overflow-x: auto;
+      padding: 0.5rem 0.9rem;
+      background: rgba(15, 23, 42, 0.5);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      white-space: nowrap;
+    }
+    .ai-quick-chips::-webkit-scrollbar { display: none; }
+    .ai-chip {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 0.3rem 0.75rem;
+      font-size: 0.76rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    .ai-chip:hover {
+      background: rgba(0, 242, 254, 0.12);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .ai-input-bar {
+      padding: 0.75rem 0.9rem;
+      background: rgba(15, 23, 42, 0.95);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .ai-textarea {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 0.6rem 0.85rem;
+      color: #fff;
+      font-size: 0.88rem;
+      resize: none;
+      outline: none;
+      max-height: 90px;
+      transition: all 0.2s ease;
+    }
+    .ai-textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
+    }
+    .ai-send-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #0284c7, #06b6d4);
+      border: none;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    .ai-send-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 14px rgba(6, 182, 212, 0.5);
+    }
+    .ai-send-btn svg { width: 18px; height: 18px; }
+
+    @media (max-width: 600px) {
+      .omni-ai-widget {
+        bottom: 0;
+        right: 0;
+        width: 100vw;
+        max-width: 100vw;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+      }
+      .omni-ai-fab {
+        bottom: 74px;
+        right: 16px;
+        padding: 0.6rem 0.9rem;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -1654,6 +1955,7 @@
 
       <ul class="nav-links">
         <li class="nav-item active" data-route="#/" onclick="app.navigate('#/')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg></span> <span>คลังสายวิชา</span></li>
+        <li class="nav-item" onclick="omniAI.open()"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span> <span>ปรึกษา AI</span></li>
         <li class="nav-item" data-route="#/leaderboard" onclick="app.navigate('#/leaderboard')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span> <span>ตารางอันดับ</span></li>
         <li class="nav-item" data-route="#/tickets" onclick="app.navigate('#/tickets')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span> <span>ศูนย์ช่วยเหลือ</span></li>
         <li class="nav-item" id="nav-admin-link" style="display: none;" onclick="app.navigate('#/admin')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></span> <span>หลังบ้าน (Admin)</span></li>
@@ -3207,7 +3509,10 @@
 
         const view = document.getElementById('app-view');
         view.innerHTML = `
-          <button class="btn btn-outline" style="margin-bottom: 1.5rem;" onclick="app.navigate('#/discipline/${disc.id}')">⬅️ ย้อนกลับไปรายการบทเรียน</button>
+          <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem;">
+            <button class="btn btn-outline" onclick="app.navigate('#/discipline/${disc.id}')">⬅️ ย้อนกลับไปรายการบทเรียน</button>
+            <button class="btn btn-primary" style="background: linear-gradient(135deg, #4f46e5, #06b6d4); border-color: #06b6d4; font-size: 0.85rem; padding: 0.45rem 0.9rem;" onclick="omniAI.askFromTheory('${disc.id}', '${idxStr}')">🤖 ปรึกษา AI เกี่ยวกับบทเรียนนี้</button>
+          </div>
           
           <div class="theory-box">
             <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem;">
@@ -3261,7 +3566,10 @@
 
         const view = document.getElementById('app-view');
         view.innerHTML = `
-          <button class="btn btn-outline" style="margin-bottom: 1.5rem;" onclick="app.navigate('#/theory/${disc.id}_${idxStr}')">⬅ กลับไปทบทวนทฤษฎี</button>
+          <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem;">
+            <button class="btn btn-outline" onclick="app.navigate('#/theory/${disc.id}_${idxStr}')">⬅ กลับไปทบทวนทฤษฎี</button>
+            <button class="btn btn-primary" style="background: linear-gradient(135deg, #4f46e5, #06b6d4); border-color: #06b6d4; font-size: 0.85rem; padding: 0.45rem 0.9rem;" onclick="omniAI.askHintFromQuiz('${disc.id}', '${idxStr}')">🤖 ขอคำใบ้โจทย์จาก AI</button>
+          </div>
           <div class="quiz-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
               <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
@@ -3902,8 +4210,531 @@
       }
     }
 
+        // ============================================================
+    // OMNI-AI SAGE 2.0 DUAL-ENGINE CHATBOT & SOCRATIC TUTOR
+    // ============================================================
+    class OmniAIEngine {
+      constructor() {
+        this.apiKey = localStorage.getItem('omni_ai_gemini_api_key') || '';
+        this.messages = [
+          {
+            role: 'bot',
+            content: '🤖 **ยินดีต้อนรับสู่ OmniAI Sage 2.0!**\n\nผมคือผู้ช่วยอัจฉริยะประจำ **OmniVerse Academy** ครอบคลุมองค์ความรู้ทั้ง **15 มหาศาสตร์ (122 สาขาวิชา 216 บทเรียน)**\n\n💡 **สิ่งที่คุณสามารถสอบถาม:**\n- 📖 อธิบายหรือสรุปแก่นความรู้ของบทเรียนปัจจุบัน\n- 🔬 ยกตัวอย่างการประยุกต์ใช้ในสถานการณ์ชีวิตจริง\n- 📝 ขอคำใบ้และแนวคิดเชิงวิเคราะห์สำหรับข้อสอบ (โดยไม่เฉลยคำตอบ)\n- 🧭 แนะนำแผนผังและเส้นทางการเรียนรู้ตามความสนใจ\n\n*สามารถพิมพ์คำถามด้านล่าง หรือกดเลือกคำถามด่วนได้เลยครับ!*'
+          }
+        ];
+        this.isTyping = false;
+      }
+
+      init() {
+        this.renderMessages();
+        this.updateKeyStatusText();
+      }
+
+      toggle() {
+        const widget = document.getElementById('omni-ai-widget');
+        if (!widget) return;
+        if (widget.style.display === 'none' || widget.style.display === '') {
+          this.open();
+        } else {
+          this.close();
+        }
+      }
+
+      open() {
+        const widget = document.getElementById('omni-ai-widget');
+        if (!widget) return;
+        widget.style.display = 'flex';
+        const msgArea = document.getElementById('omni-ai-messages');
+        if (msgArea) msgArea.scrollTop = msgArea.scrollHeight;
+        const input = document.getElementById('omni-ai-input');
+        if (input) setTimeout(() => input.focus(), 100);
+      }
+
+      close() {
+        const widget = document.getElementById('omni-ai-widget');
+        if (widget) widget.style.display = 'none';
+      }
+
+      toggleSettings() {
+        const panel = document.getElementById('ai-settings-panel');
+        if (!panel) return;
+        const isHidden = panel.style.display === 'none' || panel.style.display === '';
+        panel.style.display = isHidden ? 'block' : 'none';
+        if (isHidden) {
+          const input = document.getElementById('ai-api-key-input');
+          if (input) input.value = this.apiKey;
+          this.updateKeyStatusText();
+        }
+      }
+
+      saveApiKey() {
+        const input = document.getElementById('ai-api-key-input');
+        if (!input) return;
+        const key = input.value.trim();
+        this.apiKey = key;
+        if (key) {
+          localStorage.setItem('omni_ai_gemini_api_key', key);
+        } else {
+          localStorage.removeItem('omni_ai_gemini_api_key');
+        }
+        this.updateKeyStatusText();
+      }
+
+      clearApiKey() {
+        this.apiKey = '';
+        localStorage.removeItem('omni_ai_gemini_api_key');
+        const input = document.getElementById('ai-api-key-input');
+        if (input) input.value = '';
+        this.updateKeyStatusText();
+      }
+
+      updateKeyStatusText() {
+        const statusEl = document.getElementById('ai-key-status');
+        if (!statusEl) return;
+        if (this.apiKey) {
+          statusEl.innerHTML = '<span style="color: #4ade80;">● ใช้งาน Live Google Gemini API (คีย์: ' + this.apiKey.substring(0, 6) + '...' + this.apiKey.slice(-4) + ')</span>';
+        } else {
+          statusEl.innerHTML = '<span style="color: #38bdf8;">● ใช้งาน Built-in Knowledge Engine (ฟรี & ออฟไลน์ 100%)</span>';
+        }
+      }
+
+      clearChat() {
+        this.messages = [
+          {
+            role: 'bot',
+            content: '🤖 ล้างการสนทนาเรียบร้อยครับ! มีข้อสงสัยใน 15 มหาศาสตร์หรือโจทย์ข้อไหน ถาม OmniAI Sage ได้เลยครับ'
+          }
+        ];
+        this.renderMessages();
+      }
+
+      escapeHtml(text) {
+        const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+        return text.replace(/[&<>"']/g, m => map[m]);
+      }
+
+      formatMarkdown(md) {
+        if (!md) return '';
+        let html = this.escapeHtml(md);
+        // Code blocks
+        html = html.replace(/```([a-z]*)\n([\s\S]*?)```/g, '<pre><code class="language-$1">$2</code></pre>');
+        // Inline code
+        html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+        // Bold
+        html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+        // Italic
+        html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+        // Markdown links [text](url)
+        html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1 ↗</a>');
+        // Bullet points
+        html = html.replace(/^[•\-\*]\s+(.+)$/gm, '&bull; $1');
+        // Newlines
+        html = html.replace(/\n/g, '<br>');
+        return html;
+      }
+
+      renderMessages(showTyping = false) {
+        const msgArea = document.getElementById('omni-ai-messages');
+        if (!msgArea) return;
+
+        let html = '';
+        for (const msg of this.messages) {
+          const isUser = msg.role === 'user';
+          html += `
+            <div class="ai-msg ${isUser ? 'ai-msg-user' : 'ai-msg-bot'}">
+              ${!isUser ? '<div style="font-size: 1.15rem; flex-shrink: 0; margin-top: 2px;">🤖</div>' : ''}
+              <div class="ai-msg-bubble">
+                ${this.formatMarkdown(msg.content)}
+              </div>
+            </div>
+          `;
+        }
+
+        if (showTyping) {
+          html += `
+            <div class="ai-msg ai-msg-bot">
+              <div style="font-size: 1.15rem; flex-shrink: 0; margin-top: 2px;">🤖</div>
+              <div class="ai-msg-bubble" style="padding: 0.4rem 0.8rem;">
+                <div class="ai-typing-indicator">
+                  <span class="ai-typing-dot"></span>
+                  <span class="ai-typing-dot"></span>
+                  <span class="ai-typing-dot"></span>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        msgArea.innerHTML = html;
+        msgArea.scrollTop = msgArea.scrollHeight;
+      }
+
+      handleKeyDown(event) {
+        if (event.key === 'Enter' && !event.shiftKey) {
+          event.preventDefault();
+          this.sendFromInput();
+        }
+      }
+
+      sendQuickPrompt(promptText) {
+        this.open();
+        this.sendMessage(promptText);
+      }
+
+      sendFromInput() {
+        const input = document.getElementById('omni-ai-input');
+        if (!input) return;
+        const text = input.value.trim();
+        if (!text) return;
+        input.value = '';
+        this.sendMessage(text);
+      }
+
+      getCurrentContext() {
+        const hash = window.location.hash || '';
+        if (hash.startsWith('#/theory/')) {
+          const param = hash.replace('#/theory/', '');
+          const [discId, idxStr] = param.split('_');
+          const disc = (typeof DISCIPLINE_DATA !== 'undefined' ? DISCIPLINE_DATA : []).find(d => d.id === discId);
+          const lessons = (typeof LESSON_DATA !== 'undefined' ? LESSON_DATA[discId] : null) || [];
+          const lesson = lessons[parseInt(idxStr) || 0] || lessons[0];
+          return { type: 'theory', discId, idxStr, disc, lesson };
+        } else if (hash.startsWith('#/quiz/')) {
+          const param = hash.replace('#/quiz/', '');
+          const [discId, idxStr] = param.split('_');
+          const disc = (typeof DISCIPLINE_DATA !== 'undefined' ? DISCIPLINE_DATA : []).find(d => d.id === discId);
+          const lessons = (typeof LESSON_DATA !== 'undefined' ? LESSON_DATA[discId] : null) || [];
+          const lesson = lessons[parseInt(idxStr) || 0] || lessons[0];
+          return { type: 'quiz', discId, idxStr, disc, lesson };
+        } else if (hash.startsWith('#/discipline/')) {
+          const discId = hash.replace('#/discipline/', '');
+          const disc = (typeof DISCIPLINE_DATA !== 'undefined' ? DISCIPLINE_DATA : []).find(d => d.id === discId);
+          return { type: 'discipline', discId, disc };
+        }
+        return null;
+      }
+
+      askFromTheory(discId, idxStr) {
+        this.open();
+        const disc = (typeof DISCIPLINE_DATA !== 'undefined' ? DISCIPLINE_DATA : []).find(d => d.id === discId);
+        const lessons = (typeof LESSON_DATA !== 'undefined' ? LESSON_DATA[discId] : null) || [];
+        const lesson = lessons[parseInt(idxStr) || 0] || lessons[0];
+        const context = { type: 'theory', discId, idxStr, disc, lesson };
+        const prompt = `ช่วยสรุปและอธิบายเจาะลึกบทเรียน "${lesson ? lesson.title : ''}" ให้เข้าใจง่ายๆ พร้อมยกตัวอย่างจริงหน่อยครับ`;
+        this.sendMessage(prompt, context);
+      }
+
+      askHintFromQuiz(discId, idxStr) {
+        this.open();
+        const disc = (typeof DISCIPLINE_DATA !== 'undefined' ? DISCIPLINE_DATA : []).find(d => d.id === discId);
+        const lessons = (typeof LESSON_DATA !== 'undefined' ? LESSON_DATA[discId] : null) || [];
+        const lesson = lessons[parseInt(idxStr) || 0] || lessons[0];
+        const context = { type: 'quiz', discId, idxStr, disc, lesson };
+        const prompt = `ช่วยใบ้แนวคิดการคิดวิเคราะห์สำหรับโจทย์ข้อนี้หน่อยครับ (ไม่ต้องบอกคำตอบตรงๆ นะครับ)`;
+        this.sendMessage(prompt, context);
+      }
+
+      async sendMessage(userText, customContext = null) {
+        if (!userText || this.isTyping) return;
+        const context = customContext || this.getCurrentContext();
+
+        this.messages.push({ role: 'user', content: userText });
+        this.isTyping = true;
+        this.renderMessages(true);
+
+        try {
+          let botReply = '';
+          if (this.apiKey) {
+            try {
+              botReply = await this.callGeminiApi(userText, context);
+            } catch (err) {
+              console.warn('Gemini API call failed, falling back to built-in offline engine:', err);
+              const localReply = this.generateLocalResponse(userText, context);
+              botReply = `${localReply}\n\n*(หมายเหตุ: ไม่สามารถเรียก Live Gemini API ได้ [${err.message}] ระบบจึงใช้ Built-in Knowledge Engine ตอบแทนให้อัตโนมัติครับ)*`;
+            }
+          } else {
+            // Simulated realistic thinking latency for great UX
+            await new Promise(r => setTimeout(r, 450));
+            botReply = this.generateLocalResponse(userText, context);
+          }
+
+          this.messages.push({ role: 'bot', content: botReply });
+        } catch (globalErr) {
+          this.messages.push({
+            role: 'bot',
+            content: 'ขออภัยครับ เกิดข้อผิดพลาดในการประมวลผลข้อความ: ' + globalErr.message
+          });
+        } finally {
+          this.isTyping = false;
+          this.renderMessages(false);
+        }
+      }
+
+      async callGeminiApi(prompt, context) {
+        let systemPrompt = `คุณคือ OmniAI Sage 2.0 ผู้ช่วยติวเตอร์อัจฉริยะประจำ OmniVerse Academy ซึ่งเป็นแพลตฟอร์มการเรียนรู้ 15 มหาศาสตร์ความรู้ของมนุษยชาติ
+บทบาทของคุณคือ:
+1. ตอบเป็นภาษาไทยด้วยน้ำเสียงกระตือรือร้น สุภาพ ทรงภูมิปัญญา และใช้หลักการทางวิชาการที่แม่นยำ
+2. หากผู้ใช้อยู่ในบริบทของข้อสอบ (Quiz) และขอคำใบ้: จงใช้กระบวนการคิดแบบ Socratic Method ให้แนวคิด วิธีสังเกตจุดหลอก และตรรกะการวิเคราะห์ โดยเด็ดขาดว่าห้ามบอกตัวเลือกคำตอบที่ถูกต้องตรงๆ เพื่อส่งเสริมการเรียนรู้ที่แท้จริง
+3. หากผู้ใช้ถามทฤษฎี (Theory): สรุปแก่นสาระสำคัญ ระบุข้อควรระวัง และยกตัวอย่างการใช้งานในสถานการณ์จริง
+4. จัดรูปแบบคำตอบด้วย Markdown อย่างสวยงาม อ่านง่าย ใช้ bullet points และ emoji เหมาะสม`;
+
+        if (context) {
+          systemPrompt += '\n\n[บริบทปัจจุบันของผู้เรียน]:';
+          if (context.disc) {
+            systemPrompt += `\n- สายวิชา: ${context.disc.code} ${context.disc.name_th} (${context.disc.name_en})`;
+          }
+          if (context.lesson) {
+            systemPrompt += `\n- บทเรียน: ${context.lesson.title} (${context.lesson.field_code || ''} ${context.lesson.field_name || ''})`;
+            systemPrompt += `\n- สาระสำคัญ: ${context.lesson.desc || ''}`;
+            if (context.type === 'quiz') {
+              systemPrompt += `\n- สถานการณ์โจทย์: ${context.lesson.scenario || ''}`;
+              systemPrompt += `\n- คำถาม: ${context.lesson.question || ''}`;
+              systemPrompt += `\n- (คำเตือนสำคัญ: ห้ามเฉลยคำตอบตรงๆ ให้ใบ้แนวคิดการคิดเท่านั้น)`;
+            }
+          }
+        }
+
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(this.apiKey)}`;
+        const bodyData = {
+          contents: [
+            {
+              role: 'user',
+              parts: [{ text: `${systemPrompt}\n\nคำถามจากผู้เรียน: ${prompt}` }]
+            }
+          ],
+          generationConfig: {
+            temperature: 0.7,
+            maxOutputTokens: 1000
+          }
+        };
+
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(bodyData)
+        });
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error?.message || `HTTP ${res.status}`);
+        }
+
+        const data = await res.json();
+        const candidate = data.candidates?.[0];
+        if (!candidate || !candidate.content?.parts?.[0]?.text) {
+          throw new Error('ไม่พบคำตอบจากโมเดล Gemini');
+        }
+
+        return candidate.content.parts[0].text;
+      }
+
+      generateLocalResponse(query, context) {
+        const q = (query || '').trim().toLowerCase();
+        const discList = typeof DISCIPLINE_DATA !== 'undefined' ? DISCIPLINE_DATA : [];
+        const lessonMap = typeof LESSON_DATA !== 'undefined' ? LESSON_DATA : {};
+
+        // 1. Quiz Hint Handling (Socratic Tutor)
+        if (context && context.type === 'quiz' && (q.includes('ใบ้') || q.includes('hint') || q.includes('แนวคิด') || q.includes('ช่วย') || q.includes('ข้อนี้') || q.includes('ทำอย่างไร') || q.includes('ตอบ'))) {
+          const lesson = context.lesson;
+          if (lesson) {
+            return `💡 **แนวคิดเชิงวิเคราะห์และคำใบ้สำหรับโจทย์ข้อนี้:**
+- **บริบทสถานการณ์:** "${lesson.scenario || lesson.desc || lesson.title}"
+- **แก่นทฤษฎีที่ต้องพิจารณา:** ${lesson.field_name || ''} (${lesson.field_code || ''})
+- **จุดสังเกตสำคัญ:** ลองวิเคราะห์ตัวแปรหลักตามกฎเกณฑ์ในเนื้อหาทฤษฎีบท แล้วตัดตัวเลือกที่มีข้อผิดพลาดประเภทสับสนระหว่างเหตุกับผล (Correlation vs Causation) หรือตัวเลือกที่ไม่สอดคล้องกับหลักวิชาการสากลออก
+- 🎯 *คำใบ้ลับ:* แยกแยะระหว่าง **สาเหตุรากเหง้า (Root Cause)** กับเพียง **ผลพวงข้างเคียง (Symptom)** เพื่อหาทางเลือกที่สมบูรณ์ที่สุดครับ!`;
+          }
+        }
+
+        // 2. Theory Summary / Explanation
+        if (context && context.type === 'theory' && (q.includes('สรุป') || q.includes('คืออะไร') || q.includes('อธิบาย') || q.includes('ตัวอย่าง') || q.includes('บทเรียนนี้'))) {
+          const lesson = context.lesson;
+          const disc = context.disc;
+          if (lesson) {
+            const refs = disc && disc.references ? disc.references.map(r => `[${r.name}](${r.url})`).join(', ') : 'ตำราวิชาการมาตรฐานสากล';
+            return `📖 **สรุปเจาะลึกบทเรียน: ${lesson.title}**
+- **หมวดความรู้:** สายวิชา ${disc ? disc.name_th : ''} (${lesson.field_code || ''} ${lesson.field_name || ''})
+- **ระดับความเชี่ยวชาญ:** ระดับ${lesson.tier_th || 'พื้นฐาน'}
+- **ใจความสำคัญ:** ${lesson.desc || ''}
+- **แนวคิดหลัก:** ทำความเข้าใจโครงสร้างเชิงระบบและความสัมพันธ์ของตัวแปร เพื่อนำระเบียบวิธีคิดไปประยุกต์ใช้อย่างแม่นยำ
+- 🔬 **การประยุกต์ใช้จริง:** ศึกษา Worked Example ในหัวข้อด้านล่างของบทเรียนเพื่อดูแบบจำลองกรณีศึกษาจริง
+- 📚 **ตำราและแหล่งค้นคว้าแนะนำ:** ${refs}`;
+          }
+        }
+
+        // 3. Search matching disciplines by code or name
+        for (const d of discList) {
+          const codeMatch = q.includes(d.code) || q.includes(d.id);
+          const nameThMatch = d.name_th && q.includes(d.name_th.toLowerCase());
+          const nameEnMatch = d.name_en && q.includes(d.name_en.toLowerCase());
+
+          if (codeMatch || nameThMatch || nameEnMatch) {
+            const dLessons = lessonMap[d.id] || [];
+            const refs = d.references || [];
+            const fieldsText = d.fields ? d.fields.slice(0, 4).map(f => f.name).join(', ') : '';
+            const refsText = refs.length > 0 
+              ? refs.map(r => `  • **${r.name}**: ${r.desc} ([ศึกษาเพิ่มเติม](${r.url}))`).join('\n')
+              : '  • ตำรามาตรฐานระดับโลกและงานวิจัยตีพิมพ์สากล';
+
+            return `🌐 **สายวิชาที่ ${d.code}: ${d.name_th} (${d.name_en})**
+- **ภาควิชา:** ${d.part_name || ''}
+- **ปรัชญาประจำศาสตร์:** *"${d.quote || ''}"*
+- **ขอบเขตสาขาความรู้:** ครอบคลุม ${d.fields ? d.fields.length : 0} สาขาวิชา เช่น ${fieldsText}
+- 📚 **บทเรียนในระบบ:** มีทั้งหมด ${dLessons.length} บทเรียน ตั้งแต่ระดับพื้นฐานจนถึงเชี่ยวชาญ
+- 🔗 **ตำราและแหล่งค้นคว้าชั้นนำระดับโลก:**
+${refsText}
+
+💡 *คุณสามารถคลิกเข้าไปที่หน้ารายวิชานี้เพื่อเริ่มเรียนรู้บทเรียนและทำโจทย์ได้ทันทีครับ!*`;
+          }
+        }
+
+        // 4. Topic Keyword Matching (Specialized domains)
+        const topicKnowledge = [
+          {
+            keys: ['ควอนตัม', 'quantum', 'ซูเปอร์โพซิชัน', 'ชเรอดิงเงอร์', 'คลื่น-อนุภาค'],
+            disc: '02 ฟิสิกส์และกลศาสตร์',
+            topic: 'ฟิสิกส์ควอนตัม (Quantum Physics & Mechanics)',
+            exp: 'ศึกษาพฤติกรรมของสสารและพลังงานในระดับอนุภาคย่อย มีหลักการสำคัญเช่น ความเป็นทวิภาวะคลื่น-อนุภาค (Wave-Particle Duality), หลักความไม่แน่นอนของไฮเซนเบิร์ก, และสถานะการพัวพันเชิงควอนตัม (Quantum Entanglement)'
+          },
+          {
+            keys: ['ไซเบอร์', 'ความปลอดภัย', 'cyber', 'security', 'zero trust', 'แฮก', 'โอวาป', 'owasp'],
+            disc: '07 วิทยาการคอมพิวเตอร์',
+            topic: 'ความมั่นคงปลอดภัยไซเบอร์ (Cybersecurity & Zero Trust Architecture)',
+            exp: 'หัวใจของ Zero Trust คือ "Never Trust, Always Verify" ยืนยันตัวตนทุกการร้องขอ, การป้องกันช่องโหว่เว็บตาม OWASP Top 10 (SQL Injection, XSS, SSRF), และการเข้ารหัสลับทั้ง Symmetric (AES) และ Asymmetric (RSA/ECC)'
+          },
+          {
+            keys: ['ai', 'ปัญญาประดิษฐ์', 'machine learning', 'transformer', 'deep learning', 'llm', 'โมเดลภาษา'],
+            disc: '07 วิทยาการคอมพิวเตอร์',
+            topic: 'ปัญญาประดิษฐ์และการเรียนรู้เชิงลึก (AI & Deep Learning)',
+            exp: 'สถาปัตยกรรม Transformer อาศัยกลไก Multi-Head Self-Attention ในการประมวลผลความสัมพันธ์ของโทเค็นข้อมูลแบบขนาน ก่อให้เกิดโมเดลภาษาขนาดใหญ่ (LLMs) และ Generative AI ที่สามารถเข้าใจและให้เหตุผลระดับสูงได้'
+          },
+          {
+            keys: ['บิกแบง', 'จักรวาล', 'ดาว', 'อวกาศ', 'หลุมดำ', 'กาแล็กซี', 'ดาวเคราะห์', 'nasa'],
+            disc: '01 จักรวาลและอวกาศ',
+            topic: 'จักรวาลวิทยาและฟิสิกส์ดาราศาสตร์ (Cosmology & Astrophysics)',
+            exp: 'จักรวาลกำเนิดขึ้นเมื่อราว 13.8 พันล้านปีก่อนจากเหตุการณ์ Big Bang มีหลักฐานสำคัญคือการขยายตัวของเอกภพตามกฎฮับเบิล และรังสีไมโครเวฟพื้นหลังของจักรวาล (Cosmic Microwave Background - CMB)'
+          },
+          {
+            keys: ['dna', 'ยีน', 'crispr', 'เซลล์', 'พันธุกรรม', 'อณูชีววิทยา'],
+            disc: '04 ชีววิทยาและระบบสิ่งมีชีวิต',
+            topic: 'อณูชีววิทยาและพันธุวิศวกรรม (Molecular Biology & CRISPR-Cas9)',
+            exp: 'DNA เก็บข้อมูลพันธุกรรมด้วยเบสคู่สม 4 ชนิด (A-T, C-G) เทคโนโลยี CRISPR-Cas9 เปรียบเสมือนกรรไกรชีวภาพที่สามารถค้นหาและตัดต่อแก้ไขลำดับดีเอ็นเอจำเพาะได้อย่างแม่นยำสูง'
+          },
+          {
+            keys: ['การเงิน', 'ลงทุน', 'หุ้น', 'ดอกเบี้ย', 'เงินเฟ้อ', 'งบการเงิน', 'พอร์ต', 'compound'],
+            disc: '12 การเงิน ธุรกิจ และการบริหาร',
+            topic: 'ยุทธศาสตร์การเงินและการบริหารความมั่งคั่ง (Financial Strategy & Wealth)',
+            exp: 'พลังของดอกเบี้ยทบต้น (Compound Interest) เป็นกลไกสร้างความมั่งคั่งที่ทรงพลังที่สุด การบริหารการเงินที่ยั่งยืนเริ่มต้นจากการตั้งกองทุนฉุกเฉิน การบริหารกระแสเงินสด และการกระจายความเสี่ยงในสินทรัพย์หลากหลายประเภท'
+          },
+          {
+            keys: ['ปรัชญา', 'จริยธรรม', 'ความจริง', 'ความรู้', 'ศีลธรรม', 'ญาณวิทยา', 'ตรรกศาสตร์'],
+            disc: '15 ปรัชญา ตรรกศาสตร์ และระบบความเชื่อ',
+            topic: 'ญาณวิทยาและจริยศาสตร์ปทัสถาน (Epistemology & Normative Ethics)',
+            exp: 'ญาณวิทยาสอบทานความชอบธรรมของความรู้ (Justified True Belief) ในขณะที่จริยศาสตร์สำรวจความถูกผิดผ่านกรอบคิดประโยชน์นิยม (Utilitarianism ที่มองผลลัพธ์สูงสุด) และหน้าที่นิยมของคานท์ (Deontology ที่มองหน้าที่และความถูกต้องในตนเอง)'
+          },
+          {
+            keys: ['สมอง', 'ประสาท', 'neuro', 'สมองกล', 'เซลล์ประสาท', 'สารสื่อประสาท'],
+            disc: '05 กายวิภาคศาสตร์และวิทยาศาสตร์การแพทย์',
+            topic: 'ประสาทวิทยาศาสตร์ (Neuroscience & Brain Plasticity)',
+            exp: 'สมองมนุษย์ประกอบด้วยเซลล์ประสาท (Neurons) กว่า 8.6 หมื่นล้านเซลล์ มีความสามารถในการปรับโครงสร้างและสร้างวงจรใหม่ตลอดชีวิต (Neuroplasticity) ผ่านการเรียนรู้และการฝึกฝนทักษะอย่างสม่ำเสมอ'
+          },
+          {
+            keys: ['ภาษา', 'ไวยากรณ์', 'linguistics', 'การสื่อสาร', 'วาทศาสตร์'],
+            disc: '13 ภาษา วรรณกรรม และการสื่อสาร',
+            topic: 'ภาษาศาสตร์และการสื่อสารสากล (Linguistics & Semiotics)',
+            exp: 'ภาษามิใช่เพียงเครื่องมือสื่อสาร แต่เป็นโครงสร้างที่หล่อหลอมวิธีคิดของมนุษย์ การศึกษาครอบคลุมสัทศาสตร์ (เสียง), วากยสัมพันธ์ (โครงสร้างประโยค), อรรถศาสตร์ (ความหมาย), และวัจนปฏิบัติศาสตร์ (บริบทการใช้)'
+          }
+        ];
+
+        for (const item of topicKnowledge) {
+          if (item.keys.some(k => q.includes(k))) {
+            return `🔬 **แก่นความรู้เกี่ยวกับ: ${item.topic}**
+- **สายวิชาหลัก:** ${item.disc}
+- **คำอธิบายสาระสำคัญ:** ${item.exp}
+- 💡 **คำแนะนำในการเรียน:** คุณสามารถเข้าไปที่หน้าสายวิชาดังกล่าวใน OmniVerse Academy เพื่อเรียนรู้บทเรียนเจาะลึก 5 ส่วน และทำโจทย์สถานการณ์จริงได้ทันทีครับ!`;
+          }
+        }
+
+        // 5. General / Guidance Default Response
+        return `🤖 **สวัสดีครับ! ผมคือ OmniAI Sage 2.0**
+ผมมีความรอบรู้ครอบคลุมทั้ง 15 มหาศาสตร์ความรู้ของมนุษยชาติ:
+- 🌌 **ภาคที่ 1 (วิทยาศาสตร์และธรรมชาติ):** 01 จักรวาล, 02 ฟิสิกส์, 03 เคมี, 04 ชีววิทยา, 05 การแพทย์
+- ⚡ **ภาคที่ 2 (เทคโนโลยี คณิตศาสตร์ และโลก):** 06 คณิตศาสตร์, 07 วิทยาการคอมพิวเตอร์, 08 วิศวกรรม, 09 โลกและสิ่งแวดล้อม, 10 เกษตรกรรม
+- 🏛️ **ภาคที่ 3 (มนุษย์ สังคม และอารยธรรม):** 11 ประวัติศาสตร์, 12 การเงินและธุรกิจ, 13 ภาษาและการสื่อสาร, 14 ศิลปะ, 15 ปรัชญาและตรรกศาสตร์
+
+💬 *คุณสามารถพิมพ์ชื่อสายวิชา, หัวข้อที่สนใจ, หรือกดปุ่มปรึกษา AI ในหน้าบทเรียน/โจทย์ เพื่อให้ผมช่วยอธิบายหรือใบ้แนวคิดได้ทันทีครับ!*`;
+      }
+    }
+
+
     const app = new AppController();
-    window.onload = () => app.init();
+    const omniAI = new OmniAIEngine();
+    window.onload = () => { app.init(); omniAI.init(); };
   </script>
+
+  <!-- OmniAI Floating Action Button & Cyberpunk Chat Drawer -->
+  <div id="omni-ai-fab" class="omni-ai-fab" onclick="omniAI.toggle()" title="ปรึกษา OmniAI Sage">
+    <div class="ai-fab-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/>
+      </svg>
+    </div>
+    <span class="ai-fab-badge">🤖 ถาม AI</span>
+  </div>
+
+  <div id="omni-ai-widget" class="omni-ai-widget" style="display: none;">
+    <!-- AI Header -->
+    <div class="ai-header">
+      <div class="ai-header-info">
+        <div class="ai-avatar-badge">🤖</div>
+        <div>
+          <div class="ai-name">OMNI-AI SAGE 2.0</div>
+          <div class="ai-status"><span class="ai-status-dot"></span> พร้อมตอบคำถาม 15 สายวิชา</div>
+        </div>
+      </div>
+      <div class="ai-header-actions">
+        <button class="ai-btn-icon" onclick="omniAI.toggleSettings()" title="ตั้งค่า API Key">⚙️</button>
+        <button class="ai-btn-icon" onclick="omniAI.clearChat()" title="ล้างบทสนทนา">🗑️</button>
+        <button class="ai-btn-icon" onclick="omniAI.close()" title="ปิดหน้าต่าง">✕</button>
+      </div>
+    </div>
+
+    <!-- AI Settings Drawer (Collapsible) -->
+    <div id="ai-settings-panel" class="ai-settings-panel" style="display: none;">
+      <div style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.35rem;">⚙️ ตั้งค่า Live Gemini API (ไม่บังคับ)</div>
+      <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.6rem;">
+        ระบบมี <strong>Built-in AI Knowledge Engine</strong> ตอบคำถามได้ฟรีและออฟไลน์ทันที หรือจะใส่ Google Gemini API Key เพื่อใช้โมเดลสดระดับโลกก็ได้ครับ
+      </p>
+      <input type="password" id="ai-api-key-input" class="form-input" placeholder="กรอก Gemini API Key (AIzaSy...)" style="font-size: 0.8rem; padding: 0.4rem 0.6rem; margin-bottom: 0.5rem;">
+      <div style="display: flex; gap: 0.4rem;">
+        <button class="btn btn-primary btn-sm" onclick="omniAI.saveApiKey()" style="font-size: 0.75rem; padding: 0.3rem 0.6rem;">บันทึก Key</button>
+        <button class="btn btn-outline btn-sm" onclick="omniAI.clearApiKey()" style="font-size: 0.75rem; padding: 0.3rem 0.6rem;">ลบ Key</button>
+      </div>
+      <div id="ai-key-status" style="font-size: 0.72rem; color: #38bdf8; margin-top: 0.4rem;"></div>
+    </div>
+
+    <!-- AI Messages Scroll Area -->
+    <div id="omni-ai-messages" class="ai-messages-area">
+      <!-- Dynamic Messages -->
+    </div>
+
+    <!-- Quick Prompt Suggestions Bar -->
+    <div class="ai-quick-chips">
+      <button class="ai-chip" onclick="omniAI.sendQuickPrompt('ช่วยสรุปแก่นความรู้สำคัญของบทเรียนนี้ให้เข้าใจง่ายๆ หน่อย')">💡 สรุปบทเรียนนี้</button>
+      <button class="ai-chip" onclick="omniAI.sendQuickPrompt('ขอยกตัวอย่างสถานการณ์จริงและการนำไปใช้ในชีวิตประจำวัน')">🔬 ยกตัวอย่างจริง</button>
+      <button class="ai-chip" onclick="omniAI.sendQuickPrompt('ช่วยใบ้แนวคิดการคิดวิเคราะห์โจทย์ข้อนี้หน่อย (ไม่ต้องบอกคำตอบ)')">📝 ขอคำใบ้โจทย์</button>
+      <button class="ai-chip" onclick="omniAI.sendQuickPrompt('แนะนำสายวิชาที่ฉันควรเริ่มต้นศึกษาเป็นอันดับแรก')">🧭 แนะนำสายวิชา</button>
+    </div>
+
+    <!-- AI Input Bar -->
+    <form class="ai-input-bar" onsubmit="event.preventDefault(); omniAI.sendFromInput();">
+      <textarea id="omni-ai-input" class="ai-textarea" rows="1" placeholder="พิมพ์คำถามของคุณ... (กด Enter เพื่อส่ง)" onkeydown="omniAI.handleKeyDown(event)"></textarea>
+      <button type="submit" id="omni-ai-send-btn" class="ai-send-btn" title="ส่งข้อความ">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </form>
+  </div>
+
 </body>
 </html>
