@@ -1429,14 +1429,18 @@
             xp: 0,
             level: 1,
             rank: 'Bronze Novice',
-            avatar: '🧙‍♂️',
-            frame: 'default'
+            avatar: 'av-1',
+            frame: 'default',
+            completedQuizzes: []
           };
           try {
             const profileDoc = await firebase.firestore().collection('users').doc(firebaseUser.uid).get();
             this.currentUser = profileDoc.exists
               ? { ...fallbackProfile, ...profileDoc.data(), id: firebaseUser.uid }
               : fallbackProfile;
+            if (!Array.isArray(this.currentUser.completedQuizzes)) {
+              this.currentUser.completedQuizzes = [];
+            }
           } catch (error) {
             console.error('Firebase profile load error:', error);
             this.currentUser = fallbackProfile;
@@ -1542,6 +1546,7 @@
             rank: 'Bronze Novice',
             avatar: avatar || 'av-1',
             frame: 'default',
+            completedQuizzes: [],
             registeredAt: new Date().toISOString()
           };
           await firebase.firestore().collection('users').doc(credential.user.uid).set(profile);
@@ -2591,16 +2596,25 @@
 
           <h3 style="margin-bottom: 1.25rem;">📖 รายการบทเรียน & คลังทฤษฎีบท (${lessons.length} บทเรียน)</h3>
           <div>
-            ${lessons.map((l, idx) => `
-              <div class="lesson-card" onclick="app.navigate('#/theory/${disc.id}_${idx}')">
-                <div style="flex: 1; padding-right: 1rem;">
-                  <span class="hero-badge" style="margin-bottom: 0.3rem;">บทเรียนที่ ${idx + 1} ${l.isCustom ? '⭐ แอดมินเพิ่มใหม่' : ''}</span>
-                  <h4 style="font-size: 1.15rem; color: #fff; margin-bottom: 0.25rem;">${l.title}</h4>
-                  <p style="font-size: 0.85rem; color: var(--text-muted);">${l.desc}</p>
+            ${lessons.map((l, idx) => {
+              const quizKey = `${disc.id}_${idx}`;
+              const isDone = auth.currentUser && Array.isArray(auth.currentUser.completedQuizzes) && auth.currentUser.completedQuizzes.includes(quizKey);
+              return `
+                <div class="lesson-card" onclick="app.navigate('#/theory/${disc.id}_${idx}')">
+                  <div style="flex: 1; padding-right: 1rem;">
+                    <span class="hero-badge" style="margin-bottom: 0.3rem;">
+                      บทเรียนที่ ${idx + 1} ${l.isCustom ? '⭐ แอดมินเพิ่มใหม่' : ''}
+                      ${isDone ? '<span style="color: #4ade80; font-weight: 700; margin-left: 0.4rem;">• ✅ ผ่านแล้ว</span>' : ''}
+                    </span>
+                    <h4 style="font-size: 1.15rem; color: #fff; margin-bottom: 0.25rem;">${l.title}</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">${l.desc}</p>
+                  </div>
+                  <button class="btn ${isDone ? 'btn-outline' : 'btn-primary'}" style="white-space: nowrap;">
+                    ${isDone ? '📖 ทบทวนบทเรียน ➔' : '📖 ศึกษาทฤษฎี & ทำโจทย์ ➔'}
+                  </button>
                 </div>
-                <button class="btn btn-primary" style="white-space: nowrap;">📖 ศึกษาทฤษฎี & ทำโจทย์ ➡️</button>
-              </div>
-            `).join('')}
+              `;
+            }).join('')}
           </div>
         `;
       }
@@ -2629,7 +2643,13 @@
             </div>
 
             <div style="margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--card-border); text-align: center;">
-              <button class="btn btn-primary" style="font-size: 1.1rem; padding: 0.85rem 2rem;" onclick="app.navigate('#/quiz/${disc.id}_${idxStr}')">⚔️ เข้าใจทฤษฎีแล้ว! เริ่มทำโจทย์จำลองสถานการณ์ ➡️</button>
+              ${(() => {
+                const quizKey = `${disc.id}_${idxStr}`;
+                const isDone = auth.currentUser && Array.isArray(auth.currentUser.completedQuizzes) && auth.currentUser.completedQuizzes.includes(quizKey);
+                return `<button class="btn btn-primary" style="font-size: 1.05rem; padding: 0.85rem 2rem;" onclick="app.navigate('#/quiz/${disc.id}_${idxStr}')">
+                  ${isDone ? '⚔️ ทบทวนโจทย์จำลองสถานการณ์ (ผ่านแล้ว) ➔' : '⚔️ เข้าใจทฤษฎีแล้ว! เริ่มทำโจทย์จำลองสถานการณ์ (+50 EXP) ➔'}
+                </button>`;
+              })()}
             </div>
           </div>
         `;
@@ -2641,22 +2661,33 @@
         themeManager.setTheme(disc.id);
         const lessons = LESSON_DATA[disc.id] || [];
         const lesson = lessons[parseInt(idxStr) || 0] || lessons[0];
+        const quizKey = `${disc.id}_${idxStr}`;
+        const isDone = auth.currentUser && Array.isArray(auth.currentUser.completedQuizzes) && auth.currentUser.completedQuizzes.includes(quizKey);
 
         const view = document.getElementById('app-view');
         view.innerHTML = `
-          <button class="btn btn-outline" style="margin-bottom: 1.5rem;" onclick="app.navigate('#/theory/${disc.id}_${idxStr}')">⬅️ กลับไปทบทวนทฤษฎี</button>
+          <button class="btn btn-outline" style="margin-bottom: 1.5rem;" onclick="app.navigate('#/theory/${disc.id}_${idxStr}')">⬅ กลับไปทบทวนทฤษฎี</button>
           <div class="quiz-card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-              <span class="hero-badge">${disc.icon} ${lesson.title}</span>
-              <span style="background: #ef4444; color: #fff; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.8rem; font-weight: 700;">🔥 Combo x${this.combo}</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+              <span class="hero-badge"><span class="hero-badge-svg" style="color: ${disc.color};">${DISCIPLINE_SVGS[disc.id] || disc.icon}</span> ${lesson.title}</span>
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                ${isDone ? '<span style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; padding: 0.2rem 0.65rem; border-radius: 20px; font-size: 0.78rem; font-weight: 700;">✅ เคยทำผ่านแล้ว</span>' : ''}
+                <span style="background: #ef4444; color: #fff; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.8rem; font-weight: 700;">🔥 Combo x${this.combo}</span>
+              </div>
             </div>
+
+            ${isDone ? `
+              <div style="background: rgba(34,197,94,0.08); border: 1px dashed rgba(34,197,94,0.4); border-radius: 10px; padding: 0.6rem 0.9rem; margin-bottom: 1rem; font-size: 0.85rem; color: #86efac;">
+                ℹ️ <strong>โหมดทบทวนความรู้:</strong> คุณเคยได้รับ EXP จากข้อนี้ไปแล้ว สามารถฝึกทำโจทย์และตรวจสอบคำอธิบายได้โดยจะไม่ได้รับแต้ม EXP ซ้ำ
+              </div>
+            ` : ''}
 
             <div class="scenario-box">📌 <strong>สถานการณ์จำลอง:</strong> ${lesson.scenario}</div>
             <h3 class="quiz-question-text">${lesson.question}</h3>
 
             <div id="options-area">
               ${lesson.opts.map((opt, i) => `
-                <button class="option-btn" onclick="app.answerQuiz(${i}, ${lesson.ans}, '${(lesson.exp || '').replace(/'/g, "\'")}', '${disc.id}', '${idxStr}')">
+                <button class="option-btn" onclick="app.answerQuiz(${i}, ${lesson.ans}, '${(lesson.exp || '').replace(/'/g, "\\'")}', '${disc.id}', '${idxStr}')">
                   <span class="option-key">${String.fromCharCode(65 + i)}</span>
                   <span>${opt}</span>
                 </button>
@@ -2671,29 +2702,46 @@
       answerQuiz(selected, correct, exp, discId, idxStr) {
         document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
         const resultDiv = document.getElementById('quiz-result');
+        const quizKey = `${discId}_${idxStr}`;
+
+        const user = auth.currentUser;
+        if (user && !Array.isArray(user.completedQuizzes)) {
+          user.completedQuizzes = [];
+        }
+        const alreadyCompleted = user && user.completedQuizzes.includes(quizKey);
 
         if (selected === correct) {
           soundEngine.playCorrect();
           document.querySelectorAll('.option-btn')[selected].classList.add('correct');
-          const gained = 50 + (this.combo - 1) * 5;
-          if (auth.currentUser) {
-            auth.currentUser.xp = (auth.currentUser.xp || 0) + gained;
-            auth.saveCurrentUser();
+          
+          let gained = 0;
+          if (!alreadyCompleted) {
+            gained = 50 + (this.combo - 1) * 5;
+            if (user) {
+              user.completedQuizzes.push(quizKey);
+              user.xp = (user.xp || 0) + gained;
+              auth.saveCurrentUser();
+            }
+            this.combo += 1;
+            this.updateUserUI();
           }
-          this.combo += 1;
-          this.updateUserUI();
 
           resultDiv.innerHTML = `
             <div style="background: rgba(34,197,94,0.2); border: 1px solid #22c55e; border-radius: 12px; padding: 1.1rem; margin-top: 1.25rem;">
-              <h4 style="color: #4ade80;">✅ ถูกต้องยอดเยี่ยม! (+${gained} EXP)</h4>
+              <h4 style="color: #4ade80;">
+                ${alreadyCompleted 
+                  ? '✅ ถูกต้องยอดเยี่ยม! (ทบทวนความรู้สำเร็จ • ข้อนี้เคยได้รับ EXP ไปแล้ว)' 
+                  : `✅ ถูกต้องยอดเยี่ยม! (+${gained} EXP)`}
+              </h4>
               <p style="font-size: 0.92rem; color: #fff; margin-top: 0.4rem; line-height: 1.5;"><strong>💡 เหตุผลและหลักวิชาการ:</strong> ${exp}</p>
-              <div style="margin-top: 1rem; display: flex; gap: 0.6rem;">
-                <button class="btn btn-primary" onclick="app.navigate('#/discipline/${discId}')">ทำโจทย์บทเรียนอื่นต่อ ➡️</button>
+              <div style="margin-top: 1rem; display: flex; gap: 0.6rem; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="app.navigate('#/discipline/${discId}')">ทำโจทย์บทเรียนอื่นต่อ ➔</button>
+                <button class="btn btn-outline" onclick="app.navigate('#/theory/${discId}_${idxStr}')">📖 อ่านทฤษฎีบทนี้อีกครั้ง</button>
               </div>
             </div>
           `;
 
-          if (auth.currentUser && auth.currentUser.xp >= 300 && auth.currentUser.xp - gained < 300) {
+          if (!alreadyCompleted && user && user.xp >= 300 && user.xp - gained < 300) {
             soundEngine.playLevelUp();
             this.openModal('modal-celebrate');
           }
@@ -2707,7 +2755,7 @@
             <div style="background: rgba(239,68,68,0.2); border: 1px solid #ef4444; border-radius: 12px; padding: 1.1rem; margin-top: 1.25rem;">
               <h4 style="color: #f87171;">❌ ยังไม่ถูกต้อง (Combo รีเซ็ต)</h4>
               <p style="font-size: 0.92rem; color: #fff; margin-top: 0.4rem; line-height: 1.5;"><strong>💡 เฉลยและคำอธิบาย:</strong> ${exp}</p>
-              <div style="margin-top: 1rem; display: flex; gap: 0.6rem;">
+              <div style="margin-top: 1rem; display: flex; gap: 0.6rem; flex-wrap: wrap;">
                 <button class="btn btn-outline" onclick="app.navigate('#/quiz/${discId}_${idxStr}')">ลองทำใหม่อีกครั้ง 🔄</button>
                 <button class="btn btn-outline" onclick="app.navigate('#/theory/${discId}_${idxStr}')">📖 กลับไปอ่านทฤษฎี</button>
               </div>
@@ -2789,14 +2837,18 @@
             <h2>${auth.currentUser.username} ${auth.currentUser.role === 'admin' ? '<span style="background: #38bdf8; color: #000; font-size: 0.75rem; vertical-align: middle; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 5px;">ADMIN</span>' : ''}</h2>
             <div style="color: var(--accent); font-weight: 700; margin-bottom: 1.5rem;">${this.getRank()}</div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
-              <div style="background: rgba(0,0,0,0.3); padding: 1.25rem; border-radius: 12px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; margin-bottom: 1.5rem;">
+              <div style="background: rgba(0,0,0,0.3); padding: 1rem 0.5rem; border-radius: 12px;">
                 <div style="font-size: 0.8rem; color: var(--text-muted);">เลเวลรวม</div>
-                <strong style="font-size: 1.6rem; color: #fff;">LV. ${this.getLevel()}</strong>
+                <strong style="font-size: 1.5rem; color: #fff;">LV. ${this.getLevel()}</strong>
               </div>
-              <div style="background: rgba(0,0,0,0.3); padding: 1.25rem; border-radius: 12px;">
-                <div style="font-size: 0.8rem; color: var(--text-muted);">EXP รวม</div>
-                <strong style="font-size: 1.6rem; color: #fbbf24;">${auth.currentUser.xp || 0}</strong>
+              <div style="background: rgba(0,0,0,0.3); padding: 1rem 0.5rem; border-radius: 12px;">
+                <div style="font-size: 0.8rem; color: var(--text-muted);">EXP สะสม</div>
+                <strong style="font-size: 1.5rem; color: #fbbf24;">${auth.currentUser.xp || 0}</strong>
+              </div>
+              <div style="background: rgba(0,0,0,0.3); padding: 1rem 0.5rem; border-radius: 12px;">
+                <div style="font-size: 0.8rem; color: var(--text-muted);">โจทย์ที่สำเร็จ</div>
+                <strong style="font-size: 1.5rem; color: #34d399;">${(auth.currentUser.completedQuizzes || []).length} ข้อ</strong>
               </div>
             </div>
 
