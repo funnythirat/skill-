@@ -705,6 +705,41 @@
       border-radius: inherit;
     }
 
+    .table-avatar {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      min-width: 34px;
+      min-height: 34px;
+      max-width: 34px;
+      max-height: 34px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--card-border);
+      overflow: hidden;
+      vertical-align: middle;
+      font-size: 1.15rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .table-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+    }
+
+    .table-user-cell {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      vertical-align: middle;
+    }
+
     .profile-avatar-frame {
       display: inline-flex;
       align-items: center;
@@ -2539,7 +2574,13 @@
                 ` : users.map((user, index) => `
                   <tr>
                     <td><strong style="color: ${index === 0 ? '#fbbf24' : (index === 1 ? '#94a3b8' : (index === 2 ? '#cd7f32' : '#cbd5e1'))};">#${index + 1}</strong></td>
-                    <td>${this.avatarMarkup(user.avatar)} ${user.username} ${user.role === 'admin' ? '<span style="background: #38bdf8; color: #000; font-size: 0.7rem; font-weight: 700; padding: 0.1rem 0.4rem; border-radius: 4px;">ADMIN</span>' : ''}</td>
+                    <td>
+                      <div class="table-user-cell">
+                        <span class="table-avatar">${this.avatarMarkup(user.avatar)}</span>
+                        <span>${user.username}</span>
+                        ${user.role === 'admin' ? '<span style="background: #38bdf8; color: #000; font-size: 0.7rem; font-weight: 700; padding: 0.1rem 0.4rem; border-radius: 4px;">ADMIN</span>' : ''}
+                      </div>
+                    </td>
                     <td><span style="color: var(--accent); font-weight: 600;">${this.getRankForXp(user.xp || 0)}</span></td>
                     <td><strong>LV. ${user.level || 1}</strong></td>
                     <td style="text-align: right;"><strong style="color: #38bdf8;">${user.xp || 0} EXP</strong></td>
@@ -2927,7 +2968,12 @@
               <tbody>
                 ${auth.users.map((user, index) => `
                   <tr>
-                    <td>${this.avatarMarkup(user.avatar)} ${user.username}</td>
+                    <td>
+                      <div class="table-user-cell">
+                        <span class="table-avatar">${this.avatarMarkup(user.avatar)}</span>
+                        <span>${user.username}</span>
+                      </div>
+                    </td>
                     <td>${user.role === 'admin' ? '<span style="color: #38bdf8; font-weight: 700;">ADMIN</span>' : 'USER'}</td>
                     <td>LV. ${user.level || 1} (${user.xp || 0} EXP)</td>
                     <td style="text-align: right;">
