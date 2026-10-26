@@ -1119,6 +1119,518 @@
       .hero-title { font-size: 1.6rem; }
       .avatar-picker-grid { grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
     }
+  
+    /* ============================================================
+       UNIVERSAL KNOWLEDGE CODEX (15 DIVISIONS) STYLES
+       ============================================================ */
+    .knowledge-hero {
+      position: relative;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
+    }
+    .knowledge-levels-guide {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+      padding: 0.75rem 1rem;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+    }
+    .kl-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.65rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+    .kl-num {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.75rem;
+      background: rgba(0, 242, 254, 0.12);
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+    }
+    .kl-arrow {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+    .kl-example-note {
+      margin-top: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+    .kl-example-note code {
+      background: rgba(0, 242, 254, 0.1);
+      color: #00f2fe;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+    .knowledge-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .k-stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: all 0.25s ease;
+    }
+    .k-stat-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 242, 254, 0.1);
+    }
+    .k-stat-icon { font-size: 1.5rem; margin-bottom: 0.3rem; }
+    .k-stat-num { font-size: 1.4rem; font-weight: 800; color: #fff; }
+    .k-stat-lbl { font-size: 0.75rem; color: var(--text-muted); }
+
+    .deep-dive-card {
+      background: linear-gradient(135deg, rgba(30, 27, 75, 0.6), rgba(15, 23, 42, 0.8));
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      border-radius: 16px;
+      margin-bottom: 2rem;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.15);
+    }
+    .deep-dive-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .deep-dive-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .deep-dive-badge {
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      color: #fff;
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .deep-dive-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .deep-dive-content {
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      animation: fadeIn 0.3s ease;
+    }
+    .deep-dive-desc {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+    .deep-dive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    .dd-col {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+    .dd-col-head {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #e0e7ff;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .code-pill {
+      background: rgba(99, 102, 241, 0.25);
+      color: #a5b4fc;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-family: monospace;
+    }
+    .dd-sub-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .dd-sub-list li {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+    }
+    .sub-code {
+      color: #38bdf8;
+      font-family: monospace;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .knowledge-controls-bar {
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .knowledge-search-wrap {
+      position: relative;
+      width: 100%;
+    }
+    .k-search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      width: 18px;
+      height: 18px;
+    }
+    .k-search-icon svg { width: 100%; height: 100%; }
+    .knowledge-search-input {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 0.85rem 2.8rem 0.85rem 2.8rem;
+      color: #fff;
+      font-size: 0.95rem;
+      transition: all 0.25s ease;
+    }
+    .knowledge-search-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 16px rgba(0, 242, 254, 0.2);
+    }
+    .k-search-clear {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 0.2rem;
+    }
+    .k-search-clear:hover { color: #fff; }
+
+    .knowledge-filter-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .k-part-tabs {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .k-tab {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 0.4rem 0.8rem;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .k-tab:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+    .k-tab.active {
+      background: rgba(0, 242, 254, 0.15);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .k-expand-btns {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .knowledge-tree-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .division-tree-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .division-tree-card:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    .division-tree-card.expanded {
+      border-color: var(--div-color, var(--accent));
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .division-card-header {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      gap: 1rem;
+    }
+    .div-header-left {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex: 1;
+    }
+    .div-code-badge {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      border: 1.5px solid;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+    .div-badge-icon {
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .div-badge-icon svg { width: 100%; height: 100%; }
+    .div-badge-code {
+      font-size: 0.85rem;
+      font-weight: 800;
+      font-family: monospace;
+      line-height: 1;
+      margin-top: 2px;
+    }
+
+    .div-title-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .div-part-tag {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+    .div-title-th {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #fff;
+      margin: 0;
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .div-title-en {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+    .div-meta-counts {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin-top: 0.2rem;
+    }
+
+    .div-header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-shrink: 0;
+    }
+    .btn-academy-jump {
+      font-size: 0.8rem;
+      padding: 0.35rem 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+    .btn-academy-jump:hover {
+      background: var(--div-color, var(--accent));
+      border-color: var(--div-color, var(--accent));
+      color: #fff;
+    }
+    .div-chevron {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      transition: transform 0.3s ease;
+    }
+    .div-chevron.rotate {
+      transform: rotate(180deg);
+      color: var(--accent);
+    }
+
+    .division-card-body {
+      padding: 0 1.5rem 1.5rem 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .fields-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.25rem;
+    }
+    .field-block {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 1rem;
+      transition: all 0.2s ease;
+    }
+    .field-block:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      background: rgba(15, 23, 42, 0.8);
+    }
+    .field-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #fff;
+      padding-bottom: 0.6rem;
+      margin-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .field-code-badge {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--accent);
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-family: monospace;
+    }
+    .subfields-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .subfield-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .subfield-header {
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+    .sf-bullet {
+      color: var(--accent);
+      font-size: 0.75rem;
+    }
+    .sf-code {
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .sf-name {
+      color: #e2e8f0;
+    }
+
+    .topics-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-left: 1.25rem;
+      margin-top: 0.2rem;
+    }
+    .topic-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: rgba(0, 242, 254, 0.06);
+      border: 1px solid rgba(0, 242, 254, 0.15);
+      border-radius: 6px;
+      padding: 0.15rem 0.45rem;
+      font-size: 0.75rem;
+      color: #cbd5e1;
+    }
+    .t-code {
+      font-family: monospace;
+      color: #38bdf8;
+      font-size: 0.7rem;
+    }
+    .t-name {
+      color: #f1f5f9;
+    }
+
+    .highlight-match {
+      background: rgba(245, 158, 11, 0.35);
+      color: #fef08a;
+      padding: 0 0.15rem;
+      border-radius: 3px;
+    }
+
+    @media (max-width: 768px) {
+      .knowledge-levels-guide { flex-direction: column; align-items: stretch; }
+      .kl-arrow { display: none; }
+      .div-header-left { gap: 0.75rem; }
+      .div-code-badge { width: 44px; height: 44px; }
+      .div-badge-icon { width: 18px; height: 18px; }
+      .div-title-th { font-size: 1rem; }
+      .div-title-en { font-size: 0.85rem; }
+      .fields-grid { grid-template-columns: 1fr; }
+      .btn-academy-jump { display: none; }
+    }
+
   </style>
 </head>
 <body>
@@ -1134,6 +1646,7 @@
 
       <ul class="nav-links">
         <li class="nav-item active" data-route="#/" onclick="app.navigate('#/')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg></span> <span>คลังสายวิชา</span></li>
+        <li class="nav-item" data-route="#/knowledge-map" onclick="app.navigate('#/knowledge-map')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg></span> <span>แผนผังความรู้ 15 หมวด</span></li>
         <li class="nav-item" data-route="#/leaderboard" onclick="app.navigate('#/leaderboard')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span> <span>ตารางอันดับ</span></li>
         <li class="nav-item" data-route="#/tickets" onclick="app.navigate('#/tickets')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span> <span>ศูนย์ช่วยเหลือ</span></li>
         <li class="nav-item" id="nav-admin-link" style="display: none;" onclick="app.navigate('#/admin')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></span> <span>หลังบ้าน (Admin)</span></li>
@@ -1167,6 +1680,7 @@
     <!-- Mobile Bottom Navigation -->
     <nav class="mobile-bottom-nav">
       <div class="mobile-nav-item active" data-route="#/" onclick="app.navigate('#/')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg></span><span>คลังวิชา</span></div>
+      <div class="mobile-nav-item" data-route="#/knowledge-map" onclick="app.navigate('#/knowledge-map')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg></span><span>แผนผัง</span></div>
       <div class="mobile-nav-item" data-route="#/leaderboard" onclick="app.navigate('#/leaderboard')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span><span>อันดับ</span></div>
       <div class="mobile-nav-item" data-route="#/tickets" onclick="app.navigate('#/tickets')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span><span>ช่วยเหลือ</span></div>
       <div class="mobile-nav-item" id="mob-admin-item" style="display: none;" data-route="#/admin" onclick="app.navigate('#/admin')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></span><span>หลังบ้าน</span></div>
@@ -4740,11 +5254,18 @@
 };
     let LESSON_DATA = {};
 
+    // HUMAN KNOWLEDGE TREE (15 Divisions, 122 Fields, 409+ Subfields, Topics)
+    const HUMAN_KNOWLEDGE_TREE = [{"code":"01","nameTh":"จักรวาลและอวกาศ","nameEn":"Universe & Space","part":1,"partName":"ภาคที่ 1: วิทยาศาสตร์และธรรมชาติ","color":"#8b5cf6","icon":"<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m4.93 4.93 4.24 4.24\"/><path d=\"m14.83 9.17 4.24-4.24\"/><path d=\"m14.83 14.83 4.24 4.24\"/><path d=\"m9.17 14.83-4.24 4.24\"/><circle cx=\"12\" cy=\"12\" r=\"4\"/></svg>","disciplineId":"academic","disciplineName":"วิชาการสากลและทฤษฎีโลก","fields":[{"code":"01.01","name":"ดาราศาสตร์","subfields":[{"code":"01.01.01","name":"ดาราศาสตร์เชิงสังเกต","topics":[{"code":"01.01.01.01","name":"กล้องโทรทรรศน์และเครื่องมือตรวจวัด"},{"code":"01.01.01.02","name":"การวัดระยะทางของวัตถุท้องฟ้า"},{"code":"01.01.01.03","name":"การวิเคราะห์แสงจากดาว"}]},{"code":"01.01.02","name":"ระบบดาว","topics":[{"code":"01.01.02.01","name":"ดาวฤกษ์และวิวัฒนาการของดาว"},{"code":"01.01.02.02","name":"ระบบดาวคู่และกระจุกดาว"},{"code":"01.01.02.03","name":"ดาวเคราะห์นอกระบบ"}]},{"code":"01.01.03","name":"วัตถุขนาดเล็กในอวกาศ","topics":[{"code":"01.01.03.01","name":"ดาวเคราะห์น้อย"},{"code":"01.01.03.02","name":"ดาวหาง"},{"code":"01.01.03.03","name":"อุกกาบาต"}]}]},{"code":"01.02","name":"จักรวาลวิทยา","subfields":[{"code":"01.02.01","name":"กำเนิดและวิวัฒนาการของจักรวาล","topics":[{"code":"01.02.01.01","name":"แบบจำลองบิกแบง"},{"code":"01.02.01.02","name":"การขยายตัวของจักรวาล"},{"code":"01.02.01.03","name":"รังสีไมโครเวฟพื้นหลังของจักรวาล"}]},{"code":"01.02.02","name":"โครงสร้างขนาดใหญ่","topics":[{"code":"01.02.02.01","name":"กาแล็กซี"},{"code":"01.02.02.02","name":"กระจุกกาแล็กซี"},{"code":"01.02.02.03","name":"โครงข่ายจักรวาล"}]},{"code":"01.02.03","name":"ปัญหาทางจักรวาลวิทยา","topics":[{"code":"01.02.03.01","name":"สสารมืด"},{"code":"01.02.03.02","name":"พลังงานมืด"},{"code":"01.02.03.03","name":"ความไม่แน่นอนของแบบจำลองจักรวาล"}]}]},{"code":"01.03","name":"ฟิสิกส์ดาราศาสตร์","subfields":[{"code":"01.03.01","name":"หลุมดำและดาวนิวตรอน","topics":[]},{"code":"01.03.02","name":"ฟิสิกส์ของพลาสมาในอวกาศ","topics":[]},{"code":"01.03.03","name":"คลื่นความโน้มถ่วง","topics":[]}]},{"code":"01.04","name":"วิทยาศาสตร์ดาวเคราะห์","subfields":[{"code":"01.04.01","name":"กำเนิดระบบสุริยะ","topics":[]},{"code":"01.04.02","name":"ธรณีวิทยาของดาวเคราะห์","topics":[]},{"code":"01.04.03","name":"บรรยากาศและภูมิอากาศของดาวเคราะห์","topics":[]}]},{"code":"01.05","name":"วิทยาศาสตร์อวกาศ","subfields":[{"code":"01.05.01","name":"กลศาสตร์วงโคจร","topics":[]},{"code":"01.05.02","name":"ยานอวกาศและดาวเทียม","topics":[]},{"code":"01.05.03","name":"การสำรวจดวงจันทร์และดาวอังคาร","topics":[]}]},{"code":"01.06","name":"ชีวดาราศาสตร์","subfields":[{"code":"01.06.01","name":"กำเนิดชีวิต","topics":[]},{"code":"01.06.02","name":"สภาพแวดล้อมที่เอื้อต่อชีวิต","topics":[]},{"code":"01.06.03","name":"การค้นหาสัญญาณชีวิตนอกโลก","topics":[]}]}]},{"code":"02","nameTh":"ฟิสิกส์และพลังงาน","nameEn":"Physics & Energy","part":1,"partName":"ภาคที่ 1: วิทยาศาสตร์และธรรมชาติ","color":"#06b6d4","icon":"<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"2\"/><path d=\"M12 2a10 10 0 0 0-7.07 17.07l1.41-1.41A8 8 0 0 1 12 4V2z\"/><path d=\"M12 22a10 10 0 0 0 7.07-17.07l-1.41 1.41A8 8 0 0 1 12 20v2z\"/><path d=\"m4.93 4.93 14.14 14.14\"/><path d=\"m19.07 4.93-14.14 14.14\"/></svg>","disciplineId":"academic","disciplineName":"วิชาการสากลและทฤษฎีโลก","fields":[{"code":"02.01","name":"กลศาสตร์","subfields":[{"code":"02.01.01","name":"จลนศาสตร์","topics":[{"code":"02.01.01.01","name":"ตำแหน่งและการกระจัด"},{"code":"02.01.01.02","name":"ความเร็วและความเร่ง"},{"code":"02.01.01.03","name":"การเคลื่อนที่แบบโพรเจกไทล์"}]},{"code":"02.01.02","name":"พลศาสตร์","topics":[{"code":"02.01.02.01","name":"กฎการเคลื่อนที่ของนิวตัน"},{"code":"02.01.02.02","name":"แรงเสียดทาน"},{"code":"02.01.02.03","name":"โมเมนตัมและการชน"}]},{"code":"02.01.03","name":"กลศาสตร์ของไหล","topics":[{"code":"02.01.03.01","name":"ความดัน"},{"code":"02.01.03.02","name":"การไหลของของเหลว"},{"code":"02.01.03.03","name":"ความปั่นป่วนของของไหล"}]}]},{"code":"02.02","name":"แม่เหล็กไฟฟ้า","subfields":[{"code":"02.02.01","name":"ไฟฟ้าสถิต","topics":[{"code":"02.02.01.01","name":"ประจุไฟฟ้า"},{"code":"02.02.01.02","name":"สนามไฟฟ้า"},{"code":"02.02.01.03","name":"ศักย์ไฟฟ้า"}]},{"code":"02.02.02","name":"วงจรไฟฟ้า","topics":[{"code":"02.02.02.01","name":"กระแสและแรงดัน"},{"code":"02.02.02.02","name":"ความต้านทานและกฎของโอห์ม"},{"code":"02.02.02.03","name":"วงจรกระแสสลับ"}]},{"code":"02.02.03","name":"แม่เหล็กและคลื่นแม่เหล็กไฟฟ้า","topics":[{"code":"02.02.03.01","name":"สนามแม่เหล็ก"},{"code":"02.02.03.02","name":"การเหนี่ยวนำแม่เหล็กไฟฟ้า"},{"code":"02.02.03.03","name":"คลื่นวิทยุ ไมโครเวฟ และแสง"}]}]},{"code":"02.03","name":"อุณหพลศาสตร์","subfields":[{"code":"02.03.01","name":"ความร้อนและอุณหภูมิ","topics":[]},{"code":"02.03.02","name":"กฎของอุณหพลศาสตร์","topics":[]},{"code":"02.03.03","name":"เอนโทรปีและการเปลี่ยนรูปพลังงาน","topics":[]}]},{"code":"02.04","name":"ทัศนศาสตร์และคลื่น","subfields":[{"code":"02.04.01","name":"การสะท้อนและหักเหของแสง","topics":[]},{"code":"02.04.02","name":"การแทรกสอดและเลี้ยวเบน","topics":[]},{"code":"02.04.03","name":"เสียงและคลื่นกล","topics":[]}]},{"code":"02.05","name":"ฟิสิกส์ควอนตัม","subfields":[{"code":"02.05.01","name":"ความเป็นคลื่นและอนุภาค","topics":[]},{"code":"02.05.02","name":"สมการคลื่นควอนตัม","topics":[]},{"code":"02.05.03","name":"การวัดและสถานะควอนตัม","topics":[]}]},{"code":"02.06","name":"ฟิสิกส์สัมพัทธภาพ","subfields":[{"code":"02.06.01","name":"สัมพัทธภาพพิเศษ","topics":[]},{"code":"02.06.02","name":"สัมพัทธภาพทั่วไป","topics":[]},{"code":"02.06.03","name":"กาลอวกาศและความโน้มถ่วง","topics":[]}]},{"code":"02.07","name":"ฟิสิกส์นิวเคลียร์และอนุภาค","subfields":[{"code":"02.07.01","name":"โครงสร้างนิวเคลียส","topics":[]},{"code":"02.07.02","name":"การสลายกัมมันตรังสี","topics":[]},{"code":"02.07.03","name":"อนุภาคมูลฐาน","topics":[]}]},{"code":"02.08","name":"วิทยาศาสตร์พลังงาน","subfields":[{"code":"02.08.01","name":"พลังงานหมุนเวียน","topics":[]},{"code":"02.08.02","name":"การผลิตและกักเก็บพลังงาน","topics":[]},{"code":"02.08.03","name":"ประสิทธิภาพและการสูญเสียพลังงาน","topics":[]}]}]},{"code":"03","nameTh":"เคมีและสสาร","nameEn":"Chemistry & Matter","part":1,"partName":"ภาคที่ 1: วิทยาศาสตร์และธรรมชาติ","color":"#10b981","icon":"<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10 2v7.31L4.15 19.46A2 2 0 0 0 5.86 22h12.28a2 2 0 0 0 1.71-2.54L14 9.31V2\"/><path d=\"M8.5 2h7\"/><path d=\"M14 9.3 8.5 18\"/></svg>","disciplineId":"academic","disciplineName":"วิชาการสากลและทฤษฎีโลก","fields":[{"code":"03.01","name":"เคมีทั่วไป","subfields":[{"code":"03.01.01","name":"อะตอมและโครงสร้างอิเล็กตรอน","topics":[]},{"code":"03.01.02","name":"ตารางธาตุและสมบัติธาตุ","topics":[]},{"code":"03.01.03","name":"พันธะเคมีและโครงสร้างโมเลกุล","topics":[]}]},{"code":"03.02","name":"เคมีอนินทรีย์","subfields":[{"code":"03.02.01","name":"โลหะและสารประกอบโลหะ","topics":[]},{"code":"03.02.02","name":"กรด เบส และเกลือ","topics":[]},{"code":"03.02.03","name":"สารประกอบเชิงซ้อน","topics":[]}]},{"code":"03.03","name":"เคมีอินทรีย์","subfields":[{"code":"03.03.01","name":"ไฮโดรคาร์บอน","topics":[]},{"code":"03.03.02","name":"หมู่ฟังก์ชันและปฏิกิริยาอินทรีย์","topics":[]},{"code":"03.03.03","name":"พอลิเมอร์และโมเลกุลชีวภาพ","topics":[]}]},{"code":"03.04","name":"เคมีวิเคราะห์","subfields":[{"code":"03.04.01","name":"การวิเคราะห์เชิงปริมาณ","topics":[]},{"code":"03.04.02","name":"การวิเคราะห์เชิงคุณภาพ","topics":[]},{"code":"03.04.03","name":"โครมาโทกราฟีและสเปกโทรสโกปี","topics":[]}]},{"code":"03.05","name":"เคมีฟิสิกส์","subfields":[{"code":"03.05.01","name":"จลนพลศาสตร์เคมี","topics":[]},{"code":"03.05.02","name":"สมดุลเคมี","topics":[]},{"code":"03.05.03","name":"เคมีไฟฟ้าและอุณหพลศาสตร์เคมี","topics":[]}]},{"code":"03.06","name":"ชีวเคมี","subfields":[{"code":"03.06.01","name":"โปรตีนและเอนไซม์","topics":[]},{"code":"03.06.02","name":"คาร์โบไฮเดรตและไขมัน","topics":[]},{"code":"03.06.03","name":"เมแทบอลิซึมและกรดนิวคลีอิก","topics":[]}]},{"code":"03.07","name":"วัสดุศาสตร์","subfields":[{"code":"03.07.01","name":"โลหะและโลหะผสม","topics":[]},{"code":"03.07.02","name":"เซรามิกและแก้ว","topics":[]},{"code":"03.07.03","name":"พอลิเมอร์และวัสดุนาโน","topics":[]}]},{"code":"03.08","name":"เคมีสิ่งแวดล้อมและอุตสาหกรรม","subfields":[{"code":"03.08.01","name":"เคมีในน้ำ ดิน และอากาศ","topics":[]},{"code":"03.08.02","name":"เคมีอุตสาหกรรม","topics":[]},{"code":"03.08.03","name":"เคมีสีเขียวและการลดของเสีย","topics":[]}]}]},{"code":"04","nameTh":"ชีวิตและสิ่งมีชีวิต","nameEn":"Life Sciences","part":1,"partName":"ภาคที่ 1: วิทยาศาสตร์และธรรมชาติ","color":"#84cc16","icon":"<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M2 15c6.667-6 13.333 0 20-6\"/><path d=\"M9 22c1.798-1.998 2.518-3.995 2.807-5.993\"/><path d=\"M15 2c-1.798 1.998-2.518 3.995-2.807 5.993\"/><path d=\"m17 6-2.5-2.5\"/><path d=\"m14 8-1-1\"/><path d=\"m7 18 2.5 2.5\"/><path d=\"m10 16 1 1\"/><circle cx=\"12\" cy=\"12\" r=\"2\"/></svg>","disciplineId":"survival","disciplineName":"ศาสตร์การเอาชีวิตรอดและปฐมพยาบาล","fields":[{"code":"04.01","name":"ชีววิทยาเซลล์","subfields":[{"code":"04.01.01","name":"โครงสร้างและออร์แกเนลล์","topics":[]},{"code":"04.01.02","name":"เยื่อหุ้มเซลล์และการลำเลียงสาร","topics":[]},{"code":"04.01.03","name":"การแบ่งเซลล์และการตายของเซลล์","topics":[]}]},{"code":"04.02","name":"พันธุศาสตร์และจีโนมิกส์","subfields":[{"code":"04.02.01","name":"DNA ยีน และโครโมโซม","topics":[]},{"code":"04.02.02","name":"การถ่ายทอดลักษณะทางพันธุกรรม","topics":[]},{"code":"04.02.03","name":"การควบคุมการแสดงออกของยีน","topics":[]},{"code":"04.02.04","name":"พันธุศาสตร์ประชากร","topics":[]}]},{"code":"04.03","name":"วิวัฒนาการ","subfields":[{"code":"04.03.01","name":"การคัดเลือกโดยธรรมชาติ","topics":[]},{"code":"04.03.02","name":"การเกิดสปีชีส์ใหม่","topics":[]},{"code":"04.03.03","name":"สายสัมพันธ์ทางวิวัฒนาการ","topics":[]}]},{"code":"04.04","name":"จุลชีววิทยา","subfields":[{"code":"04.04.01","name":"แบคทีเรีย","topics":[]},{"code":"04.04.02","name":"อาร์เคีย","topics":[]},{"code":"04.04.03","name":"ไวรัสและตัวแทนก่อโรคอื่น ๆ","topics":[]},{"code":"04.04.04","name":"จุลชีววิทยาสิ่งแวดล้อม","topics":[]}]},{"code":"04.05","name":"พฤกษศาสตร์","subfields":[{"code":"04.05.01","name":"โครงสร้างและสรีรวิทยาพืช","topics":[]},{"code":"04.05.02","name":"การสืบพันธุ์ของพืช","topics":[]},{"code":"04.05.03","name":"อนุกรมวิธานพืช","topics":[]}]},{"code":"04.06","name":"สัตววิทยา","subfields":[{"code":"04.06.01","name":"กายวิภาคสัตว์","topics":[]},{"code":"04.06.02","name":"พฤติกรรมสัตว์","topics":[]},{"code":"04.06.03","name":"อนุกรมวิธานและความหลากหลายของสัตว์","topics":[]}]},{"code":"04.07","name":"นิเวศวิทยา","subfields":[{"code":"04.07.01","name":"ประชากรและชุมชนสิ่งมีชีวิต","topics":[]},{"code":"04.07.02","name":"ห่วงโซ่อาหารและสายใยอาหาร","topics":[]},{"code":"04.07.03","name":"การไหลของพลังงานและวัฏจักรสาร","topics":[]}]},{"code":"04.08","name":"ชีววิทยาประยุกต์","subfields":[{"code":"04.08.01","name":"เทคโนโลยีชีวภาพ","topics":[]},{"code":"04.08.02","name":"ชีววิทยาสังเคราะห์","topics":[]},{"code":"04.08.03","name":"ชีววิทยาการอนุรักษ์","topics":[]}]}]},{"code":"05","nameTh":"มนุษย์และสุขภาพ","nameEn":"Human & Health Sciences","part":1,"partName":"ภาคที่ 1: วิทยาศาสตร์และธรรมชาติ","color":"#f43f5e","icon":"<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z\"/><path d=\"M12 5 9.04 11l6.35 2-3.39 6\"/></svg>","disciplineId":"combat","disciplineName":"ศิลปะการต่อสู้และป้องกันตัว","fields":[{"code":"05.01","name":"กายวิภาคศาสตร์","subfields":[{"code":"05.01.01","name":"กระดูกและกล้ามเนื้อ","topics":[]},{"code":"05.01.02","name":"ระบบประสาทและอวัยวะรับสัมผัส","topics":[]},{"code":"05.01.03","name":"ระบบหัวใจและหลอดเลือด","topics":[]}]},{"code":"05.02","name":"สรีรวิทยา","subfields":[{"code":"05.02.01","name":"การทำงานของเซลล์และอวัยวะ","topics":[]},{"code":"05.02.02","name":"ระบบฮอร์โมน","topics":[]},{"code":"05.02.03","name":"การรักษาสมดุลภายในร่างกาย","topics":[]}]},{"code":"05.03","name":"การแพทย์","subfields":[{"code":"05.03.01","name":"อายุรศาสตร์","topics":[]},{"code":"05.03.02","name":"ศัลยศาสตร์","topics":[]},{"code":"05.03.03","name":"กุมารเวชศาสตร์","topics":[]},{"code":"05.03.04","name":"สูติศาสตร์และนรีเวชวิทยา","topics":[]},{"code":"05.03.05","name":"รังสีวิทยาและพยาธิวิทยา","topics":[]}]},{"code":"05.04","name":"ประสาทวิทยาและสมอง","subfields":[{"code":"05.04.01","name":"โครงสร้างสมอง","topics":[]},{"code":"05.04.02","name":"เซลล์ประสาทและการส่งสัญญาณ","topics":[]},{"code":"05.04.03","name":"ความจำ การเรียนรู้ และการรับรู้","topics":[]}]},{"code":"05.05","name":"โภชนาการ","subfields":[{"code":"05.05.01","name":"สารอาหารและเมแทบอลิซึม","topics":[]},{"code":"05.05.02","name":"ความปลอดภัยทางอาหาร","topics":[]},{"code":"05.05.03","name":"โภชนาการตลอดช่วงชีวิต","topics":[]}]},{"code":"05.06","name":"สาธารณสุข","subfields":[{"code":"05.06.01","name":"ระบาดวิทยา","topics":[]},{"code":"05.06.02","name":"การป้องกันโรค","topics":[]},{"code":"05.06.03","name":"สุขภาพชุมชน","topics":[]}]},{"code":"05.07","name":"เภสัชศาสตร์","subfields":[{"code":"05.07.01","name":"เภสัชวิทยา","topics":[]},{"code":"05.07.02","name":"เภสัชกรรมคลินิก","topics":[]},{"code":"05.07.03","name":"การพัฒนาและประเมินยา","topics":[]}]},{"code":"05.08","name":"วิทยาศาสตร์การกีฬา","subfields":[{"code":"05.08.01","name":"ชีวกลศาสตร์","topics":[]},{"code":"05.08.02","name":"สรีรวิทยาการออกกำลังกาย","topics":[]},{"code":"05.08.03","name":"การเรียนรู้และควบคุมการเคลื่อนไหว","topics":[]}]}]},{"code":"06","nameTh":"คณิตศาสตร์และตรรกะ","nameEn":"Mathematics & Logic","part":2,"partName":"ภาคที่ 2: คณิตศาสตร์ เทคโนโลยี และระบบของโลก","color":"#3b82f6","icon":"<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"4\" x2=\"20\" y1=\"9\" y2=\"9\"/><line x1=\"4\" x2=\"20\" y1=\"15\" y2=\"15\"/><line x1=\"10\" x2=\"8\" y1=\"3\" y2=\"21\"/><line x1=\"16\" x2=\"14\" y1=\"3\" y2=\"21\"/></svg>","disciplineId":"academic","disciplineName":"วิชาการสากลและทฤษฎีโลก","fields":[{"code":"06.01","name":"พีชคณิต","subfields":[{"code":"06.01.01","name":"สมการและอสมการ","topics":[]},{"code":"06.01.02","name":"พีชคณิตเชิงเส้น","topics":[]},{"code":"06.01.03","name":"พีชคณิตนามธรรม","topics":[]}]},{"code":"06.02","name":"เรขาคณิต","subfields":[{"code":"06.02.01","name":"เรขาคณิตยุคลิด","topics":[]},{"code":"06.02.02","name":"เรขาคณิตเชิงอนุพันธ์","topics":[]},{"code":"06.02.03","name":"ทอพอโลยี","topics":[]}]},{"code":"06.03","name":"แคลคูลัสและการวิเคราะห์","subfields":[{"code":"06.03.01","name":"ลิมิตและอนุพันธ์","topics":[]},{"code":"06.03.02","name":"ปริพันธ์","topics":[]},{"code":"06.03.03","name":"สมการเชิงอนุพันธ์","topics":[]},{"code":"06.03.04","name":"การวิเคราะห์เชิงจริงและเชิงซ้อน","topics":[]}]},{"code":"06.04","name":"ทฤษฎีจำนวนและคณิตศาสตร์ไม่ต่อเนื่อง","subfields":[{"code":"06.04.01","name":"จำนวนเฉพาะและการหารลงตัว","topics":[]},{"code":"06.04.02","name":"คณิตศาสตร์เชิงจัดหมู่","topics":[]},{"code":"06.04.03","name":"ทฤษฎีกราฟ","topics":[]}]},{"code":"06.05","name":"ความน่าจะเป็นและสถิติ","subfields":[{"code":"06.05.01","name":"ตัวแปรสุ่มและการแจกแจง","topics":[]},{"code":"06.05.02","name":"การประมาณค่าและการทดสอบสมมติฐาน","topics":[]},{"code":"06.05.03","name":"การวิเคราะห์การถดถอย","topics":[]},{"code":"06.05.04","name":"สถิติแบบเบย์","topics":[]}]},{"code":"06.06","name":"คณิตศาสตร์ประยุกต์","subfields":[{"code":"06.06.01","name":"การหาค่าเหมาะที่สุด","topics":[]},{"code":"06.06.02","name":"การวิจัยดำเนินงาน","topics":[]},{"code":"06.06.03","name":"การสร้างแบบจำลองทางคณิตศาสตร์","topics":[]}]},{"code":"06.07","name":"ตรรกศาสตร์","subfields":[{"code":"06.07.01","name":"ตรรกศาสตร์ประพจน์","topics":[]},{"code":"06.07.02","name":"ตรรกศาสตร์ภาคแสดง","topics":[]},{"code":"06.07.03","name":"การพิสูจน์และทฤษฎีบท","topics":[]}]},{"code":"06.08","name":"รากฐานคณิตศาสตร์","subfields":[{"code":"06.08.01","name":"ทฤษฎีเซต","topics":[]},{"code":"06.08.02","name":"ทฤษฎีการคำนวณได้","topics":[]},{"code":"06.08.03","name":"ความไม่สมบูรณ์และรากฐานของคณิตศาสตร์","topics":[]}]}]},{"code":"07","nameTh":"คอมพิวเตอร์และปัญญาประดิษฐ์","nameEn":"Computing & AI","part":2,"partName":"ภาคที่ 2: คณิตศาสตร์ เทคโนโลยี และระบบของโลก","color":"#6366f1","icon":"<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\"/><path d=\"m9 8 3 3-3 3\"/><path d=\"M14 14h2\"/></svg>","disciplineId":"tech","disciplineName":"เทคโนโลยีและการเขียนโปรแกรม","fields":[{"code":"07.01","name":"วิทยาการคอมพิวเตอร์","subfields":[{"code":"07.01.01","name":"อัลกอริทึมและโครงสร้างข้อมูล","topics":[{"code":"07.01.01.01","name":"การเรียงลำดับและการค้นหา"},{"code":"07.01.01.02","name":"ต้นไม้ กราฟ และแฮช"},{"code":"07.01.01.03","name":"การวิเคราะห์ความซับซ้อน"}]},{"code":"07.01.02","name":"ทฤษฎีการคำนวณ","topics":[{"code":"07.01.02.01","name":"ออโตมาตา"},{"code":"07.01.02.02","name":"ภาษาแบบรูปนัย"},{"code":"07.01.02.03","name":"ความสามารถในการคำนวณ"}]},{"code":"07.01.03","name":"ภาษาโปรแกรม","topics":[{"code":"07.01.03.01","name":"ภาษาเชิงขั้นตอน"},{"code":"07.01.03.02","name":"ภาษาเชิงวัตถุ"},{"code":"07.01.03.03","name":"ภาษาเชิงฟังก์ชัน"}]}]},{"code":"07.02","name":"การพัฒนาซอฟต์แวร์","subfields":[{"code":"07.02.01","name":"การวิเคราะห์ความต้องการ","topics":[]},{"code":"07.02.02","name":"การออกแบบสถาปัตยกรรมซอฟต์แวร์","topics":[]},{"code":"07.02.03","name":"การทดสอบและประกันคุณภาพ","topics":[]},{"code":"07.02.04","name":"DevOps และการส่งมอบซอฟต์แวร์","topics":[]}]},{"code":"07.03","name":"การพัฒนาเว็บและแอปพลิเคชัน","subfields":[{"code":"07.03.01","name":"Front-end","topics":[{"code":"07.03.01.01","name":"HTML และโครงสร้างหน้าเว็บ"},{"code":"07.03.01.02","name":"CSS และการออกแบบส่วนติดต่อ"},{"code":"07.03.01.03","name":"JavaScript และการโต้ตอบ"}]},{"code":"07.03.02","name":"Back-end","topics":[{"code":"07.03.02.01","name":"API และระบบบริการ"},{"code":"07.03.02.02","name":"การยืนยันตัวตนและสิทธิ์"},{"code":"07.03.02.03","name":"การประมวลผลฝั่งเซิร์ฟเวอร์"}]},{"code":"07.03.03","name":"ระบบฐานข้อมูล","topics":[{"code":"07.03.03.01","name":"ฐานข้อมูลเชิงสัมพันธ์"},{"code":"07.03.03.02","name":"ฐานข้อมูล NoSQL"},{"code":"07.03.03.03","name":"การออกแบบและปรับประสิทธิภาพฐานข้อมูล"}]},{"code":"07.03.04","name":"แอปพลิเคชันมือถือและเว็บแอป","topics":[]}]},{"code":"07.04","name":"ปัญญาประดิษฐ์","subfields":[{"code":"07.04.01","name":"การค้นหาและการแก้ปัญหา","topics":[]},{"code":"07.04.02","name":"การแทนความรู้และการให้เหตุผล","topics":[]},{"code":"07.04.03","name":"ระบบผู้เชี่ยวชาญ","topics":[]},{"code":"07.04.04","name":"การวางแผนและตัวแทนอัจฉริยะ","topics":[]}]},{"code":"07.05","name":"การเรียนรู้ของเครื่อง","subfields":[{"code":"07.05.01","name":"การเรียนรู้แบบมีผู้สอน","topics":[]},{"code":"07.05.02","name":"การเรียนรู้แบบไม่มีผู้สอน","topics":[]},{"code":"07.05.03","name":"การเรียนรู้แบบเสริมกำลัง","topics":[]},{"code":"07.05.04","name":"โครงข่ายประสาทเทียม","topics":[]},{"code":"07.05.05","name":"การประเมินและปรับแต่งโมเดล","topics":[]}]},{"code":"07.06","name":"AI เชิงสร้างสรรค์","subfields":[{"code":"07.06.01","name":"โมเดลภาษาขนาดใหญ่","topics":[]},{"code":"07.06.02","name":"การสร้างภาพ เสียง และวิดีโอ","topics":[]},{"code":"07.06.03","name":"ระบบหลายรูปแบบ","topics":[]},{"code":"07.06.04","name":"การประเมินความน่าเชื่อถือของผลลัพธ์","topics":[]}]},{"code":"07.07","name":"วิทยาการข้อมูล","subfields":[{"code":"07.07.01","name":"การเก็บและทำความสะอาดข้อมูล","topics":[]},{"code":"07.07.02","name":"การสำรวจและแสดงผลข้อมูล","topics":[]},{"code":"07.07.03","name":"การทำเหมืองข้อมูล","topics":[]},{"code":"07.07.04","name":"ข้อมูลขนาดใหญ่","topics":[]}]},{"code":"07.08","name":"เครือข่ายและระบบ","subfields":[{"code":"07.08.01","name":"ระบบปฏิบัติการ","topics":[]},{"code":"07.08.02","name":"เครือข่ายคอมพิวเตอร์","topics":[]},{"code":"07.08.03","name":"คลาวด์คอมพิวติ้ง","topics":[]},{"code":"07.08.04","name":"ระบบกระจาย","topics":[]}]},{"code":"07.09","name":"ความมั่นคงปลอดภัยไซเบอร์","subfields":[{"code":"07.09.01","name":"ความปลอดภัยเครือข่าย","topics":[{"code":"07.09.01.01","name":"สถาปัตยกรรมเครือข่ายที่ปลอดภัย"},{"code":"07.09.01.02","name":"ไฟร์วอลล์และการควบคุมการเข้าถึง"},{"code":"07.09.01.03","name":"ระบบตรวจจับและป้องกันการบุกรุก"}]},{"code":"07.09.02","name":"การเข้ารหัสและการจัดการกุญแจ","topics":[{"code":"07.09.02.01","name":"การเข้ารหัสแบบกุญแจสมมาตร"},{"code":"07.09.02.02","name":"การเข้ารหัสแบบกุญแจอสมมาตร"},{"code":"07.09.02.03","name":"ฟังก์ชันแฮชและลายมือชื่อดิจิทัล"}]},{"code":"07.09.03","name":"ความปลอดภัยเว็บและแอปพลิเคชัน","topics":[{"code":"07.09.03.01","name":"การจัดการเซสชัน"},{"code":"07.09.03.02","name":"การตรวจสอบข้อมูลนำเข้า"},{"code":"07.09.03.03","name":"การควบคุมสิทธิ์และการยืนยันตัวตน"},{"code":"07.09.03.04","name":"การทดสอบความปลอดภัยของเว็บ"}]},{"code":"07.09.04","name":"การตรวจจับและตอบสนองเหตุการณ์","topics":[{"code":"07.09.04.01","name":"การเก็บและวิเคราะห์บันทึกเหตุการณ์"},{"code":"07.09.04.02","name":"การตรวจจับความผิดปกติ"},{"code":"07.09.04.03","name":"การจัดการเหตุการณ์และการกู้คืน"}]},{"code":"07.09.05","name":"นิติวิทยาศาสตร์ดิจิทัล","topics":[]}]},{"code":"07.10","name":"ปฏิสัมพันธ์ระหว่างมนุษย์กับคอมพิวเตอร์","subfields":[{"code":"07.10.01","name":"UX และ UI","topics":[]},{"code":"07.10.02","name":"การเข้าถึงสำหรับผู้ใช้ทุกกลุ่ม","topics":[]},{"code":"07.10.03","name":"การทดสอบการใช้งาน","topics":[]}]},{"code":"07.11","name":"คอมพิวเตอร์เฉพาะทาง","subfields":[{"code":"07.11.01","name":"กราฟิกและการประมวลผลภาพ","topics":[]},{"code":"07.11.02","name":"การประมวลผลภาษาธรรมชาติ","topics":[]},{"code":"07.11.03","name":"ควอนตัมคอมพิวติ้ง","topics":[]},{"code":"07.11.04","name":"อินเทอร์เน็ตในทุกสิ่ง (IoT)","topics":[]}]}]},{"code":"08","nameTh":"วิศวกรรมและสิ่งประดิษฐ์","nameEn":"Engineering & Invention","part":2,"partName":"ภาคที่ 2: คณิตศาสตร์ เทคโนโลยี และระบบของโลก","color":"#f59e0b","icon":"<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z\"/></svg>","disciplineId":"engineering","disciplineName":"วิศวกรรม นวัตกรรม และเมคคาทรอนิกส์","fields":[{"code":"08.01","name":"วิศวกรรมเครื่องกล","subfields":[{"code":"08.01.01","name":"กลศาสตร์และการออกแบบเครื่องจักร","topics":[]},{"code":"08.01.02","name":"ระบบความร้อนและของไหล","topics":[]},{"code":"08.01.03","name":"การผลิตและการบำรุงรักษา","topics":[]}]},{"code":"08.02","name":"วิศวกรรมไฟฟ้า","subfields":[{"code":"08.02.01","name":"ระบบกำลังไฟฟ้า","topics":[]},{"code":"08.02.02","name":"เครื่องจักรไฟฟ้า","topics":[]},{"code":"08.02.03","name":"ระบบควบคุม","topics":[]}]},{"code":"08.03","name":"วิศวกรรมอิเล็กทรอนิกส์","subfields":[{"code":"08.03.01","name":"วงจรแอนะล็อกและดิจิทัล","topics":[]},{"code":"08.03.02","name":"ไมโครคอนโทรลเลอร์","topics":[]},{"code":"08.03.03","name":"เซมิคอนดักเตอร์และวงจรรวม","topics":[]}]},{"code":"08.04","name":"วิศวกรรมโยธา","subfields":[{"code":"08.04.01","name":"โครงสร้างอาคารและสะพาน","topics":[]},{"code":"08.04.02","name":"ปฐพีกลศาสตร์","topics":[]},{"code":"08.04.03","name":"ระบบขนส่งและโครงสร้างพื้นฐาน","topics":[]}]},{"code":"08.05","name":"วิศวกรรมเคมี","subfields":[{"code":"08.05.01","name":"กระบวนการผลิตสารเคมี","topics":[]},{"code":"08.05.02","name":"การถ่ายเทความร้อนและมวล","topics":[]},{"code":"08.05.03","name":"การออกแบบโรงงานและกระบวนการ","topics":[]}]},{"code":"08.06","name":"วิศวกรรมคอมพิวเตอร์","subfields":[{"code":"08.06.01","name":"สถาปัตยกรรมคอมพิวเตอร์","topics":[]},{"code":"08.06.02","name":"ระบบฝังตัว","topics":[]},{"code":"08.06.03","name":"การออกแบบฮาร์ดแวร์ดิจิทัล","topics":[]}]},{"code":"08.07","name":"หุ่นยนต์และระบบอัตโนมัติ","subfields":[{"code":"08.07.01","name":"กลศาสตร์หุ่นยนต์","topics":[]},{"code":"08.07.02","name":"เซนเซอร์และการรับรู้","topics":[]},{"code":"08.07.03","name":"การวางแผนและควบคุมการเคลื่อนที่","topics":[]}]},{"code":"08.08","name":"วิศวกรรมอุตสาหการ","subfields":[{"code":"08.08.01","name":"การวางแผนการผลิต","topics":[]},{"code":"08.08.02","name":"การควบคุมคุณภาพ","topics":[]},{"code":"08.08.03","name":"โลจิสติกส์และห่วงโซ่อุปทาน","topics":[]}]},{"code":"08.09","name":"วิศวกรรมสิ่งแวดล้อม","subfields":[{"code":"08.09.01","name":"การบำบัดน้ำและน้ำเสีย","topics":[]},{"code":"08.09.02","name":"การจัดการของเสีย","topics":[]},{"code":"08.09.03","name":"การควบคุมมลพิษ","topics":[]}]},{"code":"08.10","name":"การออกแบบและนวัตกรรม","subfields":[{"code":"08.10.01","name":"การสร้างต้นแบบ","topics":[]},{"code":"08.10.02","name":"การออกแบบผลิตภัณฑ์","topics":[]},{"code":"08.10.03","name":"การทดสอบและประเมินนวัตกรรม","topics":[]}]}]},{"code":"09","nameTh":"โลก ธรรมชาติ และสิ่งแวดล้อม","nameEn":"Earth & Environmental Sciences","part":2,"partName":"ภาคที่ 2: คณิตศาสตร์ เทคโนโลยี และระบบของโลก","color":"#14b8a6","icon":"<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20\"/><path d=\"M2 12h20\"/></svg>","disciplineId":"survival","disciplineName":"ศาสตร์การเอาชีวิตรอดและปฐมพยาบาล","fields":[{"code":"09.01","name":"ธรณีวิทยา","subfields":[{"code":"09.01.01","name":"แร่และหิน","topics":[]},{"code":"09.01.02","name":"แผ่นธรณีภาคและภูเขาไฟ","topics":[]},{"code":"09.01.03","name":"ธรณีวิทยาโครงสร้าง","topics":[]}]},{"code":"09.02","name":"ภูมิศาสตร์","subfields":[{"code":"09.02.01","name":"ภูมิศาสตร์กายภาพ","topics":[]},{"code":"09.02.02","name":"ภูมิศาสตร์มนุษย์","topics":[]},{"code":"09.02.03","name":"ระบบสารสนเทศภูมิศาสตร์ (GIS)","topics":[]}]},{"code":"09.03","name":"อุตุนิยมวิทยา","subfields":[{"code":"09.03.01","name":"บรรยากาศและความกดอากาศ","topics":[]},{"code":"09.03.02","name":"เมฆและการเกิดฝน","topics":[]},{"code":"09.03.03","name":"การพยากรณ์อากาศ","topics":[]}]},{"code":"09.04","name":"สมุทรศาสตร์","subfields":[{"code":"09.04.01","name":"กระแสน้ำและคลื่นทะเล","topics":[]},{"code":"09.04.02","name":"เคมีและชีววิทยาทางทะเล","topics":[]},{"code":"09.04.03","name":"ธรณีวิทยาทางทะเล","topics":[]}]},{"code":"09.05","name":"ภูมิอากาศวิทยา","subfields":[{"code":"09.05.01","name":"ระบบภูมิอากาศ","topics":[]},{"code":"09.05.02","name":"การเปลี่ยนแปลงภูมิอากาศ","topics":[]},{"code":"09.05.03","name":"การจำลองภูมิอากาศ","topics":[]}]},{"code":"09.06","name":"ทรัพยากรธรรมชาติ","subfields":[{"code":"09.06.01","name":"น้ำและลุ่มน้ำ","topics":[]},{"code":"09.06.02","name":"ดินและทรัพยากรแร่","topics":[]},{"code":"09.06.03","name":"ป่าไม้และทรัพยากรทางทะเล","topics":[]}]},{"code":"09.07","name":"การอนุรักษ์สิ่งแวดล้อม","subfields":[{"code":"09.07.01","name":"ความหลากหลายทางชีวภาพ","topics":[]},{"code":"09.07.02","name":"การฟื้นฟูระบบนิเวศ","topics":[]},{"code":"09.07.03","name":"การประเมินผลกระทบสิ่งแวดล้อม","topics":[]}]},{"code":"09.08","name":"ภัยพิบัติและความเสี่ยง","subfields":[{"code":"09.08.01","name":"แผ่นดินไหวและสึนามิ","topics":[]},{"code":"09.08.02","name":"น้ำท่วมและดินถล่ม","topics":[]},{"code":"09.08.03","name":"การประเมินและจัดการความเสี่ยงภัยพิบัติ","topics":[]}]}]},{"code":"10","nameTh":"ประวัติศาสตร์และอารยธรรม","nameEn":"History & Civilization","part":3,"partName":"ภาคที่ 3: มนุษย์ สังคม และวัฒนธรรม","color":"#d97706","icon":"<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><polyline points=\"12 6 12 12 14 14\"/></svg>","disciplineId":"academic","disciplineName":"วิชาการสากลและทฤษฎีโลก","fields":[{"code":"10.01","name":"ประวัติศาสตร์โลก","subfields":[{"code":"10.01.01","name":"โลกยุคโบราณ","topics":[]},{"code":"10.01.02","name":"ยุคกลาง","topics":[]},{"code":"10.01.03","name":"ยุคสมัยใหม่และร่วมสมัย","topics":[]}]},{"code":"10.02","name":"ประวัติศาสตร์ภูมิภาค","subfields":[{"code":"10.02.01","name":"เอเชีย","topics":[]},{"code":"10.02.02","name":"ยุโรป","topics":[]},{"code":"10.02.03","name":"แอฟริกา","topics":[]},{"code":"10.02.04","name":"ทวีปอเมริกา","topics":[]},{"code":"10.02.05","name":"โอเชียเนีย","topics":[]}]},{"code":"10.03","name":"โบราณคดี","subfields":[{"code":"10.03.01","name":"โบราณคดียุคก่อนประวัติศาสตร์","topics":[]},{"code":"10.03.02","name":"การขุดค้นและการวิเคราะห์หลักฐาน","topics":[]},{"code":"10.03.03","name":"โบราณคดีใต้น้ำ","topics":[]}]},{"code":"10.04","name":"ประวัติศาสตร์การเมือง","subfields":[{"code":"10.04.01","name":"การก่อตัวของรัฐ","topics":[]},{"code":"10.04.02","name":"สงครามและการปฏิวัติ","topics":[]},{"code":"10.04.03","name":"การทูตและความสัมพันธ์ระหว่างรัฐในอดีต","topics":[]}]},{"code":"10.05","name":"ประวัติศาสตร์เศรษฐกิจ","subfields":[{"code":"10.05.01","name":"เกษตรกรรมและการค้า","topics":[]},{"code":"10.05.02","name":"การปฏิวัติอุตสาหกรรม","topics":[]},{"code":"10.05.03","name":"ประวัติศาสตร์เงินและตลาด","topics":[]}]},{"code":"10.06","name":"ประวัติศาสตร์ความคิดและวิทยาศาสตร์","subfields":[{"code":"10.06.01","name":"ประวัติศาสตร์ปรัชญา","topics":[]},{"code":"10.06.02","name":"ประวัติศาสตร์วิทยาศาสตร์","topics":[]},{"code":"10.06.03","name":"ประวัติศาสตร์เทคโนโลยี","topics":[]}]},{"code":"10.07","name":"วิธีการศึกษาประวัติศาสตร์","subfields":[{"code":"10.07.01","name":"การวิพากษ์หลักฐาน","topics":[]},{"code":"10.07.02","name":"เอกสารและจดหมายเหตุ","topics":[]},{"code":"10.07.03","name":"ประวัติศาสตร์บอกเล่า","topics":[]}]}]},{"code":"11","nameTh":"สังคมและมนุษย์","nameEn":"Social Sciences","part":3,"partName":"ภาคที่ 3: มนุษย์ สังคม และวัฒนธรรม","color":"#ec4899","icon":"<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\"/><circle cx=\"9\" cy=\"7\" r=\"4\"/><path d=\"M22 21v-2a4 4 0 0 0-3-3.87\"/><path d=\"M16 3.13a4 4 0 0 1 0 7.75\"/></svg>","disciplineId":"combat","disciplineName":"ศิลปะการต่อสู้และป้องกันตัว","fields":[{"code":"11.01","name":"จิตวิทยา","subfields":[{"code":"11.01.01","name":"จิตวิทยาการรู้คิด","topics":[]},{"code":"11.01.02","name":"จิตวิทยาพัฒนาการ","topics":[]},{"code":"11.01.03","name":"จิตวิทยาสังคม","topics":[]},{"code":"11.01.04","name":"จิตวิทยาอุตสาหกรรมและองค์กร","topics":[]}]},{"code":"11.02","name":"สังคมวิทยา","subfields":[{"code":"11.02.01","name":"ครอบครัวและชุมชน","topics":[]},{"code":"11.02.02","name":"ชนชั้นและความเหลื่อมล้ำ","topics":[]},{"code":"11.02.03","name":"สถาบันทางสังคม","topics":[]},{"code":"11.02.04","name":"การเปลี่ยนแปลงทางสังคม","topics":[]}]},{"code":"11.03","name":"มานุษยวิทยา","subfields":[{"code":"11.03.01","name":"มานุษยวิทยาวัฒนธรรม","topics":[]},{"code":"11.03.02","name":"มานุษยวิทยาชีวภาพ","topics":[]},{"code":"11.03.03","name":"มานุษยวิทยาภาษา","topics":[]}]},{"code":"11.04","name":"รัฐศาสตร์","subfields":[{"code":"11.04.01","name":"ทฤษฎีการเมือง","topics":[]},{"code":"11.04.02","name":"ระบบการปกครอง","topics":[]},{"code":"11.04.03","name":"พรรคการเมืองและการเลือกตั้ง","topics":[]},{"code":"11.04.04","name":"นโยบายสาธารณะ","topics":[]}]},{"code":"11.05","name":"ความสัมพันธ์ระหว่างประเทศ","subfields":[{"code":"11.05.01","name":"การทูต","topics":[]},{"code":"11.05.02","name":"ความมั่นคงระหว่างประเทศ","topics":[]},{"code":"11.05.03","name":"องค์การระหว่างประเทศ","topics":[]}]},{"code":"11.06","name":"ประชากรศาสตร์","subfields":[{"code":"11.06.01","name":"โครงสร้างประชากร","topics":[]},{"code":"11.06.02","name":"การเกิด การตาย และการย้ายถิ่น","topics":[]},{"code":"11.06.03","name":"การเปลี่ยนแปลงประชากร","topics":[]}]},{"code":"11.07","name":"การศึกษา","subfields":[{"code":"11.07.01","name":"จิตวิทยาการเรียนรู้","topics":[]},{"code":"11.07.02","name":"หลักสูตรและการสอน","topics":[]},{"code":"11.07.03","name":"การวัดและประเมินผล","topics":[]},{"code":"11.07.04","name":"เทคโนโลยีการศึกษา","topics":[]}]},{"code":"11.08","name":"อาชญาวิทยา","subfields":[{"code":"11.08.01","name":"สาเหตุและรูปแบบอาชญากรรม","topics":[]},{"code":"11.08.02","name":"กระบวนการยุติธรรม","topics":[]},{"code":"11.08.03","name":"การป้องกันอาชญากรรม","topics":[]}]}]},{"code":"12","nameTh":"เศรษฐกิจและการจัดการ","nameEn":"Economics & Management","part":3,"partName":"ภาคที่ 3: มนุษย์ สังคม และวัฒนธรรม","color":"#eab308","icon":"<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"12\" x2=\"12\" y1=\"2\" y2=\"22\"/><path d=\"M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6\"/></svg>","disciplineId":"wealth","disciplineName":"ยุทธศาสตร์การเงินและการลงทุน","fields":[{"code":"12.01","name":"เศรษฐศาสตร์จุลภาค","subfields":[{"code":"12.01.01","name":"อุปสงค์และอุปทาน","topics":[]},{"code":"12.01.02","name":"พฤติกรรมผู้บริโภค","topics":[]},{"code":"12.01.03","name":"ต้นทุนและการผลิต","topics":[]},{"code":"12.01.04","name":"โครงสร้างตลาด","topics":[]}]},{"code":"12.02","name":"เศรษฐศาสตร์มหภาค","subfields":[{"code":"12.02.01","name":"ผลิตภัณฑ์มวลรวมและรายได้ประชาชาติ","topics":[]},{"code":"12.02.02","name":"เงินเฟ้อและการว่างงาน","topics":[]},{"code":"12.02.03","name":"นโยบายการเงินและการคลัง","topics":[]}]},{"code":"12.03","name":"การเงิน","subfields":[{"code":"12.03.01","name":"การเงินส่วนบุคคล","topics":[]},{"code":"12.03.02","name":"การเงินธุรกิจ","topics":[]},{"code":"12.03.03","name":"ตลาดทุนและการลงทุน","topics":[]},{"code":"12.03.04","name":"การบริหารความเสี่ยงทางการเงิน","topics":[]}]},{"code":"12.04","name":"การบัญชี","subfields":[{"code":"12.04.01","name":"การบัญชีการเงิน","topics":[]},{"code":"12.04.02","name":"การบัญชีบริหาร","topics":[]},{"code":"12.04.03","name":"การตรวจสอบบัญชี","topics":[]},{"code":"12.04.04","name":"ภาษีอากร","topics":[]}]},{"code":"12.05","name":"การบริหารธุรกิจ","subfields":[{"code":"12.05.01","name":"กลยุทธ์องค์กร","topics":[]},{"code":"12.05.02","name":"การจัดการทรัพยากรมนุษย์","topics":[]},{"code":"12.05.03","name":"การจัดการโครงการ","topics":[]},{"code":"12.05.04","name":"ผู้ประกอบการและสตาร์ตอัป","topics":[]}]},{"code":"12.06","name":"การตลาด","subfields":[{"code":"12.06.01","name":"พฤติกรรมผู้บริโภค","topics":[]},{"code":"12.06.02","name":"การสร้างแบรนด์","topics":[]},{"code":"12.06.03","name":"การตลาดดิจิทัล","topics":[]},{"code":"12.06.04","name":"การวิจัยตลาด","topics":[]}]},{"code":"12.07","name":"การผลิตและโลจิสติกส์","subfields":[{"code":"12.07.01","name":"การวางแผนการผลิต","topics":[]},{"code":"12.07.02","name":"การจัดซื้อและคลังสินค้า","topics":[]},{"code":"12.07.03","name":"การขนส่งและห่วงโซ่อุปทาน","topics":[]}]},{"code":"12.08","name":"เศรษฐศาสตร์เฉพาะทาง","subfields":[{"code":"12.08.01","name":"เศรษฐศาสตร์พฤติกรรม","topics":[]},{"code":"12.08.02","name":"เศรษฐศาสตร์แรงงาน","topics":[]},{"code":"12.08.03","name":"เศรษฐศาสตร์สิ่งแวดล้อม","topics":[]},{"code":"12.08.04","name":"เศรษฐศาสตร์การพัฒนา","topics":[]}]}]},{"code":"13","nameTh":"ภาษาและการสื่อสาร","nameEn":"Language & Communication","part":3,"partName":"ภาคที่ 3: มนุษย์ สังคม และวัฒนธรรม","color":"#0ea5e9","icon":"<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z\"/></svg>","disciplineId":"arts","disciplineName":"ศิลปะและการสื่อสารโน้มน้าวใจ","fields":[{"code":"13.01","name":"ภาษาศาสตร์","subfields":[{"code":"13.01.01","name":"สัทศาสตร์และสัทวิทยา","topics":[]},{"code":"13.01.02","name":"หน่วยคำและวากยสัมพันธ์","topics":[]},{"code":"13.01.03","name":"อรรถศาสตร์","topics":[]},{"code":"13.01.04","name":"วัจนปฏิบัติศาสตร์","topics":[]}]},{"code":"13.02","name":"ภาษาเฉพาะภาษา","subfields":[{"code":"13.02.01","name":"ภาษาไทย","topics":[]},{"code":"13.02.02","name":"ภาษาอังกฤษ","topics":[]},{"code":"13.02.03","name":"ภาษาจีน","topics":[]},{"code":"13.02.04","name":"ภาษาอื่น ๆ และภาษาท้องถิ่น","topics":[]}]},{"code":"13.03","name":"การอ่านและการเขียน","subfields":[{"code":"13.03.01","name":"การอ่านเชิงวิเคราะห์","topics":[]},{"code":"13.03.02","name":"การเขียนเชิงวิชาการ","topics":[]},{"code":"13.03.03","name":"การเขียนเชิงสร้างสรรค์","topics":[]}]},{"code":"13.04","name":"วรรณกรรม","subfields":[{"code":"13.04.01","name":"วรรณกรรมคลาสสิก","topics":[]},{"code":"13.04.02","name":"กวีนิพนธ์","topics":[]},{"code":"13.04.03","name":"นวนิยายและเรื่องสั้น","topics":[]},{"code":"13.04.04","name":"การวิจารณ์วรรณกรรม","topics":[]}]},{"code":"13.05","name":"การแปลและล่าม","subfields":[{"code":"13.05.01","name":"การแปลวรรณกรรม","topics":[]},{"code":"13.05.02","name":"การแปลเฉพาะทาง","topics":[]},{"code":"13.05.03","name":"การล่ามและการแปลข้ามวัฒนธรรม","topics":[]}]},{"code":"13.06","name":"นิเทศศาสตร์และสื่อ","subfields":[{"code":"13.06.01","name":"วารสารศาสตร์","topics":[]},{"code":"13.06.02","name":"การประชาสัมพันธ์","topics":[]},{"code":"13.06.03","name":"ภาพยนตร์และสื่อดิจิทัล","topics":[]},{"code":"13.06.04","name":"การสื่อสารระหว่างบุคคล","topics":[]}]},{"code":"13.07","name":"การสื่อสารด้วยข้อมูล","subfields":[{"code":"13.07.01","name":"การเล่าเรื่องด้วยข้อมูล","topics":[]},{"code":"13.07.02","name":"การแสดงผลข้อมูล","topics":[]},{"code":"13.07.03","name":"การสื่อสารความเสี่ยงและวิทยาศาสตร์","topics":[]}]}]},{"code":"14","nameTh":"ศิลปะและความคิดสร้างสรรค์","nameEn":"Arts & Creativity","part":3,"partName":"ภาคที่ 3: มนุษย์ สังคม และวัฒนธรรม","color":"#a855f7","icon":"<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"13.5\" cy=\"6.5\" r=\".5\" fill=\"currentColor\"/><circle cx=\"17.5\" cy=\"10.5\" r=\".5\" fill=\"currentColor\"/><circle cx=\"8.5\" cy=\"7.5\" r=\".5\" fill=\"currentColor\"/><circle cx=\"6.5\" cy=\"12.5\" r=\".5\" fill=\"currentColor\"/><path d=\"M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z\"/></svg>","disciplineId":"arts","disciplineName":"ศิลปะและการสื่อสารโน้มน้าวใจ","fields":[{"code":"14.01","name":"วิจิตรศิลป์","subfields":[{"code":"14.01.01","name":"จิตรกรรม","topics":[]},{"code":"14.01.02","name":"ประติมากรรม","topics":[]},{"code":"14.01.03","name":"ภาพพิมพ์","topics":[]},{"code":"14.01.04","name":"ศิลปะร่วมสมัย","topics":[]}]},{"code":"14.02","name":"ดนตรี","subfields":[{"code":"14.02.01","name":"ทฤษฎีดนตรี","topics":[]},{"code":"14.02.02","name":"การประพันธ์เพลง","topics":[]},{"code":"14.02.03","name":"การขับร้องและการบรรเลง","topics":[]},{"code":"14.02.04","name":"ดนตรีวิทยา","topics":[]}]},{"code":"14.03","name":"ศิลปะการแสดง","subfields":[{"code":"14.03.01","name":"ละครเวที","topics":[]},{"code":"14.03.02","name":"การเต้นรำ","topics":[]},{"code":"14.03.03","name":"ศิลปะการแสดงพื้นบ้าน","topics":[]}]},{"code":"14.04","name":"ภาพยนตร์และภาพเคลื่อนไหว","subfields":[{"code":"14.04.01","name":"การเขียนบท","topics":[]},{"code":"14.04.02","name":"การถ่ายภาพและกำกับภาพ","topics":[]},{"code":"14.04.03","name":"การตัดต่อและเสียง","topics":[]},{"code":"14.04.04","name":"แอนิเมชันและวิชวลเอฟเฟกต์","topics":[]}]},{"code":"14.05","name":"การออกแบบ","subfields":[{"code":"14.05.01","name":"กราฟิกดีไซน์","topics":[]},{"code":"14.05.02","name":"การออกแบบผลิตภัณฑ์","topics":[]},{"code":"14.05.03","name":"UX/UI","topics":[]},{"code":"14.05.04","name":"การออกแบบแฟชั่น","topics":[]}]},{"code":"14.06","name":"สถาปัตยกรรม","subfields":[{"code":"14.06.01","name":"การออกแบบอาคาร","topics":[]},{"code":"14.06.02","name":"การออกแบบภายใน","topics":[]},{"code":"14.06.03","name":"ภูมิสถาปัตยกรรม","topics":[]},{"code":"14.06.04","name":"การอนุรักษ์สถาปัตยกรรม","topics":[]}]},{"code":"14.07","name":"การถ่ายภาพ","subfields":[{"code":"14.07.01","name":"องค์ประกอบภาพและแสง","topics":[]},{"code":"14.07.02","name":"การถ่ายภาพสารคดี","topics":[]},{"code":"14.07.03","name":"การประมวลผลภาพ","topics":[]}]},{"code":"14.08","name":"ความคิดสร้างสรรค์","subfields":[{"code":"14.08.01","name":"การคิดเชิงออกแบบ","topics":[]},{"code":"14.08.02","name":"การสร้างแนวคิดและต้นแบบ","topics":[]},{"code":"14.08.03","name":"ความคิดสร้างสรรค์ในงานดิจิทัล","topics":[]}]}]},{"code":"15","nameTh":"ปรัชญา ศีลธรรม และความรู้","nameEn":"Philosophy, Ethics & Knowledge","part":3,"partName":"ภาคที่ 3: มนุษย์ สังคม และวัฒนธรรม","color":"#64748b","icon":"<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><polygon points=\"16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76\"/></svg>","disciplineId":"academic","disciplineName":"วิชาการสากลและทฤษฎีโลก","fields":[{"code":"15.01","name":"อภิปรัชญา","subfields":[{"code":"15.01.01","name":"ธรรมชาติของความเป็นจริง","topics":[]},{"code":"15.01.02","name":"ตัวตนและอัตลักษณ์","topics":[]},{"code":"15.01.03","name":"เหตุและผล","topics":[]},{"code":"15.01.04","name":"เวลาและความเป็นไปได้","topics":[]}]},{"code":"15.02","name":"ญาณวิทยา","subfields":[{"code":"15.02.01","name":"ความรู้และความเชื่อ","topics":[]},{"code":"15.02.02","name":"หลักฐานและเหตุผล","topics":[]},{"code":"15.02.03","name":"ความสงสัยและความแน่นอน","topics":[]},{"code":"15.02.04","name":"ขอบเขตของความรู้มนุษย์","topics":[]}]},{"code":"15.03","name":"ตรรกศาสตร์และการโต้แย้ง","subfields":[{"code":"15.03.01","name":"การอนุมานแบบนิรนัย","topics":[]},{"code":"15.03.02","name":"การอนุมานแบบอุปนัย","topics":[]},{"code":"15.03.03","name":"การให้เหตุผลเชิงความน่าจะเป็น","topics":[]},{"code":"15.03.04","name":"การตรวจจับข้อผิดพลาดในการให้เหตุผล","topics":[]}]},{"code":"15.04","name":"จริยศาสตร์","subfields":[{"code":"15.04.01","name":"ทฤษฎีความถูกผิด","topics":[]},{"code":"15.04.02","name":"จริยศาสตร์ประยุกต์","topics":[]},{"code":"15.04.03","name":"จริยธรรมวิชาชีพ","topics":[]},{"code":"15.04.04","name":"จริยธรรม AI และเทคโนโลยี","topics":[]}]},{"code":"15.05","name":"ปรัชญาการเมืองและสังคม","subfields":[{"code":"15.05.01","name":"เสรีภาพและความยุติธรรม","topics":[]},{"code":"15.05.02","name":"สิทธิและหน้าที่","topics":[]},{"code":"15.05.03","name":"อำนาจและความชอบธรรม","topics":[]}]},{"code":"15.06","name":"ปรัชญาวิทยาศาสตร์","subfields":[{"code":"15.06.01","name":"ธรรมชาติของคำอธิบายทางวิทยาศาสตร์","topics":[]},{"code":"15.06.02","name":"ทฤษฎีและหลักฐาน","topics":[]},{"code":"15.06.03","name":"การทดสอบและการหักล้างสมมติฐาน","topics":[]}]},{"code":"15.07","name":"ศาสนาและการศึกษาความเชื่อ","subfields":[{"code":"15.07.01","name":"ประวัติศาสตร์ศาสนา","topics":[]},{"code":"15.07.02","name":"ปรัชญาศาสนา","topics":[]},{"code":"15.07.03","name":"การเปรียบเทียบความเชื่อและพิธีกรรม","topics":[]}]},{"code":"15.08","name":"กฎหมายและนิติปรัชญา","subfields":[{"code":"15.08.01","name":"ทฤษฎีกฎหมาย","topics":[]},{"code":"15.08.02","name":"สิทธิ ความรับผิด และความยุติธรรม","topics":[]},{"code":"15.08.03","name":"กฎหมายกับเทคโนโลยี","topics":[]}]},{"code":"15.09","name":"วิธีวิทยาและการสร้างความรู้","subfields":[{"code":"15.09.01","name":"วิธีการทางวิทยาศาสตร์","topics":[]},{"code":"15.09.02","name":"ระเบียบวิธีวิจัยเชิงคุณภาพ","topics":[]},{"code":"15.09.03","name":"ระเบียบวิธีวิจัยเชิงปริมาณ","topics":[]},{"code":"15.09.04","name":"การทำซ้ำและตรวจสอบผลการศึกษา","topics":[]}]}]}];
+
+
     // 6. Main Application Controller
     class AppController {
       constructor() {
         this.combo = 1;
         this.currentTierFilter = 'all';
+        this.knowledgeSearchQuery = '';
+        this.knowledgePartFilter = 'all';
+        this.expandedDivisions = new Set(['01', '07']);
         this.selectedRegAvatar = 'av-1';
         this.selectedProfileAvatar = 'av-1';
         this.selectedProfileFrame = 'default';
@@ -5120,6 +5641,328 @@
         }
       }
 
+            // ============================================================
+      // UNIVERSAL KNOWLEDGE CODEX (15 DIVISIONS) CONTROLLER METHODS
+      // ============================================================
+      toggleDeepDive() {
+        const el = document.getElementById('deep-dive-content');
+        const btn = document.getElementById('btn-deep-dive-toggle');
+        if (!el) return;
+        if (el.style.display === 'none') {
+          el.style.display = 'block';
+          if (btn) btn.innerText = 'ย่อตัวอย่าง ▴';
+        } else {
+          el.style.display = 'none';
+          if (btn) btn.innerText = 'ดูตัวอย่างโครงสร้าง ▾';
+        }
+      }
+
+      onKnowledgeSearch(query) {
+        this.knowledgeSearchQuery = query;
+        this.renderKnowledgeMap();
+        const input = document.getElementById('k-search-input');
+        if (input) {
+          input.focus();
+          input.setSelectionRange(input.value.length, input.value.length);
+        }
+      }
+
+      clearKnowledgeSearch() {
+        this.knowledgeSearchQuery = '';
+        this.renderKnowledgeMap();
+      }
+
+      setKnowledgePart(part) {
+        this.knowledgePartFilter = part;
+        this.renderKnowledgeMap();
+      }
+
+      toggleDivision(code) {
+        if (this.expandedDivisions.has(code)) {
+          this.expandedDivisions.delete(code);
+        } else {
+          this.expandedDivisions.add(code);
+        }
+        const card = document.getElementById('div-card-' + code);
+        if (card) {
+          const body = card.querySelector('.division-card-body');
+          const chevron = card.querySelector('.div-chevron');
+          const isOpen = this.expandedDivisions.has(code);
+          if (body) body.style.display = isOpen ? 'block' : 'none';
+          if (chevron) chevron.classList.toggle('rotate', isOpen);
+          card.classList.toggle('expanded', isOpen);
+        }
+      }
+
+      expandAllDivisions() {
+        HUMAN_KNOWLEDGE_TREE.forEach(d => this.expandedDivisions.add(d.code));
+        this.renderKnowledgeMap();
+      }
+
+      collapseAllDivisions() {
+        this.expandedDivisions.clear();
+        this.renderKnowledgeMap();
+      }
+
+      highlightMatch(text, query) {
+        if (!query || !text) return text;
+        const q = query.trim();
+        if (!q) return text;
+        const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\navigate(hash) { window.location.hash = hash; }');
+        return text.replace(new RegExp('(' + escaped + ')', 'gi'), '<span class="highlight-match">$1</span>');
+      }
+
+      renderKnowledgeMap() {
+        const view = document.getElementById('app-view');
+        if (!view) return;
+        themeManager.setTheme('default');
+
+        const activePart = this.knowledgePartFilter || 'all';
+        const query = (this.knowledgeSearchQuery || '').trim().toLowerCase();
+
+        // Filter divisions
+        const filteredDivisions = HUMAN_KNOWLEDGE_TREE.filter(d => {
+          if (activePart !== 'all' && d.part !== parseInt(activePart)) {
+            return false;
+          }
+          if (!query) return true;
+
+          // Check division code or names
+          if (d.code.includes(query) || d.nameTh.toLowerCase().includes(query) || (d.nameEn && d.nameEn.toLowerCase().includes(query))) {
+            return true;
+          }
+
+          // Check fields
+          return d.fields.some(f => {
+            if (f.code.includes(query) || f.name.toLowerCase().includes(query)) return true;
+            return f.subfields.some(sf => {
+              if (sf.code.includes(query) || sf.name.toLowerCase().includes(query)) return true;
+              return (sf.topics || []).some(t => t.code.includes(query) || t.name.toLowerCase().includes(query));
+            });
+          });
+        });
+
+        // Compute total counts
+        const totalDivisions = HUMAN_KNOWLEDGE_TREE.length;
+        let totalFields = 0;
+        let totalSubfields = 0;
+        let totalTopics = 0;
+        HUMAN_KNOWLEDGE_TREE.forEach(d => {
+          totalFields += d.fields.length;
+          d.fields.forEach(f => {
+            totalSubfields += f.subfields.length;
+            f.subfields.forEach(sf => totalTopics += (sf.topics || []).length);
+          });
+        });
+
+        view.innerHTML = `
+          <!-- Header Banner -->
+          <div class="hero-banner knowledge-hero">
+            <div class="hero-badge">🗺️ UNIVERSAL KNOWLEDGE CODEX</div>
+            <h1 class="hero-title">แผนผังความรู้ของมนุษย์ทั้ง 15 หมวด</h1>
+            <p class="hero-quote">"สารานุกรมจำแนกโครงสร้างองค์ความรู้สากลของมนุษยชาติ จากหมวดใหญ่สู่สาขาวิชาและหัวข้อปฏิบัติการเชิงลึก"</p>
+            
+            <!-- 5-Level Principle Visual -->
+            <div class="knowledge-levels-guide">
+              <div class="kl-pill"><span class="kl-num">ระดับ 1</span> หมวดความรู้หลัก (01–15)</div>
+              <div class="kl-arrow">➔</div>
+              <div class="kl-pill"><span class="kl-num">ระดับ 2</span> สาขาวิชา (${totalFields} สาขา)</div>
+              <div class="kl-arrow">➔</div>
+              <div class="kl-pill"><span class="kl-num">ระดับ 3</span> สาขาเฉพาะทาง (${totalSubfields}+ แขนง)</div>
+              <div class="kl-arrow">➔</div>
+              <div class="kl-pill"><span class="kl-num">ระดับ 4</span> หัวข้อแนวคิดเฉพาะ (${totalTopics}+)</div>
+              <div class="kl-arrow">➔</div>
+              <div class="kl-pill"><span class="kl-num">ระดับ 5</span> หลักการและปัญหาเฉพาะ</div>
+            </div>
+            <div class="kl-example-note">📌 ตัวอย่างการอ่านรหัส: <code>07.09.01.01</code> = หมวด 07 ➔ สาขา 09 ➔ สาขาย่อย 01 ➔ หัวข้อ 01</div>
+          </div>
+
+          <!-- Quick Stats Bar -->
+          <div class="knowledge-stats-grid">
+            <div class="k-stat-card">
+              <span class="k-stat-icon">🏛️</span>
+              <div class="k-stat-num">3 ภาค</div>
+              <div class="k-stat-lbl">โครงสร้างมหาภาค</div>
+            </div>
+            <div class="k-stat-card">
+              <span class="k-stat-icon">🌐</span>
+              <div class="k-stat-num">${totalDivisions} หมวด</div>
+              <div class="k-stat-lbl">หมวดหมู่หลักสากล</div>
+            </div>
+            <div class="k-stat-card">
+              <span class="k-stat-icon">📚</span>
+              <div class="k-stat-num">${totalFields} สาขา</div>
+              <div class="k-stat-lbl">สาขาวิชาความรู้</div>
+            </div>
+            <div class="k-stat-card">
+              <span class="k-stat-icon">🔬</span>
+              <div class="k-stat-num">${totalSubfields}+ แขนง</div>
+              <div class="k-stat-lbl">สาขาเฉพาะทาง</div>
+            </div>
+            <div class="k-stat-card">
+              <span class="k-stat-icon">⚡</span>
+              <div class="k-stat-num">${totalTopics}+ หัวข้อ</div>
+              <div class="k-stat-lbl">หัวข้อวิจัยเชิงลึก</div>
+            </div>
+          </div>
+
+          <!-- Deep Dive Showcase Card -->
+          <div class="deep-dive-card">
+            <div class="deep-dive-header" onclick="app.toggleDeepDive()">
+              <div class="deep-dive-title-wrap">
+                <span class="deep-dive-badge">✨ ไฮไลต์เจาะลึก 4 ระดับ</span>
+                <span class="deep-dive-title">ตัวอย่างการแตกแขนงระดับลึก: 07.09 ความมั่นคงปลอดภัยไซเบอร์</span>
+              </div>
+              <button class="btn btn-outline btn-sm" id="btn-deep-dive-toggle">ดูตัวอย่างโครงสร้าง ▾</button>
+            </div>
+            <div id="deep-dive-content" class="deep-dive-content" style="display: none;">
+              <p class="deep-dive-desc">ตัวอย่างนี้แสดงให้เห็นว่าทุกหัวข้อในแผนผังนี้สามารถแตกแขนงต่อยอดไปจนถึงระดับแนวคิดเฉพาะ ปัญหาที่ศึกษา และการนำไปใช้จริงได้อย่างไร:</p>
+              <div class="deep-dive-grid">
+                <div class="dd-col">
+                  <div class="dd-col-head"><span class="code-pill">07.09.01</span> ความปลอดภัยเครือข่าย</div>
+                  <ul class="dd-sub-list">
+                    <li><span class="sub-code">07.09.01.01</span> สถาปัตยกรรมเครือข่ายที่ปลอดภัย</li>
+                    <li><span class="sub-code">07.09.01.02</span> ไฟร์วอลล์และการควบคุมการเข้าถึง</li>
+                    <li><span class="sub-code">07.09.01.03</span> ระบบตรวจจับและป้องกันการบุกรุก</li>
+                  </ul>
+                </div>
+                <div class="dd-col">
+                  <div class="dd-col-head"><span class="code-pill">07.09.02</span> การเข้ารหัส (Cryptography)</div>
+                  <ul class="dd-sub-list">
+                    <li><span class="sub-code">07.09.02.01</span> การเข้ารหัสแบบกุญแจสมมาตร</li>
+                    <li><span class="sub-code">07.09.02.02</span> การเข้ารหัสแบบกุญแจอสมมาตร</li>
+                    <li><span class="sub-code">07.09.02.03</span> ฟังก์ชันแฮชและลายมือชื่อดิจิทัล</li>
+                  </ul>
+                </div>
+                <div class="dd-col">
+                  <div class="dd-col-head"><span class="code-pill">07.09.03</span> ความปลอดภัยเว็บ</div>
+                  <ul class="dd-sub-list">
+                    <li><span class="sub-code">07.09.03.01</span> การจัดการเซสชัน</li>
+                    <li><span class="sub-code">07.09.03.02</span> การตรวจสอบข้อมูลนำเข้า</li>
+                    <li><span class="sub-code">07.09.03.03</span> การควบคุมสิทธิ์และการยืนยันตัวตน</li>
+                    <li><span class="sub-code">07.09.03.04</span> การทดสอบความปลอดภัยของเว็บ</li>
+                  </ul>
+                </div>
+                <div class="dd-col">
+                  <div class="dd-col-head"><span class="code-pill">07.09.04</span> การตอบสนองต่อเหตุการณ์</div>
+                  <ul class="dd-sub-list">
+                    <li><span class="sub-code">07.09.04.01</span> การเก็บและวิเคราะห์บันทึกเหตุการณ์</li>
+                    <li><span class="sub-code">07.09.04.02</span> การตรวจจับความผิดปกติ</li>
+                    <li><span class="sub-code">07.09.04.03</span> การจัดการเหตุการณ์และการกู้คืน</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Search and Filter Bar -->
+          <div class="knowledge-controls-bar">
+            <div class="knowledge-search-wrap">
+              <span class="k-search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+              <input type="text" id="k-search-input" class="knowledge-search-input" placeholder="พิมพ์ค้นหารหัส เช่น 07.09, 02 หรือคำค้นหา เช่น ไซเบอร์, ควอนตัม, ปัญญาประดิษฐ์, นิวเคลียร์, ฟิสิกส์..." value="${this.escapeHtml(this.knowledgeSearchQuery || '')}" oninput="app.onKnowledgeSearch(this.value)">
+              ${this.knowledgeSearchQuery ? `<button class="k-search-clear" onclick="app.clearKnowledgeSearch()">✕</button>` : ''}
+            </div>
+
+            <div class="knowledge-filter-actions">
+              <div class="k-part-tabs">
+                <button class="k-tab ${activePart === 'all' ? 'active' : ''}" onclick="app.setKnowledgePart('all')">ทั้งหมด (15)</button>
+                <button class="k-tab ${activePart === '1' ? 'active' : ''}" onclick="app.setKnowledgePart('1')">ภาค 1 วิทยาศาสตร์ (01–05)</button>
+                <button class="k-tab ${activePart === '2' ? 'active' : ''}" onclick="app.setKnowledgePart('2')">ภาค 2 เทคโนโลยีและโลก (06–09)</button>
+                <button class="k-tab ${activePart === '3' ? 'active' : ''}" onclick="app.setKnowledgePart('3')">ภาค 3 สังคมและมนุษย์ (10–15)</button>
+              </div>
+
+              <div class="k-expand-btns">
+                <button class="btn btn-outline btn-sm" onclick="app.expandAllDivisions()">ขยายทั้งหมด ▾</button>
+                <button class="btn btn-outline btn-sm" onclick="app.collapseAllDivisions()">ยุบทั้งหมด ▴</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tree Divisions List -->
+          <div class="knowledge-tree-container">
+            ${filteredDivisions.length === 0 ? `
+              <div class="empty-state">
+                <div class="empty-icon">🔍</div>
+                <h3>ไม่พบข้อมูลที่ตรงกับคำค้นหา</h3>
+                <p>ลองค้นหาด้วยรหัสหมวด เช่น "01" หรือคำค้นหา เช่น "ดาราศาสตร์", "ฟิสิกส์", "คอมพิวเตอร์"</p>
+                <button class="btn btn-primary" onclick="app.clearKnowledgeSearch()">ล้างคำค้นหา</button>
+              </div>
+            ` : filteredDivisions.map(div => {
+              const isExpanded = this.expandedDivisions.has(div.code) || query.length > 0;
+              const subfieldCount = div.fields.reduce((acc, f) => acc + f.subfields.length, 0);
+
+              return `
+                <div class="division-tree-card ${isExpanded ? 'expanded' : ''}" id="div-card-${div.code}" style="--div-color: ${div.color};">
+                  <div class="division-card-header" onclick="app.toggleDivision('${div.code}')">
+                    <div class="div-header-left">
+                      <div class="div-code-badge" style="background: ${div.color}22; color: ${div.color}; border-color: ${div.color}44;">
+                        <span class="div-badge-icon">${div.icon}</span>
+                        <span class="div-badge-code">${div.code}</span>
+                      </div>
+                      <div class="div-title-info">
+                        <div class="div-part-tag">${div.partName}</div>
+                        <h2 class="div-title-th">${this.highlightMatch(div.nameTh, query)} <span class="div-title-en">— ${div.nameEn}</span></h2>
+                        <div class="div-meta-counts">
+                          <span>📁 ${div.fields.length} สาขาวิชา</span>
+                          <span>•</span>
+                          <span>🔬 ${subfieldCount} สาขาเฉพาะทาง</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="div-header-right">
+                      <button class="btn btn-primary btn-sm btn-academy-jump" onclick="event.stopPropagation(); app.navigate('#/discipline/${div.disciplineId}')" title="เข้าสู่สายวิชาใน OmniVerse Academy">
+                        🔗 สายวิชา: ${div.disciplineName}
+                      </button>
+                      <span class="div-chevron ${isExpanded ? 'rotate' : ''}">▼</span>
+                    </div>
+                  </div>
+
+                  <div class="division-card-body" style="display: ${isExpanded ? 'block' : 'none'};">
+                    <div class="fields-grid">
+                      ${div.fields.map(field => {
+                        return `
+                          <div class="field-block">
+                            <div class="field-title">
+                              <span class="field-code-badge">${field.code}</span>
+                              <span class="field-name-text">${this.highlightMatch(field.name, query)}</span>
+                            </div>
+                            <div class="subfields-list">
+                              ${field.subfields.map(sf => {
+                                const topics = sf.topics || [];
+                                return `
+                                  <div class="subfield-item">
+                                    <div class="subfield-header">
+                                      <span class="sf-bullet">▸</span>
+                                      <span class="sf-code">${sf.code}</span>
+                                      <span class="sf-name">${this.highlightMatch(sf.name, query)}</span>
+                                    </div>
+                                    ${topics.length > 0 ? `
+                                      <div class="topics-chips">
+                                        ${topics.map(t => `
+                                          <div class="topic-chip" title="หัวข้อระดับ 4">
+                                            <span class="t-code">${t.code}</span>
+                                            <span class="t-name">${this.highlightMatch(t.name, query)}</span>
+                                          </div>
+                                        `).join('')}
+                                      </div>
+                                    ` : ''}
+                                  </div>
+                                `;
+                              }).join('')}
+                            </div>
+                          </div>
+                        `;
+                      }).join('')}
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+      }
+
       navigate(hash) { window.location.hash = hash; }
 
       handleRoute() {
@@ -5145,6 +5988,7 @@
         else if (hash === '#/profile') this.renderProfile();
         else if (hash === '#/tickets') this.renderTickets();
         else if (hash === '#/admin') this.renderAdmin();
+        else if (hash === '#/knowledge-map') this.renderKnowledgeMap();
       }
 
       renderHome() {
