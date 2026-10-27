@@ -2060,7 +2060,7 @@
   <div id="toast-container"></div>
 
   <!-- 1. Register Modal (First-time Onboarding Gate) -->
-  <div id="modal-register" class="modal-overlay">
+  <div id="modal-register" class="modal-overlay" onclick="if(event.target===this)app.closeModal('modal-register')">
     <div class="modal-dialog">
       <button class="modal-close" onclick="app.closeModal('modal-register')">&times;</button>
       <div style="text-align: center; margin-bottom: 1.25rem;">
@@ -2100,12 +2100,15 @@
         <p style="font-size: 0.85rem; color: var(--text-muted);">
           มีบัญชีตัวละครอยู่แล้ว? <a href="javascript:void(0)" onclick="app.closeModal('modal-register'); app.openModal('modal-login');" style="color: var(--accent); font-weight: 600;">เข้าสู่ระบบที่นี่</a>
         </p>
+        <p style="font-size: 0.8rem; margin-top: 0.4rem;">
+          <a href="javascript:void(0)" onclick="app.closeModal('modal-register')" style="color: var(--text-muted); text-decoration: underline;">สำรวจบทเรียนก่อน (ยังไม่ลงทะเบียน)</a>
+        </p>
       </div>
     </div>
   </div>
 
   <!-- 2. Login Modal (Standard Clean Login - No Demo/Admin Shortcuts) -->
-  <div id="modal-login" class="modal-overlay">
+  <div id="modal-login" class="modal-overlay" onclick="if(event.target===this)app.closeModal('modal-login')">
     <div class="modal-dialog">
       <button class="modal-close" onclick="app.closeModal('modal-login')">&times;</button>
       <div style="text-align: center; margin-bottom: 1.25rem;">
@@ -2135,7 +2138,7 @@
   </div>
 
   <!-- 3. Avatar Customizer Modal (In Profile) -->
-  <div id="modal-avatar-picker" class="modal-overlay">
+  <div id="modal-avatar-picker" class="modal-overlay" onclick="if(event.target===this)app.closeModal('modal-avatar-picker')">
     <div class="modal-dialog">
       <button class="modal-close" onclick="app.closeModal('modal-avatar-picker')">&times;</button>
       <div style="text-align: center; margin-bottom: 1.25rem;">
@@ -2168,7 +2171,7 @@
   </div>
 
   <!-- 4. Celebration Modal (Level Up) -->
-  <div id="modal-celebrate" class="modal-overlay">
+  <div id="modal-celebrate" class="modal-overlay" onclick="if(event.target===this)app.closeModal('modal-celebrate')">
     <div class="modal-dialog" style="text-align: center;">
       <div style="font-size: 3.5rem; margin-bottom: 0.5rem;" id="celebrate-icon">🏆</div>
       <h2 style="color: #fbbf24; margin-bottom: 0.5rem;" id="celebrate-title">LEVEL UP!</h2>
@@ -4238,7 +4241,7 @@
             }
           }
         }
-        document.getElementById(id).classList.add('active');
+        const m = document.getElementById(id); if (m) m.classList.add('active');
       }
 
       resetAuthForms() {
@@ -4257,12 +4260,13 @@
       }
 
       closeModal(id) {
-        document.getElementById(id).classList.remove('active');
+        const m = document.getElementById(id); if (m) m.classList.remove('active');
         if (id === 'modal-login' || id === 'modal-register') this.resetAuthForms();
       }
 
       showToast(msg) {
         const container = document.getElementById('toast-container');
+        if (!container) return;
         const t = document.createElement('div');
         t.className = 'toast';
         t.innerText = msg;
@@ -5079,8 +5083,33 @@
       module.exports = OmniAIEngine;
     }
 
+    const app = new AppController();
     const omniAI = new OmniAIEngine();
-    window.onload = () => { app.init(); omniAI.init(); };
+    window.app = app;
+    window.omniAI = omniAI;
+
+    let isOmniAppReady = false;
+    function initOmniApp() {
+      if (isOmniAppReady) return;
+      isOmniAppReady = true;
+      try {
+        if (typeof app !== 'undefined' && app.init) app.init();
+      } catch (e) {
+        console.error("AppController init error:", e);
+      }
+      try {
+        if (typeof omniAI !== 'undefined' && omniAI.init) omniAI.init();
+      } catch (e) {
+        console.error("OmniAI init error:", e);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initOmniApp);
+    } else {
+      initOmniApp();
+    }
+    window.onload = initOmniApp;
   </script>
 
   <!-- OmniAI Floating Action Button & Cyberpunk Chat Drawer -->
