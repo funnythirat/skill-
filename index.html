@@ -2601,19 +2601,27 @@
         this.mergeCustomLessons();
       }
 
-      async init() {
-        await auth.authReady;
+      init() {
         this.initAvatarPickers();
-        this.subscribeToCustomLessons();
         window.addEventListener('hashchange', () => this.handleRoute());
         this.updateUserUI();
 
-        // 🌟 Show Register modal first when entering website if not logged in
-        if (!auth.currentUser) {
-          setTimeout(() => this.openModal('modal-register'), 350);
-        }
-
+        // ⚡ Immediate render on load! Zero-delay routing without waiting for Firebase!
         this.handleRoute();
+
+        // 🛡️ Asynchronously initialize Auth & custom lessons in background
+        auth.authReady.then(() => {
+          this.subscribeToCustomLessons();
+          this.updateUserUI();
+
+          // 🌟 Only show Register modal on home page if not logged in
+          const currentHash = window.location.hash || '#/';
+          if (!auth.currentUser && (currentHash === '#/' || currentHash === '')) {
+            setTimeout(() => this.openModal('modal-register'), 350);
+          }
+        }).catch((e) => {
+          console.warn('Auth ready background warning:', e);
+        });
       }
 
       // Merge base 35 lessons with admin-created custom lessons
@@ -3033,7 +3041,7 @@
         if (!query || !text) return text;
         const q = query.trim();
         if (!q) return text;
-        const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\navigate(hash) { window.location.hash = hash; }');
+        const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         return text.replace(new RegExp('(' + escaped + ')', 'gi'), '<span class="highlight-match">$1</span>');
       }
 
@@ -3236,7 +3244,7 @@
                     </div>
 
                     <div class="div-header-right">
-                      <button class="btn btn-primary btn-sm btn-academy-jump" onclick="event.stopPropagation(); app.navigate('#/discipline/${div.disciplineId}')" title="เข้าสู่สายวิชาใน OmniVerse Academy">
+                      <button class="btn btn-primary btn-sm btn-academy-jump" onclick="event.stopPropagation(); app.navigate('#/discipline/${div.code}')" title="เข้าสู่สายวิชาใน OmniVerse Academy">
                         🔗 สายวิชา: ${div.disciplineName}
                       </button>
                       <span class="div-chevron ${isExpanded ? 'rotate' : ''}">▼</span>
@@ -3288,7 +3296,17 @@
         `;
       }
 
-      navigate(hash) { window.location.hash = hash; }
+      navigate(hash) {
+        if (window.location.hash !== hash) {
+          window.location.hash = hash;
+        }
+        this.handleRoute();
+        try {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch (e) {
+          window.scrollTo(0, 0);
+        }
+      }
 
       handleRoute() {
         const hash = window.location.hash || '#/';
@@ -3403,7 +3421,7 @@
         const resolvedId = ALIAS_MAP[id] || id;
         const disc = DISCIPLINE_DATA.find(d => d.id === resolvedId || d.code === resolvedId) || DISCIPLINE_DATA[0];
         themeManager.setTheme(disc.id);
-        const allLessons = LESSON_DATA[disc.id] || [];
+        const allLessons = (LESSON_DATA && LESSON_DATA[disc.id] && LESSON_DATA[disc.id].length > 0) ? LESSON_DATA[disc.id] : (BASE_LESSONS[disc.id] || []);
         
         // Filter lessons by selected field, tier and search query
         const currentTier = this.currentTierFilter || 'all';
@@ -3565,11 +3583,27 @@
 
 
       renderTheory(param) {
-        const [discId, idxStr] = param.split('_');
-        const disc = DISCIPLINE_DATA.find(d => d.id === discId) || DISCIPLINE_DATA[0];
+        const [rawDiscId, idxStr] = (param || '').split('_');
+        const ALIAS_MAP = {
+          'tech': '07',
+          'academic': '02',
+          'engineering': '08',
+          'wealth': '12',
+          'arts': '14',
+          'survival': '09',
+          'combat': '05'
+        };
+        const discId = ALIAS_MAP[rawDiscId] || rawDiscId;
+        const disc = DISCIPLINE_DATA.find(d => d.id === discId || d.code === discId) || DISCIPLINE_DATA[0];
         themeManager.setTheme(disc.id);
-        const lessons = LESSON_DATA[disc.id] || [];
-        const lesson = lessons[parseInt(idxStr) || 0] || lessons[0];
+        const lessons = (LESSON_DATA && LESSON_DATA[disc.id] && LESSON_DATA[disc.id].length > 0)
+          ? LESSON_DATA[disc.id]
+          : (BASE_LESSONS[disc.id] || []);
+        const lesson = lessons[parseInt(idxStr) || 0] || lessons[0] || {
+          title: 'บทเรียนมาตรฐาน',
+          desc: 'กำลังโหลดเนื้อหาบทเรียน...',
+          theory: '<p>กำลังโหลดเนื้อหา...</p>'
+        };
 
         const view = document.getElementById('app-view');
         view.innerHTML = `
@@ -3620,11 +3654,30 @@
       }
 
       renderQuiz(param) {
-        const [discId, idxStr] = param.split('_');
-        const disc = DISCIPLINE_DATA.find(d => d.id === discId) || DISCIPLINE_DATA[0];
+        const [rawDiscId, idxStr] = (param || '').split('_');
+        const ALIAS_MAP = {
+          'tech': '07',
+          'academic': '02',
+          'engineering': '08',
+          'wealth': '12',
+          'arts': '14',
+          'survival': '09',
+          'combat': '05'
+        };
+        const discId = ALIAS_MAP[rawDiscId] || rawDiscId;
+        const disc = DISCIPLINE_DATA.find(d => d.id === discId || d.code === discId) || DISCIPLINE_DATA[0];
         themeManager.setTheme(disc.id);
-        const lessons = LESSON_DATA[disc.id] || [];
-        const lesson = lessons[parseInt(idxStr) || 0] || lessons[0];
+        const lessons = (LESSON_DATA && LESSON_DATA[disc.id] && LESSON_DATA[disc.id].length > 0)
+          ? LESSON_DATA[disc.id]
+          : (BASE_LESSONS[disc.id] || []);
+        const lesson = lessons[parseInt(idxStr) || 0] || lessons[0] || {
+          title: 'แบบทดสอบบทเรียน',
+          desc: 'กำลังโหลดข้อสอบ...',
+          question: 'กำลังเตรียมคำถาม...',
+          opts: ['ก', 'ข', 'ค', 'ง'],
+          ans: 0,
+          exp: ''
+        };
         const quizKey = `${disc.id}_${idxStr}`;
         const isDone = auth.currentUser && Array.isArray(auth.currentUser.completedQuizzes) && auth.currentUser.completedQuizzes.includes(quizKey);
 
