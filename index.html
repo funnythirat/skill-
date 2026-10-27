@@ -2180,6 +2180,127 @@
     </div>
   </div>
 
+  <!-- Modal: Edit Lesson & Quiz Modal (Admin Backoffice) -->
+  <div id="modal-edit-lesson" class="modal-overlay" onclick="if(event.target===this)app.closeModal('modal-edit-lesson')">
+    <div class="modal-dialog" style="max-width: 820px; max-height: 90vh; overflow-y: auto;">
+      <button class="modal-close" onclick="app.closeModal('modal-edit-lesson')">✕</button>
+      <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem;">
+        <span style="font-size: 1.5rem;">✏️</span>
+        <h3 style="margin: 0; color: #fff;">แก้ไขบทเรียนและแบบฝึกหัด (Edit Lesson & Quiz)</h3>
+      </div>
+      <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">
+        แก้ไขเนื้อหาหลักการทฤษฎีและข้อสอบจำลองสถานการณ์ ระบบจะอัปเดตและบันทึกข้อมูลแบบเรียลไทม์
+      </p>
+
+      <form id="form-edit-lesson" onsubmit="app.saveEditLesson(event)">
+        <input type="hidden" id="edit-lesson-id">
+        <input type="hidden" id="edit-lesson-disc">
+
+        <!-- Part 1: Lesson Content -->
+        <div style="background: rgba(15, 23, 42, 0.5); padding: 1.25rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 1.25rem;">
+          <h4 style="color: #38bdf8; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.4rem;">
+            <span>📖</span> ข้อมูลและเนื้อหาบทเรียน (Lesson Content)
+          </h4>
+
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            <div>
+              <label class="form-label">ชื่อบทเรียน (Title)</label>
+              <input type="text" id="edit-lesson-title" class="form-input" required placeholder="ชื่อบทเรียน">
+            </div>
+            <div>
+              <label class="form-label">ระดับทักษะ (Mastery Tier)</label>
+              <select id="edit-lesson-tier" class="form-select" required>
+                <option value="foundation">🌱 พื้นฐาน (Foundation)</option>
+                <option value="beginner">🔰 ขั้นต้น (Beginner)</option>
+                <option value="intermediate">⚡ ขั้นกลาง (Intermediate)</option>
+                <option value="advanced">🚀 ขั้นสูง (Advanced)</option>
+                <option value="expert">🏆 ผู้เชี่ยวชาญ (Expert)</option>
+                <option value="mastery">👑 ปรมาจารย์ (Mastery)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label">คำอธิบายภาพรวมสั้นๆ (Description)</label>
+            <input type="text" id="edit-lesson-desc" class="form-input" required placeholder="คำอธิบายสั้นๆ ของบทเรียน">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label">📜 1. ทฤษฎีบทและหลักการสำคัญ (Core Principles)</label>
+            <textarea id="edit-lesson-theory" class="form-input" rows="4" required placeholder="เนื้อหาทางวิชาการ ทฤษฎีบท หรือสูตรคำนวณ"></textarea>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label">🧠 2. วิธีคิดและกระบวนการวิเคราะห์ (Analytical Thinking)</label>
+            <textarea id="edit-lesson-thinking" class="form-input" rows="3" required placeholder="ขั้นตอนการคิดวิเคราะห์ ลำดับการแก้ปัญหา"></textarea>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label">💡 3. ตัวอย่างสถานการณ์จริง (Worked Example)</label>
+            <textarea id="edit-lesson-example" class="form-input" rows="3" required placeholder="ตัวอย่างการประยุกต์ใช้ในชีวิตจริงหรือโจทย์ตัวอย่าง"></textarea>
+          </div>
+        </div>
+
+        <!-- Part 2: Quiz / Exercise -->
+        <div style="background: rgba(15, 23, 42, 0.5); padding: 1.25rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 1.5rem;">
+          <h4 style="color: #a855f7; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.4rem;">
+            <span>⚔️</span> โจทย์แบบฝึกหัดจำลองสถานการณ์ (Interactive Quiz)
+          </h4>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label">📌 บริบทสถานการณ์จำลอง (Scenario Context)</label>
+            <input type="text" id="edit-lesson-scenario" class="form-input" placeholder="บริบทสถานการณ์ เช่น การทดลอง หรือเคสจำลอง">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label">คำถามโจทย์ (Question)</label>
+            <input type="text" id="edit-lesson-question" class="form-input" required placeholder="คำถามที่ต้องการให้ผู้เรียนเลือกคำตอบ">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
+            <div>
+              <label class="form-label">ตัวเลือก A</label>
+              <input type="text" id="edit-lesson-opt-a" class="form-input" required placeholder="ตัวเลือก A">
+            </div>
+            <div>
+              <label class="form-label">ตัวเลือก B</label>
+              <input type="text" id="edit-lesson-opt-b" class="form-input" required placeholder="ตัวเลือก B">
+            </div>
+            <div>
+              <label class="form-label">ตัวเลือก C</label>
+              <input type="text" id="edit-lesson-opt-c" class="form-input" required placeholder="ตัวเลือก C">
+            </div>
+            <div>
+              <label class="form-label">ตัวเลือก D</label>
+              <input type="text" id="edit-lesson-opt-d" class="form-input" required placeholder="ตัวเลือก D">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label">ตัวเลือกที่ถูกต้อง (Correct Option)</label>
+              <select id="edit-lesson-ans" class="form-select" required>
+                <option value="0">ข้อ A ถูกต้อง</option>
+                <option value="1">ข้อ B ถูกต้อง</option>
+                <option value="2">ข้อ C ถูกต้อง</option>
+                <option value="3">ข้อ D ถูกต้อง</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">💡 คำอธิบายเฉลยและหลักวิชาการ (Explanation)</label>
+              <input type="text" id="edit-lesson-exp" class="form-input" required placeholder="เหตุผลทางวิชาการที่ข้อนี้ถูกต้อง">
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+          <button type="button" class="btn btn-outline" onclick="app.closeModal('modal-edit-lesson')">ยกเลิก</button>
+          <button type="submit" class="btn btn-primary" style="padding: 0.7rem 1.5rem;">💾 บันทึกการแก้ไข 🌟</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics-compat.js"></script>
@@ -2598,7 +2719,32 @@
         this.customLessons = [];
         this.unsubscribeTickets = null;
         this.unsubscribeCustomLessons = null;
+        this.lessonOverrides = {};
+        this.deletedLessonIds = new Set();
+        this.adminLessonFilterDisc = 'all';
+        this.adminLessonFilterTier = 'all';
+        this.adminLessonFilterSearch = '';
+        this.unsubscribeTickets = null;
+        this.unsubscribeCustomLessons = null;
+        this.unsubscribeLessonOverrides = null;
+        this.unsubscribeDeletedLessons = null;
+        this.loadCachedLessons();
         this.mergeCustomLessons();
+      }
+
+      loadCachedLessons() {
+        try {
+          const cachedCustom = localStorage.getItem('omni_custom_lessons');
+          if (cachedCustom) this.customLessons = JSON.parse(cachedCustom);
+        } catch(e) {}
+        try {
+          const cachedOverrides = localStorage.getItem('omni_lesson_overrides');
+          if (cachedOverrides) this.lessonOverrides = JSON.parse(cachedOverrides);
+        } catch(e) {}
+        try {
+          const cachedDeleted = localStorage.getItem('omni_deleted_lessons');
+          if (cachedDeleted) this.deletedLessonIds = new Set(JSON.parse(cachedDeleted));
+        } catch(e) {}
       }
 
       init() {
@@ -2646,42 +2792,68 @@
       mergeCustomLessons() {
         LESSON_DATA = {};
         Object.keys(BASE_LESSONS).forEach(k => {
-          LESSON_DATA[k] = [...BASE_LESSONS[k]];
+          LESSON_DATA[k] = BASE_LESSONS[k]
+            .filter(l => !this.deletedLessonIds.has(String(l.id)))
+            .map(l => {
+              const idStr = String(l.id);
+              if (this.lessonOverrides[idStr]) {
+                const ov = this.lessonOverrides[idStr];
+                return {
+                  ...l,
+                  ...ov,
+                  isModified: true
+                };
+              }
+              return { ...l };
+            });
         });
 
         (this.customLessons || []).forEach(cl => {
+          const idStr = String(cl.id);
+          if (this.deletedLessonIds.has(idStr)) return;
           if (LESSON_DATA[cl.discipline]) {
-            LESSON_DATA[cl.discipline].push({
-              id: cl.id,
-              isCustom: true,
-              title: cl.title,
-              desc: cl.desc,
-              theory: `
+            const ov = this.lessonOverrides[idStr] || {};
+            const merged = { ...cl, ...ov };
+            const opts = merged.opts || [merged.optA, merged.optB, merged.optC, merged.optD];
+            let theoryHtml = merged.theory || '';
+            if (!theoryHtml.includes('theory-section-title')) {
+              theoryHtml = `
                 <div class="theory-section-title">📜 1. ทฤษฎีบทและหลักการสำคัญ (Core Principles)</div>
-                <p>${cl.theory || ''}</p>
+                <p>${merged.theory || ''}</p>
                 <div class="theory-section-title">🧠 2. วิธีคิดและกระบวนการวิเคราะห์ (Analytical Thinking)</div>
-                <p>${cl.thinking || 'วิเคราะห์ตามหลักการและลำดับขั้นตอน'}</p>
+                <p>${merged.thinking || 'วิเคราะห์ตามหลักการและลำดับขั้นตอน'}</p>
                 <div class="theory-section-title">💡 3. ตัวอย่างสถานการณ์จริง (Worked Example)</div>
-                <div class="example-card">${cl.example || 'การนำทฤษฎีนี้ไปประยุกต์ใช้ในชีวิตจริง'}</div>
-              `,
-              question: cl.question,
-              scenario: cl.scenario || 'สถานการณ์จำลองตามบทเรียน',
-              opts: [cl.optA, cl.optB, cl.optC, cl.optD],
-              ans: parseInt(cl.ans) || 0,
-              exp: cl.exp || 'คำอธิบายและหลักวิชาการ'
+                <div class="example-card">${merged.example || 'การนำทฤษฎีนี้ไปประยุกต์ใช้ในชีวิตจริง'}</div>
+              `;
+            }
+            LESSON_DATA[cl.discipline].push({
+              id: merged.id,
+              discipline: merged.discipline,
+              isCustom: true,
+              isModified: !!this.lessonOverrides[idStr],
+              tier: merged.tier || 'foundation',
+              tier_th: merged.tier_th || (getTierInfo(merged.tier || 'foundation') ? getTierInfo(merged.tier || 'foundation').name_th : 'พื้นฐาน'),
+              title: merged.title,
+              desc: merged.desc,
+              theory: theoryHtml,
+              rawTheory: merged.rawTheory || merged.theory,
+              rawThinking: merged.rawThinking || merged.thinking,
+              rawExample: merged.rawExample || merged.example,
+              question: merged.question,
+              scenario: merged.scenario || 'สถานการณ์จำลองตามบทเรียน',
+              opts: opts,
+              ans: parseInt(merged.ans) || 0,
+              exp: merged.exp || 'คำอธิบายและหลักวิชาการ',
+              createdBy: merged.createdBy,
+              createdAt: merged.createdAt
             });
           }
         });
       }
 
       subscribeToCustomLessons() {
-        try {
-          const cached = localStorage.getItem('omni_custom_lessons');
-          if (cached) {
-            this.customLessons = JSON.parse(cached);
-            this.mergeCustomLessons();
-          }
-        } catch(e) {}
+        this.loadCachedLessons();
+        this.mergeCustomLessons();
 
         try {
           this.unsubscribeCustomLessons = firebase.firestore().collection('custom_lessons').onSnapshot((snapshot) => {
@@ -2691,7 +2863,31 @@
             if (window.location.hash.startsWith('#/discipline/') || window.location.hash === '#/admin') {
               this.handleRoute();
             }
-          }, (err) => console.warn('Custom lessons Firestore snapshot error:', err));
+          }, (err) => console.warn('Custom lessons Firestore snapshot warning:', err));
+        } catch(e) {}
+
+        try {
+          this.unsubscribeLessonOverrides = firebase.firestore().collection('lesson_overrides').onSnapshot((snapshot) => {
+            const ov = {};
+            snapshot.docs.forEach(doc => { ov[doc.id] = doc.data(); });
+            this.lessonOverrides = ov;
+            localStorage.setItem('omni_lesson_overrides', JSON.stringify(this.lessonOverrides));
+            this.mergeCustomLessons();
+            if (window.location.hash.startsWith('#/discipline/') || window.location.hash === '#/admin') {
+              this.handleRoute();
+            }
+          }, (err) => console.warn('Lesson overrides Firestore snapshot warning:', err));
+        } catch(e) {}
+
+        try {
+          this.unsubscribeDeletedLessons = firebase.firestore().collection('deleted_lessons').onSnapshot((snapshot) => {
+            this.deletedLessonIds = new Set(snapshot.docs.map(doc => doc.id));
+            localStorage.setItem('omni_deleted_lessons', JSON.stringify([...this.deletedLessonIds]));
+            this.mergeCustomLessons();
+            if (window.location.hash.startsWith('#/discipline/') || window.location.hash === '#/admin') {
+              this.handleRoute();
+            }
+          }, (err) => console.warn('Deleted lessons Firestore snapshot warning:', err));
         } catch(e) {}
       }
 
@@ -2747,7 +2943,6 @@
         };
 
         try {
-          // 1. Save to Firestore
           const docRef = await firebase.firestore().collection('custom_lessons').add(newLesson);
           newLesson.id = docRef.id;
         } catch(err) {
@@ -2755,12 +2950,10 @@
           newLesson.id = 'local_' + Date.now();
         }
 
-        // 2. Save locally and merge
         this.customLessons.push(newLesson);
         localStorage.setItem('omni_custom_lessons', JSON.stringify(this.customLessons));
         this.mergeCustomLessons();
 
-        // 3. Reset form
         document.getElementById('form-add-lesson').reset();
         this.showToast('เพิ่มบทเรียนและข้อสอบใหม่สำเร็จเรียบร้อย! 🌟');
         this.renderAdmin();
@@ -2779,6 +2972,397 @@
         this.mergeCustomLessons();
         this.showToast('ลบบทเรียนออกจากระบบเรียบร้อยแล้ว');
         this.renderAdmin();
+      }
+
+      // Helper: Parse structured theory parts from HTML or raw strings
+      parseTheoryParts(theoryHtml, rawTheory, rawThinking, rawExample) {
+        if (rawTheory) {
+          return {
+            theory: rawTheory || '',
+            thinking: rawThinking || '',
+            example: rawExample || ''
+          };
+        }
+        if (!theoryHtml) return { theory: '', thinking: '', example: '' };
+
+        const p1 = theoryHtml.indexOf('1. ทฤษฎีบทและหลักการสำคัญ');
+        const p2 = theoryHtml.indexOf('2. วิธีคิดและกระบวนการวิเคราะห์');
+        const p3 = theoryHtml.indexOf('3. ตัวอย่างสถานการณ์จริง');
+
+        const clean = (s) => s
+          .replace(/<div class="theory-section-title">.*?<\/div>/gi, '')
+          .replace(/<[^>]+>/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+
+        if (p1 !== -1 && p2 !== -1 && p3 !== -1) {
+          const raw1 = theoryHtml.slice(p1, p2);
+          const raw2 = theoryHtml.slice(p2, p3);
+          const raw3 = theoryHtml.slice(p3);
+          return {
+            theory: clean(raw1),
+            thinking: clean(raw2),
+            example: clean(raw3)
+          };
+        }
+
+        return {
+          theory: clean(theoryHtml),
+          thinking: '',
+          example: ''
+        };
+      }
+
+      // Admin Hub: Filter Change Handler
+      onAdminLessonFilterChange() {
+        const dEl = document.getElementById('adm-filter-disc');
+        const tEl = document.getElementById('adm-filter-tier');
+        const sEl = document.getElementById('adm-filter-search');
+        if (dEl) this.adminLessonFilterDisc = dEl.value;
+        if (tEl) this.adminLessonFilterTier = tEl.value;
+        if (sEl) this.adminLessonFilterSearch = sEl.value.trim().toLowerCase();
+        this.updateAdminLessonTable();
+      }
+
+      updateAdminLessonTable() {
+        const tbody = document.getElementById('adm-lessons-tbody');
+        const countEl = document.getElementById('adm-lesson-count');
+        if (tbody) {
+          const { html, count, total } = this.renderAdminLessonTableRowsHtml();
+          tbody.innerHTML = html;
+          if (countEl) {
+            countEl.innerHTML = `แสดง ${count} จาก ${total} บทเรียน`;
+          }
+        }
+      }
+
+      renderAdminLessonTableRowsHtml() {
+        const list = [];
+        let totalActive = 0;
+
+        // 1. Active lessons from LESSON_DATA
+        Object.keys(LESSON_DATA).forEach(discId => {
+          const lessons = LESSON_DATA[discId] || [];
+          lessons.forEach(l => {
+            totalActive++;
+            list.push({
+              ...l,
+              discId: discId,
+              isDeleted: false
+            });
+          });
+        });
+
+        // 2. Base lessons marked as deleted (so admin can view & restore)
+        Object.keys(BASE_LESSONS).forEach(discId => {
+          const baseList = BASE_LESSONS[discId] || [];
+          baseList.forEach(bl => {
+            if (this.deletedLessonIds.has(String(bl.id))) {
+              list.push({
+                ...bl,
+                discId: discId,
+                isDeleted: true
+              });
+            }
+          });
+        });
+
+        const total = totalActive;
+
+        // Apply filters
+        const filtered = list.filter(item => {
+          if (this.adminLessonFilterDisc !== 'all' && item.discId !== this.adminLessonFilterDisc) {
+            return false;
+          }
+          if (this.adminLessonFilterTier !== 'all' && item.tier !== this.adminLessonFilterTier) {
+            return false;
+          }
+          if (this.adminLessonFilterSearch) {
+            const q = this.adminLessonFilterSearch;
+            const t = String(item.title || '').toLowerCase();
+            const d = String(item.desc || '').toLowerCase();
+            const qu = String(item.question || '').toLowerCase();
+            const ex = String(item.exp || '').toLowerCase();
+            if (!t.includes(q) && !d.includes(q) && !qu.includes(q) && !ex.includes(q)) {
+              return false;
+            }
+          }
+          return true;
+        });
+
+        if (filtered.length === 0) {
+          return {
+            html: `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2.5rem 1rem;">ไม่พบบทเรียนหรือข้อสอบที่ตรงกับเงื่อนไขการค้นหา</td></tr>`,
+            count: 0,
+            total: total
+          };
+        }
+
+        const rowsHtml = filtered.map(item => {
+          const d = DISCIPLINE_DATA.find(x => x.id === item.discId) || { icon: '📖', name_th: item.discId };
+          const tObj = getTierInfo(item.tier || 'foundation');
+
+          let statusBadge = `<span class="badge" style="background: rgba(148, 163, 184, 0.15); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.3); font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px;">มาตรฐาน</span>`;
+          if (item.isDeleted) {
+            statusBadge = `<span class="badge" style="background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px;">🗑️ ลบแล้ว</span>`;
+          } else if (item.isCustom) {
+            statusBadge = `<span class="badge" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px;">✨ บทพิเศษ</span>`;
+          } else if (item.isModified) {
+            statusBadge = `<span class="badge" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px;">✏️ แก้ไขแล้ว</span>`;
+          }
+
+          const opts = item.opts || [item.optA, item.optB, item.optC, item.optD];
+          const correctOptLetter = ['A', 'B', 'C', 'D'][item.ans] || 'A';
+          const correctOptText = (opts && opts[item.ans] !== undefined) ? String(opts[item.ans]) : '';
+
+          return `
+            <tr style="${item.isDeleted ? 'opacity: 0.6; background: rgba(239, 68, 68, 0.05);' : ''}">
+              <td>
+                <div style="font-weight: 600; color: #fff; font-size: 0.85rem;">${d.icon} ${d.name_th}</div>
+                <small style="color: var(--text-muted); font-size: 0.75rem;">รหัส ${item.discId}</small>
+              </td>
+              <td>
+                <span class="tier-badge tier-badge-${tObj.id}" style="font-size: 0.75rem;">${tObj.icon} ${tObj.name_th}</span>
+              </td>
+              <td>
+                <strong style="color: #fff; font-size: 0.9rem;">${item.title}</strong>
+                <p style="color: var(--text-muted); font-size: 0.78rem; margin: 0.25rem 0 0 0; line-height: 1.3;">
+                  ${(item.desc || '').length > 70 ? item.desc.substring(0, 70) + '...' : (item.desc || '')}
+                </p>
+              </td>
+              <td>
+                <div style="color: #cbd5e1; font-size: 0.82rem; font-weight: 500;">❓ ${item.question || '-'}</div>
+                <div style="margin-top: 0.3rem; font-size: 0.75rem; color: #4ade80;">
+                  ✓ เฉลยข้อ ${correctOptLetter}: <span style="color: #94a3b8;">${correctOptText.length > 40 ? correctOptText.substring(0, 40) + '...' : correctOptText}</span>
+                </div>
+              </td>
+              <td>${statusBadge}</td>
+              <td style="text-align: right; white-space: nowrap;">
+                ${item.isDeleted ? `
+                  <button class="btn btn-outline" style="padding: 0.3rem 0.65rem; font-size: 0.78rem; color: #38bdf8; border-color: #38bdf8;" onclick="app.restoreLesson('${item.discId}', '${item.id}')">🔄 คืนค่า</button>
+                ` : `
+                  <button class="btn btn-outline" style="padding: 0.3rem 0.65rem; font-size: 0.78rem; margin-right: 0.35rem;" onclick="app.openEditLessonModal('${item.discId}', '${item.id}')" title="แก้ไขเนื้อหาและแบบฝึกหัด">✏️ แก้ไข</button>
+                  <button class="btn btn-danger" style="padding: 0.3rem 0.65rem; font-size: 0.78rem;" onclick="app.deleteAnyLesson('${item.discId}', '${item.id}')" title="ลบบทเรียนนี้">🗑️ ลบ</button>
+                  ${item.isModified ? `
+                    <button class="btn btn-outline" style="padding: 0.3rem 0.55rem; font-size: 0.75rem; margin-left: 0.35rem; color: #fbbf24; border-color: rgba(245,158,11,0.4);" onclick="app.restoreLesson('${item.discId}', '${item.id}')" title="คืนค่าเนื้อหามาตรฐาน">🔄 คืนค่า</button>
+                  ` : ''}
+                `}
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        return {
+          html: rowsHtml,
+          count: filtered.length,
+          total: total
+        };
+      }
+
+      // Admin Hub: Open Edit Modal & Populate Data
+      openEditLessonModal(discId, lessonId) {
+        let targetLesson = null;
+        if (LESSON_DATA[discId]) {
+          targetLesson = LESSON_DATA[discId].find(l => String(l.id) === String(lessonId));
+        }
+        if (!targetLesson && BASE_LESSONS[discId]) {
+          targetLesson = BASE_LESSONS[discId].find(l => String(l.id) === String(lessonId));
+        }
+        if (!targetLesson && this.customLessons) {
+          targetLesson = this.customLessons.find(l => String(l.id) === String(lessonId));
+        }
+
+        if (!targetLesson) {
+          this.showToast('ไม่พบข้อมูลบทเรียนที่ต้องการแก้ไข');
+          return;
+        }
+
+        const parts = this.parseTheoryParts(targetLesson.theory, targetLesson.rawTheory, targetLesson.rawThinking, targetLesson.rawExample);
+        const opts = targetLesson.opts || [targetLesson.optA, targetLesson.optB, targetLesson.optC, targetLesson.optD] || ['', '', '', ''];
+
+        const setVal = (id, val) => {
+          const el = document.getElementById(id);
+          if (el) el.value = val !== undefined && val !== null ? val : '';
+        };
+
+        setVal('edit-lesson-id', targetLesson.id);
+        setVal('edit-lesson-disc', discId);
+        setVal('edit-lesson-title', targetLesson.title || '');
+        setVal('edit-lesson-desc', targetLesson.desc || '');
+        setVal('edit-lesson-tier', targetLesson.tier || 'foundation');
+        setVal('edit-lesson-theory', parts.theory);
+        setVal('edit-lesson-thinking', parts.thinking);
+        setVal('edit-lesson-example', parts.example);
+        setVal('edit-lesson-scenario', targetLesson.scenario || '');
+        setVal('edit-lesson-question', targetLesson.question || '');
+        setVal('edit-lesson-opt-a', opts[0] || '');
+        setVal('edit-lesson-opt-b', opts[1] || '');
+        setVal('edit-lesson-opt-c', opts[2] || '');
+        setVal('edit-lesson-opt-d', opts[3] || '');
+        setVal('edit-lesson-ans', String(targetLesson.ans ?? 0));
+        setVal('edit-lesson-exp', targetLesson.exp || '');
+
+        this.openModal('modal-edit-lesson');
+      }
+
+      // Admin Hub: Save Edits to Lesson & Quiz
+      async saveEditLesson(event) {
+        if (event) event.preventDefault();
+        if (!auth.currentUser || auth.currentUser.role !== 'admin') {
+          this.showToast('เฉพาะผู้ดูแลระบบเท่านั้นที่สามารถแก้ไขบทเรียนได้');
+          return;
+        }
+
+        const lessonId = document.getElementById('edit-lesson-id').value;
+        const discId = document.getElementById('edit-lesson-disc').value;
+        const title = document.getElementById('edit-lesson-title').value.trim();
+        const desc = document.getElementById('edit-lesson-desc').value.trim();
+        const tier = document.getElementById('edit-lesson-tier').value;
+        const tierInfo = getTierInfo(tier);
+        const theory = document.getElementById('edit-lesson-theory').value.trim();
+        const thinking = document.getElementById('edit-lesson-thinking').value.trim();
+        const example = document.getElementById('edit-lesson-example').value.trim();
+        const scenario = document.getElementById('edit-lesson-scenario').value.trim();
+        const question = document.getElementById('edit-lesson-question').value.trim();
+        const optA = document.getElementById('edit-lesson-opt-a').value.trim();
+        const optB = document.getElementById('edit-lesson-opt-b').value.trim();
+        const optC = document.getElementById('edit-lesson-opt-c').value.trim();
+        const optD = document.getElementById('edit-lesson-opt-d').value.trim();
+        const ans = parseInt(document.getElementById('edit-lesson-ans').value) || 0;
+        const exp = document.getElementById('edit-lesson-exp').value.trim();
+
+        if (!title || !desc || !theory || !question || !optA || !optB || !optC || !optD || !exp) {
+          this.showToast('กรุณากรอกข้อมูลบทเรียนและข้อสอบให้ครบถ้วน');
+          return;
+        }
+
+        const theoryHtml = `
+          <div class="theory-section-title">📜 1. ทฤษฎีบทและหลักการสำคัญ (Core Principles)</div>
+          <p>${theory}</p>
+          <div class="theory-section-title">🧠 2. วิธีคิดและกระบวนการวิเคราะห์ (Analytical Thinking)</div>
+          <p>${thinking || 'วิเคราะห์ตามหลักการและลำดับขั้นตอน'}</p>
+          <div class="theory-section-title">💡 3. ตัวอย่างสถานการณ์จริง (Worked Example)</div>
+          <div class="example-card">${example || 'การนำทฤษฎีนี้ไปประยุกต์ใช้ในชีวิตจริง'}</div>
+        `;
+
+        const customIdx = (this.customLessons || []).findIndex(l => String(l.id) === String(lessonId));
+        const isCustom = customIdx !== -1;
+
+        const updatedData = {
+          discipline: discId,
+          tier: tier,
+          tier_th: tierInfo ? tierInfo.name_th : 'พื้นฐาน',
+          title: title,
+          desc: desc,
+          theory: theoryHtml,
+          rawTheory: theory,
+          rawThinking: thinking,
+          rawExample: example,
+          scenario: scenario,
+          question: question,
+          optA: optA,
+          optB: optB,
+          optC: optC,
+          optD: optD,
+          opts: [optA, optB, optC, optD],
+          ans: ans,
+          exp: exp,
+          modifiedBy: auth.currentUser.username,
+          modifiedAt: new Date().toISOString()
+        };
+
+        if (isCustom) {
+          this.customLessons[customIdx] = {
+            ...this.customLessons[customIdx],
+            ...updatedData
+          };
+          localStorage.setItem('omni_custom_lessons', JSON.stringify(this.customLessons));
+        } else {
+          this.lessonOverrides[String(lessonId)] = {
+            id: lessonId,
+            ...updatedData
+          };
+          if (this.deletedLessonIds.has(String(lessonId))) {
+            this.deletedLessonIds.delete(String(lessonId));
+            localStorage.setItem('omni_deleted_lessons', JSON.stringify([...this.deletedLessonIds]));
+          }
+          localStorage.setItem('omni_lesson_overrides', JSON.stringify(this.lessonOverrides));
+        }
+
+        this.mergeCustomLessons();
+        this.closeModal('modal-edit-lesson');
+        this.showToast('บันทึกการแก้ไขบทเรียนและแบบฝึกหัดสำเร็จ! ✨');
+        this.renderAdmin();
+
+        try {
+          if (isCustom) {
+            await firebase.firestore().collection('custom_lessons').doc(String(lessonId)).set(this.customLessons[customIdx], { merge: true });
+          } else {
+            if (this.deletedLessonIds.has(String(lessonId))) {
+              try { await firebase.firestore().collection('deleted_lessons').doc(String(lessonId)).delete(); } catch(e) {}
+            }
+            await firebase.firestore().collection('lesson_overrides').doc(String(lessonId)).set(this.lessonOverrides[String(lessonId)]);
+          }
+        } catch(e) {
+          console.warn('Firestore lesson save warning:', e);
+        }
+      }
+
+      // Admin Hub: Delete Any Lesson (Custom or Base)
+      async deleteAnyLesson(discId, lessonId) {
+        if (!auth.currentUser || auth.currentUser.role !== 'admin') {
+          this.showToast('เฉพาะผู้ดูแลระบบเท่านั้นที่สามารถลบบทเรียนได้');
+          return;
+        }
+
+        if (!confirm('คุณแน่ใจหรือไม่ว่าต้องการลบบทเรียนและแบบฝึกหัดนี้ออกจากระบบ?')) return;
+
+        const customIdx = (this.customLessons || []).findIndex(l => String(l.id) === String(lessonId));
+        if (customIdx !== -1) {
+          this.customLessons.splice(customIdx, 1);
+          localStorage.setItem('omni_custom_lessons', JSON.stringify(this.customLessons));
+        }
+
+        this.deletedLessonIds.add(String(lessonId));
+        localStorage.setItem('omni_deleted_lessons', JSON.stringify([...this.deletedLessonIds]));
+
+        this.mergeCustomLessons();
+        this.showToast('ลบบทเรียนออกจากระบบเรียบร้อยแล้ว 🗑️');
+        this.renderAdmin();
+
+        try {
+          if (customIdx !== -1) {
+            await firebase.firestore().collection('custom_lessons').doc(String(lessonId)).delete();
+          }
+          await firebase.firestore().collection('deleted_lessons').doc(String(lessonId)).set({
+            id: String(lessonId),
+            discId: discId,
+            deletedAt: new Date().toISOString()
+          });
+        } catch(e) {
+          console.warn('Firestore delete marker warning:', e);
+        }
+      }
+
+      // Admin Hub: Restore Modified or Deleted Base Lesson
+      async restoreLesson(discId, lessonId) {
+        if (!auth.currentUser || auth.currentUser.role !== 'admin') return;
+        if (!confirm('ต้องการคืนค่าบทเรียนนี้กลับสู่เนื้อหามาตรฐานเดิมใช่หรือไม่?')) return;
+
+        this.deletedLessonIds.delete(String(lessonId));
+        localStorage.setItem('omni_deleted_lessons', JSON.stringify([...this.deletedLessonIds]));
+
+        delete this.lessonOverrides[String(lessonId)];
+        localStorage.setItem('omni_lesson_overrides', JSON.stringify(this.lessonOverrides));
+
+        this.mergeCustomLessons();
+        this.showToast('คืนค่าบทเรียนกลับสู่มาตรฐานเดิมเรียบร้อยแล้ว! 🔄');
+        this.renderAdmin();
+
+        try {
+          await firebase.firestore().collection('deleted_lessons').doc(String(lessonId)).delete();
+          await firebase.firestore().collection('lesson_overrides').doc(String(lessonId)).delete();
+        } catch(e) {}
       }
 
       // Compact client-side image compression and resizing via HTML Canvas
@@ -4006,7 +4590,8 @@
           return;
         }
 
-        const totalLessonsCount = 35 + this.customLessons.length;
+        let totalLessonsCount = 0;
+        Object.keys(LESSON_DATA).forEach(k => { totalLessonsCount += (LESSON_DATA[k] || []).length; });
 
         view.innerHTML = `
           <div class="hero-banner" style="background: linear-gradient(135deg, #091e3a 0%, #0f172a 100%);">
@@ -4146,47 +4731,65 @@
             </form>
           </div>
 
-          <!-- 2. Custom Lessons Queue Table -->
-          <div style="background: var(--card-bg); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--card-border); margin-bottom: 2rem; overflow-x: auto;">
-            <h3 style="margin-bottom: 1rem;">📚 บทเรียนพิเศษที่เพิ่มโดยแอดมิน (${this.customLessons.length} บทเรียน)</h3>
-            ${this.customLessons.length === 0 ? `
-              <p style="color: var(--text-muted); font-size: 0.9rem; text-align: center; padding: 2rem 0;">ยังไม่มีบทเรียนที่สร้างใหม่ สามารถใช้แบบฟอร์มด้านบนเพิ่มบทเรียนแรกได้ทันที!</p>
-            ` : `
+          <!-- 2. Curriculum & Quiz Management Hub -->
+          <div style="background: var(--card-bg); border-radius: 16px; padding: 1.75rem; border: 1px solid var(--card-border); margin-bottom: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+              <div>
+                <h3 style="color: var(--accent); margin-bottom: 0.25rem;">📚 คลังจัดการบทเรียนและแบบฝึกหัดทั้งหมด (Curriculum & Quiz Hub)</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0;">ค้นหา แก้ไขเนื้อหาทฤษฎี และแบบฝึกหัดทุกวิชา หรือลบ/กู้คืนบทเรียนได้แบบเรียลไทม์</p>
+              </div>
+              <div id="adm-lesson-count" class="badge" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); font-size: 0.85rem; padding: 0.4rem 0.8rem; border-radius: 20px;">
+                <!-- Updated dynamically -->
+              </div>
+            </div>
+
+            <!-- Filters & Search Toolbar -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; margin-bottom: 1.25rem; background: rgba(15, 23, 42, 0.6); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08);">
+              <div>
+                <label style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">🔬 กรองตามหมวดวิชา:</label>
+                <select id="adm-filter-disc" class="form-select" style="font-size: 0.85rem; padding: 0.5rem;" onchange="app.onAdminLessonFilterChange()">
+                  <option value="all">🌐 ทุกหมวดวิชา (All Disciplines)</option>
+                  ${DISCIPLINE_DATA.map(d => `<option value="${d.id}" ${this.adminLessonFilterDisc === d.id ? 'selected' : ''}>${d.icon} ${d.name_th}</option>`).join('')}
+                </select>
+              </div>
+              <div>
+                <label style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">⚡ กรองตามระดับทักษะ:</label>
+                <select id="adm-filter-tier" class="form-select" style="font-size: 0.85rem; padding: 0.5rem;" onchange="app.onAdminLessonFilterChange()">
+                  <option value="all">🌟 ทุกระดับทักษะ (All Tiers)</option>
+                  ${TIERS.map(t => `<option value="${t.id}" ${this.adminLessonFilterTier === t.id ? 'selected' : ''}>${t.icon} ${t.name_th} (${t.name_en})</option>`).join('')}
+                </select>
+              </div>
+              <div>
+                <label style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">🔍 ค้นหาบทเรียนหรือโจทย์:</label>
+                <input type="text" id="adm-filter-search" class="form-input" style="font-size: 0.85rem; padding: 0.5rem;" placeholder="พิมพ์คำค้นหา..." value="${this.adminLessonFilterSearch || ''}" oninput="app.onAdminLessonFilterChange()">
+              </div>
+            </div>
+
+            <!-- Table Container -->
+            <div style="overflow-x: auto;">
               <table class="admin-table">
                 <thead>
                   <tr>
-                    <th>หมวดวิชา</th>
-                    <th>ระดับทักษะ</th>
-                    <th>ชื่อบทเรียน</th>
-                    <th>คำถามข้อสอบ</th>
-                    <th>ผู้สร้าง</th>
-                    <th style="text-align: right;">การกระทำ</th>
+                    <th style="min-width: 140px;">หมวดวิชา</th>
+                    <th style="min-width: 100px;">ระดับ</th>
+                    <th style="min-width: 220px;">เนื้อหาบทเรียน</th>
+                    <th style="min-width: 220px;">โจทย์และคำตอบแบบฝึกหัด</th>
+                    <th style="min-width: 90px;">สถานะ</th>
+                    <th style="text-align: right; min-width: 150px;">การจัดการ</th>
                   </tr>
                 </thead>
-                <tbody>
-                  ${this.customLessons.map(cl => {
-                    const d = DISCIPLINE_DATA.find(x => x.id === cl.discipline) || { icon: '📖', name_th: cl.discipline };
-                    return `
-                      <tr>
-                        <td>${d.icon} ${d.name_th}</td>
-                        <td>
-                          ${(() => {
-                            const tObj = getTierInfo(cl.tier || 'foundation');
-                            return `<span class="tier-badge tier-badge-${tObj.id}">${tObj.icon} ${tObj.name_th}</span>`;
-                          })()}
-                        </td>
-                        <td><strong style="color: #fff;">${cl.title}</strong><br><small style="color: var(--text-muted);">${cl.desc}</small></td>
-                        <td><small style="color: #cbd5e1;">${cl.question}</small></td>
-                        <td><small style="color: var(--accent);">${cl.createdBy || 'Admin'}</small></td>
-                        <td style="text-align: right;">
-                          <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="app.deleteCustomLesson('${cl.id}')">🗑️ ลบ</button>
-                        </td>
-                      </tr>
-                    `;
-                  }).join('')}
+                <tbody id="adm-lessons-tbody">
+                  ${(() => {
+                    const res = this.renderAdminLessonTableRowsHtml();
+                    setTimeout(() => {
+                      const countEl = document.getElementById('adm-lesson-count');
+                      if (countEl) countEl.innerHTML = `แสดง ${res.count} จาก ${res.total} บทเรียน`;
+                    }, 0);
+                    return res.html;
+                  })()}
                 </tbody>
               </table>
-            `}
+            </div>
           </div>
 
           <!-- 3. Admin Ticket Management -->
