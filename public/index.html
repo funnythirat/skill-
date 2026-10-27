@@ -3792,7 +3792,10 @@
 
       renderLeaderboard() {
         const view = document.getElementById('app-view');
-        const users = [...auth.users].sort((first, second) => (second.xp || 0) - (first.xp || 0));
+        // Filter out admin accounts from leaderboard while preserving them in database & admin control
+        const users = [...auth.users]
+          .filter(user => user.role !== 'admin' && (user.username || '').toLowerCase() !== 'admin')
+          .sort((first, second) => (second.xp || 0) - (first.xp || 0));
 
         view.innerHTML = `
           <div class="hero-banner">
@@ -3821,7 +3824,7 @@
                       <div class="table-user-cell">
                         <span class="table-avatar">${this.avatarMarkup(user.avatar)}</span>
                         <span>${user.username}</span>
-                        ${user.role === 'admin' ? '<span style="background: #38bdf8; color: #000; font-size: 0.7rem; font-weight: 700; padding: 0.1rem 0.4rem; border-radius: 4px;">ADMIN</span>' : ''}
+                        
                       </div>
                     </td>
                     <td><span style="color: var(--accent); font-weight: 600;">${this.getRankForXp(user.xp || 0)}</span></td>
