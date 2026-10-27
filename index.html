@@ -2515,7 +2515,10 @@
           if (!firebaseUser) {
             this.currentUser = null;
             localStorage.removeItem('omni_user');
-            if (window.app) window.app.subscribeToTickets();
+            if (window.app) {
+              window.app.subscribeToTickets();
+              window.app.subscribeToLessons();
+            }
             this.resolveAuthReady();
             this.updateUiAfterAuthChange();
             return;
@@ -2545,7 +2548,10 @@
             this.currentUser = fallbackProfile;
           }
           localStorage.setItem('omni_user', JSON.stringify(this.currentUser));
-          if (window.app) window.app.subscribeToTickets();
+          if (window.app) {
+            window.app.subscribeToTickets();
+            window.app.subscribeToLessons();
+          }
           this.resolveAuthReady();
           this.updateUiAfterAuthChange();
         });
@@ -2717,14 +2723,13 @@
         this.selectedProfileFrame = 'default';
         this.tickets = [];
         this.customLessons = [];
-        this.unsubscribeTickets = null;
-        this.unsubscribeCustomLessons = null;
         this.lessonOverrides = {};
         this.deletedLessonIds = new Set();
         this.adminLessonFilterDisc = 'all';
         this.adminLessonFilterTier = 'all';
         this.adminLessonFilterSearch = '';
         this.unsubscribeTickets = null;
+        this.unsubscribeLessons = null;
         this.unsubscribeCustomLessons = null;
         this.unsubscribeLessonOverrides = null;
         this.unsubscribeDeletedLessons = null;
@@ -2755,9 +2760,9 @@
         // ⚡ Immediate render on load! Zero-delay routing without waiting for Firebase!
         this.handleRoute();
 
-        // 🛡️ Asynchronously initialize Auth & custom lessons in background
+        // 🛡️ Asynchronously initialize Auth & lessons in background
         auth.authReady.then(() => {
-          this.subscribeToCustomLessons();
+          this.subscribeToLessons();
           this.updateUserUI();
 
           // 🌟 Only show Register modal on home page if not logged in
@@ -2791,6 +2796,11 @@
 
       mergeCustomLessons() {
         LESSON_DATA = {};
+        if (typeof DISCIPLINE_DATA !== 'undefined' && Array.isArray(DISCIPLINE_DATA)) {
+          DISCIPLINE_DATA.forEach(d => {
+            LESSON_DATA[d.id] = [];
+          });
+        }
         Object.keys(BASE_LESSONS).forEach(k => {
           LESSON_DATA[k] = BASE_LESSONS[k]
             .filter(l => !this.deletedLessonIds.has(String(l.id)))
@@ -2811,84 +2821,125 @@
         (this.customLessons || []).forEach(cl => {
           const idStr = String(cl.id);
           if (this.deletedLessonIds.has(idStr)) return;
-          if (LESSON_DATA[cl.discipline]) {
-            const ov = this.lessonOverrides[idStr] || {};
-            const merged = { ...cl, ...ov };
-            const opts = merged.opts || [merged.optA, merged.optB, merged.optC, merged.optD];
-            let theoryHtml = merged.theory || '';
-            if (!theoryHtml.includes('theory-section-title')) {
-              theoryHtml = `
-                <div class="theory-section-title">📜 1. ทฤษฎีบทและหลักการสำคัญ (Core Principles)</div>
-                <p>${merged.theory || ''}</p>
-                <div class="theory-section-title">🧠 2. วิธีคิดและกระบวนการวิเคราะห์ (Analytical Thinking)</div>
-                <p>${merged.thinking || 'วิเคราะห์ตามหลักการและลำดับขั้นตอน'}</p>
-                <div class="theory-section-title">💡 3. ตัวอย่างสถานการณ์จริง (Worked Example)</div>
-                <div class="example-card">${merged.example || 'การนำทฤษฎีนี้ไปประยุกต์ใช้ในชีวิตจริง'}</div>
-              `;
-            }
-            LESSON_DATA[cl.discipline].push({
-              id: merged.id,
-              discipline: merged.discipline,
-              isCustom: true,
-              isModified: !!this.lessonOverrides[idStr],
-              tier: merged.tier || 'foundation',
-              tier_th: merged.tier_th || (getTierInfo(merged.tier || 'foundation') ? getTierInfo(merged.tier || 'foundation').name_th : 'พื้นฐาน'),
-              title: merged.title,
-              desc: merged.desc,
-              theory: theoryHtml,
-              rawTheory: merged.rawTheory || merged.theory,
-              rawThinking: merged.rawThinking || merged.thinking,
-              rawExample: merged.rawExample || merged.example,
-              question: merged.question,
-              scenario: merged.scenario || 'สถานการณ์จำลองตามบทเรียน',
-              opts: opts,
-              ans: parseInt(merged.ans) || 0,
-              exp: merged.exp || 'คำอธิบายและหลักวิชาการ',
-              createdBy: merged.createdBy,
-              createdAt: merged.createdAt
-            });
+          const disc = cl.discipline;
+          if (!LESSON_DATA[disc]) LESSON_DATA[disc] = [];
+
+          const ov = this.lessonOverrides[idStr] || {};
+          const merged = { ...cl, ...ov };
+          const opts = merged.opts || [merged.optA, merged.optB, merged.optC, merged.optD];
+          let theoryHtml = merged.theory || '';
+          if (!theoryHtml.includes('theory-section-title')) {
+            theoryHtml = `
+              <div class="theory-section-title">📜 1. ทฤษฎีบทและหลักการสำคัญ (Core Principles)</div>
+              <p>${merged.theory || ''}</p>
+              <div class="theory-section-title">🧠 2. วิธีคิดและกระบวนการวิเคราะห์ (Analytical Thinking)</div>
+              <p>${merged.thinking || 'วิเคราะห์ตามหลักการและลำดับขั้นตอน'}</p>
+              <div class="theory-section-title">💡 3. ตัวอย่างสถานการณ์จริง (Worked Example)</div>
+              <div class="example-card">${merged.example || 'การนำทฤษฎีนี้ไปประยุกต์ใช้ในชีวิตจริง'}</div>
+            `;
           }
+          LESSON_DATA[disc].push({
+            id: merged.id,
+            discipline: merged.discipline,
+            isCustom: true,
+            isModified: !!this.lessonOverrides[idStr],
+            tier: merged.tier || 'foundation',
+            tier_th: merged.tier_th || (getTierInfo(merged.tier || 'foundation') ? getTierInfo(merged.tier || 'foundation').name_th : 'พื้นฐาน'),
+            title: merged.title,
+            desc: merged.desc,
+            theory: theoryHtml,
+            rawTheory: merged.rawTheory || merged.theory,
+            rawThinking: merged.rawThinking || merged.thinking,
+            rawExample: merged.rawExample || merged.example,
+            question: merged.question,
+            scenario: merged.scenario || 'สถานการณ์จำลองตามบทเรียน',
+            opts: opts,
+            ans: parseInt(merged.ans) || 0,
+            exp: merged.exp || 'คำอธิบายและหลักวิชาการ',
+            createdBy: merged.createdBy,
+            createdAt: merged.createdAt
+          });
         });
       }
 
-      subscribeToCustomLessons() {
+      subscribeToLessons() {
         this.loadCachedLessons();
         this.mergeCustomLessons();
 
+        if (this.unsubscribeLessons) {
+          try { this.unsubscribeLessons(); } catch(e) {}
+          this.unsubscribeLessons = null;
+        }
+
+        // Must be signed in to listen to Firestore /lessons (Firestore security rules require signedIn())
+        if (!firebase.auth().currentUser) return;
+
         try {
-          this.unsubscribeCustomLessons = firebase.firestore().collection('custom_lessons').onSnapshot((snapshot) => {
-            this.customLessons = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          this.unsubscribeLessons = firebase.firestore().collection('lessons').onSnapshot(async (snapshot) => {
+            const custom = [];
+            const overrides = {};
+            const deleted = new Set();
+
+            snapshot.docs.forEach(doc => {
+              const data = doc.data();
+              const docId = String(doc.id);
+              const id = String(data.id || docId);
+
+              if (data.type === 'deleted' || data.isDeleted) {
+                deleted.add(id);
+              } else if (data.type === 'override' || data.isModified) {
+                overrides[id] = { ...data, id };
+              } else {
+                custom.push({ ...data, id, isCustom: true });
+              }
+            });
+
+            // If admin is active, auto-sync any locally cached lessons that have not yet reached Cloud Firestore
+            if (auth.currentUser && auth.currentUser.role === 'admin') {
+              const cloudIds = new Set(snapshot.docs.map(d => String(d.id)));
+              for (const localLesson of (this.customLessons || [])) {
+                const localId = String(localLesson.id || '');
+                if (localId && !cloudIds.has(localId) && !deleted.has(localId)) {
+                  try {
+                    await firebase.firestore().collection('lessons').doc(localId).set({
+                      ...localLesson,
+                      type: 'custom',
+                      isCustom: true
+                    }, { merge: true });
+                    console.log('Auto-synced existing local lesson to Cloud Firestore:', localId);
+                  } catch(e) {
+                    console.warn('Auto-sync local lesson warning:', e);
+                  }
+                }
+              }
+            }
+
+            this.customLessons = custom;
+            this.lessonOverrides = overrides;
+            this.deletedLessonIds = deleted;
+
             localStorage.setItem('omni_custom_lessons', JSON.stringify(this.customLessons));
-            this.mergeCustomLessons();
-            if (window.location.hash.startsWith('#/discipline/') || window.location.hash === '#/admin') {
-              this.handleRoute();
-            }
-          }, (err) => console.warn('Custom lessons Firestore snapshot warning:', err));
-        } catch(e) {}
-
-        try {
-          this.unsubscribeLessonOverrides = firebase.firestore().collection('lesson_overrides').onSnapshot((snapshot) => {
-            const ov = {};
-            snapshot.docs.forEach(doc => { ov[doc.id] = doc.data(); });
-            this.lessonOverrides = ov;
             localStorage.setItem('omni_lesson_overrides', JSON.stringify(this.lessonOverrides));
-            this.mergeCustomLessons();
-            if (window.location.hash.startsWith('#/discipline/') || window.location.hash === '#/admin') {
-              this.handleRoute();
-            }
-          }, (err) => console.warn('Lesson overrides Firestore snapshot warning:', err));
-        } catch(e) {}
-
-        try {
-          this.unsubscribeDeletedLessons = firebase.firestore().collection('deleted_lessons').onSnapshot((snapshot) => {
-            this.deletedLessonIds = new Set(snapshot.docs.map(doc => doc.id));
             localStorage.setItem('omni_deleted_lessons', JSON.stringify([...this.deletedLessonIds]));
+
             this.mergeCustomLessons();
-            if (window.location.hash.startsWith('#/discipline/') || window.location.hash === '#/admin') {
+
+            // Refresh UI if viewing home, discipline, or admin
+            const hash = window.location.hash || '#/';
+            if (hash === '#/' || hash.startsWith('#/discipline/') || hash === '#/admin') {
               this.handleRoute();
             }
-          }, (err) => console.warn('Deleted lessons Firestore snapshot warning:', err));
-        } catch(e) {}
+          }, (err) => {
+            console.warn('Firestore lessons snapshot warning:', err);
+          });
+        } catch(e) {
+          console.warn('subscribeToLessons init error:', e);
+        }
+      }
+
+      // Backward compatibility alias
+      subscribeToCustomLessons() {
+        this.subscribeToLessons();
       }
 
       // Admin Add Lesson & Quiz Action
@@ -2921,10 +2972,14 @@
           return;
         }
 
+        const docId = 'custom_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
         const newLesson = {
+          id: docId,
+          type: 'custom',
+          isCustom: true,
           discipline: disc,
           tier,
-          tier_th: tierInfo.name_th,
+          tier_th: tierInfo ? tierInfo.name_th : 'พื้นฐาน',
           title,
           desc,
           theory,
@@ -2936,20 +2991,14 @@
           optB,
           optC,
           optD,
+          opts: [optA, optB, optC, optD],
           ans: parseInt(ans) || 0,
           exp,
           createdBy: auth.currentUser.username,
           createdAt: new Date().toISOString()
         };
 
-        try {
-          const docRef = await firebase.firestore().collection('custom_lessons').add(newLesson);
-          newLesson.id = docRef.id;
-        } catch(err) {
-          console.warn('Firestore offline/rule warning, saving locally:', err);
-          newLesson.id = 'local_' + Date.now();
-        }
-
+        // Optimistic local update so admin sees it instantly
         this.customLessons.push(newLesson);
         localStorage.setItem('omni_custom_lessons', JSON.stringify(this.customLessons));
         this.mergeCustomLessons();
@@ -2957,21 +3006,38 @@
         document.getElementById('form-add-lesson').reset();
         this.showToast('เพิ่มบทเรียนและข้อสอบใหม่สำเร็จเรียบร้อย! 🌟');
         this.renderAdmin();
+
+        // Persist to Cloud Firestore collection 'lessons' so ALL users get it in real-time
+        try {
+          await firebase.firestore().collection('lessons').doc(docId).set(newLesson);
+        } catch(err) {
+          console.error('Firestore save lesson error:', err);
+          this.showToast('แจ้งเตือน: Cloud Firestore ยังไม่สามารถซิงค์ได้ (' + (err.message || 'error') + ')');
+        }
       }
 
       async deleteCustomLesson(docId) {
         if (!auth.currentUser || auth.currentUser.role !== 'admin') return;
         if (!confirm('ต้องการลบบทเรียนนี้ออกจากระบบใช่หรือไม่?')) return;
-        try {
-          await firebase.firestore().collection('custom_lessons').doc(docId).delete();
-        } catch(e) {
-          console.warn('Firestore delete error:', e);
-        }
-        this.customLessons = this.customLessons.filter(l => l.id !== docId);
+        const idStr = String(docId);
+        this.customLessons = this.customLessons.filter(l => String(l.id) !== idStr);
+        this.deletedLessonIds.add(idStr);
         localStorage.setItem('omni_custom_lessons', JSON.stringify(this.customLessons));
+        localStorage.setItem('omni_deleted_lessons', JSON.stringify([...this.deletedLessonIds]));
         this.mergeCustomLessons();
         this.showToast('ลบบทเรียนออกจากระบบเรียบร้อยแล้ว');
         this.renderAdmin();
+
+        try {
+          await firebase.firestore().collection('lessons').doc(idStr).set({
+            id: idStr,
+            type: 'deleted',
+            isDeleted: true,
+            deletedAt: new Date().toISOString()
+          }, { merge: true });
+        } catch(e) {
+          console.warn('Firestore delete error:', e);
+        }
       }
 
       // Helper: Parse structured theory parts from HTML or raw strings
@@ -3296,12 +3362,17 @@
 
         try {
           if (isCustom) {
-            await firebase.firestore().collection('custom_lessons').doc(String(lessonId)).set(this.customLessons[customIdx], { merge: true });
+            await firebase.firestore().collection('lessons').doc(String(lessonId)).set({
+              ...this.customLessons[customIdx],
+              type: 'custom',
+              isCustom: true
+            }, { merge: true });
           } else {
-            if (this.deletedLessonIds.has(String(lessonId))) {
-              try { await firebase.firestore().collection('deleted_lessons').doc(String(lessonId)).delete(); } catch(e) {}
-            }
-            await firebase.firestore().collection('lesson_overrides').doc(String(lessonId)).set(this.lessonOverrides[String(lessonId)]);
+            await firebase.firestore().collection('lessons').doc(String(lessonId)).set({
+              ...this.lessonOverrides[String(lessonId)],
+              type: 'override',
+              isModified: true
+            });
           }
         } catch(e) {
           console.warn('Firestore lesson save warning:', e);
@@ -3331,12 +3402,11 @@
         this.renderAdmin();
 
         try {
-          if (customIdx !== -1) {
-            await firebase.firestore().collection('custom_lessons').doc(String(lessonId)).delete();
-          }
-          await firebase.firestore().collection('deleted_lessons').doc(String(lessonId)).set({
+          await firebase.firestore().collection('lessons').doc(String(lessonId)).set({
             id: String(lessonId),
             discId: discId,
+            type: 'deleted',
+            isDeleted: true,
             deletedAt: new Date().toISOString()
           });
         } catch(e) {
@@ -3360,9 +3430,10 @@
         this.renderAdmin();
 
         try {
-          await firebase.firestore().collection('deleted_lessons').doc(String(lessonId)).delete();
-          await firebase.firestore().collection('lesson_overrides').doc(String(lessonId)).delete();
-        } catch(e) {}
+          await firebase.firestore().collection('lessons').doc(String(lessonId)).delete();
+        } catch(e) {
+          console.warn('Firestore restore error:', e);
+        }
       }
 
       // Compact client-side image compression and resizing via HTML Canvas
