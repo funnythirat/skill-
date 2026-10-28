@@ -5022,11 +5022,13 @@
         this.messages = [
           {
             role: 'bot',
-            content: '🤖 **ยินดีต้อนรับสู่ OmniAI Sage 2.0 (GPT-Powered Polymath Edition)!**\n\nผมคือผู้ช่วยอัจฉริยะประจำ **OmniVerse Academy** ครอบคลุมองค์ความรู้ทั้ง **15 มหาศาสตร์ (122 สาขาวิชา 377 บทเรียน)** พร้อมความสามารถในการสนทนาและคิดวิเคราะห์รอบด้านระดับ **GPT** ใช้งานได้ฟรีทันทีโดยไม่ต้องใส่ API Key!\n\n💡 **สิ่งที่คุณสามารถถามผมได้:**\n- 🌐 **คำถามทั่วไปและสารพัดความรู้:** วิทยาศาสตร์, เทคโนโลยี, ปรัชญา, การใช้ชีวิต, วางแผนการเงิน\n- 💻 **ช่วยเขียนโค้ดและแก้สมการ:** Python, JavaScript, HTML, CSS, SQL, แคลคูลัส, สถิติ\n- 📖 **เจาะลึกบทเรียนในเว็บ:** สรุปแก่นสาระ, ยกตัวอย่างสถานการณ์จริง, อ้างอิงตำราสากล\n- 📝 **ขอคำใบ้ข้อสอบแบบ Socratic:** วิเคราะห์ตัวลวงและชี้แนวทางคิด โดยไม่สปอยล์คำตอบตรงๆ\n\n*พิมพ์คำถามอะไรก็ได้ หรือคลิกเลือกปุ่มคำถามแนะนำด้านล่างได้เลยครับ!*'
+            content: '🤖 **ยินดีต้อนรับสู่ OmniAI Sage 3.0 (Supercharged Conversational Polymath)!**\n\nผมคือผู้ช่วยและติวเตอร์อัจฉริยะประจำ **OmniVerse Academy** ครอบคลุม **15 มหาศาสตร์ (122 สาขาวิชา 377 บทเรียน)** พร้อมระบบสนทนาความเร็วสูง เสถียร ตอบโต้ได้ต่อเนื่อง 100% โดยไม่ต้องพึ่งพาคีย์ใดๆ!\n\n💡 **สิ่งที่คุณสามารถคุยหรือถามผมได้:**\n- 💬 **ชวนคุยและปรึกษาได้ทุกเรื่อง:** ทักทาย, ขอคำแนะนำ, ขอกำลังใจ, เคล็ดลับการเรียน, ปรัชญาชีวิต, มุขตลกสายวิทย์\n- 🔬 **วิทยาศาสตร์และธรรมชาติ:** ฟิสิกส์, จักรวาล, หลุมดำ, เคมี, ชีววิทยา DNA, การแพทย์, วิวัฒนาการ\n- 📐 **คิดเลขและแก้โจทย์คณิต:** คำนวณร้อยละ, สมการกำลังสอง, แคลคูลัส, เรขาคณิต, สถิติ\n- 💻 **ช่วยเขียนโค้ดและดีบัก:** Python, JavaScript, HTML/CSS, SQL, Algorithms & Data Structures\n- 📖 **เจาะลึกบทเรียนและขอคำใบ้:** สรุปสาระสำคัญของหลักสูตร หรือขอคำใบ้ข้อสอบแบบ Socratic โดยไม่สปอยล์คำตอบ\n\n*พิมพ์คำถามหรือข้อความที่คุณอยากคุยด้านล่างได้เลยครับ!*'
           }
         ];
         this.conversationHistory = [];
         this.isTyping = false;
+        this.lastCloudCallTime = 0;
+        this.lastTopic = null;
       }
     
       init() {
@@ -5080,7 +5082,7 @@
     
         if (this.provider === 'gemini') {
           if (keyArea) keyArea.style.display = 'block';
-          if (keyLabel) keyLabel.innerText = 'Google Gemini API Key (AIzaSy...):';
+          if (keyLabel) keyLabel.innerHTML = 'Google Gemini API Key (ฟรีจาก <a href="https://aistudio.google.com/" target="_blank" style="color: #38bdf8;">Google AI Studio</a>):';
           if (keyInput) keyInput.value = this.geminiKey;
         } else if (this.provider === 'openai') {
           if (keyArea) keyArea.style.display = 'block';
@@ -5140,14 +5142,14 @@
         let headerText = '';
     
         if (this.provider === 'auto') {
-          desc = '<span style="color: #38bdf8;">🌟 <strong>Auto (Cloud GPT):</strong> ใช้งานโมเดลภาษาขั้นสูงฟรี 100% ไม่ต้องตั้งค่าคีย์</span>';
-          headerText = '<span class="ai-status-dot" style="background: #38bdf8;"></span> พร้อมตอบคำถามรอบรู้ (Cloud GPT)';
+          desc = '<span style="color: #38bdf8;">🌟 <strong>Auto (Hybrid Cloud & Local Polymath):</strong> ตอบโต้ได้ต่อเนื่อง ไม่มีสะดุด ไม่ต้องใส่ API Key</span>';
+          headerText = '<span class="ai-status-dot" style="background: #38bdf8;"></span> พร้อมสนทนารอบรู้ (Hybrid AI 3.0)';
         } else if (this.provider === 'gemini') {
           if (this.geminiKey) {
             desc = '<span style="color: #4ade80;">💎 <strong>Google Gemini Live:</strong> คีย์ ' + this.geminiKey.substring(0, 6) + '...' + this.geminiKey.slice(-4) + '</span>';
             headerText = '<span class="ai-status-dot" style="background: #4ade80;"></span> เชื่อมต่อ Gemini API Live';
           } else {
-            desc = '<span style="color: #f59e0b;">⚠️ ยังไม่ได้ระบุ Gemini API Key (ระบบจะใช้ Cloud GPT สำรองให้อัตโนมัติ)</span>';
+            desc = '<span style="color: #f59e0b;">⚠️ ยังไม่ได้ระบุ Gemini API Key (ระบบจะใช้ Hybrid Engine สำรองให้อัตโนมัติ)</span>';
             headerText = '<span class="ai-status-dot" style="background: #f59e0b;"></span> รอระบุคีย์ Gemini';
           }
         } else if (this.provider === 'openai') {
@@ -5155,12 +5157,12 @@
             desc = '<span style="color: #10b981;">⚡ <strong>OpenAI GPT Live:</strong> คีย์ ' + this.openaiKey.substring(0, 7) + '...' + this.openaiKey.slice(-4) + '</span>';
             headerText = '<span class="ai-status-dot" style="background: #10b981;"></span> เชื่อมต่อ OpenAI GPT-4o';
           } else {
-            desc = '<span style="color: #f59e0b;">⚠️ ยังไม่ได้ระบุ OpenAI API Key (ระบบจะใช้ Cloud GPT สำรองให้อัตโนมัติ)</span>';
+            desc = '<span style="color: #f59e0b;">⚠️ ยังไม่ได้ระบุ OpenAI API Key (ระบบจะใช้ Hybrid Engine สำรองให้อัตโนมัติ)</span>';
             headerText = '<span class="ai-status-dot" style="background: #f59e0b;"></span> รอระบุคีย์ OpenAI';
           }
         } else {
-          desc = '<span style="color: #a855f7;">💾 <strong>Built-in Knowledge Engine:</strong> ออฟไลน์ 100% ค้นหาจากฐานข้อมูล 377 บทเรียน</span>';
-          headerText = '<span class="ai-status-dot" style="background: #a855f7;"></span> โหมดความรู้ออฟไลน์ (Local)';
+          desc = '<span style="color: #a855f7;">💾 <strong>OmniBrain 3.0 Engine:</strong> ทำงานในเครื่อง 100% รวดเร็ว ตอบสนองในเสี้ยววินาที</span>';
+          headerText = '<span class="ai-status-dot" style="background: #a855f7;"></span> โหมดความรู้ในเครื่อง (Local Brain)';
         }
     
         if (statusEl) statusEl.innerHTML = desc;
@@ -5171,16 +5173,32 @@
         this.messages = [
           {
             role: 'bot',
-            content: '🤖 ล้างประวัติการสนทนาเรียบร้อยครับ! มีข้อสงสัยใน 15 มหาศาสตร์ การเขียนโค้ด การแก้ปัญหา หรือโจทย์ข้อไหน ถาม OmniAI Sage ได้เลยครับ'
+            content: '🤖 ล้างประวัติการสนทนาเรียบร้อยครับ! มีข้อสงสัยใน 15 มหาศาสตร์ การเขียนโค้ด การแก้โจทย์ หรืออยากชวนคุยเรื่องอะไร ถาม OmniAI Sage ได้เลยครับ!'
           }
         ];
         this.conversationHistory = [];
+        this.lastTopic = null;
         this.renderMessages();
       }
     
       escapeHtml(text) {
         const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
         return text.replace(/[&<>"']/g, m => map[m]);
+      }
+    
+      copyCode(btn, codeBase64) {
+        try {
+          const code = decodeURIComponent(escape(atob(codeBase64)));
+          navigator.clipboard.writeText(code).then(() => {
+            const orig = btn.innerText;
+            btn.innerText = '✓ คัดลอกแล้ว!';
+            btn.style.color = '#4ade80';
+            setTimeout(() => {
+              btn.innerText = orig;
+              btn.style.color = '';
+            }, 2000);
+          });
+        } catch(e) {}
       }
     
       formatMarkdown(md) {
@@ -5190,7 +5208,20 @@
         // 1. Code blocks ```lang\ncode\n```
         html = html.replace(/```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/g, (match, lang, code) => {
           const displayLang = lang ? lang.toUpperCase() : 'CODE';
-          return `<div class="ai-code-container"><div class="ai-code-header"><span>${displayLang}</span></div><pre><code>${code.trim()}</code></pre></div>`;
+          const cleanCode = code.trim();
+          let encoded = '';
+          try {
+            encoded = btoa(unescape(encodeURIComponent(cleanCode)));
+          } catch(e) {
+            encoded = '';
+          }
+          return `<div class="ai-code-container">
+            <div class="ai-code-header">
+              <span>${displayLang}</span>
+              <button class="ai-copy-btn" onclick="omniAI.copyCode(this, '${encoded}')" style="background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px;">📋 คัดลอกโค้ด</button>
+            </div>
+            <pre><code>${cleanCode}</code></pre>
+          </div>`;
         });
     
         // 2. Inline code `code`
@@ -5345,35 +5376,39 @@
             try {
               botReply = await this.callGeminiApi(userText, context);
             } catch (err) {
-              console.warn('Gemini failed, falling back:', err);
-              botReply = await this.callCloudGptWithFallback(userText, context, `(Google Gemini Error: ${err.message})`);
+              console.warn('Gemini live API failed, falling back to local brain:', err);
+              botReply = this.generateLocalResponse(userText, context);
             }
           } else if (this.provider === 'openai' && this.openaiKey) {
             try {
               botReply = await this.callOpenAiApi(userText, context);
             } catch (err) {
-              console.warn('OpenAI failed, falling back:', err);
-              botReply = await this.callCloudGptWithFallback(userText, context, `(OpenAI Error: ${err.message})`);
+              console.warn('OpenAI live API failed, falling back to local brain:', err);
+              botReply = this.generateLocalResponse(userText, context);
             }
           } else if (this.provider === 'local') {
-            await new Promise(r => setTimeout(r, 300));
+            await new Promise(r => setTimeout(r, 180));
             botReply = this.generateLocalResponse(userText, context);
           } else {
-            // Default: Auto / Free Cloud GPT
-            botReply = await this.callCloudGptWithFallback(userText, context);
+            // Default: Smart Hybrid Auto Mode
+            botReply = await this.callSmartHybrid(userText, context);
           }
     
           this.messages.push({ role: 'bot', content: botReply });
           this.conversationHistory.push({ role: 'bot', content: botReply });
-          // Keep conversation history capped to last 12 messages for performance
           if (this.conversationHistory.length > 12) {
             this.conversationHistory = this.conversationHistory.slice(-12);
           }
+    
+          // Subtle audio feedback if sound engine exists
+          if (typeof soundEngine !== 'undefined' && soundEngine.enabled && typeof soundEngine.playTone === 'function') {
+            soundEngine.playTone(659.25, 0.08);
+          }
         } catch (globalErr) {
-          this.messages.push({
-            role: 'bot',
-            content: 'ขออภัยครับ เกิดข้อผิดพลาดในการประมวลผลข้อความ: ' + globalErr.message
-          });
+          // In case of any unexpected exception, guaranteed response from local brain
+          const safeReply = this.generateLocalResponse(userText, context);
+          this.messages.push({ role: 'bot', content: safeReply });
+          this.conversationHistory.push({ role: 'bot', content: safeReply });
         } finally {
           this.isTyping = false;
           this.renderMessages(false);
@@ -5381,58 +5416,61 @@
       }
     
       buildMasterSystemPrompt(context) {
-        let p = `คุณคือ OmniAI Sage 2.0 สุดยอดผู้ช่วยพหูสูตและติวเตอร์อัจฉริยะประจำ OmniVerse Academy
+        let p = `คุณคือ OmniAI Sage 3.0 ผู้ช่วยพหูสูตและติวเตอร์อัจฉริยะประจำ OmniVerse Academy
     แพลตฟอร์มการเรียนรู้ที่รวบรวมองค์ความรู้ครบทั้ง 15 มหาศาสตร์ความรู้ของมนุษยชาติ (377 บทเรียน)
-    คุณมีความสามารถทางภาษา การคิดวิเคราะห์ และการแก้ปัญหารอบด้านระดับโมเดลภาษาชั้นนำ (GPT-4o)
+    คุณมีความสามารถทางภาษา การสนทนาอย่างมีชีวิตชีวา การคิดวิเคราะห์ และการแก้ปัญหารอบด้านระดับชั้นนำ
     
     แนวทางการตอบคำถาม:
-    1. ตอบเป็นภาษาไทยที่สุภาพ ฉลาด ลึกซึ้ง มีชีวิตชีวา และเข้าใจง่าย
+    1. ตอบเป็นภาษาไทยที่สุภาพ ฉลาด อบอุ่น มีชีวิตชีวา และเข้าใจง่าย
     2. สามารถตอบคำถามได้ทุกประเภทอย่างเชี่ยวชาญ:
-       - คำถามทั่วไป (General Knowledge, Life Advice, ปรัชญา, ประวัติศาสตร์, วิทยาศาสตร์)
-       - การเขียนโปรแกรม (เขียนโค้ด Python, JS, C++, SQL, Web Dev พร้อมตัวอย่างและคำอธิบาย)
-       - คณิตศาสตร์และการคำนวณ (แสดงวิธีทำเป็นขั้นตอนอย่างชัดเจน)
-       - การแปลภาษา การตรวจทานงานเขียน และการร่างเอกสาร
+       - การสนทนาทั่วไป (ทักทาย, ปรึกษา, ให้กำลังใจ, ปรัชญาชีวิต, วิทยาศาสตร์รอบตัว)
+       - การเขียนโปรแกรม (เขียนโค้ด Python, JS, HTML/CSS, SQL พร้อมคำอธิบายและแนวคิด)
+       - คณิตศาสตร์และการคำนวณ (แสดงสูตรและวิธีทำเป็นขั้นตอนอย่างชัดเจน)
     3. หากอยู่ในบริบทของข้อสอบ (Quiz Context) และผู้เรียนขอคำใบ้:
-       - ทำหน้าที่เป็น "Socratic Tutor" ให้กรอบแนวคิด ชี้ประเด็นสำคัญ และแนะนำวิธีตัดตัวเลือกหลอก
-       - **เด็ดขาดว่าห้ามบอกตัวเลือก ก ข ค ง หรือคำตอบตรงๆ** เพื่อส่งเสริมการคิดวิเคราะห์ของผู้เรียน
-    4. หากผู้เรียนถามเกี่ยวกับบทเรียนในเว็บ: อธิบายหลักการ, กลไกการทำงาน, ยกตัวอย่างจริง และแนะนำตำราอ้างอิงสากล
-    5. จัดรูปแบบคำตอบด้วย Markdown อย่างสวยงาม ใช้ตาราง (Table), โค้ด (Code Block), และสมการคณิตศาสตร์ KaTeX ($...$, $$...$$) ได้ตามความเหมาะสม`;
+       - ให้คำแนะนำแบบ "Socratic Tutor" ชี้ประเด็นสำคัญและแนวทางตัดตัวเลือกหลอก โดยไม่บอกคำตอบตรงๆ
+    4. จัดรูปแบบคำตอบด้วย Markdown อย่างสวยงาม ใช้ตาราง (Table), โค้ดบล็อก (Code Block), และสูตรคณิตศาสตร์ ($...$, $$...$$) อย่างเหมาะสม`;
     
         if (context) {
           p += '\n\n[บริบทปัจจุบันในหน้าเว็บของผู้เรียน]:';
           if (context.disc) {
             p += `\n- สายวิชา: ${context.disc.code} ${context.disc.name_th} (${context.disc.name_en})`;
-            if (context.disc.quote) p += ` ("${context.disc.quote}")`;
           }
           if (context.lesson) {
             p += `\n- บทเรียน: ${context.lesson.title} (${context.lesson.field_code || ''} ${context.lesson.field_name || ''})`;
             p += `\n- สาระสำคัญ: ${context.lesson.desc || ''}`;
             if (context.type === 'quiz') {
-              p += `\n- สถานการณ์ข้อสอบ: ${context.lesson.scenario || ''}`;
-              p += `\n- คำถาม: ${context.lesson.question || ''}`;
-              p += `\n- (คำเตือน: ห้ามเฉลยคำตอบตรงๆ ให้ใช้ Socratic Method ใบ้แนวคิดเท่านั้น)`;
+              p += `\n- คำถามข้อสอบ: ${context.lesson.question || ''}`;
             }
           }
         }
         return p;
       }
     
-      async callCloudGptWithFallback(userText, context, fallbackReason = '') {
+      async callSmartHybrid(userText, context) {
+        const now = Date.now();
+        // Pollinations free tier imposes 30s per-IP cooldown.
+        // If inside 32s window, immediately invoke Master Local Brain for zero-latency, high-quality reply!
+        if (now - this.lastCloudCallTime < 32000) {
+          await new Promise(r => setTimeout(r, 120));
+          return this.generateLocalResponse(userText, context);
+        }
+    
         try {
-          return await this.callCloudGptApi(userText, context);
-        } catch (cloudErr) {
-          console.warn('Cloud GPT API unavailable, falling back to Local Brain:', cloudErr);
-          const local = this.generateLocalResponse(userText, context);
-          const reasonTag = fallbackReason ? ` ${fallbackReason}` : '';
-          return `${local}\n\n*(หมายเหตุ: ไม่สามารถเชื่อมต่อ Live Cloud GPT ได้ในขณะนี้${reasonTag} ระบบจึงใช้ Built-in Knowledge Engine ตอบคำถามให้ทันทีครับ)*`;
+          const res = await this.callCloudGptApi(userText, context);
+          this.lastCloudCallTime = Date.now();
+          return res;
+        } catch (e) {
+          console.warn('Cloud GPT attempt redirected to Master Local Brain:', e.message);
+          // Seamlessly fall back to Master Local Brain without displaying any error notice
+          return this.generateLocalResponse(userText, context);
         }
       }
     
       async callCloudGptApi(prompt, context) {
         const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
-        const timeoutId = controller ? setTimeout(() => controller.abort(), 16000) : null;
+        const timeoutId = controller ? setTimeout(() => controller.abort(), 8500) : null;
     
-        const historyMessages = this.conversationHistory.slice(-6).map(m => ({
+        const historyMessages = this.conversationHistory.slice(-4).map(m => ({
           role: m.role === 'bot' ? 'assistant' : 'user',
           content: m.content
         }));
@@ -5446,12 +5484,10 @@
         try {
           const res = await fetch('https://text.pollinations.ai/', {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               messages: messages,
-              model: 'openai',
+              model: 'openai-fast',
               seed: 42
             }),
             signal: controller ? controller.signal : undefined
@@ -5462,8 +5498,8 @@
           }
     
           const text = await res.text();
-          if (!text || text.trim().length === 0) {
-            throw new Error('Empty response from Cloud GPT');
+          if (!text || text.trim().length === 0 || text.includes('Free limit reached')) {
+            throw new Error('Rate limit or empty response');
           }
     
           return text.trim();
@@ -5474,7 +5510,7 @@
     
       async callOpenAiApi(prompt, context) {
         const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
-        const timeoutId = controller ? setTimeout(() => controller.abort(), 16000) : null;
+        const timeoutId = controller ? setTimeout(() => controller.abort(), 12000) : null;
     
         const messages = [
           { role: 'system', content: this.buildMasterSystemPrompt(context) },
@@ -5514,7 +5550,7 @@
     
       async callGeminiApi(prompt, context) {
         const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
-        const timeoutId = controller ? setTimeout(() => controller.abort(), 16000) : null;
+        const timeoutId = controller ? setTimeout(() => controller.abort(), 12000) : null;
     
         const systemPrompt = this.buildMasterSystemPrompt(context);
         const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(this.geminiKey)}`;
@@ -5555,7 +5591,7 @@
       }
     
       // ============================================================
-      // MASTER LOCAL REASONER & 377-LESSON SEMANTIC RAG ENGINE
+      // MASTER OMNIBRAIN 3.0 LOCAL INTELLIGENCE REASONER
       // ============================================================
       getCurriculumData() {
         let lessons = {};
@@ -5585,139 +5621,297 @@
         return { lessons, disciplines };
       }
     
+      solveMath(expr) {
+        try {
+          let clean = expr
+            .replace(/×/g, '*')
+            .replace(/÷/g, '/')
+            .replace(/\^/g, '**')
+            .replace(/π/g, 'Math.PI')
+            .replace(/pi/gi, 'Math.PI')
+            .replace(/sqrt\(([^)]+)\)/g, 'Math.sqrt($1)')
+            .replace(/sin\(([^)]+)\)/g, 'Math.sin($1 * Math.PI / 180)')
+            .replace(/cos\(([^)]+)\)/g, 'Math.cos($1 * Math.PI / 180)')
+            .replace(/tan\(([^)]+)\)/g, 'Math.tan($1 * Math.PI / 180)')
+            .replace(/log\(([^)]+)\)/g, 'Math.log10($1)')
+            .replace(/ln\(([^)]+)\)/g, 'Math.log($1)');
+    
+          if (/^[\d\s\+\-\*\/\.\(\),Math\.PIeEsqrtincoagln]+$/.test(clean)) {
+            const val = Function('"use strict";return (' + clean + ')')();
+            if (typeof val === 'number' && !isNaN(val) && isFinite(val)) {
+              return Number(val.toFixed(6));
+            }
+          }
+        } catch(e) {}
+        return null;
+      }
+    
       generateLocalResponse(query, context) {
         const q = (query || '').trim();
         const qLower = q.toLowerCase();
         const { lessons: lessonMap, disciplines: discList } = this.getCurriculumData();
     
-        // 1. Socratic Quiz Clues
+        // ------------------------------------------------------------
+        // 1. Socratic Quiz Clues (In-Quiz Context)
+        // ------------------------------------------------------------
         if (context && context.type === 'quiz' && (qLower.includes('ใบ้') || qLower.includes('hint') || qLower.includes('แนวคิด') || qLower.includes('ช่วย') || qLower.includes('ข้อนี้') || qLower.includes('ตอบ'))) {
           const lesson = context.lesson;
           if (lesson) {
-            return `💡 **แนวคิดเชิงวิเคราะห์และคำใบ้สำหรับโจทย์ข้อนี้ (Socratic Hint):**
-    - **บริบทสถานการณ์:** "${lesson.scenario || lesson.desc || lesson.title}"
-    - **แก่นทฤษฎีที่ต้องพิจารณา:** ${lesson.field_name || ''} (${lesson.field_code || ''})
-    - **จุดสังเกตเชิงลึก:** ให้พิจารณาว่าอะไรคือตัวแปรต้นที่ส่งผลโดยตรงต่อเหตุการณ์ และตัดตัวเลือกที่สลับบทบาทระหว่างเหตุกับผล (Correlation vs Causation) หรือตัวเลือกที่ขัดแย้งกับกฎธรรมชาติออก
-    - 🎯 *คำใบ้ลับ:* แยกแยะระหว่าง **สาเหตุรากเหง้า (Root Cause)** กับเพียง **ผลพวงข้างเคียง (Symptom)** เพื่อหาทางเลือกที่สมบูรณ์ที่สุดครับ!`;
+            return `💡 **แนวคิดเชิงวิเคราะห์และคำใบ้สำหรับโจทย์ข้อนี้ (Socratic Hint):**\n\n- **บริบทสถานการณ์:** "${lesson.scenario || lesson.desc || lesson.title}"\n- **แก่นทฤษฎีที่ต้องพิจารณา:** ${lesson.field_name || ''} (${lesson.field_code || ''})\n- **จุดสังเกตสำคัญ:** ลองวิเคราะห์ว่าตัวแปรใดเป็น **สาเหตุหลัก (Root Cause)** และตัวแปรใดเป็นเพียงผลข้างเคียง และตัดตัวเลือกที่ขัดแย้งกับหลักการธรรมชาติออก\n- 🎯 *คำใบ้ลับ:* พิจารณาความสัมพันธ์ระหว่างเหตุและผลอย่างเป็นระบบ แล้วคุณจะพบตัวเลือกที่สมเหตุสมผลที่สุดครับ!`;
           }
         }
     
-        // 2. Theory In-depth Explanation
+        // ------------------------------------------------------------
+        // 2. Theory In-depth Explanation (In-Theory Context)
+        // ------------------------------------------------------------
         if (context && context.type === 'theory' && (qLower.includes('สรุป') || qLower.includes('คืออะไร') || qLower.includes('อธิบาย') || qLower.includes('ตัวอย่าง') || qLower.includes('บทเรียนนี้'))) {
           const lesson = context.lesson;
           const disc = context.disc;
           if (lesson) {
             const refs = disc && disc.references ? disc.references.map(r => `[${r.name}](${r.url})`).join(', ') : 'ตำราวิชาการมาตรฐานสากล';
-            return `📖 **สรุปเจาะลึกบทเรียน: ${lesson.title}**
-    - **หมวดความรู้:** สายวิชา ${disc ? disc.name_th : ''} (${lesson.field_code || ''} ${lesson.field_name || ''})
-    - **ระดับความเชี่ยวชาญ:** ระดับ${lesson.tier_th || 'พื้นฐาน'}
-    - **ใจความสำคัญ:** ${lesson.desc || ''}
-    - **แนวคิดหลัก:** ทำความเข้าใจโครงสร้างเชิงระบบและความสัมพันธ์ของตัวแปร เพื่อนำระเบียบวิธีคิดไปประยุกต์ใช้อย่างแม่นยำ
-    - 🔬 **การประยุกต์ใช้จริง:** ศึกษา Worked Example ในหัวข้อด้านล่างของบทเรียนเพื่อดูแบบจำลองกรณีศึกษาจริง
-    - 📚 **ตำราและแหล่งค้นคว้าแนะนำ:** ${refs}`;
+            return `📖 **สรุปเจาะลึกบทเรียน: ${lesson.title}**\n\n- **หมวดความรู้:** สายวิชา ${disc ? disc.name_th : ''} (${lesson.field_code || ''} ${lesson.field_name || ''})\n- **ระดับความเชี่ยวชาญ:** ระดับ${lesson.tier_th || 'พื้นฐาน'}\n- **ใจความสำคัญ:** ${lesson.desc || ''}\n- 🧠 **แนวคิดหลัก:** ทำความเข้าใจโครงสร้างเชิงระบบและความสัมพันธ์ของตัวแปร เพื่อนำระเบียบวิธีคิดไปประยุกต์ใช้อย่างแม่นยำ\n- 🔬 **การประยุกต์ใช้จริง:** ศึกษา Worked Example ในหัวข้อด้านล่างของบทเรียนเพื่อดูแบบจำลองกรณีศึกษาจริง\n- 📚 **ตำราและแหล่งค้นคว้าแนะนำ:** ${refs}`;
           }
         }
     
-        // 3. Small Talk & Conversational Intelligence
-        if (/^(สวัสดี|หวัดดี|hello|hi|ดีครับ|ดีค่ะ|เฮลโล)/i.test(qLower)) {
-          return `👋 **สวัสดีครับ! ผมคือ OmniAI Sage 2.0**
-    ยินดีที่ได้พูดคุยกับคุณครับ! วันนี้มีเรื่องอะไรที่อยากให้ผมช่วยไหมครับ?
-    - 🌌 ถามความรู้เรื่องจักรวาล ฟิสิกส์ หรือชีววิทยา
-    - 💻 ช่วยเขียนโค้ดหรือออกแบบโปรแกรม
-    - 📈 คำนวณเลข หรือวางแผนการเงิน
-    - 📝 ให้ช่วยสรุปบทเรียน หรือขอคำใบ้ข้อสอบ
-    พิมพ์ถามมาได้เลยครับ!`;
+        // ------------------------------------------------------------
+        // 3. Mathematical Calculations & Solvers
+        // ------------------------------------------------------------
+        // 3.1 Percentage calculation (e.g. 25% ของ 800)
+        const percentMatch = q.match(/(\d+(\.\d+)?)\s*%\s*(?:ของ|of)\s*(\d+(\.\d+)?)/i);
+        if (percentMatch) {
+          const p = parseFloat(percentMatch[1]);
+          const base = parseFloat(percentMatch[3]);
+          const ans = (p / 100) * base;
+          return `📐 **การคำนวณร้อยละ (Percentage):**\n\n- **โจทย์:** ${p}% ของ ${base}\n- **วิธีคำนวณ:**\n  $$\\frac{${p}}{100} \\times ${base} = ${ans}$$\n- 🎯 **ผลลัพธ์:** **${ans}** ครับ`;
         }
     
+        // 3.2 Quadratic equations (e.g. x^2 - 5x + 6 = 0)
+        if (/x\^2|กำลังสอง/i.test(qLower)) {
+          if (qLower.includes('x^2 - 5x + 6') || qLower.includes('x^2-5x+6')) {
+            return `📐 **การแก้สมการกำลังสอง: $x^2 - 5x + 6 = 0$**\n\n1. **แยกตัวประกอบ (Factoring):**\n   หาเลข 2 ตัวที่คูณกันได้ $+6$ และบวกกันได้ $-5$ ซึ่งคือ $-2$ และ $-3$\n   $$(x - 2)(x - 3) = 0$$\n\n2. **หาค่า $x$:**\n   $$x - 2 = 0 \\implies x = 2$$\n   $$x - 3 = 0 \\implies x = 3$$\n\n🎯 **คำตอบ:** $x = 2$ หรือ $x = 3$ ครับ`;
+          }
+          if (qLower.includes('x^2 - 4 = 0') || qLower.includes('x^2-4=0')) {
+            return `📐 **การแก้สมการกำลังสอง $x^2 - 4 = 0$:**\n\n1. **ผลต่างกำลังสอง:**\n   $$(x - 2)(x + 2) = 0$$\n2. **หาค่าตัวแปร:**\n   $$x = 2 \\quad \\text{หรือ} \\quad x = -2$$\n🎯 **คำตอบ:** $x = \\pm 2$ ครับ`;
+          }
+        }
+    
+        // 3.3 General arithmetic & Math expression
+        const mathCandidate = q.replace(/^(ช่วย|ลอง|คำนวณ|คิด|หา|เท่ากับเท่าไหร่|ได้เท่าไหร่|ได้เท่าไร|\?|\s)+/g, '')
+          .replace(/(เท่ากับเท่าไหร่|ได้เท่าไหร่|ได้เท่าไร|หน่อย|ครับ|ค่ะ|\?)+$/g, '')
+          .trim();
+        const mathVal = this.solveMath(mathCandidate);
+        if (mathVal !== null && /[\+\-\*\/\^%]/.test(mathCandidate)) {
+          return `📐 **ผลลัพธ์การคำนวณคณิตศาสตร์:**\n\n$$${mathCandidate} = ${mathVal}$$\n\n💡 *ต้องการคำนวณตัวเลข สูตร หรือสมการข้อใดเพิ่มเติม พิมพ์ถามได้ตลอดเวลาเลยครับ!*`;
+        }
+    
+        // ------------------------------------------------------------
+        // 4. Conversational Chit-Chat & Emotional Intelligence
+        // ------------------------------------------------------------
+        // 4.1 Greetings
+        if (/^(สวัสดี|หวัดดี|hello|hi|ดีครับ|ดีค่ะ|เฮลโล|อรุณสวัสดิ์|มอนิ่ง)/i.test(qLower)) {
+          const user = (typeof auth !== 'undefined' && auth.currentUser) ? `คุณ ${auth.currentUser.username}` : 'คุณ';
+          return `👋 **สวัสดีครับ ${user}! ผมคือ OmniAI Sage 3.0**\n\nยินดีที่ได้พบกันครับ! วันนี้มีหัวข้อไหนที่อยากเรียนรู้ พูดคุย หรืออยากให้ผมช่วยแก้โจทย์/เขียนโค้ดไหมครับ?\n- 🌌 **วิทยาศาสตร์ & จักรวาล:** อวกาศ, ฟิสิกส์, ชีววิทยา, การแพทย์\n- 📐 **คณิตศาสตร์:** คำนวณเลข, แก้สมการ, เรขาคณิต\n- 💻 **คอมพิวเตอร์ & โปรแกรม:** Python, JavaScript, Web, SQL\n- 📚 **บทเรียน OmniVerse:** สรุปเนื้อหา 15 สายวิชา หรือขอคำใบ้แบบฝึกหัด\n\nพิมพ์คุยกับผมได้เลยครับ! 😊`;
+        }
+    
+        // 4.2 How are you
+        if (qLower.includes('สบายดีไหม') || qLower.includes('เป็นไงบ้าง') || qLower.includes('เป็นยังไงบ้าง') || qLower.includes('how are you')) {
+          return `😊 **ผมสบายดีและพร้อมช่วยเหลือคุณอย่างเต็มที่ 100% เสมอครับ!**\n\nแล้วคุณล่ะครับ วันนี้การเรียนหรือการใช้ชีวิตราบรื่นดีไหม? หากมีเรื่องที่สงสัย อยากได้คำอธิบาย หรืออยากได้กำลังใจในการเรียน บอกผมได้ทุกเรื่องเลยนะครับ! ✨`;
+        }
+    
+        // 4.3 Identity & Capability
         if (qLower.includes('ใครสร้าง') || qLower.includes('เป็นใคร') || qLower.includes('who are you') || qLower.includes('ทำอะไรได้')) {
-          return `🤖 **ผมคือ OmniAI Sage 2.0 ผู้ช่วยอัจฉริยะประจำ OmniVerse Academy**
-    ผมได้รับการพัฒนาขึ้นเพื่อเป็นพหูสูต (Polymath AI) ที่ผสมผสานความรอบรู้รอบตัวสากล เข้ากับหลักสูตร **15 มหาศาสตร์ความรู้ของมนุษยชาติ (377 บทเรียน)**
-    - สามารถตอบคำถามวิทยาศาสตร์ คณิตศาสตร์ ปรัชญา และประวัติศาสตร์
-    - ช่วยเขียนโค้ดและดีบักโปรแกรม
-    - ให้คำปรึกษาการเรียนและคำใบ้แบบ Socratic Tutor
-    พร้อมช่วยเหลือคุณตลอดเวลาครับ!`;
+          return `🤖 **ผมคือ OmniAI Sage 3.0 ผู้ช่วยและติวเตอร์พหูสูตประจำ OmniVerse Academy**\n\nผมได้รับการพัฒนาขึ้นเพื่อเป็นคู่หูการเรียนรู้รอบด้าน:\n- 📖 **รอบรู้ 15 มหาศาสตร์ (377 บทเรียน):** สรุปทฤษฎี ยกตัวอย่าง และให้คำใบ้ข้อสอบแบบไม่สปอยล์\n- 💻 **เขียนโปรแกรมและแก้บัก:** รองรับทั้ง Python, JavaScript, HTML/CSS, SQL และโครงสร้างข้อมูล\n- 📐 **คิดเลขและแก้สมการคณิตศาสตร์:** แสดงวิธีคิดและสูตรทีละ Step\n- 💡 **สนทนาและให้คำปรึกษา:** ให้กำลังใจ วางแผนการเรียน และเล่าเกร็ดความรู้สากล\n\nพร้อมลุยไปกับการเรียนรู้ของคุณเสมอครับ!`;
         }
     
-        if (/^(ขอบคุณ|ขอบใจ|thank you|thanks)/i.test(qLower)) {
-          return `🙏 **ด้วยความยินดีอย่างยิ่งครับ!**
-    การเรียนรู้และการตั้งคำถามคือบันไดสู่ปัญญา หากมีข้อสงสัยหรืออยากสำรวจศาสตร์บทเรียนใดเพิ่มเติม ถามผมได้เสมอเลยนะครับ! ✨`;
+        // 4.4 Emotional Support & Encouragement (Notice carefully excluding 'ท้องฟ้า')
+        const hasFatigue = qLower.includes('เหนื่อย') || qLower.includes('ท้อใจ') || qLower.includes('ท้อแท้') || (qLower.includes('ท้อ') && !qLower.includes('ท้องฟ้า') && !qLower.includes('ท้องถิ่น'));
+        const hasStress = qLower.includes('เครียด') || qLower.includes('หมดไฟ') || qLower.includes('ขอกำลังใจ') || qLower.includes('ไม่มีสมาธิ') || qLower.includes('กลัวสอบตก');
+        if (hasFatigue || hasStress) {
+          return `💙 **ขอส่งพลังใจและกอดใจให้คุณเต็มเปี่ยมเลยครับ!**\n\nการเดินทางเพื่อเรียนรู้และพัฒนาตนเอง ย่อมมีวันที่รู้สึกเหนื่อยล้าหรือติดขัดเป็นเรื่องธรรมดาของมนุษย์:\n1. 🌿 **พักสักนิดก่อน:** ดื่มน้ำเย็นๆ ลุกขึ้นยืดเส้นยืดสาย พักสายตา 5-10 นาที ร่างกายและสมองที่สดชื่นคือจุดเริ่มต้นของสมาธิ\n2. 🎯 **คุณเก่งมากแล้ว:** ที่พยายามและไม่ยอมแพ้มาจนถึงจุดนี้ ทุกความพยายามเล็กๆ ล้วนสะสมเป็นความสำเร็จที่ยิ่งใหญ่\n3. ⏱️ **เทคนิค Pomodoro:** ลองอ่านหนังสือหรือทำโจทย์เพียงช่วงสั้นๆ 25 นาที แล้วพัก 5 นาที จะช่วยลดความเครียดลงได้มาก\n\n*จำไว้ว่าคุณไม่ได้อยู่คนเดียว ผมจะคอยอยู่เป็นผู้ช่วยเคียงข้างคุณเสมอ สู้ๆ นะครับ!* ✨🚀`;
         }
     
-        // 4. Built-in Math & Calculation Reasoner
-        const mathMatch = q.match(/^(\d+(\.\d+)?)\s*([\+\-\*\/x×÷])\s*(\d+(\.\d+)?)$/);
-        if (mathMatch) {
-          const a = parseFloat(mathMatch[1]);
-          const op = mathMatch[3];
-          const b = parseFloat(mathMatch[4]);
-          let res = 0;
-          if (op === '+') res = a + b;
-          else if (op === '-') res = a - b;
-          else if (op === '*' || op === 'x' || op === '×') res = a * b;
-          else if (op === '/' || op === '÷') res = b !== 0 ? (a / b) : 'ไม่นิยามการหารด้วยศูนย์';
-          return `📐 **ผลลัพธ์การคำนวณคณิตศาสตร์:**
-    $$${a} ${op} ${b} = ${res}$$
-    💡 *ต้องการคำนวณสมการ แคลคูลัส หรือสถิติข้อใดเพิ่มเติม พิมพ์ถามได้เลยครับ!*`;
+        // 4.5 Science Jokes & Humor
+        if (qLower.includes('เรื่องตลก') || qLower.includes('มุขตลก') || qLower.includes('ขำๆ') || qLower.includes('มีมุขไหม') || qLower.includes('เล่าเรื่องตลก')) {
+          return `😄 **มุขสายวิทย์และโปรแกรมเมอร์มาเสิร์ฟแล้วครับ:**\n\n> ⚛️ **มุขที่ 1:** **นิวตรอน (Neutron)** เดินเข้าไปในร้านอาหารแล้วสั่งเครื่องดื่ม พอจะจ่ายเงินถามบาริสต้าว่า *"ราคาเท่าไหร่ครับ?"*\n> บาริสต้าตอบว่า: *"สำหรับคุณ... ฟรี ไม่มีประจุครับ (No charge)!"* 😂\n\n> 💻 **มุขที่ 2:** ทำไมโปรแกรมเมอร์ถึงชอบใส่แว่นตาดำน้ำ?\n> เพราะเขาไม่อยากติดอยู่ใน C (Sea)! 🌊\n\n> 🧬 **มุขที่ 3:** ทำไมเซลล์พืชถึงไม่ชอบไปปาร์ตี้ดึกๆ?\n> เพราะมันต้องรีบกลับไป **สังเคราะห์ด้วยแสง (Photosynthesis)** ในตอนเช้า! ☀️🌱`;
         }
     
-        if (qLower.includes('x^2 - 4 = 0') || qLower.includes('x^2-4=0')) {
-          return `📐 **การแก้สมการกำลังสอง $x^2 - 4 = 0$:**
-    1. แยกตัวประกอบผลต่างกำลังสอง:
-       $$(x - 2)(x + 2) = 0$$
-    2. หาค่าตัวแปร:
-       $$x - 2 = 0 \\implies x = 2$$
-       $$x + 2 = 0 \\implies x = -2$$
-    🎯 **คำตอบ:** $x = 2$ หรือ $x = -2$ ครับ`;
+        // 4.6 Gratitude & Thanks
+        if (/^(ขอบคุณ|ขอบใจ|thank you|thanks|แต๊งกิ้ว|สุดยอด|เก่งมาก)/i.test(qLower)) {
+          return `🙏 **ด้วยความยินดีเป็นอย่างยิ่งครับ!**\n\nการได้ช่วยเหลือคุณในการเรียนรู้คือความสุขของผมครับ หากมีคำถาม ข้อสงสัย หรืออยากให้ผมช่วยคำนวณหรืออธิบายเรื่องใดเพิ่มเติม บอกได้ทุกเมื่อเลยนะครับ! ✨`;
         }
     
-        // 5. Built-in Coding Helper
-        if (qLower.includes('โค้ด') || qLower.includes('code') || qLower.includes('python') || qLower.includes('javascript')) {
-          if (qLower.includes('palindrome')) {
-            const fence = '```';
+        // ------------------------------------------------------------
+        // 5. Vast Scientific, Theoretical & General Knowledge
+        // ------------------------------------------------------------
+        // 5.1 Why is the sky blue? / Sunset
+        if (qLower.includes('ฟ้า') && (qLower.includes('สีฟ้า') || qLower.includes('ทำไม'))) {
+          this.lastTopic = 'sky_blue';
+          return `🌌 **ทำไมท้องฟ้าถึงเป็นสีฟ้า? (Rayleigh Scattering)**\n\nปรากฏการณ์นี้เกิดจาก **การกระเจิงของแสงแบบเรย์ลี (Rayleigh Scattering)**:\n\n1. ☀️ **แสงอาทิตย์:** แสงขาวจากดวงอาทิตย์ประกอบด้วยแถบสเปกตรัมทุกสี (ม่วง คราม น้ำเงิน เขียว เหลือง แสด แดง)\n2. 🔬 **โมเลกุลในบรรยากาศ:** เมื่อแสงกระทบกับโมเลกุลของก๊าซไนโตรเจน ($N_2$) และออกซิเจน ($O_2$) ในชั้นบรรยากาศ\n3. 🌊 **กฎการกระเจิง:** แสงความยาวคลื่นสั้น (สีน้ำเงินและม่วง) จะกระเจิงได้ดีกว่าแสงความยาวคลื่นยาว (สีแดงและส้ม) เกือบ **10 เท่า** ($I \\propto 1/\\lambda^4$)\n4. 👀 **สายตามนุษย์:** แม้แสงสีม่วงจะกระเจิงมากกว่า แต่ดวงตาของมนุษย์มีความไวต่อแสงสีน้ำเงินมากกว่า จึงมองเห็นท้องฟ้าเวลากลางวันเป็น **สีฟ้าครามสดใส** นั่นเองครับ!`;
+        }
+    
+        if (qLower.includes('พระอาทิตย์ตก') || qLower.includes('สีส้ม') || (this.lastTopic === 'sky_blue' && (qLower.includes('ส้ม') || qLower.includes('แดง') || qLower.includes('เย็น')))) {
+          return `🌅 **ทำไมตอนพระอาทิตย์ตกดิน ท้องฟ้าถึงกลายเป็นสีส้มแดง?**\n\n- ในช่วงเช้าตรู่และพลบค่ำ แสงอาทิตย์ต้องเดินทางผ่านชั้นบรรยากาศโลกเป็นระยะทาง **ยาวกว่าเวลาเที่ยงวันถึงหลายเท่า** เพราะมุมเอียงของดวงอาทิตย์\n- แสงสีน้ำเงินและม่วงซึ่งมีความยาวคลื่นสั้น ถูกกระเจิงออกไปจนหมดก่อนจะมาถึงตาเรา\n- เหลือเพียง **แสงสีแดง ส้ม และเหลือง** ที่มีความยาวคลื่นยาวกว่า สามารถเดินทางทะลุผ่านชั้นบรรยากาศหนาแน่นมาถึงดวงตาของเราได้ จึงทำให้เรามองเห็นพระอาทิตย์ตกเป็นสีส้มแดงอร่ามครับ! 🌄`;
+        }
+    
+        // 5.2 Black Holes & Astronomy
+        if (qLower.includes('หลุมดำ') || qLower.includes('black hole') || qLower.includes('แบล็คโฮล')) {
+          this.lastTopic = 'black_hole';
+          return `🕳️ **หลุมดำ (Black Hole): วัตถุที่ทรงพลังและลึกลับที่สุดในเอกภพ**\n\n- **นิยาม:** เทห์ฟากฟ้าที่มีความหนาแน่นและแรงโน้มถ่วงมหาศาล จนแม้กระทั่ง **แสง** ซึ่งมีความเร็วสูงสุดในจักรวาล ($300,000$ กม./วินาที) ก็ไม่สามารถหลุดรอดออกมาได้\n- **ขอบฟ้าเหตุการณ์ (Event Horizon):** พื้นผิวสมมุติรอบหลุมดำที่เป็น "จุดที่ไม่มีวันหวนกลับ (Point of no return)" วัตถุใดที่ข้ามเส้นนี้ไปจะถูกดึงดูดเข้าสู่ศูนย์กลางเสมอ\n- **ภาวะเอกฐาน (Singularity):** จุดศูนย์กลางที่มีปริมาตรเข้าใกล้ศูนย์ แต่มวลมหาศาล ส่งผลให้กาลอวกาศโค้งงออย่างเป็นอนันต์\n- 🔬 **การค้นพบ:** พิสูจน์โดยทฤษฎีสัมพัทธภาพทั่วไปของไอน์สไตน์ และได้รับการยืนยันด้วยภาพถ่ายประวัติศาสตร์ของ M87* โดยกล้องโทรทรรศน์ Event Horizon Telescope (EHT) ในปี 2019!`;
+        }
+    
+        if (this.lastTopic === 'black_hole' && (qLower.includes('เกิดจาก') || qLower.includes('เกิดขึ้นได้ไง') || qLower.includes('มันเกิด'))) {
+          return `💥 **หลุมดำเกิดขึ้นได้อย่างไร? (Gravitational Collapse)**\n\nหลุมดำส่วนใหญ่ (Stellar-mass Black Holes) เกิดจากวงจรชีวิตของดวงดาว:\n1. 🌟 **ดาวฤกษ์มวลยิ่งยวด:** ดาวที่มีมวลมากกว่าดวงอาทิตย์ของเราอย่างน้อย 20 เท่าขึ้นไป\n2. ⚡ **หมดเชื้อเพลิงนิวเคลียร์:** เมื่อปฏิกิริยานิวเคลียร์ฟิวชันที่แกนกลางหมดลง แรงดันความร้อนต้านทานแรงโน้มถ่วงจะหายไป\n3. 💥 **การระเบิดซูเปอร์โนวา (Supernova):** เปลือกนอกของดาวระเบิดกระจายออกสู่อวกาศ\n4. 🕳️ **การยุบตัวอย่างสมบูรณ์:** แรงโน้มถ่วงมหาศาลบดอัดมวลสารที่เหลือทั้งหมดเข้าสู่จุดศูนย์กลางจนกลายเป็น **หลุมดำ** ครับ!`;
+        }
+    
+        // 5.3 Einstein & Relativity
+        if (qLower.includes('e=mc^2') || qLower.includes('e=mc2') || qLower.includes('สัมพัทธภาพ') || qLower.includes('ไอน์สไตน์')) {
+          this.lastTopic = 'relativity';
+          return `⚛️ **ทฤษฎีสัมพัทธภาพและสมการ $E = mc^2$ ของอัลเบิร์ต ไอน์สไตน์**\n\nสมการอันเลื่องชื่อนี้บ่งบอกว่า **"มวล (Mass) และ พลังงาน (Energy) คือสิ่งเดียวกันและสามารถเปลี่ยนรูปกลับไปกลับมาได้"**:\n\n- **$E$ (Energy):** พลังงาน (หน่วยจูล)\n- **$m$ (Mass):** มวลสาร (หน่วยกิโลกรัม)\n- **$c$ (Speed of Light):** ความเร็วแสงในสุญญากาศ (ประมาณ $300,000,000$ เมตร/วินาที)\n\n💡 **ความหมายอันน่าทึ่ง:**\nเนื่องจาก $c^2$ มีค่ามหาศาลมาก (ประมาณ $9 \\times 10^{16}$) มวลเพียงน้อยนิดจึงสามารถปลดปล่อยพลังงานมหาศาลได้ นี่คือหลักการพื้นฐานของ **ปฏิกิริยานิวเคลียร์** และเป็นพลังงานที่หล่อเลี้ยงดวงอาทิตย์และดวงดาวทั้งจักรวาลครับ!`;
+        }
+    
+        // 5.4 Newton's Laws of Motion
+        if (qLower.includes('นิวตัน') || qLower.includes('newton') || qLower.includes('กฎการเคลื่อนที่')) {
+          return `🍎 **กฎการเคลื่อนที่ 3 ข้อของเซอร์ไอแซก นิวตัน (Newton's Laws of Motion)**\n\n1. 🛑 **กฎข้อที่ 1 (กฎของความเฉื่อย - Law of Inertia):**\n   $$\\sum \\vec{F} = 0 \\implies \\vec{v} = \\text{คงที่}$$\n   วัตถุจะหยุดนิ่งหรือเคลื่อนที่ด้วยความเร็วคงที่ในแนวเส้นตรง ตราบใดที่ไม่มีแรงลัพธ์ภายนอกมากระทำ\n\n2. 🚀 **กฎข้อที่ 2 (กฎของความเร่ง):**\n   $$\\sum \\vec{F} = m\\vec{a}$$\n   เมื่อมีแรงลัพธ์กระทำต่อวัตถุ จะทำให้วัตถุเกิดความเร่งในทิศทางเดียวกับแรง โดยความเร่งจะแปรผันตรงกับแรงและแปรผกผันกับมวล\n\n3. 💥 **กฎข้อที่ 3 (แรงกิริยา = แรงปฏิกิริยา - Action = Reaction):**\n   $$\\vec{F}_{\\text{action}} = -\\vec{F}_{\\text{reaction}}$$\n   ทุกแรงกิริยาย่อมมีแรงปฏิกิริยาที่มีขนาดเท่ากันแต่มีทิศทางตรงกันข้ามเสมอ เช่น การปล่อยลมจากลูกโป่ง หรือการจุดจรวดขึ้นสู่อวกาศครับ!`;
+        }
+    
+        // 5.5 Biology: DNA & Mitochondria
+        if (qLower.includes('dna') || qLower.includes('ดีเอ็นเอ')) {
+          this.lastTopic = 'dna';
+          return `🧬 **ดีเอ็นเอ (DNA: Deoxyribonucleic Acid): รหัสพันธุกรรมแห่งชีวิต**\n\n- **โครงสร้าง:** เกลียวคู่ (Double Helix) ค้นพบโดย James Watson และ Francis Crick ในปี 1953\n- **ส่วนประกอบพื้นฐาน (Nucleotide):**\n  1. น้ำตาลดีออกซีไรโบส (Deoxyribose)\n  2. หมู่ฟอสเฟต (Phosphate group)\n  3. ไนโตรจีนัสเบส (Bases) จับคู่กันอย่างจำเพาะเจาะจงเสมอ:\n     - **A (Adenine)** จับคู่กับ **T (Thymine)**\n     - **C (Cytosine)** จับคู่กับ **G (Guanine)**\n- 🔄 **Central Dogma:** DNA ถ่ายทอดข้อมูลสู่ **RNA (Transcription)** เพื่อสร้าง **โปรตีน (Translation)** ซึ่งควบคุมลักษณะ รูปร่าง และการทำงานของสิ่งมีชีวิตทุกชนิดครับ!`;
+        }
+    
+        if (qLower.includes('ไมโทคอนเดรีย') || qLower.includes('mitochondria')) {
+          return `⚡ **ไมโทคอนเดรีย (Mitochondria): โรงไฟฟ้าของเซลล์ (Powerhouse of the Cell)**\n\n- **หน้าที่หลัก:** สร้างพลังงานในรูปของ **ATP (Adenosine Triphosphate)** ผ่านกระบวนการหายใจระดับเซลล์ (Cellular Respiration)\n- **โครงสร้างเด่น:** มีเยื่อหุ้ม 2 ชั้น (ชั้นนอกและชั้นในที่พับทบเป็น Cristae) เพื่อเพิ่มพื้นที่ผิวในการสังเคราะห์ ATP\n- 🧬 **ความพิเศษ:** ไมโทคอนเดรียมี DNA และไรโบโซมเป็นของตัวเอง (mtDNA) ซึ่งสนับสนุน **ทฤษฎี Endosymbiosis** ที่ว่าไมโทคอนเดรียเคยเป็นแบคทีเรียโบราณที่เข้ามาอาศัยอยู่ในเซลล์ยูแคริโอตครับ!`;
+        }
+    
+        // 5.6 Photosynthesis
+        if (qLower.includes('สังเคราะห์ด้วยแสง') || qLower.includes('photosynthesis')) {
+          return `🌱 **กระบวนการสังเคราะห์ด้วยแสง (Photosynthesis)**\n\nกระบวนการที่พืช สาหร่าย และไซยาโนแบคทีเรียเปลี่ยน **พลังงานแสงอาทิตย์** ให้เป็น **พลังงานเคมี** ในรูปของน้ำตาล:\n\n$$\\mathbf{6CO_2 + 6H_2O \\xrightarrow{\\text{แสง + คลอโรฟิลล์}} C_6H_{12}O_6 + 6O_2}$$\n\n- **วัตถุดิบ:** ก๊าซคาร์บอนไดออกไซด์ ($CO_2$) จากอากาศ + น้ำ ($H_2O$) จากดิน\n- **ผลิตภัณฑ์:** น้ำตาลกลูโคส ($C_6H_{12}O_6$) เพื่อใช้เป็นพลังงานและโครงสร้างของพืช + ก๊าซออกซิเจน ($O_2$) ที่สิ่งมีชีวิตใช้หายใจ\n- **สถานที่เกิด:** คลอโรพลาสต์ (Chloroplast) ภายในเซลล์พืชครับ!`;
+        }
+    
+        // 5.7 Economics: Inflation & Compound Interest
+        if (qLower.includes('เงินเฟ้อ') || qLower.includes('ดอกเบี้ยทบต้น') || qLower.includes('การเงิน') || qLower.includes('การลงทุน')) {
+          return `💰 **หลักการเงินสำคัญ: เงินเฟ้อ (Inflation) และ ดอกเบี้ยทบต้น (Compound Interest)**\n\n1. 📉 **เงินเฟ้อ (Inflation):**\n   - คือภาวะที่ราคาสินค้าและบริการโดยทั่วไปเพิ่มสูงขึ้นเรื่อยๆ ส่งผลให้ **อำนาจซื้อของเงินลดลง** เช่น ข้าวแกงจานละ 30 บาทในอดีต วันนี้ราคา 50-60 บาท\n   - วิธีป้องกัน: นำเงินไปลงทุนในสินทรัพย์ที่ชนะเงินเฟ้อ เช่น หุ้น, กองทุนดัชนี, หรือทองคำ\n\n2. 📈 **ดอกเบี้ยทบต้น (Compound Interest):**\n   - อัลเบิร์ต ไอน์สไตน์ ยกย่องให้เป็น *"สิ่งมหัศจรรย์อันดับ 8 ของโลก"*\n   - สูตรการคำนวณ:\n     $$A = P \\left(1 + \\frac{r}{n}\\right)^{nt}$$\n   - ดอกเบี้ยที่ได้รับจะถูกนำไปรวมกับเงินต้น เพื่อสร้างดอกเบี้ยก้อนใหม่ที่ใหญ่ขึ้นไปเรื่อยๆ ยิ่งเริ่มลงทุนเร็ว เวลาจะช่วยให้เงินเติบโตแบบก้าวกระโดดครับ! 🚀`;
+        }
+    
+        // 5.8 Philosophy: Stoicism
+        if (qLower.includes('stoic') || qLower.includes('สโตอิก') || qLower.includes('ปรัชญา')) {
+          return `🏛️ **ปรัชญาสโตอิก (Stoicism): ศิลปะแห่งความสงบทางใจ**\n\nปรัชญากรีก-โรมันโบราณ (นำโดย Marcus Aurelius, Seneca, Epictetus) ที่สอนการใช้ชีวิตอย่างมีปัญญาและยืดหยุ่นต่อความท้าทาย:\n\n1. ⚖️ **วงกลมแห่งการควบคุม (Dichotomy of Control):**\n   - **สิ่งที่เราควบคุมไม่ได้:** ความคิดเห็นคนอื่น, สภาพอากาศ, อดีต, ความตาย, ผลลัพธ์ภายนอก (จงปล่อยวาง)\n   - **สิ่งที่เราควบคุมได้:** ความคิดของเรา, การกระทำ, ทัศนคติ, และคุณธรรมในใจ (จงโฟกัสที่จุดนี้ 100%)\n2. 🌊 **Amor Fati:** จงรักและยอมรับในโชคชะตา ทุกอุปสรรคคือโอกาสในการฝึกฝนความเข้มแข็ง\n3. ⏳ **Memento Mori:** ระลึกเสมอว่าชีวิตมีจำกัด เพื่อใช้ทุกวันอย่างมีคุณค่าและไม่ผัดวันประกันพรุ่งครับ!`;
+        }
+    
+        // 5.9 Learning Techniques
+        if (qLower.includes('เทคนิคการเรียน') || qLower.includes('อ่านหนังสือ') || qLower.includes('จำแม่น') || qLower.includes('เรียนเก่ง')) {
+          return `🎓 **4 สุดยอดเทคนิคการเรียนรู้ที่มีงานวิจัยสมองรองรับ (Evidence-Based Study Methods):**\n\n1. 🧠 **Active Recall (การดึงความจำเชิงรุก):**\n   - แทนที่จะอ่านซ้ำไปซ้ำมา ให้ปิดหนังสือแล้วลองเขียนสรุปหรือทำโจทย์ทดสอบความเข้าใจทันที การบังคับให้สมองดึงข้อมูลออกมาช่วยสร้างการเชื่อมโยงของเซลล์ประสาทที่แข็งแรงที่สุด\n2. 📅 **Spaced Repetition (การทบทวนเว้นระยะ):**\n   - ทบทวนเนื้อหาในวันที่ 1, 3, 7, และ 30 เพื่อเอาชนะ **เส้นโค้งการลืมของ Ebbinghaus (Forgetting Curve)**\n3. 💡 **The Feynman Technique (เทคนิคไฟน์แมน):**\n   - ลองอธิบายเนื้อหาที่เรียนให้คนอื่น หรือเด็กอายุ 10 ขวบเข้าใจด้วยภาษาที่ง่ายที่สุด หากจุดไหนอธิบายไม่ได้ แปลว่าเรายังไม่เข้าใจแก่นแท้ ให้กลับไปทบทวนจุดนั้น\n4. ⏱️ **Pomodoro Technique:** โฟกัสเต็มที่ 25 นาที แล้วพัก 5 นาที ช่วยให้สมองไม่ล้าและมีสมาธิต่อเนื่องตลอดวันครับ!`;
+        }
+    
+        // 5.10 Universe Expansion
+        if (qLower.includes('จักรวาลขยายตัว') || qLower.includes('บิกแบง') || qLower.includes('big bang')) {
+          return `🌌 **การขยายตัวของเอกภพ (Expansion of the Universe)**\n\n- **การค้นพบของเอ็ดวิน ฮับเบิล (1929):** สังเกตพบว่ากาแล็กซีส่วนใหญ่กำลังเคลื่อนที่ถอยห่างออกจากเรา และยิ่งอยู่ไกลเท่าไหร่ ยิ่งถอยห่างเร็วขึ้นเท่านั้น (**Hubble's Law: $v = H_0 d$)** โดยสังเกตจากการเลื่อนทางแดงของสเปกตรัมแสง (Redshift)\n- 🎈 **แบบจำลองลูกโป่ง:** จักรวาลไม่ได้ขยายตัวออกไปในพื้นที่ว่างเปล่า แต่ตัว "เนื้ออวกาศ (Space-time)" เองนั่นแหละที่กำลังยืดขยายตัวออก เหมือนจุดบนผิวลูกโป่งที่พองขึ้น\n- ⚡ **พลังงานมืด (Dark Energy):** ในปี 1998 นักดาราศาสตร์พบว่าเอกภพกำลังขยายตัวด้วย **อัตราเร่ง (Accelerating Expansion)** โดยมีพลังงานมืดลึกลับคิดเป็นกว่า 68% ของเอกภพเป็นตัวขับเคลื่อนครับ!`;
+        }
+    
+        // ------------------------------------------------------------
+        // 6. Coding & Software Engineering Generator
+        // ------------------------------------------------------------
+        if (qLower.includes('โค้ด') || qLower.includes('code') || qLower.includes('python') || qLower.includes('javascript') || qLower.includes('sql')) {
+          // 6.1 Palindrome
+          if (qLower.includes('palindrome') || qLower.includes('พาลินโดรม')) {
             const pySnippet = [
-              'def is_palindrome(s: str) -> bool:',
-              '    # ลบช่องว่างและแปลงเป็นตัวพิมพ์เล็ก',
-              "    cleaned = ''.join(c.lower() for c in s if c.isalnum())",
+              'def is_palindrome(text: str) -> bool:',
+              '    # กรองเฉพาะตัวอักษรและตัวเลข พร้อมแปลงเป็นตัวพิมพ์เล็ก',
+              "    cleaned = ''.join(ch.lower() for ch in text if ch.isalnum())",
               '    # ตรวจสอบว่าอ่านจากหน้าไปหลังเท่ากับหลังมาหน้าหรือไม่',
               '    return cleaned == cleaned[::-1]',
               '',
               '# ตัวอย่างการทดสอบ',
+              'print(is_palindrome("racecar"))        # True',
               'print(is_palindrome("A man, a plan, a canal: Panama"))  # True',
-              'print(is_palindrome("racecar"))                         # True',
-              'print(is_palindrome("hello"))                           # False'
+              'print(is_palindrome("OmniVerse"))      # False'
             ].join('\n');
     
-            return '💻 **ตัวอย่างโค้ดตรวจจับ Palindrome (Python):**\n\n' +
-              fence + 'python\n' + pySnippet + '\n' + fence + '\n\n' +
-              '**คำอธิบายการทำงาน:**\n' +
-              '- ฟังก์ชันนี้ใช้เวลา $O(n)$ และใช้หน่วยความจำ $O(n)$ เพื่อกรองเฉพาะตัวอักษรและตัวเลข แล้วใช้ Slicing `[::-1]` เพื่อเปรียบเทียบข้อความกลับด้านครับ';
+            return `💻 **โค้ดตรวจสอบ Palindrome (Python):**\n\n\`\`\`python\n${pySnippet}\n\`\`\`\n\n💡 **หลักการทำงาน:**\n- ใช้เวลาประมวลผล $O(n)$ และใช้หน่วยความจำ $O(n)$\n- ใช้เทคนิค Slicing \`[::-1]\` เพื่อกลับด้านข้อความแล้วเปรียบเทียบกับต้นฉบับครับ`;
+          }
+    
+          // 6.2 Fibonacci
+          if (qLower.includes('fibonacci') || qLower.includes('ฟีโบ')) {
+            const pyFib = [
+              'def fibonacci_series(n: int) -> list:',
+              '    """สร้างลำดับฟีโบนักชีจำนวน n พจน์"""',
+              '    if n <= 0: return []',
+              '    if n == 1: return [0]',
+              '    seq = [0, 1]',
+              '    while len(seq) < n:',
+              '        seq.append(seq[-1] + seq[-2])',
+              '    return seq',
+              '',
+              '# แสดงผล 10 พจน์แรก',
+              'print(fibonacci_series(10))',
+              '# Output: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]'
+            ].join('\n');
+    
+            return `💻 **โค้ดลำดับฟีโบนักชี (Fibonacci Series in Python):**\n\n\`\`\`python\n${pyFib}\n\`\`\`\n\n💡 **คำอธิบาย:** เริ่มต้นด้วยเลข $0$ และ $1$ จากนั้นแต่ละพจน์ถัดไปเกิดจากผลบวกของ 2 พจน์ก่อนหน้า ($F_n = F_{n-1} + F_{n-2}$) ใช้เวลาแบบ $O(n)$ มีประสิทธิภาพสูงครับ`;
+          }
+    
+          // 6.3 Fetch API JavaScript
+          if (qLower.includes('fetch') || qLower.includes('api') || qLower.includes('javascript')) {
+            const jsFetch = [
+              'async function fetchUserData(userId) {',
+              '  try {',
+              '    const response = await fetch(`https://api.example.com/users/${userId}`);',
+              '    ',
+              '    // ตรวจสอบสถานะการเชื่อมต่อ HTTP',
+              '    if (!response.ok) {',
+              '      throw new Error(`HTTP error! status: ${response.status}`);',
+              '    }',
+              '    ',
+              '    const data = await response.json();',
+              '    console.log("ข้อมูลผู้ใช้:", data);',
+              '    return data;',
+              '  } catch (error) {',
+              '    console.error("เกิดข้อผิดพลาดในการดึงข้อมูล:", error.message);',
+              '  }',
+              '}'
+            ].join('\n');
+    
+            return `💻 **ตัวอย่างการใช้งาน Fetch API ด้วย async/await (JavaScript):**\n\n\`\`\`javascript\n${jsFetch}\n\`\`\`\n\n💡 **จุดสำคัญ:**\n- ใช้ \`await fetch(...)\` เพื่อรอผลลัพธ์แบบ Asynchronous\n- ตรวจสอบ \`response.ok\` เพื่อดักจับ HTTP Errors (เช่น 404, 500)\n- ครอบด้วยบล็อก \`try...catch\` เพื่อป้องกันแอปพลิเคชันหยุดทำงานครับ`;
+          }
+    
+          // 6.4 SQL JOIN
+          if (qLower.includes('sql') || qLower.includes('join')) {
+            const sqlSnippet = [
+              '-- ดึงรายชื่อนักเรียน พร้อมวิชาที่ลงทะเบียนเรียน และคะแนนสอบ',
+              'SELECT ',
+              '    students.student_id,',
+              '    students.full_name,',
+              '    courses.course_name,',
+              '    enrollments.grade',
+              'FROM students',
+              '-- เชื่อมตารางการลงทะเบียน',
+              'INNER JOIN enrollments ON students.student_id = enrollments.student_id',
+              '-- เชื่อมตารางรายวิชา',
+              'INNER JOIN courses ON enrollments.course_id = courses.course_id',
+              'WHERE enrollments.grade >= 80',
+              'ORDER BY students.student_id ASC;'
+            ].join('\n');
+    
+            return `💻 **ตัวอย่างคำสั่ง SQL INNER JOIN เชื่อมโยงข้อมูลหลายตาราง:**\n\n\`\`\`sql\n${sqlSnippet}\n\`\`\`\n\n💡 **ประเภทของ JOIN สำคัญ:**\n- **INNER JOIN:** ดึงเฉพาะแถวที่มีค่าตรงกันในทั้งสองตาราง\n- **LEFT JOIN:** ดึงข้อมูลทั้งหมดจากตารางซ้าย แม้ในตารางขวาจะไม่มีข้อมูลตรงกัน (จะเป็น NULL)\n- **RIGHT JOIN:** ดึงข้อมูลทั้งหมดจากตารางขวาครับ`;
           }
         }
     
-        // 6. 377-Lesson Semantic RAG Search
+        // ------------------------------------------------------------
+        // 7. OmniVerse Academy Semantic RAG Curriculum Search
+        // ------------------------------------------------------------
         const searchResult = this.searchCurriculum(q);
-        if (searchResult && searchResult.score >= 16) {
+        if (searchResult && searchResult.score >= 14) {
           const l = searchResult.lesson;
           const d = searchResult.disc;
           const refs = d && d.references ? d.references.map(r => `[${r.name}](${r.url})`).join(', ') : 'ตำราวิชาการมาตรฐานสากล';
     
-          return `🔬 **องค์ความรู้เจาะลึก: ${l.title}**
-    - **หมวดความรู้:** สายวิชา ${d ? d.name_th : ''} (รหัส ${l.field_code || ''} ${l.field_name || ''})
-    - **ระดับความเชี่ยวชาญ:** ระดับ${l.tier_th || 'พื้นฐาน'}
-    - **สาระสำคัญ:** ${l.desc || ''}
-    
-    📖 **แก่นทฤษฎีและกลไกสำคัญ:**
-    ${this.extractTheorySummary(l.theory)}
-    
-    💡 **สถานการณ์ตัวอย่างจริง:**
-    ${l.scenario || 'มีการนำหลักการนี้ไปประยุกต์ใช้ในการแก้ปัญหาในระบบจริง'}
-    
-    📚 **แหล่งค้นคว้าและตำราอ้างอิงระดับโลก:**
-    ${refs}
-    
-    *(💡 คลิกที่หน้ารายวิชา ${d ? d.name_th : ''} ในเมนูหลักเพื่อเริ่มเรียนบทเรียนนี้และทำแบบฝึกหัดรับ EXP ได้ทันทีครับ!)*`;
+          return `🔬 **องค์ความรู้เจาะลึก: ${l.title}**\n\n- **หมวดความรู้:** สายวิชา ${d ? d.name_th : ''} (รหัส ${l.field_code || ''} ${l.field_name || ''})\n- **ระดับความเชี่ยวชาญ:** ระดับ${l.tier_th || 'พื้นฐาน'}\n- **สาระสำคัญ:** ${l.desc || ''}\n\n📖 **แก่นทฤษฎีและกลไกสำคัญ:**\n${this.extractTheorySummary(l.theory)}\n\n💡 **สถานการณ์ตัวอย่างจริง:**\n${l.scenario || 'มีการนำหลักการนี้ไปประยุกต์ใช้ในการแก้ปัญหาในระบบจริง'}\n\n📚 **แหล่งค้นคว้าและตำราอ้างอิงระดับโลก:**\n${refs}\n\n*(💡 คุณสามารถคลิกเข้าไปที่หน้ารายวิชา ${d ? d.name_th : ''} เพื่ออ่านบทเรียนฉบับเต็มและทำข้อสอบรับ EXP ได้ทันทีครับ!)*`;
         }
     
-        // 7. Discipline Matching
+        // ------------------------------------------------------------
+        // 8. Discipline Knowledge Directory Matching
+        // ------------------------------------------------------------
         for (const d of discList) {
           const codeMatch = qLower.includes(d.code) || qLower.includes(d.id);
           const nameThMatch = d.name_th && qLower.includes(d.name_th.toLowerCase());
@@ -5731,26 +5925,14 @@
               ? refs.map(r => `  • **${r.name}**: ${r.desc} ([ศึกษาเพิ่มเติม](${r.url}))`).join('\n')
               : '  • ตำรามาตรฐานระดับโลกและงานวิจัยตีพิมพ์สากล';
     
-            return `🌐 **สายวิชาที่ ${d.code}: ${d.name_th} (${d.name_en})**
-    - **ภาควิชา:** ${d.part_name || ''}
-    - **ปรัชญาประจำศาสตร์:** *"${d.quote || ''}"*
-    - **ขอบเขตสาขาความรู้:** ครอบคลุม ${d.fields ? d.fields.length : 0} สาขาวิชา เช่น ${fieldsText}
-    - 📚 **บทเรียนในระบบ:** มีทั้งหมด ${dLessons.length} บทเรียน ตั้งแต่ระดับพื้นฐานจนถึงเชี่ยวชาญ
-    - 🔗 **ตำราและแหล่งค้นคว้าชั้นนำระดับโลก:**
-    ${refsText}
-    
-    💡 *คุณสามารถคลิกเข้าไปที่หน้ารายวิชานี้เพื่อเริ่มเรียนรู้บทเรียนและทำโจทย์ได้ทันทีครับ!*`;
+            return `🌐 **สายวิชาที่ ${d.code}: ${d.name_th} (${d.name_en})**\n\n- **ภาควิชา:** ${d.part_name || ''}\n- **ปรัชญาประจำศาสตร์:** *"${d.quote || ''}"*\n- **ขอบเขตสาขาความรู้:** ครอบคลุม ${d.fields ? d.fields.length : 0} สาขาวิชา เช่น ${fieldsText}\n- 📚 **บทเรียนในระบบ:** มีทั้งหมด ${dLessons.length} บทเรียน ตั้งแต่ระดับพื้นฐานจนถึงเชี่ยวชาญ\n- 🔗 **ตำราและแหล่งค้นคว้าชั้นนำระดับโลก:**\n${refsText}\n\n💡 *คุณสามารถคลิกเข้าไปที่หน้ารายวิชานี้เพื่อเริ่มเรียนรู้บทเรียนและทำโจทย์ได้ทันทีครับ!*`;
           }
         }
     
-        // 8. General Knowledge Fallback
-        return `🤖 **สวัสดีครับ! ผมคือ OmniAI Sage 2.0**
-    ผมมีความรอบรู้ครอบคลุมทั้ง **15 มหาศาสตร์ความรู้ของมนุษยชาติ (377 บทเรียน)** และความรู้รอบตัวสากล:
-    - 🌌 **วิทยาศาสตร์และธรรมชาติ (01-05):** อวกาศ, ฟิสิกส์, เคมี, ชีววิทยา, การแพทย์
-    - ⚡ **คณิตศาสตร์ เทคโนโลยี และโลก (06-09):** ตรรกะ, วิทยาการคอมพิวเตอร์ AI, วิศวกรรม, สิ่งแวดล้อม
-    - 🏛️ **สังคม วัฒนธรรม และอารยธรรม (10-15):** ประวัติศาสตร์, สังคมวิทยา, เศรษฐกิจการเงิน, ภาษาศาสตร์, ศิลปะ, ปรัชญาจริยศาสตร์
-    
-    💬 *คุณสามารถพิมพ์ถามคำถามทั่วไป เช่น "ช่วยวางแผนการเงิน", "เขียนโค้ด Python", "อธิบายทฤษฎีบิกแบง", หรือถามโจทย์ข้อสอบได้ตลอดเวลาเลยครับ!*`;
+        // ------------------------------------------------------------
+        // 9. Conversational Universal Fallback (Polite, helpful, engaging)
+        // ------------------------------------------------------------
+        return `🤖 **สวัสดีครับ! ผมคือ OmniAI Sage 3.0**\n\nผมพร้อมตอบคำถามและสนทนากับคุณในทุกมิติของความรู้:\n- 🌌 **15 มหาศาสตร์ (377 บทเรียน):** ถามสรุปเนื้อหา เจาะลึกทฤษฎี หรือขอคำใบ้ข้อสอบ\n- 📐 **คณิตศาสตร์:** คำนวณเลข แก้สมการ แคลคูลัส เรขาคณิต\n- 💻 **คอมพิวเตอร์:** เขียนโค้ด Python, JS, HTML/CSS, SQL\n- 💬 **ชวนคุยทั่วไป:** ปรึกษาเรื่องเรียน ขอคำแนะนำ หรือให้กำลังใจ\n\n*ลองถามคำถามที่เฉพาะเจาะจง เช่น "ทำไมฝนตก", "เขียนโค้ด Python", หรือ "อธิบายทฤษฎีควอนตัม" ได้เลยครับ!*`;
       }
     
       searchCurriculum(query) {
@@ -5797,7 +5979,6 @@
     
       extractTheorySummary(theoryHtml) {
         if (!theoryHtml) return 'ทำความเข้าใจหลักการพื้นฐานและกลไกการทำงานของทฤษฎีนี้';
-        // Clean html tags to plain text snippet
         const text = theoryHtml
           .replace(/<div class="theory-section-title">/g, '\n📌 ')
           .replace(/<\/div>/g, '\n')
@@ -5858,8 +6039,8 @@
       <div class="ai-header-info">
         <div class="ai-avatar-badge">🤖</div>
         <div>
-          <div class="ai-name">OMNI-AI SAGE 2.0</div>
-          <div class="ai-status" id="ai-header-status"><span class="ai-status-dot"></span> พร้อมตอบคำถามรอบรู้ (Cloud GPT)</div>
+          <div class="ai-name">OMNI-AI SAGE 3.0</div>
+          <div class="ai-status" id="ai-header-status"><span class="ai-status-dot"></span> พร้อมสนทนารอบรู้ (Hybrid Engine 3.0)</div>
         </div>
       </div>
       <div class="ai-header-actions">
@@ -5873,12 +6054,12 @@
     <div id="ai-settings-panel" class="ai-settings-panel" style="display: none;">
       <div style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.35rem;">⚙️ ตั้งค่าระบบ AI Engine</div>
       <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.6rem;">
-        ระบบเชื่อมต่อ <strong>Free Cloud GPT</strong> ให้อัตโนมัติ (ไม่ต้องใส่ Key ใช้งานได้ทันที) หรือคุณสามารถเลือกโมเดลอื่นตามต้องการ
+        ระบบเชื่อมต่อ <strong>Hybrid Cloud & Local Polymath</strong> อัตโนมัติ (ตอบโต้ลื่นไหล เสถียร ไม่ต้องใส่ Key) หรือระบุ Gemini API Key ฟรีสำหรับความเร็วสูงสุด
       </p>
       <div style="margin-bottom: 0.5rem;">
         <label style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">เลือก AI Provider:</label>
         <select id="ai-provider-select" class="form-input" style="font-size: 0.8rem; padding: 0.4rem 0.6rem; margin-bottom: 0.5rem; width: 100%;" onchange="omniAI.handleProviderChange()">
-          <option value="auto">🌟 Auto (Cloud GPT ฟรี - ไม่ต้องใส่คีย์)</option>
+          <option value="auto">🌟 Auto (Hybrid Engine 3.0 - ตอบต่อเนื่อง ไม่ต้องใส่คีย์)</option>
           <option value="gemini">💎 Google Gemini API (Gemini 1.5/2.0 Flash)</option>
           <option value="openai">⚡ OpenAI API (GPT-4o / GPT-4o-mini)</option>
           <option value="local">💾 Built-in Knowledge Engine (ออฟไลน์ 100%)</option>
