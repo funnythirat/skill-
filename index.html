@@ -2117,6 +2117,27 @@
       color: #fff;
       box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
     }
+
+    /* MULTI-QUIZ & DYNAMIC QUESTION BUILDER ENHANCEMENTS */
+    .admin-q-card {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      transition: all 0.2s ease;
+    }
+    .admin-q-card:hover {
+      border-color: rgba(56, 189, 248, 0.35);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    .quiz-progress-wrap {
+      margin-bottom: 1.25rem;
+      background: rgba(15, 23, 42, 0.4);
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
   </style>
 </head>
 <body>
@@ -2357,55 +2378,19 @@
           </div>
         </div>
 
-        <!-- Part 2: Quiz / Exercise -->
+        <!-- Part 2: Dynamic Multi-Quiz (Up to 10 Questions) -->
         <div style="background: rgba(15, 23, 42, 0.5); padding: 1.25rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 1.5rem;">
-          <h4 style="color: #a855f7; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.4rem;">
-            <span>⚔️</span> โจทย์แบบฝึกหัดจำลองสถานการณ์ (Interactive Quiz)
-          </h4>
-
-          <div class="form-group" style="margin-bottom: 1rem;">
-            <label class="form-label">📌 บริบทสถานการณ์จำลอง (Scenario Context)</label>
-            <input type="text" id="edit-lesson-scenario" class="form-input" placeholder="บริบทสถานการณ์ เช่น การทดลอง หรือเคสจำลอง">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+            <h4 style="color: #a855f7; margin: 0; display: flex; align-items: center; gap: 0.4rem;">
+              <span>⚔️</span> จัดการชุดโจทย์แบบฝึกหัด (Interactive Quizzes)
+              <span class="badge" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); font-size: 0.75rem;">มี <span id="edit-q-count">1</span>/10 ข้อ</span>
+            </h4>
+            <button type="button" id="edit-add-q-btn" class="btn btn-outline btn-sm" onclick="app.addQuestionBlock('edit')" style="border-color: #a855f7; color: #c084fc; font-size: 0.8rem; padding: 0.35rem 0.75rem;">
+              ➕ เพิ่มโจทย์ข้อต่อไป (สูงสุด 10 ข้อ)
+            </button>
           </div>
-
-          <div class="form-group" style="margin-bottom: 1rem;">
-            <label class="form-label">คำถามโจทย์ (Question)</label>
-            <input type="text" id="edit-lesson-question" class="form-input" required placeholder="คำถามที่ต้องการให้ผู้เรียนเลือกคำตอบ">
-          </div>
-
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
-            <div>
-              <label class="form-label">ตัวเลือก A</label>
-              <input type="text" id="edit-lesson-opt-a" class="form-input" required placeholder="ตัวเลือก A">
-            </div>
-            <div>
-              <label class="form-label">ตัวเลือก B</label>
-              <input type="text" id="edit-lesson-opt-b" class="form-input" required placeholder="ตัวเลือก B">
-            </div>
-            <div>
-              <label class="form-label">ตัวเลือก C</label>
-              <input type="text" id="edit-lesson-opt-c" class="form-input" required placeholder="ตัวเลือก C">
-            </div>
-            <div>
-              <label class="form-label">ตัวเลือก D</label>
-              <input type="text" id="edit-lesson-opt-d" class="form-input" required placeholder="ตัวเลือก D">
-            </div>
-          </div>
-
-          <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1rem;">
-            <div class="form-group">
-              <label class="form-label">ตัวเลือกที่ถูกต้อง (Correct Option)</label>
-              <select id="edit-lesson-ans" class="form-select" required>
-                <option value="0">ข้อ A ถูกต้อง</option>
-                <option value="1">ข้อ B ถูกต้อง</option>
-                <option value="2">ข้อ C ถูกต้อง</option>
-                <option value="3">ข้อ D ถูกต้อง</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label">💡 คำอธิบายเฉลยและหลักวิชาการ (Explanation)</label>
-              <input type="text" id="edit-lesson-exp" class="form-input" required placeholder="เหตุผลทางวิชาการที่ข้อนี้ถูกต้อง">
-            </div>
+          <div id="edit-questions-container">
+            <!-- Dynamic Question Cards populated by initQuestionBuilder('edit') -->
           </div>
         </div>
 
@@ -2967,6 +2952,7 @@
             rawTheory: merged.rawTheory || merged.theory,
             rawThinking: merged.rawThinking || merged.thinking,
             rawExample: merged.rawExample || merged.example,
+            questions: Array.isArray(merged.questions) ? merged.questions : null,
             question: merged.question,
             scenario: merged.scenario || 'สถานการณ์จำลองตามบทเรียน',
             opts: opts,
@@ -3058,7 +3044,7 @@
         this.subscribeToLessons();
       }
 
-      // Admin Add Lesson & Quiz Action
+      // Admin Add Lesson & Quiz Action (Supports 1-10 Questions)
       async createCustomLesson(event) {
         if (event) event.preventDefault();
         if (!auth.currentUser || auth.currentUser.role !== 'admin') {
@@ -3074,21 +3060,18 @@
         const theory = document.getElementById('adm-theory').value.trim();
         const thinking = document.getElementById('adm-thinking').value.trim();
         const example = document.getElementById('adm-example').value.trim();
-        const question = document.getElementById('adm-question').value.trim();
-        const scenario = document.getElementById('adm-scenario').value.trim();
-        const optA = document.getElementById('adm-opt-a').value.trim();
-        const optB = document.getElementById('adm-opt-b').value.trim();
-        const optC = document.getElementById('adm-opt-c').value.trim();
-        const optD = document.getElementById('adm-opt-d').value.trim();
-        const ans = document.getElementById('adm-ans').value;
-        const exp = document.getElementById('adm-exp').value.trim();
 
-        if (!title || !desc || !theory || !question || !optA || !optB || !optC || !optD || !exp) {
-          this.showToast('กรุณากรอกข้อมูลบทเรียนและข้อสอบให้ครบถ้วน');
+        if (!title || !desc || !theory) {
+          this.showToast('กรุณากรอกข้อมูลบทเรียนและทฤษฎีให้ครบถ้วน');
           return;
         }
 
+        const questions = this.collectAndValidateQuestions('adm');
+        if (!questions || questions.length === 0) return;
+
         const docId = 'custom_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
+        const primaryQ = questions[0];
+
         const newLesson = {
           id: docId,
           type: 'custom',
@@ -3101,15 +3084,18 @@
           theory,
           thinking,
           example,
-          question,
-          scenario,
-          optA,
-          optB,
-          optC,
-          optD,
-          opts: [optA, optB, optC, optD],
-          ans: parseInt(ans) || 0,
-          exp,
+          // Support multiple questions (up to 10)
+          questions: questions,
+          // Maintain root fields for full backward compatibility
+          question: primaryQ.question,
+          scenario: primaryQ.scenario,
+          optA: primaryQ.optA,
+          optB: primaryQ.optB,
+          optC: primaryQ.optC,
+          optD: primaryQ.optD,
+          opts: [primaryQ.optA, primaryQ.optB, primaryQ.optC, primaryQ.optD],
+          ans: primaryQ.ans,
+          exp: primaryQ.exp,
           createdBy: auth.currentUser.username,
           createdAt: new Date().toISOString()
         };
@@ -3120,7 +3106,8 @@
         this.mergeCustomLessons();
 
         document.getElementById('form-add-lesson').reset();
-        this.showToast('เพิ่มบทเรียนและข้อสอบใหม่สำเร็จเรียบร้อย! 🌟');
+        this.initQuestionBuilder('adm');
+        this.showToast(`เพิ่มบทเรียนพร้อมชุดโจทย์ ${questions.length} ข้อสำเร็จเรียบร้อย! 🌟`);
         this.renderAdmin();
 
         // Persist to Cloud Firestore collection 'lessons' so ALL users get it in real-time
@@ -3341,7 +3328,7 @@
         };
       }
 
-      // Admin Hub: Open Edit Modal & Populate Data
+      // Admin Hub: Open Edit Modal & Populate Data (1-10 Questions)
       openEditLessonModal(discId, lessonId) {
         let targetLesson = null;
         if (LESSON_DATA[discId]) {
@@ -3360,7 +3347,6 @@
         }
 
         const parts = this.parseTheoryParts(targetLesson.theory, targetLesson.rawTheory, targetLesson.rawThinking, targetLesson.rawExample);
-        const opts = targetLesson.opts || [targetLesson.optA, targetLesson.optB, targetLesson.optC, targetLesson.optD] || ['', '', '', ''];
 
         const setVal = (id, val) => {
           const el = document.getElementById(id);
@@ -3375,19 +3361,15 @@
         setVal('edit-lesson-theory', parts.theory);
         setVal('edit-lesson-thinking', parts.thinking);
         setVal('edit-lesson-example', parts.example);
-        setVal('edit-lesson-scenario', targetLesson.scenario || '');
-        setVal('edit-lesson-question', targetLesson.question || '');
-        setVal('edit-lesson-opt-a', opts[0] || '');
-        setVal('edit-lesson-opt-b', opts[1] || '');
-        setVal('edit-lesson-opt-c', opts[2] || '');
-        setVal('edit-lesson-opt-d', opts[3] || '');
-        setVal('edit-lesson-ans', String(targetLesson.ans ?? 0));
-        setVal('edit-lesson-exp', targetLesson.exp || '');
+
+        // Populate dynamic question builder with existing questions
+        const questions = this.getLessonQuestions(targetLesson);
+        this.initQuestionBuilder('edit', questions);
 
         this.openModal('modal-edit-lesson');
       }
 
-      // Admin Hub: Save Edits to Lesson & Quiz
+      // Admin Hub: Save Edits to Lesson & Quiz (Supports 1-10 Questions)
       async saveEditLesson(event) {
         if (event) event.preventDefault();
         if (!auth.currentUser || auth.currentUser.role !== 'admin') {
@@ -3404,19 +3386,14 @@
         const theory = document.getElementById('edit-lesson-theory').value.trim();
         const thinking = document.getElementById('edit-lesson-thinking').value.trim();
         const example = document.getElementById('edit-lesson-example').value.trim();
-        const scenario = document.getElementById('edit-lesson-scenario').value.trim();
-        const question = document.getElementById('edit-lesson-question').value.trim();
-        const optA = document.getElementById('edit-lesson-opt-a').value.trim();
-        const optB = document.getElementById('edit-lesson-opt-b').value.trim();
-        const optC = document.getElementById('edit-lesson-opt-c').value.trim();
-        const optD = document.getElementById('edit-lesson-opt-d').value.trim();
-        const ans = parseInt(document.getElementById('edit-lesson-ans').value) || 0;
-        const exp = document.getElementById('edit-lesson-exp').value.trim();
 
-        if (!title || !desc || !theory || !question || !optA || !optB || !optC || !optD || !exp) {
-          this.showToast('กรุณากรอกข้อมูลบทเรียนและข้อสอบให้ครบถ้วน');
+        if (!title || !desc || !theory) {
+          this.showToast('กรุณากรอกข้อมูลบทเรียนและทฤษฎีให้ครบถ้วน');
           return;
         }
+
+        const questions = this.collectAndValidateQuestions('edit');
+        if (!questions || questions.length === 0) return;
 
         const theoryHtml = `
           <div class="theory-section-title">📜 1. ทฤษฎีบทและหลักการสำคัญ (Core Principles)</div>
@@ -3429,6 +3406,7 @@
 
         const customIdx = (this.customLessons || []).findIndex(l => String(l.id) === String(lessonId));
         const isCustom = customIdx !== -1;
+        const primaryQ = questions[0];
 
         const updatedData = {
           discipline: discId,
@@ -3440,15 +3418,18 @@
           rawTheory: theory,
           rawThinking: thinking,
           rawExample: example,
-          scenario: scenario,
-          question: question,
-          optA: optA,
-          optB: optB,
-          optC: optC,
-          optD: optD,
-          opts: [optA, optB, optC, optD],
-          ans: ans,
-          exp: exp,
+          // Support multiple questions (up to 10)
+          questions: questions,
+          // Maintain root fields for full backward compatibility
+          scenario: primaryQ.scenario,
+          question: primaryQ.question,
+          optA: primaryQ.optA,
+          optB: primaryQ.optB,
+          optC: primaryQ.optC,
+          optD: primaryQ.optD,
+          opts: [primaryQ.optA, primaryQ.optB, primaryQ.optC, primaryQ.optD],
+          ans: primaryQ.ans,
+          exp: primaryQ.exp,
           modifiedBy: auth.currentUser.username,
           modifiedAt: new Date().toISOString()
         };
@@ -3473,7 +3454,7 @@
 
         this.mergeCustomLessons();
         this.closeModal('modal-edit-lesson');
-        this.showToast('บันทึกการแก้ไขบทเรียนและแบบฝึกหัดสำเร็จ! ✨');
+        this.showToast(`บันทึกการแก้ไขบทเรียนและชุดโจทย์ ${questions.length} ข้อสำเร็จ! ✨`);
         this.renderAdmin();
 
         try {
@@ -4051,9 +4032,9 @@
                                         `).join('')}
                                       </div>
                                     ` : ''}
-                                  </div>
-                                `;
-                              }).join('')}
+                                  </div>`;
+        setTimeout(() => this.initQuestionBuilder('adm'), 50);
+      }).join('')}
                             </div>
                           </div>
                         `;
@@ -4424,7 +4405,259 @@
         `;
       }
 
-      renderQuiz(param) {
+      
+      // ============================================================
+      // DYNAMIC ADMIN QUESTION BUILDER (1-10 QUESTIONS)
+      // ============================================================
+      escapeHtml(text) {
+        const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+        return String(text || '').replace(/[&<>"']/g, m => map[m]);
+      }
+
+      getLessonQuestions(lesson) {
+        if (!lesson) return [];
+        if (Array.isArray(lesson.questions) && lesson.questions.length > 0) {
+          return lesson.questions.map(q => ({
+            question: q.question || '',
+            scenario: q.scenario || '',
+            optA: q.optA || (q.opts ? q.opts[0] : ''),
+            optB: q.optB || (q.opts ? q.opts[1] : ''),
+            optC: q.optC || (q.opts ? q.opts[2] : ''),
+            optD: q.optD || (q.opts ? q.opts[3] : ''),
+            opts: q.opts || [q.optA || '', q.optB || '', q.optC || '', q.optD || ''],
+            ans: parseInt(q.ans ?? 0) || 0,
+            exp: q.exp || ''
+          }));
+        }
+        return [{
+          question: lesson.question || '',
+          scenario: lesson.scenario || '',
+          optA: lesson.optA || (lesson.opts ? lesson.opts[0] : ''),
+          optB: lesson.optB || (lesson.opts ? lesson.opts[1] : ''),
+          optC: lesson.optC || (lesson.opts ? lesson.opts[2] : ''),
+          optD: lesson.optD || (lesson.opts ? lesson.opts[3] : ''),
+          opts: lesson.opts || [lesson.optA || '', lesson.optB || '', lesson.optC || '', lesson.optD || ''],
+          ans: parseInt(lesson.ans ?? 0) || 0,
+          exp: lesson.exp || ''
+        }];
+      }
+
+      initQuestionBuilder(prefix, initialQuestions = []) {
+        if (!this.adminQuestionsData) this.adminQuestionsData = {};
+        let questions = [];
+        if (Array.isArray(initialQuestions) && initialQuestions.length > 0) {
+          questions = initialQuestions.map(q => ({
+            question: q.question || '',
+            scenario: q.scenario || '',
+            optA: q.optA || (q.opts ? q.opts[0] : ''),
+            optB: q.optB || (q.opts ? q.opts[1] : ''),
+            optC: q.optC || (q.opts ? q.opts[2] : ''),
+            optD: q.optD || (q.opts ? q.opts[3] : ''),
+            ans: parseInt(q.ans ?? 0) || 0,
+            exp: q.exp || ''
+          }));
+        } else {
+          questions = [{
+            question: '',
+            scenario: '',
+            optA: '',
+            optB: '',
+            optC: '',
+            optD: '',
+            ans: 0,
+            exp: ''
+          }];
+        }
+
+        this.adminQuestionsData[prefix] = questions;
+        this.renderQuestionBlocks(prefix);
+      }
+
+      renderQuestionBlocks(prefix) {
+        const container = document.getElementById(`${prefix}-questions-container`);
+        const countBadge = document.getElementById(`${prefix}-q-count`);
+        const addBtn = document.getElementById(`${prefix}-add-q-btn`);
+        if (!container) return;
+
+        const questions = this.adminQuestionsData[prefix] || [];
+        if (countBadge) countBadge.innerText = questions.length;
+        if (addBtn) addBtn.style.display = questions.length >= 10 ? 'none' : 'inline-flex';
+
+        let html = '';
+        questions.forEach((q, idx) => {
+          html += `
+            <div class="admin-q-card" id="${prefix}-q-card-${idx}" style="background: rgba(15, 23, 42, 0.65); padding: 1.25rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 0.6rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <span style="background: linear-gradient(135deg, #06b6d4, #8b5cf6); color: #fff; font-size: 0.78rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 8px;">ข้อที่ ${idx + 1}</span>
+                  <span style="font-size: 0.82rem; color: var(--text-muted);">โจทย์ข้อสอบ</span>
+                </div>
+                ${questions.length > 1 ? `
+                  <button type="button" class="btn btn-outline btn-sm" style="color: #f87171; border-color: rgba(239, 68, 68, 0.3); font-size: 0.75rem; padding: 0.25rem 0.6rem;" onclick="app.removeQuestionBlock('${prefix}', ${idx})">
+                    🗑️ ลบข้อนี้
+                  </button>
+                ` : ''}
+              </div>
+
+              <div class="form-group" style="margin-bottom: 0.85rem;">
+                <label class="form-label" style="font-size: 0.82rem;">📌 บริบทสถานการณ์จำลอง (Scenario Context - ไม่บังคับ)</label>
+                <input type="text" class="form-input ${prefix}-q-scenario" data-idx="${idx}" value="${this.escapeHtml(q.scenario)}" placeholder="เช่น การทดลองในห้องแล็บ หรือเคสจำลอง">
+              </div>
+
+              <div class="form-group" style="margin-bottom: 0.85rem;">
+                <label class="form-label" style="font-size: 0.82rem;">คำถามโจทย์ข้อที่ ${idx + 1} (Question) <span style="color: #f87171;">*</span></label>
+                <input type="text" class="form-input ${prefix}-q-question" data-idx="${idx}" required value="${this.escapeHtml(q.question)}" placeholder="พิมพ์คำถามข้อที่ ${idx + 1}...">
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.85rem;">
+                <div>
+                  <label class="form-label" style="font-size: 0.82rem;">ตัวเลือก A <span style="color: #f87171;">*</span></label>
+                  <input type="text" class="form-input ${prefix}-q-opt-a" data-idx="${idx}" required value="${this.escapeHtml(q.optA)}" placeholder="ตัวเลือก A">
+                </div>
+                <div>
+                  <label class="form-label" style="font-size: 0.82rem;">ตัวเลือก B <span style="color: #f87171;">*</span></label>
+                  <input type="text" class="form-input ${prefix}-q-opt-b" data-idx="${idx}" required value="${this.escapeHtml(q.optB)}" placeholder="ตัวเลือก B">
+                </div>
+                <div>
+                  <label class="form-label" style="font-size: 0.82rem;">ตัวเลือก C <span style="color: #f87171;">*</span></label>
+                  <input type="text" class="form-input ${prefix}-q-opt-c" data-idx="${idx}" required value="${this.escapeHtml(q.optC)}" placeholder="ตัวเลือก C">
+                </div>
+                <div>
+                  <label class="form-label" style="font-size: 0.82rem;">ตัวเลือก D <span style="color: #f87171;">*</span></label>
+                  <input type="text" class="form-input ${prefix}-q-opt-d" data-idx="${idx}" required value="${this.escapeHtml(q.optD)}" placeholder="ตัวเลือก D">
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 0.75rem;">
+                <div>
+                  <label class="form-label" style="font-size: 0.82rem;">ตัวเลือกที่ถูกต้อง <span style="color: #f87171;">*</span></label>
+                  <select class="form-select ${prefix}-q-ans" data-idx="${idx}" required>
+                    <option value="0" ${q.ans === 0 ? 'selected' : ''}>ข้อ A ถูกต้อง</option>
+                    <option value="1" ${q.ans === 1 ? 'selected' : ''}>ข้อ B ถูกต้อง</option>
+                    <option value="2" ${q.ans === 2 ? 'selected' : ''}>ข้อ C ถูกต้อง</option>
+                    <option value="3" ${q.ans === 3 ? 'selected' : ''}>ข้อ D ถูกต้อง</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label" style="font-size: 0.82rem;">💡 คำอธิบายเฉลยและหลักวิชาการ (Explanation) <span style="color: #f87171;">*</span></label>
+                  <input type="text" class="form-input ${prefix}-q-exp" data-idx="${idx}" required value="${this.escapeHtml(q.exp)}" placeholder="เหตุผลทางวิชาการที่ข้อนี้ถูกต้อง">
+                </div>
+              </div>
+            </div>
+          `;
+        });
+
+        container.innerHTML = html;
+      }
+
+      syncQuestionsFromDom(prefix) {
+        const container = document.getElementById(`${prefix}-questions-container`);
+        if (!container) return;
+
+        const questions = this.adminQuestionsData[prefix] || [];
+        questions.forEach((q, idx) => {
+          const scenarioEl = container.querySelector(`.${prefix}-q-scenario[data-idx="${idx}"]`);
+          const questionEl = container.querySelector(`.${prefix}-q-question[data-idx="${idx}"]`);
+          const optAEl = container.querySelector(`.${prefix}-q-opt-a[data-idx="${idx}"]`);
+          const optBEl = container.querySelector(`.${prefix}-q-opt-b[data-idx="${idx}"]`);
+          const optCEl = container.querySelector(`.${prefix}-q-opt-c[data-idx="${idx}"]`);
+          const optDEl = container.querySelector(`.${prefix}-q-opt-d[data-idx="${idx}"]`);
+          const ansEl = container.querySelector(`.${prefix}-q-ans[data-idx="${idx}"]`);
+          const expEl = container.querySelector(`.${prefix}-q-exp[data-idx="${idx}"]`);
+
+          if (scenarioEl) q.scenario = scenarioEl.value.trim();
+          if (questionEl) q.question = questionEl.value.trim();
+          if (optAEl) q.optA = optAEl.value.trim();
+          if (optBEl) q.optB = optBEl.value.trim();
+          if (optCEl) q.optC = optCEl.value.trim();
+          if (optDEl) q.optD = optDEl.value.trim();
+          if (ansEl) q.ans = parseInt(ansEl.value) || 0;
+          if (expEl) q.exp = expEl.value.trim();
+        });
+      }
+
+      addQuestionBlock(prefix) {
+        this.syncQuestionsFromDom(prefix);
+        const questions = this.adminQuestionsData[prefix] || [];
+        if (questions.length >= 10) {
+          this.showToast('สามารถเพิ่มโจทย์ได้สูงสุด 10 ข้อต่อบทเรียนครับ');
+          return;
+        }
+
+        questions.push({
+          question: '',
+          scenario: '',
+          optA: '',
+          optB: '',
+          optC: '',
+          optD: '',
+          ans: 0,
+          exp: ''
+        });
+
+        this.renderQuestionBlocks(prefix);
+        const newCard = document.getElementById(`${prefix}-q-card-${questions.length - 1}`);
+        if (newCard) newCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      removeQuestionBlock(prefix, index) {
+        this.syncQuestionsFromDom(prefix);
+        const questions = this.adminQuestionsData[prefix] || [];
+        if (questions.length <= 1) {
+          this.showToast('บทเรียนต้องมีโจทย์อย่างน้อย 1 ข้อครับ');
+          return;
+        }
+
+        questions.splice(index, 1);
+        this.renderQuestionBlocks(prefix);
+      }
+
+      collectAndValidateQuestions(prefix) {
+        this.syncQuestionsFromDom(prefix);
+        const questions = this.adminQuestionsData[prefix] || [];
+        if (questions.length === 0) {
+          this.showToast('กรุณาระบุโจทย์อย่างน้อย 1 ข้อ');
+          return null;
+        }
+        if (questions.length > 10) {
+          this.showToast('สามารถมีโจทย์ได้สูงสุด 10 ข้อต่อบทเรียน');
+          return null;
+        }
+
+        for (let i = 0; i < questions.length; i++) {
+          const q = questions[i];
+          if (!q.question) {
+            this.showToast(`กรุณากรอกคำถามในโจทย์ข้อที่ ${i + 1}`);
+            return null;
+          }
+          if (!q.optA || !q.optB || !q.optC || !q.optD) {
+            this.showToast(`กรุณากรอกตัวเลือก A, B, C, D ให้ครบในโจทย์ข้อที่ ${i + 1}`);
+            return null;
+          }
+          if (!q.exp) {
+            this.showToast(`กรุณากรอกคำอธิบายเฉลยในโจทย์ข้อที่ ${i + 1}`);
+            return null;
+          }
+        }
+
+        return questions.map(q => ({
+          question: q.question,
+          scenario: q.scenario || '',
+          optA: q.optA,
+          optB: q.optB,
+          optC: q.optC,
+          optD: q.optD,
+          opts: [q.optA, q.optB, q.optC, q.optD],
+          ans: q.ans,
+          exp: q.exp
+        }));
+      }
+
+
+      // ============================================================
+      // INTERACTIVE MULTI-QUESTION QUIZ RUNNER (1-10 QUESTIONS)
+      // ============================================================
+      renderQuiz(param, restart = false) {
         const [rawDiscId, idxStr] = (param || '').split('_');
         const ALIAS_MAP = {
           'tech': '07',
@@ -4452,11 +4685,30 @@
         const quizKey = `${disc.id}_${idxStr}`;
         const isDone = auth.currentUser && Array.isArray(auth.currentUser.completedQuizzes) && auth.currentUser.completedQuizzes.includes(quizKey);
 
+        const questions = this.getLessonQuestions(lesson);
+        const totalQ = questions.length;
+
+        // Initialize or validate quiz state
+        if (restart || !this.activeQuizState || this.activeQuizState.quizKey !== quizKey) {
+          this.activeQuizState = {
+            quizKey,
+            discId: disc.id,
+            idxStr,
+            currentIdx: 0,
+            score: 0,
+            answers: []
+          };
+        }
+
+        const currentStep = this.activeQuizState.currentIdx;
+        const currentQ = questions[currentStep] || questions[0];
+        const progressPct = Math.round(((currentStep) / totalQ) * 100);
+
         const view = document.getElementById('app-view');
         view.innerHTML = `
           <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem;">
             <button class="btn btn-outline" onclick="app.navigate('#/theory/${disc.id}_${idxStr}')">⬅ กลับไปทบทวนทฤษฎี</button>
-            <button class="btn btn-primary" style="background: linear-gradient(135deg, #4f46e5, #06b6d4); border-color: #06b6d4; font-size: 0.85rem; padding: 0.45rem 0.9rem;" onclick="omniAI.askHintFromQuiz('${disc.id}', '${idxStr}')">🤖 ขอคำใบ้โจทย์จาก AI</button>
+            <button class="btn btn-primary" style="background: linear-gradient(135deg, #4f46e5, #06b6d4); border-color: #06b6d4; font-size: 0.85rem; padding: 0.45rem 0.9rem;" onclick="omniAI.askHintFromQuiz('${disc.id}', '${idxStr}', ${currentStep})">🤖 ขอคำใบ้โจทย์จาก AI</button>
           </div>
           <div class="quiz-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
@@ -4466,25 +4718,40 @@
                   const tObj = getTierInfo(lesson.tier || 'foundation');
                   return `<span class="tier-badge tier-badge-${tObj.id}">${tObj.icon} ระดับ${tObj.name_th}</span>`;
                 })()}
+                <span class="badge" style="background: rgba(6, 182, 212, 0.15); color: #38bdf8; border: 1px solid rgba(6, 182, 212, 0.3); font-size: 0.78rem;">📝 ข้อที่ ${currentStep + 1}/${totalQ}</span>
               </div>
               <div style="display: flex; gap: 0.5rem; align-items: center;">
+                ${totalQ > 1 ? `<span style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); padding: 0.2rem 0.65rem; border-radius: 20px; font-size: 0.78rem; font-weight: 700;">คะแนน: ${this.activeQuizState.score}/${currentStep}</span>` : ''}
                 ${isDone ? '<span style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; padding: 0.2rem 0.65rem; border-radius: 20px; font-size: 0.78rem; font-weight: 700;">✅ เคยทำผ่านแล้ว</span>' : ''}
                 <span style="background: #ef4444; color: #fff; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.8rem; font-weight: 700;">🔥 Combo x${this.combo}</span>
               </div>
             </div>
 
-            ${isDone ? `
-              <div style="background: rgba(34,197,94,0.08); border: 1px dashed rgba(34,197,94,0.4); border-radius: 10px; padding: 0.6rem 0.9rem; margin-bottom: 1rem; font-size: 0.85rem; color: #86efac;">
-                ℹ️ <strong>โหมดทบทวนความรู้:</strong> คุณเคยได้รับ EXP จากข้อนี้ไปแล้ว สามารถฝึกทำโจทย์และตรวจสอบคำอธิบายได้โดยจะไม่ได้รับแต้ม EXP ซ้ำ
+            <!-- Multi-Question Progress Bar -->
+            ${totalQ > 1 ? `
+              <div class="quiz-progress-wrap">
+                <div style="display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.35rem;">
+                  <span>ความคืบหน้าแบบฝึกหัด</span>
+                  <span style="color: #38bdf8; font-weight: 700;">${currentStep + 1} จาก ${totalQ} ข้อ (${progressPct}%)</span>
+                </div>
+                <div style="background: rgba(255,255,255,0.08); height: 7px; border-radius: 6px; overflow: hidden;">
+                  <div style="background: linear-gradient(90deg, #38bdf8, #a855f7); height: 100%; width: ${((currentStep + 1) / totalQ) * 100}%; transition: width 0.3s ease;"></div>
+                </div>
               </div>
             ` : ''}
 
-            <div class="scenario-box">📌 <strong>สถานการณ์จำลอง:</strong> ${lesson.scenario}</div>
-            <h3 class="quiz-question-text">${lesson.question}</h3>
+            ${isDone && currentStep === 0 ? `
+              <div style="background: rgba(34,197,94,0.08); border: 1px dashed rgba(34,197,94,0.4); border-radius: 10px; padding: 0.6rem 0.9rem; margin-bottom: 1rem; font-size: 0.85rem; color: #86efac;">
+                ℹ️ <strong>โหมดทบทวนความรู้:</strong> คุณเคยได้รับ EXP จากชุดแบบฝึกหัดนี้ไปแล้ว สามารถฝึกทำโจทย์และตรวจสอบคำอธิบายได้โดยจะไม่ได้รับแต้ม EXP ซ้ำ
+              </div>
+            ` : ''}
+
+            ${currentQ.scenario ? `<div class="scenario-box">📌 <strong>สถานการณ์จำลอง:</strong> ${currentQ.scenario}</div>` : ''}
+            <h3 class="quiz-question-text">${currentQ.question}</h3>
 
             <div id="options-area">
-              ${lesson.opts.map((opt, i) => `
-                <button class="option-btn" onclick="app.answerQuiz(${i}, ${lesson.ans}, '${(lesson.exp || '').replace(/'/g, "\\'")}', '${disc.id}', '${idxStr}')">
+              ${currentQ.opts.map((opt, i) => `
+                <button class="option-btn" onclick="app.answerQuizStep(${i}, ${currentQ.ans}, '${(currentQ.exp || '').replace(/'/g, "\\'")}', '${disc.id}', '${idxStr}', ${currentStep}, ${totalQ})">
                   <span class="option-key">${String.fromCharCode(65 + i)}</span>
                   <span>${opt}</span>
                 </button>
@@ -4496,68 +4763,124 @@
         `;
       }
 
-      answerQuiz(selected, correct, exp, discId, idxStr) {
+      answerQuizStep(selected, correct, exp, discId, idxStr, currentStep, totalQ) {
         document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
         const resultDiv = document.getElementById('quiz-result');
         const quizKey = `${discId}_${idxStr}`;
+        const isCorrect = selected === correct;
+
+        if (this.activeQuizState && this.activeQuizState.quizKey === quizKey) {
+          if (isCorrect) this.activeQuizState.score++;
+          this.activeQuizState.answers.push({ step: currentStep, selected, correct, isCorrect });
+        }
 
         const user = auth.currentUser;
         if (user && !Array.isArray(user.completedQuizzes)) {
           user.completedQuizzes = [];
         }
         const alreadyCompleted = user && user.completedQuizzes.includes(quizKey);
+        const hasNext = (currentStep + 1) < totalQ;
 
-        if (selected === correct) {
+        if (isCorrect) {
           soundEngine.playCorrect();
           document.querySelectorAll('.option-btn')[selected].classList.add('correct');
-          
-          let gained = 0;
-          if (!alreadyCompleted) {
-            gained = 50 + (this.combo - 1) * 5;
-            if (user) {
-              user.completedQuizzes.push(quizKey);
-              user.xp = (user.xp || 0) + gained;
-              auth.saveCurrentUser();
-            }
-            this.combo += 1;
-            this.updateUserUI();
-          }
+          this.combo += 1;
+          this.updateUserUI();
 
-          resultDiv.innerHTML = `
-            <div style="background: rgba(34,197,94,0.2); border: 1px solid #22c55e; border-radius: 12px; padding: 1.1rem; margin-top: 1.25rem;">
-              <h4 style="color: #4ade80;">
-                ${alreadyCompleted 
-                  ? '✅ ถูกต้องยอดเยี่ยม! (ทบทวนความรู้สำเร็จ • ข้อนี้เคยได้รับ EXP ไปแล้ว)' 
-                  : `✅ ถูกต้องยอดเยี่ยม! (+${gained} EXP)`}
-              </h4>
-              <p style="font-size: 0.92rem; color: #fff; margin-top: 0.4rem; line-height: 1.5;"><strong>💡 เหตุผลและหลักวิชาการ:</strong> ${exp}</p>
-              <div style="margin-top: 1rem; display: flex; gap: 0.6rem; flex-wrap: wrap;">
-                <button class="btn btn-primary" onclick="app.navigate('#/discipline/${discId}')">ทำโจทย์บทเรียนอื่นต่อ ➔</button>
-                <button class="btn btn-outline" onclick="app.navigate('#/theory/${discId}_${idxStr}')">📖 อ่านทฤษฎีบทนี้อีกครั้ง</button>
+          if (hasNext) {
+            resultDiv.innerHTML = `
+              <div style="background: rgba(34,197,94,0.2); border: 1px solid #22c55e; border-radius: 12px; padding: 1.1rem; margin-top: 1.25rem;">
+                <h4 style="color: #4ade80;">✅ ถูกต้องยอดเยี่ยม!</h4>
+                <p style="font-size: 0.92rem; color: #fff; margin-top: 0.4rem; line-height: 1.5;"><strong>💡 เหตุผลและหลักวิชาการ:</strong> ${exp}</p>
+                <div style="margin-top: 1rem;">
+                  <button class="btn btn-primary" style="padding: 0.65rem 1.4rem;" onclick="app.nextQuizStep('${quizKey}')">ข้อถัดไป ➔ (ข้อ ${currentStep + 2}/${totalQ})</button>
+                </div>
               </div>
-            </div>
-          `;
-
-          if (!alreadyCompleted && user && user.xp >= 300 && user.xp - gained < 300) {
-            soundEngine.playLevelUp();
-            this.openModal('modal-celebrate');
+            `;
+          } else {
+            this.finishQuizSession(quizKey, discId, idxStr, totalQ, alreadyCompleted);
           }
         } else {
           soundEngine.playWrong();
           document.querySelectorAll('.option-btn')[selected].classList.add('wrong');
           document.querySelectorAll('.option-btn')[correct].classList.add('correct');
           this.combo = 1;
+          this.updateUserUI();
 
-          resultDiv.innerHTML = `
-            <div style="background: rgba(239,68,68,0.2); border: 1px solid #ef4444; border-radius: 12px; padding: 1.1rem; margin-top: 1.25rem;">
-              <h4 style="color: #f87171;">❌ ยังไม่ถูกต้อง (Combo รีเซ็ต)</h4>
-              <p style="font-size: 0.92rem; color: #fff; margin-top: 0.4rem; line-height: 1.5;"><strong>💡 เฉลยและคำอธิบาย:</strong> ${exp}</p>
-              <div style="margin-top: 1rem; display: flex; gap: 0.6rem; flex-wrap: wrap;">
-                <button class="btn btn-outline" onclick="app.navigate('#/quiz/${discId}_${idxStr}')">ลองทำใหม่อีกครั้ง 🔄</button>
-                <button class="btn btn-outline" onclick="app.navigate('#/theory/${discId}_${idxStr}')">📖 กลับไปอ่านทฤษฎี</button>
+          if (hasNext) {
+            resultDiv.innerHTML = `
+              <div style="background: rgba(239,68,68,0.2); border: 1px solid #ef4444; border-radius: 12px; padding: 1.1rem; margin-top: 1.25rem;">
+                <h4 style="color: #f87171;">❌ ยังไม่ถูกต้อง (Combo รีเซ็ต)</h4>
+                <p style="font-size: 0.92rem; color: #fff; margin-top: 0.4rem; line-height: 1.5;"><strong>💡 เฉลยและคำอธิบาย:</strong> ${exp}</p>
+                <div style="margin-top: 1rem;">
+                  <button class="btn btn-primary" style="padding: 0.65rem 1.4rem;" onclick="app.nextQuizStep('${quizKey}')">ข้อถัดไป ➔ (ข้อ ${currentStep + 2}/${totalQ})</button>
+                </div>
+              </div>
+            `;
+          } else {
+            this.finishQuizSession(quizKey, discId, idxStr, totalQ, alreadyCompleted);
+          }
+        }
+      }
+
+      nextQuizStep(quizKey) {
+        if (this.activeQuizState && this.activeQuizState.quizKey === quizKey) {
+          this.activeQuizState.currentIdx++;
+          this.renderQuiz(quizKey);
+        }
+      }
+
+      finishQuizSession(quizKey, discId, idxStr, totalQ, alreadyCompleted) {
+        const resultDiv = document.getElementById('quiz-result');
+        const score = this.activeQuizState ? this.activeQuizState.score : 0;
+        const pct = Math.round((score / totalQ) * 100);
+        const user = auth.currentUser;
+
+        let gained = 0;
+        if (!alreadyCompleted && user) {
+          // Dynamic XP calculation: 25 XP per correct + perfect bonus (if totalQ >= 2) + combo bonus
+          const baseXP = score * 25;
+          const perfectBonus = (score === totalQ && totalQ >= 2) ? 50 : 0;
+          const comboBonus = Math.max(0, (this.combo - 1) * 5);
+          gained = baseXP + perfectBonus + comboBonus;
+
+          user.completedQuizzes.push(quizKey);
+          user.xp = (user.xp || 0) + gained;
+          auth.saveCurrentUser();
+          this.updateUserUI();
+        }
+
+        const isPassed = pct >= 50;
+
+        resultDiv.innerHTML = `
+          <div style="background: ${isPassed ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)'}; border: 1px solid ${isPassed ? '#22c55e' : '#ef4444'}; border-radius: 14px; padding: 1.4rem; margin-top: 1.25rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+              <div>
+                <h3 style="color: ${isPassed ? '#4ade80' : '#f87171'}; margin: 0;">
+                  ${isPassed ? '🎉 สรุปผลการทำแบบฝึกหัด: ผ่านเกณฑ์ยอดเยี่ยม!' : '📝 สรุปผลการทำแบบฝึกหัด: พยายามได้ดีมาก!'}
+                </h3>
+                <p style="font-size: 0.92rem; color: #e2e8f0; margin-top: 0.35rem;">
+                  ตอบถูกทั้งหมด <strong>${score} / ${totalQ} ข้อ</strong> (${pct}%)
+                  ${!alreadyCompleted && gained > 0 ? `<span style="color: #facc15; font-weight: 700; margin-left: 0.5rem;">⭐ +${gained} EXP</span>` : ''}
+                  ${alreadyCompleted ? '<span style="color: #86efac; margin-left: 0.5rem;">(โหมดทบทวนความรู้)</span>' : ''}
+                </p>
+              </div>
+              <div style="font-size: 1.8rem; font-weight: 800; color: ${isPassed ? '#4ade80' : '#f87171'}; background: rgba(0,0,0,0.3); padding: 0.5rem 1.2rem; border-radius: 12px;">
+                ${score}/${totalQ}
               </div>
             </div>
-          `;
+
+            <div style="margin-top: 1.25rem; display: flex; gap: 0.6rem; flex-wrap: wrap;">
+              <button class="btn btn-primary" onclick="app.navigate('#/discipline/${discId}')">ทำโจทย์บทเรียนอื่นต่อ ➔</button>
+              <button class="btn btn-outline" onclick="app.renderQuiz('${discId}_${idxStr}', true)">ลองทำชุดนี้ใหม่อีกครั้ง 🔄</button>
+              <button class="btn btn-outline" onclick="app.navigate('#/theory/${discId}_${idxStr}')">📖 อ่านทฤษฎีบทนี้อีกครั้ง</button>
+            </div>
+          </div>
+        `;
+
+        if (!alreadyCompleted && user && user.xp >= 300 && user.xp - gained < 300) {
+          soundEngine.playLevelUp();
+          this.openModal('modal-celebrate');
         }
       }
 
@@ -4866,51 +5189,17 @@
               </div>
 
               <div style="border-top: 1px solid var(--card-border); margin: 1.25rem 0; padding-top: 1.25rem;">
-                <h4 style="color: #fff; margin-bottom: 0.75rem;">⚔️ ส่วนของโจทย์แบบฝึกหัดจำลองสถานการณ์</h4>
-                
-                <div class="form-group">
-                  <label class="form-label">📌 บริบทสถานการณ์จำลอง (Scenario Context)</label>
-                  <input type="text" id="adm-scenario" class="form-input" placeholder="เช่น การทดลองในห้องแล็บ หรือการเผชิญหน้ากับความท้าทาย">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+                  <h4 style="color: #fff; margin: 0; display: flex; align-items: center; gap: 0.4rem;">
+                    <span>⚔️</span> จัดการชุดโจทย์แบบฝึกหัด (Interactive Quizzes)
+                    <span class="badge" style="background: rgba(6, 182, 212, 0.15); color: #38bdf8; border: 1px solid rgba(6, 182, 212, 0.3); font-size: 0.75rem;">มี <span id="adm-q-count">1</span>/10 ข้อ</span>
+                  </h4>
+                  <button type="button" id="adm-add-q-btn" class="btn btn-outline btn-sm" onclick="app.addQuestionBlock('adm')" style="border-color: var(--accent); color: var(--accent); font-size: 0.8rem; padding: 0.35rem 0.75rem;">
+                    ➕ เพิ่มโจทย์ข้อต่อไป (สูงสุด 10 ข้อ)
+                  </button>
                 </div>
-
-                <div class="form-group">
-                  <label class="form-label">คำถามโจทย์ (Question)</label>
-                  <input type="text" id="adm-question" class="form-input" required placeholder="คำถามที่ต้องการให้ผู้เรียนเลือกคำตอบที่ถูกต้อง">
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
-                  <div>
-                    <label class="form-label">ตัวเลือก A</label>
-                    <input type="text" id="adm-opt-a" class="form-input" required placeholder="ตัวเลือก A">
-                  </div>
-                  <div>
-                    <label class="form-label">ตัวเลือก B</label>
-                    <input type="text" id="adm-opt-b" class="form-input" required placeholder="ตัวเลือก B">
-                  </div>
-                  <div>
-                    <label class="form-label">ตัวเลือก C</label>
-                    <input type="text" id="adm-opt-c" class="form-input" required placeholder="ตัวเลือก C">
-                  </div>
-                  <div>
-                    <label class="form-label">ตัวเลือก D</label>
-                    <input type="text" id="adm-opt-d" class="form-input" required placeholder="ตัวเลือก D">
-                  </div>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1rem;">
-                  <div class="form-group">
-                    <label class="form-label">ตัวเลือกที่ถูกต้อง (Correct Option)</label>
-                    <select id="adm-ans" class="form-select" required>
-                      <option value="0">ข้อ A ถูกต้อง</option>
-                      <option value="1">ข้อ B ถูกต้อง</option>
-                      <option value="2">ข้อ C ถูกต้อง</option>
-                      <option value="3">ข้อ D ถูกต้อง</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">💡 คำอธิบายเฉลยและหลักวิชาการ (Explanation)</label>
-                    <input type="text" id="adm-exp" class="form-input" required placeholder="เหตุผลทางวิชาการที่ข้อนี้ถูกต้อง">
-                  </div>
+                <div id="adm-questions-container">
+                  <!-- Dynamic Question Cards populated by initQuestionBuilder('adm') -->
                 </div>
               </div>
 
@@ -5786,13 +6075,23 @@
         return null;
       }
 
-      askHintFromQuiz(discId, idxStr) {
+      askHintFromQuiz(discId, idxStr, qIdx = 0) {
         this.open();
         const disc = (typeof DISCIPLINE_DATA !== 'undefined' ? DISCIPLINE_DATA : []).find(d => d.id === discId);
         const lessons = (typeof LESSON_DATA !== 'undefined' ? LESSON_DATA[discId] : null) || [];
         const lesson = lessons[parseInt(idxStr) || 0] || lessons[0];
-        const context = { type: 'quiz', discId, idxStr, disc, lesson };
-        const prompt = `ช่วยใบ้แนวคิดการคิดวิเคราะห์สำหรับโจทย์ข้อนี้หน่อยครับ (ไม่ต้องบอกคำตอบตรงๆ นะครับ)`;
+
+        // Retrieve active question object
+        let activeQuestion = lesson;
+        if (typeof app !== 'undefined' && app.getLessonQuestions) {
+          const qList = app.getLessonQuestions(lesson);
+          if (qList[qIdx]) activeQuestion = qList[qIdx];
+        } else if (lesson && Array.isArray(lesson.questions) && lesson.questions[qIdx]) {
+          activeQuestion = lesson.questions[qIdx];
+        }
+
+        const context = { type: 'quiz', discId, idxStr, qIdx, disc, lesson, currentQuestion: activeQuestion };
+        const prompt = `ช่วยใบ้แนวคิดการคิดวิเคราะห์สำหรับโจทย์ข้อที่ ${qIdx + 1} หน่อยครับ (ไม่ต้องบอกคำตอบตรงๆ นะครับ)`;
         this.sendMessage(prompt, context);
       }
 
@@ -6149,12 +6448,14 @@
 
         // 1. In-Quiz Socratic Hints
         if (context && context.type === 'quiz' && (qLower.includes('ใบ้') || qLower.includes('hint') || qLower.includes('แนวคิด') || qLower.includes('ช่วย') || qLower.includes('ข้อนี้') || qLower.includes('ตอบ'))) {
-          const lesson = context.lesson;
-          if (lesson) {
-            this.lastTopic = 'quiz_hint';
-            return `💡 **แนวคิดเชิงวิเคราะห์และคำใบ้สำหรับโจทย์ข้อนี้ (Socratic Hint):**\n\n- **บริบทสถานการณ์:** "${lesson.scenario || lesson.desc || lesson.title}"\n- **แก่นทฤษฎีที่ต้องพิจารณา:** ${lesson.field_name || ''} (${lesson.field_code || ''})\n- **จุดสังเกตสำคัญ:** ให้พิจารณาว่าอะไรคือตัวแปรต้นที่ส่งผลโดยตรงต่อเหตุการณ์ และตัดตัวเลือกที่สลับบทบาทระหว่างเหตุกับผล (Correlation vs Causation) หรือตัวเลือกที่ขัดแย้งกับกฎธรรมชาติออก\n- 🎯 *คำใบ้ลับ:* แยกแยะระหว่าง **สาเหตุรากเหง้า (Root Cause)** กับเพียง **ผลพวงข้างเคียง (Symptom)** เพื่อหาทางเลือกที่สมบูรณ์ที่สุดครับ!`;
-          }
-        }
+      const lesson = context.lesson;
+      const qObj = context.currentQuestion || lesson;
+      if (lesson) {
+        this.lastTopic = 'quiz_hint';
+        const qNumText = (context.qIdx !== undefined) ? ` ข้อที่ ${context.qIdx + 1}` : '';
+        return `💡 **แนวคิดเชิงวิเคราะห์และคำใบ้สำหรับโจทย์${qNumText} (Socratic Hint):**\n\n- **บริบทสถานการณ์:** "${qObj.scenario || lesson.scenario || lesson.desc || lesson.title}"\n- **คำถามที่กำลังพิจารณา:** "${qObj.question || lesson.question}"\n- **แก่นทฤษฎีที่ต้องนำมาใช้:** ${lesson.field_name || ''} (${lesson.field_code || ''})\n- **จุดสังเกตสำคัญ:** ให้พิจารณาว่าอะไรคือตัวแปรต้นที่ส่งผลโดยตรงต่อเหตุการณ์ และตัดตัวเลือกที่สลับบทบาทระหว่างเหตุกับผล (Correlation vs Causation) หรือตัวเลือกที่ขัดแย้งกับกฎธรรมชาติออก\n- 🎯 *คำใบ้ลับ:* แยกแยะระหว่าง **สาเหตุรากเหง้า (Root Cause)** กับเพียง **ผลพวงข้างเคียง (Symptom)** เพื่อหาทางเลือกที่สมบูรณ์ที่สุดครับ!`;
+      }
+    }
 
         // 2. In-Theory Deep Dive
         if (context && context.type === 'theory' && (qLower.includes('สรุป') || qLower.includes('คืออะไร') || qLower.includes('อธิบาย') || qLower.includes('ตัวอย่าง') || qLower.includes('บทเรียนนี้'))) {
