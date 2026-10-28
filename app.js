@@ -487,7 +487,7 @@ class OmniApp {
               </div>
             </td>
             <td><span style="color: var(--accent); font-weight: 600;">${u.rank_tier}</span></td>
-            <td><strong>LV. ${u.level}</strong></td>
+            <td><strong>LV. ${u.level || (Math.floor(Math.sqrt((u.xp || 0) / 25)) + 1)}</strong></td>
             <td style="text-align: right;"><strong style="color: #fbbf24;">${u.xp} EXP</strong></td>
           </tr>
         `).join('');

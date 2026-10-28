@@ -367,7 +367,7 @@ class AdminPortal {
                     </select>
                   </td>
                   <td><span style="color: var(--admin-accent);">${u.rank_tier}</span></td>
-                  <td>LV. ${u.level}</td>
+                  <td>LV. ${u.level || (Math.floor(Math.sqrt((u.xp || 0) / 25)) + 1)}</td>
                   <td>${u.xp}</td>
                   <td>
                     ${u.is_banned ? '<span style="color: #ef4444; font-weight: 700;">⛔ ถูกระงับ</span>' : '<span style="color: #22c55e;">ปกติ</span>'}

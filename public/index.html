@@ -2641,6 +2641,12 @@
             this.currentUser = profileDoc.exists
               ? { ...fallbackProfile, ...profileDoc.data(), id: firebaseUser.uid }
               : fallbackProfile;
+            const userXp = Number(this.currentUser.xp) || 0;
+            this.currentUser.xp = userXp;
+            this.currentUser.level = Math.floor(Math.sqrt(userXp / 25)) + 1;
+            if (window.app && window.app.getRankForXp) {
+              this.currentUser.rank = window.app.getRankForXp(userXp);
+            }
             if (!Array.isArray(this.currentUser.completedQuizzes)) {
               this.currentUser.completedQuizzes = [];
             }
@@ -2658,7 +2664,19 @@
         });
 
         this.unsubscribeUsers = firebase.firestore().collection('users').orderBy('xp', 'desc').onSnapshot((snapshot) => {
-          this.users = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          this.users = snapshot.docs.map(doc => {
+            const data = doc.data();
+            const xp = Number(data.xp) || 0;
+            const level = Math.floor(Math.sqrt(xp / 25)) + 1;
+            const rank = (window.app && window.app.getRankForXp) ? window.app.getRankForXp(xp) : (data.rank || 'Bronze Novice');
+            return {
+              id: doc.id,
+              ...data,
+              xp,
+              level,
+              rank
+            };
+          });
           if (window.app && (window.location.hash === '#/leaderboard' || window.location.hash === '#/admin')) {
             window.app.handleRoute();
           }
@@ -2673,6 +2691,12 @@
 
       async saveCurrentUser() {
         if (!this.currentUser || !this.currentUser.id) return;
+        const xp = Number(this.currentUser.xp) || 0;
+        this.currentUser.xp = xp;
+        this.currentUser.level = Math.floor(Math.sqrt(xp / 25)) + 1;
+        if (window.app && window.app.getRankForXp) {
+          this.currentUser.rank = window.app.getRankForXp(xp);
+        }
         const { id, ...profile } = this.currentUser;
         try {
           await firebase.firestore().collection('users').doc(id).set(profile, { merge: true });
@@ -3681,21 +3705,34 @@
         return `<span class="profile-avatar-frame ${user.frame || 'default'} ${className}">${avatar}</span>`;
       }
 
-      getLevel() {
-        const xp = auth.currentUser ? auth.currentUser.xp : 0;
-        return Math.floor(Math.sqrt(xp / 25)) + 1;
+      getLevel(user) {
+        const u = user || auth.currentUser;
+        const xp = u ? (u.xp || 0) : 0;
+        return this.getLevelForXp(xp);
       }
 
-      getRank() {
-        const xp = auth.currentUser ? auth.currentUser.xp : 0;
+      getLevelForXp(xp) {
+        const currentXp = Math.max(0, Number(xp) || 0);
+        return Math.floor(Math.sqrt(currentXp / 25)) + 1;
+      }
+
+      getXpForLevel(level) {
+        const lvl = Math.max(1, Number(level) || 1);
+        return (lvl - 1) * (lvl - 1) * 25;
+      }
+
+      getRank(user) {
+        const u = user || auth.currentUser;
+        const xp = u ? (u.xp || 0) : 0;
         return this.getRankForXp(xp);
       }
 
       getRankForXp(xp) {
-        if (xp >= 1500) return 'Omniscient Sage';
-        if (xp >= 600) return 'Platinum Expert';
-        if (xp >= 300) return 'Gold Adept';
-        if (xp >= 150) return 'Silver Apprentice';
+        const currentXp = Math.max(0, Number(xp) || 0);
+        if (currentXp >= 1500) return 'Omniscient Sage';
+        if (currentXp >= 600) return 'Platinum Expert';
+        if (currentXp >= 300) return 'Gold Adept';
+        if (currentXp >= 150) return 'Silver Apprentice';
         return 'Bronze Novice';
       }
 
@@ -4837,6 +4874,10 @@
         const user = auth.currentUser;
 
         let gained = 0;
+        const oldXp = (user && user.xp) || 0;
+        const oldLevel = this.getLevelForXp(oldXp);
+        const oldRank = this.getRankForXp(oldXp);
+
         if (!alreadyCompleted && user) {
           // Dynamic XP calculation: 25 XP per correct + perfect bonus (if totalQ >= 2) + combo bonus
           const baseXP = score * 25;
@@ -4845,10 +4886,16 @@
           gained = baseXP + perfectBonus + comboBonus;
 
           user.completedQuizzes.push(quizKey);
-          user.xp = (user.xp || 0) + gained;
+          user.xp = oldXp + gained;
+          user.level = this.getLevelForXp(user.xp);
+          user.rank = this.getRankForXp(user.xp);
           auth.saveCurrentUser();
           this.updateUserUI();
         }
+
+        const newXp = (user && user.xp) || 0;
+        const newLevel = this.getLevelForXp(newXp);
+        const newRank = this.getRankForXp(newXp);
 
         const isPassed = pct >= 50;
 
@@ -4878,9 +4925,26 @@
           </div>
         `;
 
-        if (!alreadyCompleted && user && user.xp >= 300 && user.xp - gained < 300) {
-          soundEngine.playLevelUp();
-          this.openModal('modal-celebrate');
+        if (!alreadyCompleted && user && gained > 0) {
+          if (newRank !== oldRank) {
+            soundEngine.playLevelUp();
+            const iconEl = document.getElementById('celebrate-icon');
+            const titleEl = document.getElementById('celebrate-title');
+            const textEl = document.getElementById('celebrate-text');
+            if (iconEl) iconEl.innerText = '👑';
+            if (titleEl) titleEl.innerText = 'RANK UP!';
+            if (textEl) textEl.innerText = `ยินดีด้วย! คุณได้รับการเลื่อนขั้นสู่ยศ "${newRank}" (Level ${newLevel})`;
+            this.openModal('modal-celebrate');
+          } else if (newLevel > oldLevel) {
+            soundEngine.playLevelUp();
+            const iconEl = document.getElementById('celebrate-icon');
+            const titleEl = document.getElementById('celebrate-title');
+            const textEl = document.getElementById('celebrate-text');
+            if (iconEl) iconEl.innerText = '⚡';
+            if (titleEl) titleEl.innerText = 'LEVEL UP!';
+            if (textEl) textEl.innerText = `ยินดีด้วย! คุณเลเวลอัปสู่ Level ${newLevel} แล้ว`;
+            this.openModal('modal-celebrate');
+          }
         }
       }
 
@@ -4922,7 +4986,7 @@
                       </div>
                     </td>
                     <td><span style="color: var(--accent); font-weight: 600;">${this.getRankForXp(user.xp || 0)}</span></td>
-                    <td><strong>LV. ${user.level || 1}</strong></td>
+                    <td><strong>LV. ${this.getLevelForXp(user.xp || 0)}</strong></td>
                     <td style="text-align: right;"><strong style="color: #38bdf8;">${user.xp || 0} EXP</strong></td>
                   </tr>
                 `).join('')}
@@ -4960,7 +5024,7 @@
             <h2>${auth.currentUser.username} ${auth.currentUser.role === 'admin' ? '<span style="background: #38bdf8; color: #000; font-size: 0.75rem; vertical-align: middle; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 5px;">ADMIN</span>' : ''}</h2>
             <div style="color: var(--accent); font-weight: 700; margin-bottom: 1.5rem;">${this.getRank()}</div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; margin-bottom: 1.5rem;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
               <div style="background: rgba(0,0,0,0.3); padding: 1rem 0.5rem; border-radius: 12px;">
                 <div style="font-size: 0.8rem; color: var(--text-muted);">เลเวลรวม</div>
                 <strong style="font-size: 1.5rem; color: #fff;">LV. ${this.getLevel()}</strong>
@@ -4974,6 +5038,27 @@
                 <strong style="font-size: 1.5rem; color: #34d399;">${(auth.currentUser.completedQuizzes || []).length} / 168 บทเรียน</strong>
               </div>
             </div>
+
+            ${(() => {
+              const curLvl = this.getLevel();
+              const curBaseXp = this.getXpForLevel(curLvl);
+              const nextBaseXp = this.getXpForLevel(curLvl + 1);
+              const userXp = Number(auth.currentUser.xp) || 0;
+              const xpInCurrentLvl = Math.max(0, userXp - curBaseXp);
+              const xpNeededForNextLvl = Math.max(1, nextBaseXp - curBaseXp);
+              const lvlProgressPct = Math.min(100, Math.round((xpInCurrentLvl / xpNeededForNextLvl) * 100));
+              return `
+                <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--card-border); border-radius: 12px; padding: 0.85rem 1.25rem; margin-bottom: 1.5rem; text-align: left;">
+                  <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 0.4rem;">
+                    <span style="color: var(--text-muted);">ความก้าวหน้าสู่ <strong>LV. ${curLvl + 1}</strong></span>
+                    <span style="color: #38bdf8; font-weight: 700;">${xpInCurrentLvl} / ${xpNeededForNextLvl} EXP (${lvlProgressPct}%)</span>
+                  </div>
+                  <div style="background: rgba(255,255,255,0.08); height: 8px; border-radius: 6px; overflow: hidden;">
+                    <div style="background: linear-gradient(90deg, #38bdf8, #a855f7); height: 100%; width: ${lvlProgressPct}%; transition: width 0.3s ease;"></div>
+                  </div>
+                </div>
+              `;
+            })()}
 
             ${auth.currentUser.role === 'admin' ? `
               <div style="margin-bottom: 1.5rem;">
@@ -5317,7 +5402,7 @@
                       </div>
                     </td>
                     <td>${user.role === 'admin' ? '<span style="color: #38bdf8; font-weight: 700;">ADMIN</span>' : 'USER'}</td>
-                    <td>LV. ${user.level || 1} (${user.xp || 0} EXP)</td>
+                    <td>LV. ${this.getLevelForXp(user.xp || 0)} (${user.xp || 0} EXP)</td>
                     <td style="text-align: right;">
                       ${user.role === 'admin' ? '<button class="btn btn-outline" disabled style="padding: 0.3rem 0.6rem; font-size: 0.8rem;">Superuser</button>' : `<button class="btn btn-outline" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; color: #fbbf24;" onclick="app.showToast('จัดการ EXP ให้ ${user.username} สำเร็จ!')">จัดการ EXP ⭐</button><button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="auth.deleteUser(${index})">ลบบัญชี</button>`}
                     </td>
