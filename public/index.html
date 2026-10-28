@@ -2001,6 +2001,119 @@
       }
     }
 
+    
+    /* OMNI-AI 5.0 NEXT-GEN ENHANCEMENTS */
+    .ai-persona-bar {
+      display: flex;
+      gap: 0.35rem;
+      padding: 0.45rem 0.9rem;
+      background: rgba(15, 23, 42, 0.75);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .ai-persona-bar::-webkit-scrollbar { display: none; }
+    .ai-persona-tab {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      color: #94a3b8;
+      font-size: 0.73rem;
+      font-weight: 600;
+      padding: 0.25rem 0.65rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .ai-persona-tab:hover {
+      background: rgba(56, 189, 248, 0.12);
+      color: #38bdf8;
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+    .ai-persona-tab.active {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.4), rgba(6, 182, 212, 0.4));
+      border-color: #06b6d4;
+      color: #fff;
+      box-shadow: 0 0 10px rgba(6, 182, 212, 0.35);
+    }
+
+    .ai-mic-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    .ai-mic-btn:hover {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+    .ai-mic-btn.ai-mic-recording {
+      background: rgba(239, 68, 68, 0.25) !important;
+      border-color: #ef4444 !important;
+      color: #ef4444 !important;
+      animation: micPulse 1.2s infinite alternate ease-in-out;
+    }
+    @keyframes micPulse {
+      0% { transform: scale(1); box-shadow: 0 0 4px rgba(239, 68, 68, 0.4); }
+      100% { transform: scale(1.1); box-shadow: 0 0 16px rgba(239, 68, 68, 0.85); }
+    }
+    .ai-mic-btn svg { width: 18px; height: 18px; }
+
+    .ai-math-block {
+      margin: 0.65rem 0;
+      padding: 0.65rem 0.9rem;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-left: 3px solid #38bdf8;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+    .ai-math-label {
+      font-size: 0.7rem;
+      color: #38bdf8;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .ai-math-block code {
+      background: transparent !important;
+      color: #e0f2fe !important;
+      font-size: 0.92rem;
+      font-family: 'Fira Code', 'Consolas', monospace;
+      padding: 0 !important;
+      display: block;
+      white-space: pre-wrap;
+    }
+    .ai-math-inline {
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 4px;
+      padding: 0.1rem 0.35rem;
+      font-family: 'Fira Code', 'Consolas', monospace;
+      font-size: 0.85rem;
+      color: #38bdf8;
+      white-space: nowrap;
+    }
+    .ai-math-inline code {
+      background: transparent !important;
+      color: inherit !important;
+      padding: 0 !important;
+    }
+
     /* OMNI-AI 4.0 PINNACLE ENHANCEMENTS */
     .ai-stream-cursor {
       display: inline-block;
@@ -2139,6 +2252,8 @@
       border: 1px solid rgba(255, 255, 255, 0.05);
     }
   </style>
+  <!-- Puter.js Free Cloud AI SDK -->
+  <script src="https://js.puter.com/v2/"></script>
 </head>
 <body>
   <canvas id="canvas-background"></canvas>
@@ -5508,15 +5623,17 @@
         this.provider = (typeof localStorage !== 'undefined' ? localStorage.getItem('omni_ai_provider') : null) || 'auto';
         this.geminiKey = (typeof localStorage !== 'undefined' ? localStorage.getItem('omni_ai_gemini_api_key') : null) || '';
         this.openaiKey = (typeof localStorage !== 'undefined' ? localStorage.getItem('omni_ai_openai_api_key') : null) || '';
+        this.persona = (typeof localStorage !== 'undefined' ? localStorage.getItem('omni_ai_persona') : null) || 'sage';
 
         this.messages = [
           {
             role: 'bot',
-            content: '🤖 **ยินดีต้อนรับสู่ OmniAI Sage 4.0 (Pinnacle Polymath Edition)!**\n\nผมคือผู้ช่วยอัจฉริยะและติวเตอร์ส่วนตัวประจำ **OmniVerse Academy** ครอบคลุม **15 มหาศาสตร์ (122 สาขาวิชา 377 บทเรียน)** พร้อมระบบสนทนาความเร็วสูง รองรับการอ่านออกเสียงภาษาไทย (Voice TTS) แนะนำคำถามวิเคราะห์ต่อเนื่องอัตโนมัติ และระบบพิมพ์แบบ Typewriter Streaming!\n\n💡 **สิ่งที่คุณสามารถคุยหรือถามผมได้:**\n- 💬 **สนทนาและปรึกษาได้ทุกเรื่อง:** ทักทาย, ขอคำแนะนำการเรียน, ขอกำลังใจ, ปรัชญาชีวิต, มุขตลกสายวิทย์\n- 🔬 **วิทยาศาสตร์ 15 มหาศาสตร์:** จักรวาล, ควอนตัม, ฟิสิกส์, เคมี, เซลล์ & DNA, วิศวกรรม, การแพทย์\n- 📐 **คิดเลขและแก้โจทย์คณิต:** คำนวณร้อยละ, สมการกำลังสอง, แคลคูลัส, สถิติ พร้อมวิธีทำทีละขั้น\n- 💻 **ช่วยเขียนโค้ดและดีบัก:** Python, JavaScript, HTML/CSS, SQL, Algorithms & Big-O\n- 📖 **เจาะลึกบทเรียนและติวสอบ:** สรุปหลักสูตร หรือขอคำใบ้แบบ Socratic โดยไม่สปอยล์คำตอบตรงๆ\n\n*คลิกเลือกหัวข้อแนะนำด้านล่าง หรือพิมพ์คำถามที่สงสัยได้เลยครับ!*',
+            content: '🤖 **ยินดีต้อนรับสู่ OmniAI Sage 5.0 (OmniPolymath Next-Gen)!**\n\nผมคือผู้ช่วยอัจฉริยะและติวเตอร์ส่วนตัวประจำ **OmniVerse Academy** ครอบคลุม **15 มหาศาสตร์ (122 สาขาวิชา 377 บทเรียน)** พร้อมขุมพลัง **Puter.js Free Cloud LLM (GPT-4o-mini)**, รองรับการสั่งงานด้วยเสียงภาษาไทย (Speech-to-Text), ปรับเลือก **4 สไตล์บุคลิกผู้สอน (AI Personas)**, แปลงสูตรคณิตศาสตร์ ($..$, $$..$$), และระบบออกโจทย์ฝึกหัดจำลอง!\n\n💡 **สิ่งที่คุณสามารถคุยหรือถามผมได้:**\n- 🎙️ **สั่งงานด้วยเสียง:** กดไอคอนรูปไมโครโฟนเพื่อพูดภาษาไทยได้ทันที\n- 🎭 **เลือกสไตล์ผู้สอน:** สลับระหว่าง 🧙‍♂️ ปราชญ์, ⚡ ติวเตอร์สรุป, 👶 พี่ใจดี ELI5, หรือ 💻 โค้ดเมนเทอร์\n- 🎯 **สร้างโจทย์ฝึกหัด:** พิมพ์ "ขอโจทย์ซ้อมมือ" เพื่อรับข้อสอบจำลองพร้อมเฉลยวิธีคิด\n- 🔬 **วิทยาศาสตร์ 15 มหาศาสตร์:** จักรวาล, ฟิสิกส์, เคมี, เซลล์ & DNA, วิศวกรรม, การแพทย์\n- 📐 **คิดเลขและแก้โจทย์คณิต:** คำนวณร้อยละ, สมการกำลังสอง, แคลคูลัส, สถิติ พร้อมสูตรและวิธีทำ\n- 💻 **ช่วยเขียนโค้ดและดีบัก:** Python, JavaScript, HTML/CSS, SQL พร้อมวิเคราะห์ Big-O\n- 📥 **บันทึกการเรียน:** กดปุ่ม 📥 เพื่อดาวน์โหลดสรุปโน้ตการเรียนรู้ทั้งหมดเป็นไฟล์ Markdown\n\n*คลิกเลือกหัวข้อแนะนำด้านล่าง หรือพิมพ์คำถามที่สงสัยได้เลยครับ!*',
             chips: [
+              '🎯 ขอโจทย์ซ้อมมือ 1 ข้อพร้อมเฉลย',
               '🌌 อธิบายเรื่องหลุมดำและกาลเวลาให้ฟังหน่อย',
               '💻 ช่วยเขียนโค้ด Python ฟีโบนักชีพร้อมวิเคราะห์ Big-O',
-              '📐 ช่วยคิดเลข 35% ของ 2,400 หน่อยครับ',
+              '📐 สรุปสูตรแคลคูลัสและการหาอนุพันธ์',
               '🌿 เซลล์พืชกับเซลล์สัตว์ต่างกันอย่างไร?'
             ]
           }
@@ -5529,10 +5646,13 @@
         this.lastTopic = null;
         this.currentSpeakingIndex = null;
         this.currentUtterance = null;
+        this.isListening = false;
+        this.recognition = null;
       }
 
       init() {
         this.renderMessages();
+        this.syncPersonaUI();
         this.updateKeyStatusText();
         this.syncSettingsUI();
       }
@@ -5560,8 +5680,198 @@
       close() {
         const widget = document.getElementById('omni-ai-widget');
         if (widget) widget.style.display = 'none';
+        this.stopListening();
+        this.stopSpeaking();
       }
 
+      // ============================================================
+      // PERSONA SYSTEM (🧙‍♂️ ปราชญ์ / ⚡ สรุป / 👶 ELI5 / 💻 โค้ด)
+      // ============================================================
+      setPersona(personaKey) {
+        const valid = ['sage', 'speed', 'eli5', 'code'];
+        if (!valid.includes(personaKey)) return;
+        this.persona = personaKey;
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('omni_ai_persona', personaKey);
+        }
+        this.syncPersonaUI();
+        this.updateKeyStatusText();
+
+        const personaLabels = {
+          sage: '🧙‍♂️ สลับสู่โหมด: ปราชญ์พหูสูต (รอบรู้ ลึกซึ้ง ครอบคลุม)',
+          speed: '⚡ สลับสู่โหมด: ติวเตอร์เร่งรัด (สรุปสั้น กระชับ ตรงจุดสอบ)',
+          eli5: '👶 สลับสู่โหมด: พี่ใจดี ELI5 (เข้าใจง่าย ยกตัวอย่างเห็นภาพ)',
+          code: '💻 สลับสู่โหมด: โค้ดดิ้งเมนเทอร์ (Clean Code & Big-O)'
+        };
+
+        // Notify user in chat
+        this.messages.push({
+          role: 'bot',
+          content: `✨ **${personaLabels[personaKey]}** เรียบร้อยแล้วครับ! ถามคำถามถัดไปได้ทันที`,
+          chips: [
+            '🎯 ขอโจทย์ซ้อมมือ 1 ข้อพร้อมเฉลย',
+            '📌 สรุปสาระสำคัญเป็น 3 ข้อย่อย (TL;DR)',
+            '💡 แนะนำวิธีจำบทเรียนให้แม่นยำ'
+          ]
+        });
+        this.renderMessages();
+      }
+
+      syncPersonaUI() {
+        const tabs = document.querySelectorAll('.ai-persona-tab');
+        tabs.forEach(tab => {
+          if (tab.getAttribute('data-persona') === this.persona) {
+            tab.classList.add('active');
+          } else {
+            tab.classList.remove('active');
+          }
+        });
+
+        const avatar = document.getElementById('ai-header-avatar');
+        if (avatar) {
+          const avatars = { sage: '🧙‍♂️', speed: '⚡', eli5: '👶', code: '💻' };
+          avatar.innerText = avatars[this.persona] || '🤖';
+        }
+      }
+
+      getPersonaInstruction() {
+        switch (this.persona) {
+          case 'speed':
+            return 'บุคลิกผู้สอน: "ติวเตอร์เร่งรัด" ตอบแบบสรุปสั้น กระชับ ตรงประเด็น ไฮไลท์เฉพาะจุดสำคัญที่ออกสอบและคีย์เวิร์ดหลัก สรุปเป็น 3 ข้อย่อย (TL;DR) หลีกเลี่ยงน้ำเนื้อที่ยืดเยื้อ';
+          case 'eli5':
+            return 'บุคลิกผู้สอน: "พี่ใจดี ELI5" อธิบายเรื่องยากให้เข้าใจง่ายมากเหมือนสอนเด็ก 10 ขวบ ยกตัวอย่างเปรียบเทียบในชีวิตประจำวัน เช่น เลโก้ หรือของเล่น ห้ามใช้ศัพท์เทคนิคยากๆ โดยไม่อธิบาย';
+          case 'code':
+            return 'บุคลิกผู้สอน: "โค้ดดิ้งเมนเทอร์" เน้นการสอนเขียนโปรแกรม Clean Code, Best Practices, วิเคราะห์ Time & Space Complexity (Big-O Notation) พร้อมอธิบายกลไกการทำงานทีละบรรทัด';
+          case 'sage':
+          default:
+            return 'บุคลิกผู้สอน: "ปราชญ์พหูสูต" สุภาพ ลึกซึ้ง ละเอียด รอบรู้ 15 มหาศาสตร์ เชื่อมโยงหลักการทางวิทยาศาสตร์ ตรรกะ และการประยุกต์ใช้จริงได้อย่างสมบูรณ์แบบ';
+        }
+      }
+
+      // ============================================================
+      // THAI SPEECH-TO-TEXT (VOICE INPUT)
+      // ============================================================
+      toggleVoiceInput() {
+        if (this.isListening) {
+          this.stopListening();
+        } else {
+          this.startListening();
+        }
+      }
+
+      startListening() {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+          alert('ขออภัยครับ เบราว์เซอร์ของคุณยังไม่รองรับ Web Speech API (แนะนำให้ใช้งานบน Google Chrome, Edge หรือ Safari ครับ)');
+          return;
+        }
+
+        try {
+          this.recognition = new SpeechRecognition();
+          this.recognition.lang = 'th-TH';
+          this.recognition.continuous = false;
+          this.recognition.interimResults = true;
+
+          const micBtn = document.getElementById('omni-ai-mic-btn');
+          const input = document.getElementById('omni-ai-input');
+
+          this.recognition.onstart = () => {
+            this.isListening = true;
+            if (micBtn) {
+              micBtn.classList.add('ai-mic-recording');
+              micBtn.title = 'กำลังฟังเสียงภาษาไทย... (คลิกเพื่อหยุด)';
+            }
+            if (input) input.placeholder = '🎙️ กำลังฟังเสียงของคุณ พูดคำถามได้เลยครับ...';
+          };
+
+          this.recognition.onresult = (event) => {
+            let transcript = '';
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+              transcript += event.results[i][0].transcript;
+            }
+            if (input && transcript) {
+              input.value = transcript;
+            }
+          };
+
+          this.recognition.onerror = (event) => {
+            console.warn('Speech recognition error:', event.error);
+            this.stopListening();
+          };
+
+          this.recognition.onend = () => {
+            this.stopListening();
+          };
+
+          this.recognition.start();
+        } catch (e) {
+          console.warn('Cannot start speech recognition:', e);
+          this.stopListening();
+        }
+      }
+
+      stopListening() {
+        this.isListening = false;
+        if (this.recognition) {
+          try { this.recognition.stop(); } catch(e) {}
+          this.recognition = null;
+        }
+        const micBtn = document.getElementById('omni-ai-mic-btn');
+        const input = document.getElementById('omni-ai-input');
+        if (micBtn) {
+          micBtn.classList.remove('ai-mic-recording');
+          micBtn.title = 'สั่งงานด้วยเสียงภาษาไทย (Speech-to-Text)';
+        }
+        if (input) input.placeholder = 'พิมพ์หรือกดไมค์พูดคำถาม... (ถามได้ทุกเรื่องใน 15 มหาศาสตร์)';
+      }
+
+      // ============================================================
+      // EXPORT STUDY NOTES (MARKDOWN DOWNLOAD)
+      // ============================================================
+      exportChatNotes() {
+        if (!this.messages || this.messages.length <= 1) {
+          alert('ยังไม่มีบันทึกบทสนทนาที่จะส่งออกครับ ลองเริ่มพูดคุยหรือถามคำถามกับ AI ดูก่อนนะครับ');
+          return;
+        }
+
+        const dateStr = new Date().toLocaleString('th-TH');
+        let mdDoc = `# 📚 บันทึกสรุปการเรียนรู้ OmniVerse Academy\n\n`;
+        mdDoc += `- **วันที่บันทึก:** ${dateStr}\n`;
+        mdDoc += `- **โหมดผู้สอน:** OmniAI Sage 5.0 (${this.persona.toUpperCase()})\n`;
+        mdDoc += `- **จำนวนข้อความ:** ${this.messages.length} ข้อความ\n\n`;
+        mdDoc += `---\n\n`;
+
+        this.messages.forEach((m, idx) => {
+          if (m.role === 'user') {
+            mdDoc += `### 👤 ผู้เรียน (คำถามที่ ${idx}):\n${m.content}\n\n`;
+          } else {
+            const raw = m.fullContent || m.content;
+            mdDoc += `### 🤖 OmniAI Sage 5.0:\n${raw}\n\n---\n\n`;
+          }
+        });
+
+        try {
+          const blob = new Blob([mdDoc], { type: 'text/markdown;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `OmniVerse_Study_Notes_${Date.now()}.md`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          alert('ดาวน์โหลดบันทึกการเรียนรู้ (.md) เรียบร้อยแล้วครับ!');
+        } catch (e) {
+          // Fallback to clipboard
+          navigator.clipboard.writeText(mdDoc).then(() => {
+            alert('คัดลอกสรุปบันทึกการเรียนรู้ลงคลิปบอร์ดเรียบร้อยแล้ว!');
+          });
+        }
+      }
+
+      // ============================================================
+      // SETTINGS & PROVIDER MANAGEMENT
+      // ============================================================
       toggleSettings() {
         const panel = document.getElementById('ai-settings-panel');
         if (!panel) return;
@@ -5622,7 +5932,7 @@
           }
         }
         this.updateKeyStatusText();
-        alert('บันทึกการตั้งค่าระบบ AI 4.0 เรียบร้อยแล้วครับ!');
+        alert('บันทึกการตั้งค่าระบบ AI 5.0 เรียบร้อยแล้วครับ!');
       }
 
       resetSettings() {
@@ -5641,13 +5951,23 @@
         let desc = '';
         let headerText = '';
 
+        const personaName = {
+          sage: 'ปราชญ์พหูสูต 5.0',
+          speed: 'ติวเตอร์สรุป 5.0',
+          eli5: 'พี่ใจดี ELI5',
+          code: 'โค้ดดิ้งเมนเทอร์ 5.0'
+        }[this.persona] || 'OmniPolymath';
+
         if (this.provider === 'auto') {
-          desc = '<span style="color: #38bdf8;">🌟 <strong>Auto (Hybrid Cloud & Local Polymath 4.0):</strong> ตอบโต้ได้ต่อเนื่อง ไม่มีสะดุด ไม่ต้องใส่ API Key</span>';
-          headerText = '<span class="ai-status-dot" style="background: #38bdf8;"></span> พร้อมสนทนารอบรู้ (Pinnacle Polymath 4.0)';
+          desc = '<span style="color: #38bdf8;">🌟 <strong>Auto Next-Gen 5.0:</strong> Puter Cloud + Pollinations + OmniBrain 5.0 ฟรี ไม่ต้องใส่ Key</span>';
+          headerText = `<span class="ai-status-dot" style="background: #38bdf8;"></span> พร้อมสนทนารอบรู้ (${personaName})`;
+        } else if (this.provider === 'puter') {
+          desc = '<span style="color: #06b6d4;">🤖 <strong>Puter.js Free Cloud LLM:</strong> ใช้งาน GPT-4o-mini ฟรีผ่านคลาวด์ ไม่ต้องมีบัญชี</span>';
+          headerText = `<span class="ai-status-dot" style="background: #06b6d4;"></span> เชื่อมต่อ Puter.js Cloud (${personaName})`;
         } else if (this.provider === 'gemini') {
           if (this.geminiKey) {
             desc = '<span style="color: #4ade80;">💎 <strong>Google Gemini Live:</strong> คีย์ ' + this.geminiKey.substring(0, 6) + '...' + this.geminiKey.slice(-4) + '</span>';
-            headerText = '<span class="ai-status-dot" style="background: #4ade80;"></span> เชื่อมต่อ Gemini API Live';
+            headerText = `<span class="ai-status-dot" style="background: #4ade80;"></span> เชื่อมต่อ Gemini API Live (${personaName})`;
           } else {
             desc = '<span style="color: #f59e0b;">⚠️ ยังไม่ได้ระบุ Gemini API Key (ระบบจะใช้ Hybrid Engine สำรองให้อัตโนมัติ)</span>';
             headerText = '<span class="ai-status-dot" style="background: #f59e0b;"></span> รอระบุคีย์ Gemini';
@@ -5655,14 +5975,14 @@
         } else if (this.provider === 'openai') {
           if (this.openaiKey) {
             desc = '<span style="color: #10b981;">⚡ <strong>OpenAI GPT Live:</strong> คีย์ ' + this.openaiKey.substring(0, 7) + '...' + this.openaiKey.slice(-4) + '</span>';
-            headerText = '<span class="ai-status-dot" style="background: #10b981;"></span> เชื่อมต่อ OpenAI GPT-4o';
+            headerText = `<span class="ai-status-dot" style="background: #10b981;"></span> เชื่อมต่อ OpenAI GPT-4o (${personaName})`;
           } else {
             desc = '<span style="color: #f59e0b;">⚠️ ยังไม่ได้ระบุ OpenAI API Key (ระบบจะใช้ Hybrid Engine สำรองให้อัตโนมัติ)</span>';
             headerText = '<span class="ai-status-dot" style="background: #f59e0b;"></span> รอระบุคีย์ OpenAI';
           }
         } else {
-          desc = '<span style="color: #a855f7;">💾 <strong>OmniBrain 4.0 Engine:</strong> ทำงานในเครื่อง 100% รวดเร็ว ตอบสนองในเสี้ยววินาที</span>';
-          headerText = '<span class="ai-status-dot" style="background: #a855f7;"></span> โหมดความรู้ในเครื่อง (Local Brain)';
+          desc = '<span style="color: #a855f7;">💾 <strong>OmniBrain 5.0 Engine:</strong> ทำงานในเครื่อง 100% ตอบสนองเร็วในเสี้ยววินาที</span>';
+          headerText = `<span class="ai-status-dot" style="background: #a855f7;"></span> โหมดความรู้ในเครื่อง (${personaName})`;
         }
 
         if (statusEl) statusEl.innerHTML = desc;
@@ -5672,14 +5992,16 @@
       clearChat() {
         this.stopStreaming();
         this.stopSpeaking();
+        this.stopListening();
         this.messages = [
           {
             role: 'bot',
-            content: '🤖 ล้างประวัติการสนทนาเรียบร้อยครับ! มีข้อสงสัยใน 15 มหาศาสตร์ การเขียนโค้ด การแก้โจทย์ หรืออยากชวนคุยเรื่องอะไร ถาม OmniAI Sage 4.0 ได้เลยครับ!',
+            content: '🤖 ล้างประวัติการสนทนาเรียบร้อยครับ! มีข้อสงสัยใน 15 มหาศาสตร์ การเขียนโค้ด การแก้โจทย์ หรืออยากขอโจทย์ฝึกหัด ถาม OmniAI Sage 5.0 ได้เลยครับ!',
             chips: [
+              '🎯 ขอโจทย์ซ้อมมือ 1 ข้อพร้อมเฉลย',
               '🌌 อธิบายเรื่องหลุมดำและกาลเวลาให้ฟังหน่อย',
               '💻 ช่วยเขียนโค้ด Python ฟีโบนักชีพร้อมวิเคราะห์ Big-O',
-              '📐 ช่วยคิดเลข 35% ของ 2,400 หน่อยครับ',
+              '📐 สรุปสูตรแคลคูลัสและการหาอนุพันธ์',
               '🌿 เซลล์พืชกับเซลล์สัตว์ต่างกันอย่างไร?'
             ]
           }
@@ -5756,7 +6078,6 @@
 
         const synth = window.speechSynthesis;
 
-        // Toggle off if currently speaking this exact message
         if (this.currentSpeakingIndex === msgIndex && synth.speaking) {
           this.stopSpeaking();
           return;
@@ -5775,7 +6096,6 @@
         utterance.rate = 1.05;
         utterance.pitch = 1.0;
 
-        // Detect Thai voice
         const voices = synth.getVoices ? synth.getVoices() : [];
         const thaiVoice = voices.find(v => v.lang === 'th-TH' || v.lang.startsWith('th'));
         if (thaiVoice) utterance.voice = thaiVoice;
@@ -5838,7 +6158,6 @@
       }
 
       streamBotMessage(fullReply, chips = []) {
-        // If not in browser environment, push immediately
         if (typeof window === 'undefined') {
           this.messages.push({ role: 'bot', content: fullReply, chips });
           this.conversationHistory.push({ role: 'bot', content: fullReply });
@@ -5863,9 +6182,8 @@
 
         let charIndex = 0;
         const totalChars = fullReply.length;
-        // Dynamic chunk size: faster for very long replies
-        const stepSize = totalChars > 1000 ? 5 : (totalChars > 400 ? 3 : 2);
-        const stepDelay = 12; // ms
+        const stepSize = totalChars > 1000 ? 6 : (totalChars > 400 ? 4 : 2);
+        const stepDelay = 12;
 
         this.renderMessages();
 
@@ -5899,70 +6217,67 @@
         }
       }
 
-      // ============================================================
-      // SMART CONTEXTUAL FOLLOW-UP ACTION CHIPS
-      // ============================================================
-      getSmartChips(topic, userQuery) {
+      getSmartChips(topic, userQuery = '') {
         const q = (userQuery || '').toLowerCase();
 
-        if (topic === 'math' || /[\+\-\*\/\^=]/.test(q) || q.includes('สมการ') || q.includes('คำนวณ') || q.includes('%')) {
+        if (q.includes('โจทย์') || topic === 'practice') {
           return [
-            '📐 ขอวิธีทำแบบละเอียดทีละบรรทัด',
-            '💡 ขอโจทย์ฝึกหัดข้อคล้ายกันให้ลองทำ',
-            '📌 สรุปสูตรสำคัญที่ใช้ในข้อนี้'
+            '🎯 ขอโจทย์ซ้อมมืออีก 1 ข้อ',
+            '💡 ขอคำอธิบายวิธีคิดข้อเมื่อกี้ละเอียดขึ้น',
+            '📐 สรุปสูตรที่ใช้ในโจทย์ข้อนี้'
           ];
         }
-        if (topic === 'code' || q.includes('โค้ด') || q.includes('python') || q.includes('javascript') || q.includes('sql')) {
+
+        if (topic === 'math' || q.includes('คำนวณ') || q.includes('สมการ') || q.includes('แคลคูลัส') || q.includes('เลข')) {
           return [
-            '🔍 วิเคราะห์ Big-O ความเร็วและหน่วยความจำ',
-            '⚡ ขอตัวอย่าง Test Cases ทดสอบรัน',
-            '🛡️ แนะนำวิธีเขียนให้กระชับแบบ clean code'
+            '📐 ขอตัวอย่างการแก้สมการกำลังสอง',
+            '📊 อธิบายสูตรแคลคูลัสการหาอนุพันธ์และอินทิกรัล',
+            '🎯 สร้างโจทย์คณิตศาสตร์ให้ลองคิด 1 ข้อ'
           ];
         }
-        if (topic === 'black_hole' || topic === 'universe' || topic === 'astronomy' || q.includes('หลุมดำ') || q.includes('อวกาศ') || q.includes('จักรวาล')) {
+
+        if (topic === 'code' || q.includes('โค้ด') || q.includes('python') || q.includes('javascript')) {
+          return [
+            '⚡ เปรียบเทียบความเร็ว Big-O ของ Algorithms',
+            '🔍 แนะนำวิธีเขียนแบบ Clean Code และ Edge Cases',
+            '🎯 ขอโจทย์ซ้อมมือเขียนโค้ด (Coding Problem)'
+          ];
+        }
+
+        if (topic === 'black_hole' || topic === 'universe' || topic === 'physics' || q.includes('หลุมดำ') || q.includes('สัมพัทธภาพ') || q.includes('นิวตัน')) {
           return [
             '🚀 ถ้ามนุษย์ตกลงไปในหลุมดำจะเกิดอะไรขึ้น?',
-            '⏱️ กาลเวลาจะหยุดเดินจริงไหม?',
-            '💥 หลุมดำจะระเหยหายไปได้หรือไม่?'
+            '⏱️ ทำไมแรงโน้มถ่วงถึงทำให้เวลาเดินช้าลง?',
+            '⚛️ อธิบายทฤษฎีควอนตัมให้เข้าใจง่ายๆ'
           ];
         }
-        if (topic === 'sky_blue' || q.includes('ท้องฟ้า') || q.includes('สีฟ้า')) {
-          return [
-            '🌅 แล้วตอนพระอาทิตย์ตกดินทำไมถึงเป็นสีส้มแดง?',
-            '🌈 รุ้งกินน้ำเกิดขึ้นได้อย่างไร?',
-            '☁️ ทำไมก้อนเมฆถึงเป็นสีขาว?'
-          ];
-        }
-        if (topic === 'physics' || topic === 'relativity' || topic === 'newton' || q.includes('นิวตัน') || q.includes('สัมพัทธภาพ')) {
-          return [
-            '🔬 ยกตัวอย่างที่พบเห็นได้ในชีวิตประจำวัน',
-            '💡 ถ้าไม่มีแรงนี้ โลกของเราจะเป็นอย่างไร?',
-            '📚 แนะนำการทดลองง่ายๆ ที่บ้าน'
-          ];
-        }
+
         if (topic === 'biology' || topic === 'dna' || topic === 'cell' || q.includes('dna') || q.includes('เซลล์') || q.includes('พืช')) {
           return [
-            '🧬 สิ่งมีชีวิตกลายพันธุ์เกิดขึ้นได้อย่างไร?',
-            '🔬 เทคโนโลยี CRISPR ตัดต่อยีนคืออะไร?',
+            '🧬 กลไกการคัดลอกรหัสพันธุกรรม DNA ทำงานอย่างไร?',
+            '🔬 เทคโนโลยี CRISPR ตัดต่อยีนทำงานอย่างไร?',
             '⚡ ไมโทคอนเดรียสร้างพลังงาน ATP อย่างไร?'
           ];
         }
-        if (topic === 'finance' || topic === 'economics' || q.includes('เงินเฟ้อ') || q.includes('ดอกเบี้ย')) {
+
+        if (topic === 'chemistry' || q.includes('เคมี') || q.includes('พันธะ') || q.includes('กรด')) {
           return [
-            '📈 แนะนำวิธีจัดสรรเงินตามกฎ 50-30-20',
-            '🛡️ ดอกเบี้ยทบต้นทำงานอย่างไรใน 10 ปี?',
-            '💰 หุ้น กองทุนรวม และทองคำ ต่างกันยังไง?'
+            '🧪 พันธะโคเวเลนต์กับพันธะไอออนิกต่างกันอย่างไร?',
+            '⚖️ กรด-เบส และค่า pH คำนวณอย่างไร?',
+            '⚛️ สรุปแนวโน้มตารางธาตุสำคัญ'
           ];
         }
-        if (topic === 'philosophy' || topic === 'stoic' || q.includes('สโตอิก') || q.includes('ชีวิต')) {
+
+        if (topic === 'finance' || q.includes('เงิน') || q.includes('ดอกเบี้ย') || q.includes('ลงทุน')) {
           return [
-            '⚖️ วงกลมแห่งการควบคุมนำไปใช้แก้เครียดอย่างไร?',
-            '🌿 ความสุขที่แท้จริงตามหลักปรัชญาคืออะไร?',
-            '📖 แนะนำหนังสือหรือนักคิดที่ควรรู้จัก'
+            '📈 กฎ 72 และพลังของดอกเบี้ยทบต้น',
+            '🛡️ จัดพอร์ตการเงินตามกฎ 50-30-20',
+            '💰 หุ้น กองทุนรวม และทองคำ ต่างกันอย่างไร?'
           ];
         }
 
         return [
+          '🎯 ขอโจทย์ซ้อมมือ 1 ข้อพร้อมเฉลย',
           '📌 สรุปสาระสำคัญเป็น 3 ข้อย่อย (TL;DR)',
           '👶 อธิบายให้เข้าใจง่ายเหมือนเด็ก 10 ขวบ (ELI5)',
           '💡 ขอเกร็ดความรู้น่าทึ่งอีก 1 เรื่องเกี่ยวกับหัวข้อนี้'
@@ -5973,7 +6288,17 @@
         if (!md) return '';
         let html = this.escapeHtml(md);
 
-        // 1. Code blocks ```lang\ncode\n```
+        // 1. Math Block: $$ ... $$
+        html = html.replace(/\$\$([\s\S]+?)\$\$/g, (match, expr) => {
+          return `<div class="ai-math-block"><div class="ai-math-label">📐 นิพจน์ / สูตรคณิตศาสตร์:</div><code>${expr.trim()}</code></div>`;
+        });
+
+        // 2. Math Inline: $ ... $
+        html = html.replace(/\$([^$\n]+?)\$/g, (match, expr) => {
+          return `<span class="ai-math-inline"><code>${expr.trim()}</code></span>`;
+        });
+
+        // 3. Code blocks ```lang\ncode\n```
         html = html.replace(/```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/g, (match, lang, code) => {
           const displayLang = lang ? lang.toUpperCase() : 'CODE';
           const cleanCode = code.trim();
@@ -5992,10 +6317,10 @@
           </div>`;
         });
 
-        // 2. Inline code `code`
+        // 4. Inline code `code`
         html = html.replace(/`([^`\n]+)`/g, '<code>$1</code>');
 
-        // 3. Tables | header | header | ...
+        // 5. Tables | header | header | ...
         html = html.replace(/(?:^|\n)(\|.+?\|\r?\n\|[-:| ]+?\|\r?\n(?:\|.+?\|\r?\n?)+)/g, (match) => {
           const rows = match.trim().split(/\r?\n/).map(r => r.trim());
           if (rows.length < 2) return match;
@@ -6007,21 +6332,21 @@
           return `<div class="ai-table-wrap"><table><thead><tr>${headers}</tr></thead><tbody>${bodyRows}</tbody></table></div>`;
         });
 
-        // 4. Blockquotes > ...
+        // 6. Blockquotes > ...
         html = html.replace(/^>\s+(.+)$/gm, '<blockquote>$1</blockquote>');
 
-        // 5. Bold & Italic
+        // 7. Bold & Italic
         html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
         html = html.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
 
-        // 6. Links [text](url)
+        // 8. Links [text](url)
         html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1 ↗</a>');
 
-        // 7. Bullet points & Ordered lists
+        // 9. Bullet points & Ordered lists
         html = html.replace(/^[•\-\*]\s+(.+)$/gm, '&bull; $1');
         html = html.replace(/^(\d+)\.\s+(.+)$/gm, '<strong>$1.</strong> $2');
 
-        // 8. Line breaks
+        // 10. Line breaks
         html = html.replace(/\n/g, '<br>');
 
         return html;
@@ -6077,9 +6402,12 @@
               `;
             }
 
+            const avatarMap = { sage: '🧙‍♂️', speed: '⚡', eli5: '👶', code: '💻' };
+            const botAvatar = avatarMap[this.persona] || '🤖';
+
             html += `
               <div class="ai-msg ai-msg-bot">
-                <div style="font-size: 1.15rem; flex-shrink: 0; margin-top: 2px;">🤖</div>
+                <div style="font-size: 1.15rem; flex-shrink: 0; margin-top: 2px;">${botAvatar}</div>
                 <div style="flex: 1; max-width: calc(100% - 32px);">
                   <div class="ai-msg-bubble">
                     ${this.formatMarkdown(msg.content)}${cursorHtml}
@@ -6093,9 +6421,11 @@
         });
 
         if (showTyping) {
+          const avatarMap = { sage: '🧙‍♂️', speed: '⚡', eli5: '👶', code: '💻' };
+          const botAvatar = avatarMap[this.persona] || '🤖';
           html += `
             <div class="ai-msg ai-msg-bot">
-              <div style="font-size: 1.15rem; flex-shrink: 0; margin-top: 2px;">🤖</div>
+              <div style="font-size: 1.15rem; flex-shrink: 0; margin-top: 2px;">${botAvatar}</div>
               <div class="ai-msg-bubble" style="padding: 0.4rem 0.8rem;">
                 <div class="ai-typing-indicator">
                   <span class="ai-typing-dot"></span>
@@ -6129,11 +6459,12 @@
         const text = input.value.trim();
         if (!text) return;
         input.value = '';
+        this.stopListening();
         this.sendMessage(text);
       }
 
       getCurrentContext() {
-        const hash = (typeof window !== 'undefined' && window.location ? window.location.hash : '') || '';
+        const hash = window.location.hash || '';
         if (hash.startsWith('#/quiz/')) {
           const parts = hash.replace('#/quiz/', '').split('/');
           const discId = parts[0];
@@ -6166,7 +6497,6 @@
         const lessons = (typeof LESSON_DATA !== 'undefined' ? LESSON_DATA[discId] : null) || [];
         const lesson = lessons[parseInt(idxStr) || 0] || lessons[0];
 
-        // Retrieve active question object
         let activeQuestion = lesson;
         if (typeof app !== 'undefined' && app.getLessonQuestions) {
           const qList = app.getLessonQuestions(lesson);
@@ -6192,7 +6522,14 @@
         try {
           let botReply = '';
 
-          if (this.provider === 'gemini' && this.geminiKey) {
+          if (this.provider === 'puter') {
+            try {
+              botReply = await this.callPuterApi(userText, context);
+            } catch (err) {
+              console.warn('Puter API call failed, falling back to local brain:', err);
+              botReply = this.generateLocalResponse(userText, context);
+            }
+          } else if (this.provider === 'gemini' && this.geminiKey) {
             try {
               botReply = await this.callGeminiApi(userText, context);
             } catch (err) {
@@ -6210,23 +6547,20 @@
             await new Promise(r => setTimeout(r, 120));
             botReply = this.generateLocalResponse(userText, context);
           } else {
-            // Default: Smart Hybrid Auto Mode
+            // Default: Smart Hybrid Next-Gen 5.0 (Puter -> Pollinations -> OmniBrain 5.0)
             botReply = await this.callSmartHybrid(userText, context);
           }
 
           const chips = this.getSmartChips(this.lastTopic, userText);
 
-          // Audio feedback if sound engine exists
           if (typeof soundEngine !== 'undefined' && soundEngine.enabled && typeof soundEngine.playTone === 'function') {
             soundEngine.playTone(659.25, 0.08);
           }
 
-          // Stream the response with typewriter animation
           this.isTyping = false;
           this.streamBotMessage(botReply, chips);
 
         } catch (globalErr) {
-          // In case of any unexpected exception, guaranteed response from local brain
           const safeReply = this.generateLocalResponse(userText, context);
           const chips = this.getSmartChips(this.lastTopic, userText);
           this.isTyping = false;
@@ -6235,59 +6569,98 @@
       }
 
       buildMasterSystemPrompt(context) {
-        let p = `คุณคือ OmniAI Sage 4.0 ผู้ช่วยพหูสูตและติวเตอร์อัจฉริยะประจำ OmniVerse Academy
-    แพลตฟอร์มการเรียนรู้ที่รวบรวมองค์ความรู้ครบทั้ง 15 มหาศาสตร์ความรู้ของมนุษยชาติ (377 บทเรียน)
-    คุณมีความสามารถทางภาษา การสนทนาอย่างมีชีวิตชีวา การคิดวิเคราะห์ และการแก้ปัญหารอบด้านระดับชั้นนำ
+        let p = `คุณคือ OmniAI Sage 5.0 ผู้ช่วยพหูสูตและติวเตอร์อัจฉริยะประจำ OmniVerse Academy
+แพลตฟอร์มการเรียนรู้ที่รวบรวมองค์ความรู้ครบทั้ง 15 มหาศาสตร์ความรู้ของมนุษยชาติ (377 บทเรียน)
+คุณมีความสามารถทางภาษา การสนทนาอย่างมีชีวิตชีวา การคิดวิเคราะห์ และการแก้ปัญหารอบด้านระดับชั้นนำ
 
-    แนวทางการตอบคำถาม:
-    1. ตอบเป็นภาษาไทยที่สุภาพ ฉลาด อบอุ่น มีชีวิตชีวา และเข้าใจง่าย
-    2. สามารถตอบคำถามได้ทุกประเภทอย่างเชี่ยวชาญ:
-       - การสนทนาทั่วไป (ทักทาย, ปรึกษา, ให้กำลังใจ, ปรัชญาชีวิต, วิทยาศาสตร์รอบตัว)
-       - การเขียนโปรแกรม (เขียนโค้ด Python, JS, HTML/CSS, SQL พร้อมคำอธิบายและแนวคิด)
-       - คณิตศาสตร์และการคำนวณ (แสดงสูตรและวิธีทำเป็นขั้นตอนอย่างชัดเจน)
-    3. หากอยู่ในบริบทของข้อสอบ (Quiz Context) และผู้เรียนขอคำใบ้:
-       - ให้คำแนะนำแบบ "Socratic Tutor" ชี้ประเด็นสำคัญและแนวทางตัดตัวเลือกหลอก โดยไม่บอกคำตอบตรงๆ
-    4. จัดรูปแบบคำตอบด้วย Markdown อย่างสวยงาม ใช้ตาราง (Table), โค้ดบล็อก (Code Block), และสูตรคณิตศาสตร์ ($...$, $$...$$) อย่างเหมาะสม`;
+${this.getPersonaInstruction()}
+
+แนวทางการตอบคำถาม:
+1. ตอบเป็นภาษาไทยที่สุภาพ ฉลาด มีชีวิตชีวา ตรงไปตรงมา และมีโครงสร้างที่ชัดเจน
+2. สามารถตอบคำถามได้ทุกประเภท:
+   - การสนทนาทั่วไป (ทักทาย, ปรึกษา, ให้กำลังใจ, ปรัชญาชีวิต)
+   - การเขียนโปรแกรม (เขียนโค้ด Python, JS, HTML/CSS, SQL พร้อมวิเคราะห์ Time/Space Complexity)
+   - คณิตศาสตร์และการคำนวณ (แสดงสูตรและวิธีทำเป็นขั้นตอนอย่างเป็นระบบ ใช้ $...$ หรือ $$...$$)
+   - การสร้างโจทย์และข้อสอบจำลอง พร้อมเฉลยแนวคิดแบบ Socratic
+3. หากอยู่ในบริบทของข้อสอบ (Quiz Context) และผู้เรียนขอคำใบ้:
+   - ให้คำแนะนำแบบ Socratic Tutor ชี้ประเด็นสำคัญและแนวทางตัดตัวเลือกหลอก โดยไม่บอกคำตอบตรงๆ
+4. จัดรูปแบบคำตอบด้วย Markdown อย่างสวยงาม ใช้ตาราง (Table), โค้ดบล็อก (Code Block), และสูตรคณิตศาสตร์ ($...$, $$...$$) อย่างเหมาะสม`;
 
         if (context) {
-          p += '\n\n[บริบทปัจจุบันในหน้าเว็บของผู้เรียน]:';
-          if (context.disc) {
-            p += `\n- สายวิชา: ${context.disc.code} ${context.disc.name_th} (${context.disc.name_en})`;
-          }
-          if (context.lesson) {
-            p += `\n- บทเรียน: ${context.lesson.title} (${context.lesson.field_code || ''} ${context.lesson.field_name || ''})`;
-            p += `\n- สาระสำคัญ: ${context.lesson.desc || ''}`;
-            if (context.type === 'quiz') {
-              p += `\n- คำถามข้อสอบ: ${context.lesson.question || ''}`;
-            }
+          p += `\n\n[บริบทการเรียนรู้ปัจจุบัน]:`;
+          if (context.disc) p += `\n- สายวิชา: ${context.disc.name_th} (${context.disc.code})`;
+          if (context.lesson) p += `\n- บทเรียน: ${context.lesson.title} (${context.lesson.field_name || ''})`;
+          if (context.type === 'quiz' && context.currentQuestion) {
+            const q = context.currentQuestion;
+            p += `\n- ข้อสอบปัจจุบัน: "${q.question}"`;
+            p += `\n- ตัวเลือก: ${q.options ? q.options.join(', ') : 'N/A'}`;
+            p += `\n- หมายเหตุ: ห้ามเฉลยคำตอบตรงๆ ให้ใบ้แนวคิดการวิเคราะห์เท่านั้น`;
           }
         }
+
         return p;
       }
 
+      // ============================================================
+      // CLOUD AI INTEGRATIONS (PUTER.JS / POLLINATIONS / OPENAI / GEMINI)
+      // ============================================================
       async callSmartHybrid(userText, context) {
+        // 1. Try Puter.js Cloud LLM (GPT-4o-mini Free)
+        if (typeof window !== 'undefined' && typeof puter !== 'undefined' && puter.ai && typeof puter.ai.chat === 'function') {
+          try {
+            const puterPromise = this.callPuterApi(userText, context);
+            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Puter timeout')), 8000));
+            const res = await Promise.race([puterPromise, timeoutPromise]);
+            if (res && res.trim().length > 0) {
+              this.lastCloudCallTime = Date.now();
+              return res;
+            }
+          } catch (puterErr) {
+            console.warn('Puter AI attempt skipped/failed:', puterErr.message);
+          }
+        }
+
+        // 2. Try Pollinations Free Cloud GPT
         const now = Date.now();
-
-        // Pollinations free tier imposes 30s per-IP cooldown.
-        // If inside 32s window, immediately invoke Master Local Brain for zero-latency, high-quality reply!
-        if (now - this.lastCloudCallTime < 32000) {
-          await new Promise(r => setTimeout(r, 120));
-          return this.generateLocalResponse(userText, context);
+        if (now - this.lastCloudCallTime > 2500) {
+          try {
+            const res = await this.callCloudGptApi(userText, context);
+            this.lastCloudCallTime = Date.now();
+            return res;
+          } catch (e) {
+            console.warn('Pollinations attempt skipped, using Master OmniBrain 5.0:', e.message);
+          }
         }
 
-        try {
-          const res = await this.callCloudGptApi(userText, context);
-          this.lastCloudCallTime = Date.now();
-          return res;
-        } catch (e) {
-          console.warn('Cloud GPT attempt redirected to Master Local Brain:', e.message);
-          return this.generateLocalResponse(userText, context);
+        // 3. Guaranteed instantaneous fallback: Master OmniBrain 5.0
+        return this.generateLocalResponse(userText, context);
+      }
+
+      async callPuterApi(prompt, context) {
+        if (typeof window === 'undefined' || typeof puter === 'undefined' || !puter.ai) {
+          throw new Error('Puter.js not loaded');
         }
+
+        const historyMessages = this.conversationHistory.slice(-4).map(m => ({
+          role: m.role === 'bot' ? 'assistant' : 'user',
+          content: m.content
+        }));
+
+        const messages = [
+          { role: 'system', content: this.buildMasterSystemPrompt(context) },
+          ...historyMessages,
+          { role: 'user', content: prompt }
+        ];
+
+        const resp = await puter.ai.chat(messages, { model: 'gpt-4o-mini' });
+        const text = typeof resp === 'string' ? resp : (resp?.message?.content || resp?.text || '');
+        if (!text || !text.trim()) throw new Error('Empty response from Puter AI');
+        return text.trim();
       }
 
       async callCloudGptApi(prompt, context) {
         const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
-        const timeoutId = controller ? setTimeout(() => controller.abort(), 8500) : null;
+        const timeoutId = controller ? setTimeout(() => controller.abort(), 7500) : null;
 
         const historyMessages = this.conversationHistory.slice(-4).map(m => ({
           role: m.role === 'bot' ? 'assistant' : 'user',
@@ -6312,15 +6685,11 @@
             signal: controller ? controller.signal : undefined
           });
 
-          if (!res.ok) {
-            throw new Error(`HTTP ${res.status}`);
-          }
-
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
           const text = await res.text();
           if (!text || text.trim().length === 0 || text.includes('Free limit reached')) {
             throw new Error('Rate limit or empty response');
           }
-
           return text.trim();
         } finally {
           if (timeoutId) clearTimeout(timeoutId);
@@ -6410,7 +6779,7 @@
       }
 
       // ============================================================
-      // MASTER OMNIBRAIN 4.0 LOCAL INTELLIGENCE REASONER
+      // MASTER OMNIBRAIN 5.0 KNOWLEDGE ENGINE (POLYGLOT & REASONER)
       // ============================================================
       getCurriculumData() {
         let lessons = {};
@@ -6422,10 +6791,6 @@
           lessons = window.LESSON_DATA;
         } else if (typeof window !== 'undefined' && window.BASE_LESSONS && Object.keys(window.BASE_LESSONS).length > 0) {
           lessons = window.BASE_LESSONS;
-        } else if (typeof global !== 'undefined' && global.LESSON_DATA && Object.keys(global.LESSON_DATA).length > 0) {
-          lessons = global.LESSON_DATA;
-        } else if (typeof global !== 'undefined' && global.BASE_LESSONS && Object.keys(global.BASE_LESSONS).length > 0) {
-          lessons = global.BASE_LESSONS;
         }
 
         let disciplines = [];
@@ -6433,8 +6798,6 @@
           disciplines = DISCIPLINE_DATA;
         } else if (typeof window !== 'undefined' && Array.isArray(window.DISCIPLINE_DATA) && window.DISCIPLINE_DATA.length > 0) {
           disciplines = window.DISCIPLINE_DATA;
-        } else if (typeof global !== 'undefined' && Array.isArray(global.DISCIPLINE_DATA) && global.DISCIPLINE_DATA.length > 0) {
-          disciplines = global.DISCIPLINE_DATA;
         }
 
         return { lessons, disciplines };
@@ -6444,64 +6807,51 @@
         try {
           let clean = expr
             .replace(/เท่ากับเท่าไหร่|เท่ากับเท่าใด|มีค่าเท่าไร|คือเท่าไร|ได้เท่าไหร่|คำนวณ|คิดเลข/g, '')
-            .replace(/x/gi, '*')
+            .replace(/(\d+)\s*[xX]\s*(\d+)/g, '$1 * $2')
             .replace(/÷/g, '/')
             .replace(/,/g, '')
             .trim();
 
-          // Percentage pattern: "35% ของ 2400"
-          const pctMatch = clean.match(/(\d+(?:\.\d+)?)\s*%\s*(?:ของ|\*)\s*(\d+(?:\.\d+)?)/);
+          // 1. Percentage: X% ของ Y
+          const pctMatch = clean.match(/(\d+(?:\.\d+)?)\s*%\s*(?:ของ|of|\*)\s*(\d+(?:\.\d+)?)/i) ||
+                           clean.match(/(\d+(?:\.\d+)?)\s*(?:เปอร์เซ็นต์|ร้อยละ)\s*(?:ของ)?\s*(\d+(?:\.\d+)?)/i);
           if (pctMatch) {
             const pct = parseFloat(pctMatch[1]);
             const base = parseFloat(pctMatch[2]);
             const res = (pct / 100) * base;
-            this.lastTopic = 'math';
-            return `📐 **การคำนวณร้อยละ (Percentage):**\n\n- **โจทย์:** ${pct}% ของ ${base.toLocaleString()}\n- **วิธีคำนวณ:**\n  $$\\frac{${pct}}{100} \\times ${base.toLocaleString()} = ${res.toLocaleString()}$$\n- 🎯 **ผลลัพธ์:** **${res.toLocaleString()}**`;
+            return `📐 **การคำนวณร้อยละ (Percentage Calculation):**\n\n- **โจทย์:** $${pct}\\%$ ของ $${base}$\n- **สูตรคำนวณ:** $$\\text{ผลลัพธ์} = \\frac{${pct}}{100} \\times ${base}$$\n- **คำตอบ:** $$\\mathbf{${res}}$$`;
           }
 
-          // Safe arithmetic evaluator
-          if (/^[0-9\.\s\+\-\*\/\(\)\^]+$/.test(clean) && /[0-9]/.test(clean)) {
-            const safeExpr = clean.replace(/\^/g, '**');
-            const fn = new Function(`'use strict'; return (${safeExpr});`);
-            const result = fn();
-            if (typeof result === 'number' && !isNaN(result) && isFinite(result)) {
-              this.lastTopic = 'math';
-              return `📐 **ผลการคำนวณทางคณิตศาสตร์:**\n\n$$\`${clean}\` = **${result.toLocaleString()}**$$\n\n💡 *หากต้องการแสดงวิธีทำอย่างละเอียดในรูปแบบสมการ บอกผมได้เลยครับ!*`;
+          // 2. Arithmetic expression
+          if (/^[\d\s+\-*/().^%]+$/.test(clean) && /[+\-*/]/.test(clean)) {
+            const sanitized = clean.replace(/\^/g, '**');
+            const evalResult = Function(`"use strict"; return (${sanitized});`)();
+            if (typeof evalResult === 'number' && !isNaN(evalResult) && isFinite(evalResult)) {
+              return `📐 **ผลลัพธ์การคำนวณทางคณิตศาสตร์:**\n\n- **นิพจน์:** $${clean}$\n- **คำตอบที่ได้:** $$\\mathbf{${evalResult}}$$`;
             }
           }
-        } catch(e) {}
-        return null;
-      }
 
-      solveQuadratic(query) {
-        try {
-          // Matches pattern like "x^2 - 5x + 6 = 0"
-          const q = query.replace(/\s+/g, '').replace(/=0$/, '');
-          const match = q.match(/([+-]?\d*)x\^2([+-]?\d*)x([+-]?\d+)/i);
-          if (match) {
-            const aStr = match[1];
-            const bStr = match[2];
-            const cStr = match[3];
+          // 3. Quadratic equation: ax^2 + bx + c = 0
+          const quadRegex = /([+-]?\s*\d*(?:\.\d+)?)x\^?2\s*([+-]\s*\d*(?:\.\d+)?)x\s*([+-]\s*\d*(?:\.\d+)?)\s*=\s*0/i;
+          const qm = clean.replace(/\s+/g, '').match(quadRegex);
+          if (qm) {
+            let a = qm[1] === '' || qm[1] === '+' ? 1 : (qm[1] === '-' ? -1 : parseFloat(qm[1]));
+            let b = qm[2] === '' || qm[2] === '+' ? 1 : (qm[2] === '-' ? -1 : parseFloat(qm[2]));
+            let c = parseFloat(qm[3]);
 
-            const a = (aStr === '' || aStr === '+') ? 1 : (aStr === '-' ? -1 : parseFloat(aStr));
-            const b = (bStr === '' || bStr === '+') ? 1 : (bStr === '-' ? -1 : parseFloat(bStr));
-            const c = parseFloat(cStr);
-
-            const discriminant = b * b - 4 * a * c;
-            this.lastTopic = 'math';
-
+            const discriminant = (b * b) - (4 * a * c);
             let rootsText = '';
             if (discriminant > 0) {
-              const x1 = (-b + Math.sqrt(discriminant)) / (2 * a);
-              const x2 = (-b - Math.sqrt(discriminant)) / (2 * a);
+              const x1 = ((-b + Math.sqrt(discriminant)) / (2 * a)).toFixed(3);
+              const x2 = ((-b - Math.sqrt(discriminant)) / (2 * a)).toFixed(3);
               rootsText = `มีคำตอบจำนวนจริง 2 คำตอบ:\n- $$x_1 = ${x1}$$\n- $$x_2 = ${x2}$$`;
             } else if (discriminant === 0) {
-              const x = -b / (2 * a);
+              const x = (-b / (2 * a)).toFixed(3);
               rootsText = `มีคำตอบซ้ำ 1 คำตอบ:\n- $$x = ${x}$$`;
             } else {
-              const real = (-b / (2 * a)).toFixed(2);
-              const imag = (Math.sqrt(-discriminant) / (2 * a)).toFixed(2);
-              rootsText = `ไม่มีคำตอบในระบบจำนวนจริง แต่มีคำตอบในระบบจำนวนเชิงซ้อน (Complex Roots):\n- $$x = ${real} \\pm ${imag}i$$`;
+              const real = (-b / (2 * a)).toFixed(3);
+              const imag = (Math.sqrt(-discriminant) / (2 * a)).toFixed(3);
+              rootsText = `ไม่มีคำตอบในระบบจำนวนจริง แต่มีคำตอบจำนวนเชิงซ้อน (Complex Roots):\n- $$x = ${real} \\pm ${imag}i$$`;
             }
 
             return `📐 **การแก้สมการกำลังสอง (Quadratic Equation):**\n\n- **รูปทั่วไป:** $$ax^2 + bx + c = 0$$\n- **ค่าสัมประสิทธิ์:** $a = ${a}, b = ${b}, c = ${c}$\n- **ดิสคริมิแนนต์ (Discriminant $\\Delta$):**\n  $$\\Delta = b^2 - 4ac = (${b})^2 - 4(${a})(${c}) = ${discriminant}$$\n\n🎯 **คำตอบของสมการ:**\n${rootsText}`;
@@ -6510,118 +6860,142 @@
         return null;
       }
 
+      generatePracticeQuestion() {
+        const questions = [
+          {
+            subject: 'ฟิสิกส์ & จักรวาล (Physics & Cosmology)',
+            q: 'เหตุใดเวลาบนดาวเคราะห์ที่อยู่ใกล้หลุมดำมวลยวดยิ่ง (Supermassive Black Hole) จึงเดินช้ากว่าเวลาบนโลกตามทฤษฎีสัมพัทธภาพทั่วไปของไอน์สไตน์?',
+            options: [
+              'A) เพราะความกดอากาศในอวกาศบีบอัดกาลเวลา',
+              'B) เพราะสนามโน้มถ่วงที่เข้มข้นสูงทำให้กาล-อวกาศ (Spacetime) โค้งงอ',
+              'C) เพราะอนุภาคทาคิออนวิ่งสวนทางกับแสง',
+              'D) เพราะอุณหภูมิใกล้ศูนย์สัมบูรณ์ทำให้โมเลกุลหยุดนิ่ง'
+            ],
+            ans: 'B) เพราะสนามโน้มถ่วงที่เข้มข้นสูงทำให้กาล-อวกาศ (Spacetime) โค้งงอ',
+            explain: 'ตามทฤษฎีสัมพัทธภาพทั่วไป (General Relativity) มวลที่หนาแน่นยิ่งยวดจะทำให้เนื้อผ้าของกาล-อวกาศโค้งงออย่างรุนแรง ส่งผลให้เกิดปรากฏการณ์ **Gravitational Time Dilation** ยิ่งเข้าใกล้หลุมดำ เวลาของผู้สังเกตภายนอกจะมองเห็นเวลาของวัตถุนั้นเดินช้าลงเรื่อยๆ'
+          },
+          {
+            subject: 'วิทยาการคอมพิวเตอร์ & อัลกอริทึม (Computer Science)',
+            q: 'การค้นหาข้อมูลในตารางขนาด 1,000,000 สมาชิกที่เรียงลำดับแล้ว (Sorted Array) โดยใช้ Binary Search จะใช้จำนวนการเปรียบเทียบในกรณีแย่ที่สุด (Worst Case) ไม่เกินกี่ครั้ง?',
+            options: [
+              'A) ประมาณ 20 ครั้ง',
+              'B) 100 ครั้ง',
+              'C) 500,000 ครั้ง',
+              'D) 1,000,000 ครั้ง'
+            ],
+            ans: 'A) ประมาณ 20 ครั้ง',
+            explain: 'Binary Search มี Time Complexity เป็น $O(\\log_2 n)$ สำหรับ $n = 1,000,000$ จะได้ $\\log_2(1,000,000) \\approx 19.93$ ดังนั้นใช้การเปรียบเทียบสูงสุดเพียง **20 ครั้ง** เท่านั้น ซึ่งมีประสิทธิภาพสูงกว่า Linear Search $O(n)$ อย่างมหาศาล!'
+          },
+          {
+            subject: 'ชีววิทยา & พันธุศาสตร์ (Biology & Genetics)',
+            q: 'ออร์แกเนลล์ใดในเซลล์ยูคาริโอตที่ทำหน้าที่สร้างพลังงานในรูปของโมเลกุล ATP ผ่านกระบวนการ Cellular Respiration?',
+            options: [
+              'A) ไรโบโซม (Ribosome)',
+              'B) กอลจิบอดี (Golgi Complex)',
+              'C) ไมโทคอนเดรีย (Mitochondria)',
+              'D) ไลโซโซม (Lysosome)'
+            ],
+            ans: 'C) ไมโทคอนเดรีย (Mitochondria)',
+            explain: 'ไมโทคอนเดรียเป็นโรงงานพลังงานของเซลล์ ทำหน้าที่สังเคราะห์ **ATP (Adenosine Triphosphate)** ผ่านกระบวนการ Krebs Cycle และ Electron Transport Chain โดยใช้ออกซิเจนและกลูโคส'
+          },
+          {
+            subject: 'เคมี & วัสดุศาสตร์ (Chemistry)',
+            q: 'พันธะเคมีประเภทใดที่เกิดจากการใช้อิเล็กตรอนวงนอกสุด (Valence Electrons) ร่วมกันระหว่างอะตอมของอโลหะกับอโลหะ?',
+            options: [
+              'A) พันธะไอออนิก (Ionic Bond)',
+              'B) พันธะโคเวเลนต์ (Covalent Bond)',
+              'C) พันธะโลหะ (Metallic Bond)',
+              'D) พันธะไฮโดรเจน (Hydrogen Bond)'
+            ],
+            ans: 'B) พันธะโคเวเลนต์ (Covalent Bond)',
+            explain: 'พันธะโคเวเลนต์ (Covalent Bond) เกิดจากการที่อะตอมอโลหะที่มีค่า Electronegativity ใกล้เคียงกัน แชร์อิเล็กตรอนร่วมกันเพื่อให้ครบ Octet (8 อิเล็กตรอน) เช่น โมเลกุลของน้ำ ($H_2O$) หรือ ก๊าซคาร์บอนไดออกไซด์ ($CO_2$)'
+          }
+        ];
+
+        const item = questions[Math.floor(Math.random() * questions.length)];
+        this.lastTopic = 'practice';
+
+        return `🎯 **โจทย์จำลองฝึกคิดวิเคราะห์ (Practice Question):**\n\n📌 **หมวดวิชา:** ${item.subject}\n\n**คำถาม:** ${item.q}\n\n` +
+          item.options.map(opt => `- ${opt}`).join('\n') +
+          `\n\n---\n💡 **เฉลยและการวิเคราะห์:**\n- **คำตอบที่ถูกต้อง:** **${item.ans}**\n- **คำอธิบายแนวคิด:** ${item.explain}\n\n*(อยากลองทำโจทย์หมวดวิชาอื่นเพิ่มเติม พิมพ์ "ขอโจทย์ซ้อมมือ" ได้เลยครับ!)*`;
+      }
+
       generateLocalResponse(query, context = null) {
         const q = (query || '').trim();
         const qLower = q.toLowerCase();
         const { lessons: lessonMap, disciplines: discList } = this.getCurriculumData();
 
-        // 0. Quick Tone Modifiers
-        if (qLower === '📌 สรุปสาระสำคัญเป็น 3 ข้อย่อย (tl;dr)' || qLower.includes('สรุปสาระสำคัญเป็น 3 ข้อย่อย') || qLower === 'ขอย่อสั้นๆ' || qLower === 'สรุปสั้นๆ') {
-          const prevBot = [...this.conversationHistory].reverse().find(m => m.role === 'bot');
-          if (prevBot) {
-            return `📌 **สรุปย่อ 3 ข้อสำคัญ (Key Takeaways):**\n\n1. 🎯 **แก่นหัวใจ:** ทำความเข้าใจหลักการพื้นฐานและปัจจัยหลักที่ขับเคลื่อนระบบ\n2. ⚙️ **กลไกการทำงาน:** องค์ประกอบต่างๆ ทำงานประสานกันตามกฎเกณฑ์ทางธรรมชาติ/ตรรกะ\n3. 💡 **การนำไปใช้:** สังเกตและประยุกต์ใช้เพื่อแก้ปัญหาในชีวิตจริงและการวิเคราะห์อย่างมีเหตุผล\n\n*(หากต้องการเจาะลึกข้อไหนเป็นพิเศษ บอกผมได้เลยครับ!)*`;
+        // 0. Practice Question Generator
+        if (qLower.includes('ขอโจทย์') || qLower.includes('สร้างโจทย์') || qLower.includes('แบบฝึกหัด') || qLower.includes('โจทย์ซ้อม') || qLower.includes('ทดสอบ')) {
+          return this.generatePracticeQuestion();
+        }
+
+        // 1. Math Equation & Calculation Solver
+        const mathResult = this.solveMath(q);
+        if (mathResult) {
+          this.lastTopic = 'math';
+          return mathResult;
+        }
+
+        // 2. Calculus & Trigonometry knowledge
+        if (qLower.includes('แคลคูลัส') || qLower.includes('อนุพันธ์') || qLower.includes('ดิฟ') || qLower.includes('อินทิกรัล') || qLower.includes('ตรีโกณ')) {
+          this.lastTopic = 'math';
+          return `📐 **แก่นทฤษฎีแคลคูลัสและตรีโกณมิติ (Calculus & Trigonometry Master Guide):**\n\n1. 📈 **การหาอนุพันธ์ (Derivatives - อัตราการเปลี่ยนแปลงชั่วขณะ):**\n   - กฎยกกำลัง (Power Rule): $$\\frac{d}{dx} x^n = n x^{n-1}$$\n   - กฎลูกโซ่ (Chain Rule): $$\\frac{d}{dx} f(g(x)) = f'(g(x)) \\cdot g'(x)$$\n   - ผลคูณ (Product Rule): $$(uv)' = u'v + uv'$$\n\n2. 📊 **การอินทิเกรต (Integration - พื้นที่ใต้กราฟและการสะสม):**\n   - อินทิกรัลไม่จำกัดเขต: $$\\int x^n \\, dx = \\frac{x^{n+1}}{n+1} + C \\quad (n \\neq -1)$$\n   - กฎพื้นฐานแคลคูลัส: $$\\int_{a}^{b} f(x) \\, dx = F(b) - F(a)$$\n\n3. 📐 **ตรีโกณมิติและพีทาโกรัส:**\n   - ทฤษฎีบทพีทาโกรัส: $$a^2 + b^2 = c^2$$\n   - เอกลักษณ์พื้นฐาน: $$\\sin^2(\\theta) + \\cos^2(\\theta) = 1$$\n   - ความสัมพันธ์: $$\\tan(\\theta) = \\frac{\\sin(\\theta)}{\\cos(\\theta)}$$\n\n💡 *สามารถพิมพ์สมการ เช่น "x^2 + 5x + 6 = 0" หรือ "35% ของ 2400" เพื่อให้ผมคำนวณสดได้ทันทีครับ!*`;
+        }
+
+        // 3. In-Quiz Socratic Hints
+        if (context && context.type === 'quiz' && (qLower.includes('ใบ้') || qLower.includes('hint') || qLower.includes('แนวคิด') || qLower.includes('ช่วย') || qLower.includes('ข้อนี้') || qLower.includes('ตอบ'))) {
+          const lesson = context.lesson;
+          const qObj = context.currentQuestion || lesson;
+          if (lesson) {
+            this.lastTopic = 'quiz_hint';
+            const qNumText = (context.qIdx !== undefined) ? ` ข้อที่ ${context.qIdx + 1}` : '';
+            return `💡 **แนวคิดเชิงวิเคราะห์สำหรับโจทย์${qNumText} (Socratic Hint):**\n\n- **สถานการณ์:** "${qObj.scenario || lesson.scenario || lesson.desc || lesson.title}"\n- **คำถาม:** "${qObj.question || lesson.question}"\n- **แก่นทฤษฎีที่เกี่ยวข้อง:** ${lesson.field_name || ''} (${lesson.field_code || ''})\n- **ข้อแนะนำการตัดช้อยส์:**\n  1. พิจารณาตัวแปรต้น (Independent Variable) ที่เป็นสาเหตุหลัก\n  2. ตัดตัวเลือกที่เป็นเพียงผลข้างเคียง (Symptom) หรือสลับเหตุกับผล\n  3. ตัดตัวเลือกที่ละเมิดกฎอนุรักษ์พลังงานหรือขัดกับตรรกะพื้นฐาน\n\n🎯 *กุญแจสำคัญคือการหาความสัมพันธ์เชิงเหตุและผล (Causation) ที่แท้จริงครับ!*`;
           }
         }
 
-        if (qLower === '👶 อธิบายให้เข้าใจง่ายเหมือนเด็ก 10 ขวบ (eli5)' || qLower.includes('เหมือนเด็ก 10 ขวบ') || qLower.includes('eli5')) {
-          return `👶 **อธิบายแบบเห็นภาพง่ายๆ สไตล์นิทาน (ELI5):**\n\nลองจินตนาการว่าทุกอย่างรอบตัวเราเหมือน **"ตัวต่อเลโก้ (Lego Bricks)"** หรือ **"ของเล่นในสนามเด็กเล่น"**:\n- 🧱 สิ่งเล็กๆ มารวมกันจนกลายเป็นสิ่งใหญ่ที่มหัศจรรย์\n- ⚖️ เมื่อเราผลักสิ่งหนึ่ง สิ่งนั้นก็จะส่งแรงผลักเรากลับเหมือนกระโดดบนแทรมโพลีน\n- 🌟 ทุกความซับซ้อนในจักรวาล แท้จริงแล้วเริ่มมาจากกฎเกณฑ์ง่ายๆ เพียงไม่กี่ข้อเท่านั้นครับ!`;
-        }
-
-        if (qLower === '🔬 เจาะลึกเชิงวิชาการ' || qLower.includes('เจาะลึกเชิงวิชาการ') || qLower.includes('เชิงลึก')) {
-          return `🔬 **การวิเคราะห์เชิงลึกตามระเบียบวิธีวิจัยและทฤษฎีมาตรฐาน (Academic Deep Dive):**\n\n- 📊 **กรอบทฤษฎี (Theoretical Framework):** อาศัยแบบจำลองเชิงคณิตศาสตร์และสมมติฐานเชิงประจักษ์ (Empirical Evidence)\n- ⚙️ **การแปลงค่าตัวแปร (Mechanistic Formulation):** นิยามสภาวะขอบเขต (Boundary Conditions) และสมการอนุพันธ์ที่ควบคุมพลวัตของระบบ\n- 📚 **การอ้างอิงสากล (Peer-Reviewed Consensus):** สอดคล้องกับรายงานการวิจัยในวารสารชั้นนำ เช่น Nature และ Physical Review ครับ`;
-        }
-
-        // 1. In-Quiz Socratic Hints
-        if (context && context.type === 'quiz' && (qLower.includes('ใบ้') || qLower.includes('hint') || qLower.includes('แนวคิด') || qLower.includes('ช่วย') || qLower.includes('ข้อนี้') || qLower.includes('ตอบ'))) {
-      const lesson = context.lesson;
-      const qObj = context.currentQuestion || lesson;
-      if (lesson) {
-        this.lastTopic = 'quiz_hint';
-        const qNumText = (context.qIdx !== undefined) ? ` ข้อที่ ${context.qIdx + 1}` : '';
-        return `💡 **แนวคิดเชิงวิเคราะห์และคำใบ้สำหรับโจทย์${qNumText} (Socratic Hint):**\n\n- **บริบทสถานการณ์:** "${qObj.scenario || lesson.scenario || lesson.desc || lesson.title}"\n- **คำถามที่กำลังพิจารณา:** "${qObj.question || lesson.question}"\n- **แก่นทฤษฎีที่ต้องนำมาใช้:** ${lesson.field_name || ''} (${lesson.field_code || ''})\n- **จุดสังเกตสำคัญ:** ให้พิจารณาว่าอะไรคือตัวแปรต้นที่ส่งผลโดยตรงต่อเหตุการณ์ และตัดตัวเลือกที่สลับบทบาทระหว่างเหตุกับผล (Correlation vs Causation) หรือตัวเลือกที่ขัดแย้งกับกฎธรรมชาติออก\n- 🎯 *คำใบ้ลับ:* แยกแยะระหว่าง **สาเหตุรากเหง้า (Root Cause)** กับเพียง **ผลพวงข้างเคียง (Symptom)** เพื่อหาทางเลือกที่สมบูรณ์ที่สุดครับ!`;
-      }
-    }
-
-        // 2. In-Theory Deep Dive
+        // 4. In-Theory Deep Dive
         if (context && context.type === 'theory' && (qLower.includes('สรุป') || qLower.includes('คืออะไร') || qLower.includes('อธิบาย') || qLower.includes('ตัวอย่าง') || qLower.includes('บทเรียนนี้'))) {
           const lesson = context.lesson;
           const disc = context.disc;
           if (lesson) {
             this.lastTopic = 'theory_summary';
-            const refs = disc && disc.references ? disc.references.map(r => `[${r.name}](${r.url})`).join(', ') : 'ตำราวิชาการมาตรฐานสากล';
-            return `📖 **สรุปเจาะลึกบทเรียน: ${lesson.title}**\n\n- **หมวดความรู้:** สายวิชา ${disc ? disc.name_th : ''} (${lesson.field_code || ''} ${lesson.field_name || ''})\n- **ระดับความเชี่ยวชาญ:** ระดับ${lesson.tier_th || 'พื้นฐาน'}\n- **ใจความสำคัญ:** ${lesson.desc || ''}\n- 🧠 **แนวคิดหลัก:** ทำความเข้าใจโครงสร้างเชิงระบบและความสัมพันธ์ของตัวแปร เพื่อนำระเบียบวิธีคิดไปประยุกต์ใช้อย่างแม่นยำ\n- 🔬 **การประยุกต์ใช้จริง:** ศึกษา Worked Example ในหัวข้อด้านล่างของบทเรียนเพื่อดูแบบจำลองกรณีศึกษาจริง\n- 📚 **ตำราและแหล่งค้นคว้าแนะนำ:** ${refs}`;
+            return `📖 **สรุปแก่นความรู้บทเรียน: ${lesson.title}**\n\n- **สาขาวิชา:** ${disc ? disc.name_th : 'วิทยาการรอบรู้'} (${lesson.field_code || ''} ${lesson.field_name || ''})\n- **สาระสำคัญ:** ${lesson.desc || ''}\n\n🔬 **ทฤษฎีและกลไกหลัก:**\n${this.extractTheorySummary(lesson.theory)}\n\n💡 **การนำไปประยุกต์ใช้จริง:**\n${lesson.scenario || 'ใช้เป็นรากฐานในการวิเคราะห์และแก้ปัญหาในเชิงระบบ'}\n\n*(พร้อมทำแบบฝึกหัดเพื่อเก็บ EXP และปรับระดับผู้ใช้หรือยังครับ?)*`;
           }
         }
 
-        // 3. Mathematical Calculations & Solvers
-        const quadSol = this.solveQuadratic(q);
-        if (quadSol) return quadSol;
-
-        const mathSol = this.solveMath(q);
-        if (mathSol) return mathSol;
-
-        // 4. Greetings, Polite Inquiries, and Chat Small-talk
-        const isGreeting = /^(สวัสดี|หวัดดี|ดีครับ|ดีค่ะ|hello|hi|hey|อรุณสวัสดิ์|ราตรีสวัสดิ์)/.test(qLower);
-        if (isGreeting) {
-          this.lastTopic = 'greeting';
-          return `👋 **สวัสดีครับ! ผมคือ OmniAI Sage 4.0**\n\nยินดีที่ได้พบกันครับ! วันนี้มีหัวข้อไหนที่อยากเรียนรู้เป็นพิเศษ ไม่ว่าจะเป็น:\n- 🌌 **ดาราศาสตร์และฟิสิกส์:** หลุมดำ, คลื่นโน้มถ่วง, ควอนตัม, เวลา\n- 💻 **การเขียนโปรแกรม:** ฝึกโจทย์ Python, JavaScript, SQL\n- 📐 **คณิตศาสตร์:** คำนวณร้อยละ, พีชคณิต, แคลคูลัส\n- 🧠 **เทคนิคการเรียนรู้:** วิธีจำแม่น, การบริหารเวลา, ปรัชญาชีวิต\n\nคุณสามารถคลิกปุ่มแนะนำด้านล่าง หรือพิมพ์คำถามที่สงสัยได้เลยครับ!`;
+        // 5. Physics & Cosmology (Einstein, Newton, Quantum, Black Holes)
+        if (qLower.includes('หลุมดำ') || qLower.includes('black hole') || qLower.includes('สัมพัทธภาพ') || qLower.includes('นิวตัน') || qLower.includes('ควอนตัม') || qLower.includes('เวลา')) {
+          this.lastTopic = 'physics';
+          if (qLower.includes('หลุมดำ')) {
+            return `🌌 **หลุมดำ (Black Hole) และกาล-อวกาศตามฟิสิกส์สมัยใหม่:**\n\n- **นิยาม:** วัตถุอวกาศที่มีมวลหนาแน่นมหาศาลจนสนามโน้มถ่วงมีความเข้มข้นจนแม้กระทั่ง **แสง (ความเร็ว 300,000 กม./วินาที)** ก็ไม่สามารถหลุดรอดออกมาได้\n- **ขอบฟ้าเหตุการณ์ (Event Horizon):** เส้นแบ่งเขตแดนที่ข้อมูลและสสารจะไม่สามารถส่งสัญญาณกลับสู่ภายนอกได้อีกต่อไป\n- **ภาวะเอกฐาน (Singularity):** จุดศูนย์กลางที่มวลทั้งหมดถูกบีบอัดจนมีปริมาตรเกือบเป็นศูนย์และความหนาแน่นเป็นอนันต์\n- **การยืดออกของเวลา (Time Dilation):** ตามทฤษฎีสัมพัทธภาพทั่วไปของไอน์สไตน์ วัตถุที่อยู่ใกล้ขอบฟ้าเหตุการณ์ เวลาจะเดินช้าลงเมื่อเทียบกับผู้สังเกตที่อยู่ห่างออกไป\n- **รังสีฮอว์คิง (Hawking Radiation):** กลไกควอนตัมที่ทำให้อนุภาคเสมือนหลุดรอดออกมา ส่งผลให้หลุมดำสามารถระเหยและสูญสลายได้ในระยะเวลาทางดาราศาสตร์อันยาวนานครับ!`;
+          }
+          if (qLower.includes('นิวตัน') || qLower.includes('แรง')) {
+            return `🔬 **กฎการเคลื่อนที่ 3 ข้อของเซอร์ไอแซก นิวตัน (Newton's Laws of Motion):**\n\n1. 🛑 **กฎแห่งความเฉื่อย (Law of Inertia):** วัตถุจะรักษาสภาพหยุดนิ่งหรือเคลื่อนที่ด้วยความเร็วคงที่ในแนวเส้นตรง ตราบใดที่ไม่มีแรงลัพธ์ภายนอกมากระทำ ($$\\Sigma F = 0$$)\n2. 🚀 **กฎของแรงและความเร่ง (Law of Acceleration):** เมื่อมีแรงลัพธ์มากระทำ วัตถุจะเคลื่อนที่ด้วยความเร่งที่เป็นสัดส่วนตรงกับขนาดของแรง และแปรผกผันกับมวล: $$\\mathbf{F = ma}$$\n3. ⚖️ **กฎแรงกิริยาและปฏิกิริยา (Action-Reaction):** ทุกแรงกิริยาจะมีแรงปฏิกิริยาที่มีขนาดเท่ากันแต่มีทิศทางตรงกันข้ามเสมอ ($$F_{\\text{action}} = -F_{\\text{reaction}}$$)`;
+          }
+          return `⚛️ **กลศาสตร์ควอนตัม (Quantum Mechanics) โดยสังเขป:**\n\n- **ทวิภาวะคลื่น-อนุภาค (Wave-Particle Duality):** แสงและสสารสามารถแสดงสมบัติเป็นได้ทั้งคลื่นและอนุภาคพร้อมกัน\n- **หลักความไม่แน่นอนของไฮเซนแบร์ก (Heisenberg Uncertainty Principle):** เราไม่สามารถวัดตำแหน่ง ($x$) และโมเมนตัม ($p$) ของอนุภาคได้อย่างแม่นยำพร้อมกัน: $$\\Delta x \\cdot \\Delta p \\ge \\frac{\\hbar}{2}$$\n- **การซ้อนทับควอนตัม (Superposition):** สถานะทางควอนตัมสามารถดำรงอยู่ได้หลายสถานะพร้อมกันจนกว่าจะเกิดการสังเกตหรือวัดค่า (เช่น การทดลองแมวของชเรอดิงเงอร์)`;
         }
 
-        if (qLower.includes('คุณคือใคร') || qLower.includes('ชื่ออะไร') || qLower.includes('ทำอะไรได้บ้าง')) {
-          this.lastTopic = 'about';
-          return `🤖 **ผมคือ OmniAI Sage 4.0 (Pinnacle Polymath Edition)**\n\nปัญญาประดิษฐ์ผู้ช่วยการเรียนรู้ประจำ **OmniVerse Academy** ความสามารถเด่นของผมมีดังนี้:\n- 📚 **ครอบคลุม 15 มหาศาสตร์ (377 บทเรียน):** ค้นหาและสรุปองค์ความรู้ตั้งแต่ระดับพื้นฐานจนถึงขั้นสูง\n- 🔊 **ระบบอ่านออกเสียงภาษาไทย (Thai Voice TTS):** กดปุ่ม "🔊 ฟังเสียง" เพื่อฟังการสรุปบทเรียนได้ทันที\n- ✍️ **การพิมพ์แบบ Typewriter Streaming:** แสดงผลลื่นไหลสบายตาเหมือนมนุษย์กำลังพิมพ์สนทนา\n- 💡 **แนะนำคำถามต่อเนื่อง (Smart Action Chips):** แนะนำหัวข้อเจาะลึกที่ผู้เรียนควรรู้ต่อ\n- 📐 **เครื่องมือคำนวณและเขียนโค้ด:** วิเคราะห์ Big-O, ดีบักโค้ด, และแก้โจทย์คณิตศาสตร์แบบ Step-by-step ครับ`;
+        // 6. Chemistry & Materials
+        if (qLower.includes('เคมี') || qLower.includes('พันธะ') || qLower.includes('กรด') || qLower.includes('เบส') || qLower.includes('ตารางธาตุ') || qLower.includes('โมล')) {
+          this.lastTopic = 'chemistry';
+          return `🧪 **องค์ความรู้เคมีรากฐาน (Chemistry Foundations Guide):**\n\n1. ⚛️ **พันธะเคมีหลัก (Chemical Bonds):**\n   - **พันธะโคเวเลนต์:** เกิดจากการแชร์อิเล็กตรอนระหว่างอะตอมอโลหะ (เช่น $H_2O, CO_2$)\n   - **พันธะไอออนิก:** เกิดจากการถ่ายโอนอิเล็กตรอนระหว่างโลหะกับอโลหะจนเกิดแรงดึงดูดทางไฟฟ้าสถิต (เช่น $NaCl$)\n   - **พันธะไฮโดรเจน:** แรงดึงดูดระหว่างโมเลกุลที่มีขั้วสูง ทำให้สารเช่นน้ำมีจุดเดือดสูงเป็นพิเศษ\n\n2. ⚖️ **กรด-เบส และสเกล pH:**\n   - คำนวณจากความเข้มข้นของไฮโดรเนียมไอออน: $$\\text{pH} = -\\log[H_3O^+]$$\n   - $\\text{pH} < 7$ คือสารละลายกรด, $\\text{pH} = 7$ คือเป็นกลาง, $\\text{pH} > 7$ คือสารละลายเบส\n\n3. 📊 **ปริมาณสารสัมพันธ์และโมล (The Mole Concept):**\n   - จำนวนอนุภาค: $1 \\text{ mol} = 6.022 \\times 10^{23}$ อนุภาค (เลขอโวกาโดร)\n   - สูตรคำนวณโมล: $$n = \\frac{g}{M} = \\frac{V}{22.4} \\quad (\\text{ที่ STP})$$`;
         }
 
-        if (qLower.includes('ขอบคุณ') || qLower.includes('thanks') || qLower.includes('thank you')) {
-          this.lastTopic = 'thanks';
-          return `😊 **ด้วยความยินดีเป็นอย่างยิ่งครับ!**\n\nการเรียนรู้เป็นกระบวนการต่อเนื่อง หากมีข้อสงสัยตรงไหนเพิ่มเติม ไม่ว่าจะเป็นทฤษฎีบท การคิดเลข หรือการเขียนโค้ด ทักหาผมได้ตลอดเวลาเลยนะครับ! 🚀`;
-        }
-
-        // 5. Emotional Support, Motivation, and Philosophy
-        if (qLower.includes('เหนื่อย') || qLower.includes('ท้อ') && !qLower.includes('ท้องฟ้า') || qLower.includes('หมดไฟ') || qLower.includes('เครียด')) {
-          this.lastTopic = 'motivation';
-          return `💙 **ผมขอส่งกำลังใจให้คุณอย่างเต็มที่ครับ**\n\nความรู้สึกเหนื่อยล้าหรือท้อถอยเป็นสัญญาณว่าคุณกำลังพยายามก้าวข้ามขีดจำกัดเดิมของตัวเอง:\n\n1. 🛑 **พักสักนิด:** ลองหยุดพัก 15-20 นาที ดื่มน้ำ ยืดเหยียดร่างกาย หรือสูดอากาศบริสุทธิ์\n2. 🧩 **ซอยเป้าหมายให้เล็กลง:** อย่าเพิ่งแบกภูเขาทั้งลูก โฟกัสแค่สิ่งเล็กๆ 1 อย่างที่ทำได้ในตอนนี้\n3. 🌿 **หลักคิดแบบ Stoic:** แยกแยะระหว่าง *สิ่งที่เราควบคุมได้* (ความพยายาม ทัศนคติ) กับ *สิ่งที่เราควบคุมไม่ได้* (ผลลัพธ์ เวลา)\n\nเมื่อพร้อมแล้ว ค่อยกลับมาลุยต่อด้วยกันนะครับ ผมพร้อมเคียงข้างคุณเสมอ! ✨`;
-        }
-
-        // 6. Deep Knowledge Topics (Science, Astronomy, Coding, Economics)
-        if (qLower.includes('หลุมดำ') || (qLower.includes('black') && qLower.includes('hole'))) {
-          this.lastTopic = 'black_hole';
-          return `🕳️ **หลุมดำ (Black Hole): วัตถุที่ทรงพลังและลึกลับที่สุดในเอกภพ**\n\n- **นิยาม:** เทห์ฟากฟ้าที่มีความหนาแน่นมหาศาลจนทำให้แรงโน้มถ่วงสูงมาก แม้กระทั่งแสงที่มีความเร็ว 300,000 กิโลเมตร/วินาที ก็ไม่สามารถหลุดรอดออกมาได้\n- **ขอบฟ้าเหตุการณ์ (Event Horizon):** จุดที่ไม่มีการหวนกลับ (Point of No Return) หากข้ามเส้นนี้ไป ข้อมูลและวัตถุจะไม่สามารถส่งสัญญาณกลับสู่ภายนอกได้อีก\n- **การยืดของเวลา (Gravitational Time Dilation):** ตามทฤษฎีสัมพัทธภาพทั่วไปของไอน์สไตน์ ยิ่งเข้าใกล้หลุมดำมากเท่าใด กาลเวลาของผู้สังเกตการณ์จะยิ่งเดินช้าลงเมื่อเทียบกับผู้ที่อยู่ห่างออกไป\n- **การแผ่รังสีฮอว์คิง (Hawking Radiation):** สตีเฟน ฮอว์คิง ค้นพบว่าจากผลกระทบเชิงควอนตัมบริเวณขอบฟ้าเหตุการณ์ หลุมดำสามารถสูญเสียมวลและระเหยหายไปได้ในระยะเวลาที่ยาวนานมหาศาลครับ`;
-        }
-
-        if (qLower.includes('ทำไม') && (qLower.includes('ท้องฟ้า') || qLower.includes('ฟ้า')) && qLower.includes('สีฟ้า')) {
-          this.lastTopic = 'sky_blue';
-          return `🌌 **ทำไมท้องฟ้าถึงเป็นสีฟ้า? (Rayleigh Scattering)**\n\n- **แสงอาทิตย์:** แท้จริงแล้วเป็นแสงสีขาวที่ประกอบด้วยสเปกตรัมทุกสี (ม่วง คราม น้ำเงิน เขียว เหลือง แสด แดง)\n- **การกระเจิงของเรย์ลี (Rayleigh Scattering):** แสงคลื่นสั้น (สีน้ำเงินและสีม่วง) มีความยาวคลื่นประมาณ 400-450 นาโนเมตร เมื่อเดินทางผ่านชั้นบรรยากาศโลก จะชนกับโมเลกุลของก๊าซไนโตรเจนและออกซิเจน ทำให้เกิดการกระเจิงไปทั่วทุกทิศทางมากกว่าแสงสีแดงถึง 10 เท่า\n- **ทำไมไม่เห็นเป็นสีม่วง?** แม้แสงสีม่วงจะกระเจิงได้ดีที่สุด แต่ดวงอาทิตย์แผ่รังสีแสงสีน้ำเงินออกมาในปริมาณที่มากกว่ามาก ประกอบกับเซลล์รับแสงรูปกรวยในดวงตามนุษย์มีความไวต่อแสงสีน้ำเงินมากกว่าสีม่วง เราจึงมองเห็นท้องฟ้าเป็นสีฟ้าครามสดใสครับ!`;
-        }
-
-        if (qLower.includes('เซลล์พืช') && qLower.includes('เซลล์สัตว์')) {
+        // 7. Biology, DNA & Medicine
+        if (qLower.includes('dna') || qLower.includes('เซลล์') || qLower.includes('สังเคราะห์แสง') || qLower.includes('ชีวะ') || qLower.includes('ภูมิคุ้มกัน')) {
           this.lastTopic = 'biology';
-          return `🌿 **ข้อแตกต่างระหว่างเซลล์พืชและเซลล์สัตว์ (Plant vs Animal Cell):**\n\n| ลักษณะ | เซลล์พืช (Plant Cell) | เซลล์สัตว์ (Animal Cell) |\n| :--- | :--- | :--- |\n| **ผนังเซลล์ (Cell Wall)** | มี (สร้างจากเซลลูโลส ให้ความแข็งแรง) | ไม่มี (มีเพียงเยื่อหุ้มเซลล์ที่ยืดหยุ่น) |\n| **คลอโรพลาสต์ (Chloroplast)** | มี (มีคลอโรฟิลล์เพื่อสังเคราะห์ด้วยแสง) | ไม่มี (ไม่สามารถสร้างอาหารเองได้) |\n| **แวคิวโอล (Vacuole)** | มีขนาดใหญ่เด่นชัด (Central Vacuole) | มีขนาดเล็กหรือไม่มีเลย |\n| **รูปร่างเซลล์** | ค่อนข้างเหลี่ยมและคงรูปแน่นอน | กลม รี หรือไม่แน่นอน |\n| **เซนทริโอล (Centriole)** | ส่วนใหญ่ไม่มี (พบในพืชชั้นต่ำ) | มี (ช่วยในการแบ่งเซลล์) |\n\n💡 **จุดเชื่อมโยง:** ทั้งสองชนิดเป็นเซลล์ยูแคริโอต (Eukaryote) ที่มีนิวเคลียสและไมโทคอนเดรียเพื่อสร้างพลังงาน ATP เหมือนกันครับ!`;
+          if (qLower.includes('สังเคราะห์แสง')) {
+            return `🌿 **กระบวนการสังเคราะห์ด้วยแสง (Photosynthesis):**\n\n- **สมการเคมีรวม:** $$6CO_2 + 6H_2O \\xrightarrow{\\text{แสง, คลอโรฟิลล์}} C_6H_{12}O_6 + 6O_2$$\n- **ปฏิกิริยาแสง (Light Reaction):** เกิดขึ้นที่เยื่อไทลาคอยด์ในคลอโรพลาสต์ แสงกระตุ้นคลอโรฟิลล์ให้แตกตัวโมเลกุลน้ำ ($H_2O$) ได้ก๊าซออกซิเจน ($O_2$) และพลังงาน $ATP, NADPH$\n- **วัฏจักรคัลวิน (Calvin Cycle / Dark Reaction):** เกิดขึ้นที่สโตรมา ใช้ $CO_2, ATP, NADPH$ สังเคราะห์น้ำตาลกลูโคสสะสมเป็นพลังงาน`;
+          }
+          return `🧬 **ชีววิทยาระดับเซลล์และรหัสพันธุกรรม (Cell Biology & DNA):**\n\n1. 🔬 **เซลล์พืช vs เซลล์สัตว์:**\n   - **เซลล์พืช:** มีผนังเซลล์ (Cell Wall ทำจากเซลลูโลส), มีคลอโรพลาสต์ (Chloroplast) และมีแวคิวโอลขนาดใหญ่\n   - **เซลล์สัตว์:** ไม่มีผนังเซลล์ มีแต่เยื่อหุ้มเซลล์ (Cell Membrane) และมีเซนทริโอลช่วยแบ่งเซลล์\n\n2. 🧬 **โครงสร้างและรหัส DNA:**\n   - DNA เป็นเกลียวคู่ (Double Helix) ประกอบด้วยนิวคลีโอไทด์ 4 เบส จับคู่สมมาตร:\n     - **A (Adenine) จับคู่กับ T (Thymine)** ด้วยพันธะไฮโดรเจน 2 พันธะ\n     - **C (Cytosine) จับคู่กับ G (Guanine)** ด้วยพันธะไฮโดรเจน 3 พันธะ\n\n3. 🛡️ **ระบบภูมิคุ้มกันร่างกาย (Immune System):**\n   - **B-cells:** สร้างแอนติบอดี (Antibodies) จำเพาะเจาะจงเพื่อจับเชื้อโรค\n   - **T-cells:** จดจำและทำลายเซลล์ที่ติดเชื้อไวรัสหรือเซลล์มะเร็ง`;
         }
 
-        if (qLower.includes('เทคนิคการเรียน') || qLower.includes('อ่านหนังสือ') || qLower.includes('จำแม่น')) {
-          this.lastTopic = 'study';
-          return `🎓 **4 สุดยอดเทคนิคการเรียนรู้ที่มีงานวิจัยสมองรองรับ (Evidence-Based Study Methods):**\n\n1. 🧠 **Active Recall (การดึงข้อมูลจากความทรงจำ):** แทนที่จะอ่านซ้ำๆ ให้ปิดหนังสือแล้วพยายามเขียนสรุปหรือตอบคำถามด้วยตนเอง จะช่วยกระตุ้นการสร้างโครงข่ายประสาท (Synaptic Plasticity)\n2. ⏱️ **Spaced Repetition (การทบทวนแบบเว้นระยะ):** ทบทวนตามช่วงเวลาที่กราฟการลืม (Ebbinghaus Forgetting Curve) เริ่มลดลง เช่น วันที่ 1, วันที่ 3, วันที่ 7 และวันที่ 30 เพื่อเปลี่ยนความจำระยะสั้นให้เป็นความจำระยะยาว\n3. 🗣️ **Feynman Technique:** ลองอธิบายเรื่องยากๆ ให้เข้าใจง่ายที่สุดประหนึ่งสอนให้เด็ก 10 ขวบเข้าใจ หากสะดุดตรงไหน แสดงว่านั่นคือช่องโหว่ทางความรู้ที่ต้องกลับไปอ่านเพิ่ม\n4. 🍅 **Pomodoro Technique:** โฟกัสเข้มข้น 25 นาที สลับพัก 5 นาที เพื่อรักษาระดับสารสื่อประสาทโดพามีนและสมาธิให้อยู่ในจุดสมดุลครับ!`;
-        }
-
-        // Code Generation & Programming Snippets
-        if (qLower.includes('python') || qLower.includes('เขียนโค้ด') || qLower.includes('javascript') || qLower.includes('sql') || qLower.includes('โค้ด')) {
+        // 8. Computer Science & Code Generation
+        if (qLower.includes('python') || qLower.includes('เขียนโค้ด') || qLower.includes('javascript') || qLower.includes('sql') || qLower.includes('โค้ด') || qLower.includes('big-o') || qLower.includes('algorithm')) {
           this.lastTopic = 'code';
-          if (qLower.includes('palindrome') || qLower.includes('พาลินโดรม')) {
-            const pyPalindrome = [
-              'def is_palindrome(text: str) -> bool:',
-              '    # กรองเฉพาะตัวอักษรและตัวเลข พร้อมแปลงเป็นตัวพิมพ์เล็ก',
-              '    cleaned = "".join(ch.lower() for ch in str(text) if ch.isalnum())',
-              '    # ตรวจสอบว่าเมื่อกลับด้านแล้วยังเหมือนเดิมหรือไม่ด้วย Slicing [::-1]',
-              '    return cleaned == cleaned[::-1]',
-              '',
-              '# ทดสอบการใช้งาน',
-              'test_cases = ["Racecar", "A man, a plan, a canal: Panama", "Hello World"]',
-              'for text in test_cases:',
-              '    print(f"\\"{text}\\" -> {is_palindrome(text)}")'
-            ].join('\n');
-
-            return `💻 **โค้ดตรวจสอบ Palindrome (Python):**\n\n\`\`\`python\n${pyPalindrome}\n\`\`\`\n\n💡 **การวิเคราะห์ประสิทธิภาพ:**\n- **Time Complexity:** $O(n)$ เมื่อ $n$ คือความยาวของข้อความ\n- **Space Complexity:** $O(n)$ เพื่อเก็บสตริงที่กรองแล้วครับ`;
+          if (qLower.includes('big-o') || qLower.includes('ความซับซ้อน')) {
+            return `⚡ **ตารางเปรียบเทียบความซับซ้อนของขั้นตอนวิธี (Big-O Complexity Guide):**\n\n| Big-O Notation | ระดับความเร็ว | ตัวอย่างอัลกอริทึม |\n| :--- | :--- | :--- |\n| $O(1)$ | ยอดเยี่ยมที่สุด (Constant) | การเข้าถึง Array index, Hash Table lookup |\n| $O(\\log n)$ | ยอดเยี่ยมมาก (Logarithmic) | Binary Search ใน Array ที่เรียงแล้ว |\n| $O(n)$ | ดี (Linear) | Linear Search วนลูป 1 รอบ |\n| $O(n \\log n)$ | ปานกลาง (Linearithmic) | MergeSort, QuickSort, HeapSort |\n| $O(n^2)$ | ช้า (Quadratic) | Nested loop 2 ชั้น, BubbleSort |\n| $O(2^n)$ | แย่มาก (Exponential) | Recursive Fibonacci ดั้งเดิม |\n| $O(n!)$ | ช้าวิกฤต (Factorial) | ปัญหาพนักงานขายเดินทาง (Traveling Salesman) |\n\n💡 **กฎทองคำ:** พยายามออกแบบ Algorithm ให้อยู่ในระดับ $O(1), O(\\log n)$ หรือ $O(n \\log n)$ เพื่อให้รองรับข้อมูลขนาดใหญ่ได้ดีที่สุดครับ!`;
           }
 
           if (qLower.includes('fibonacci') || qLower.includes('ฟีโบ')) {
@@ -6642,7 +7016,7 @@
               'print([fibonacci_memo(i) for i in range(10)])'
             ].join('\n');
 
-            return `💻 **โค้ดลำดับฟีโบนักชีแบบ Dynamic Programming Memoization (Python):**\n\n\`\`\`python\n${pyFibo}\n\`\`\`\n\n⚡ **ข้อได้เปรียบ:**\n- ลดความซับซ้อนของเวลาจาก $O(2^n)$ แบบ Recursion ดั้งเดิม เหลือเพียง $O(n)$ ช่วยให้คำนวณค่า $n$ ขนาดใหญ่ได้ทันทีโดยไม่เกิด Stack Overflow ครับ`;
+            return `💻 **โค้ดคำนวณลำดับ Fibonacci แบบ Dynamic Programming Memoization (Python):**\n\n\`\`\`python\n${pyFibo}\n\`\`\`\n\n⚡ **การวิเคราะห์ประสิทธิภาพ:**\n- **Time Complexity:** ลดจาก $O(2^n)$ เหลือเพียง $O(n)$ รวดเร็วทันตาเห็น\n- **Space Complexity:** $O(n)$ เพื่อเก็บแคชใน Dictionary`;
           }
 
           if (qLower.includes('fetch') || qLower.includes('api') || qLower.includes('javascript') || qLower.includes('js')) {
@@ -6654,40 +7028,48 @@
               '      throw new Error(`HTTP error! status: ${response.status}`);',
               '    }',
               '    const userData = await response.json();',
-              '    console.log("ข้อมูลผู้ใช้:", userData.name, userData.email);',
+              '    console.log("ชื่อผู้ใช้งาน:", userData.name, "อีเมล:", userData.email);',
               '    return userData;',
               '  } catch (error) {',
-              '    console.error("เกิดข้อผิดพลาดในการดึงข้อมูล:", error.message);',
+              '    console.error("เกิดข้อผิดพลาดในการเรียก API:", error.message);',
               '    return null;',
               '  }',
               '}'
             ].join('\n');
 
-            return `💻 **ตัวอย่างการใช้งาน Fetch API ด้วย async/await (JavaScript):**\n\n\`\`\`javascript\n${jsFetch}\n\`\`\`\n\n💡 **จุดสำคัญ:**\n- ใช้ \`await fetch(...)\` เพื่อรอผลลัพธ์แบบ Asynchronous\n- ตรวจสอบ \`response.ok\` เพื่อดักจับ HTTP Errors (เช่น 404, 500)\n- ครอบด้วยบล็อก \`try...catch\` เพื่อป้องกันแอปพลิเคชันหยุดทำงานครับ`;
+            return `💻 **ตัวอย่างการใช้ Fetch API และ Async/Await (JavaScript):**\n\n\`\`\`javascript\n${jsFetch}\n\`\`\`\n\n💡 **แนวคิดสำคัญ:**\n- ใช้ \`await\` เพื่อรอผลลัพธ์ของ Promise อย่างเป็นระเบียบ ไม่เกิด Callback Hell\n- ครอบด้วย \`try...catch\` เพื่อดักจับข้อผิดพลาดของเครือข่ายอย่างปลอดภัย`;
           }
 
-          if (qLower.includes('sql') || qLower.includes('join')) {
-            const sqlSnippet = [
-              '-- ดึงรายชื่อนักเรียน พร้อมวิชาที่ลงทะเบียนเรียน และคะแนนสอบ',
-              'SELECT ',
-              '    students.student_id,',
-              '    students.full_name,',
-              '    courses.course_name,',
-              '    enrollments.grade',
-              'FROM students',
-              '-- เชื่อมตารางการลงทะเบียน',
-              'INNER JOIN enrollments ON students.student_id = enrollments.student_id',
-              '-- เชื่อมตารางรายวิชา',
-              'INNER JOIN courses ON enrollments.course_id = courses.course_id',
-              'WHERE enrollments.grade >= 80',
-              'ORDER BY students.student_id ASC;'
-            ].join('\n');
+          const pySample = [
+            'def binary_search(arr: list, target: int) -> int:',
+            '    left, right = 0, len(arr) - 1',
+            '    while left <= right:',
+            '        mid = (left + right) // 2',
+            '        if arr[mid] == target:',
+            '            return mid  # พบตำแหน่งของข้อมูล',
+            '        elif arr[mid] < target:',
+            '            left = mid + 1',
+            '        else:',
+            '            right = mid - 1',
+            '    return -1  # ไม่พบข้อมูล'
+          ].join('\n');
 
-            return `💻 **ตัวอย่างคำสั่ง SQL INNER JOIN เชื่อมโยงข้อมูลหลายตาราง:**\n\n\`\`\`sql\n${sqlSnippet}\n\`\`\`\n\n💡 **ประเภทของ JOIN สำคัญ:**\n- **INNER JOIN:** ดึงเฉพาะแถวที่มีค่าตรงกันในทั้งสองตาราง\n- **LEFT JOIN:** ดึงข้อมูลทั้งหมดจากตารางซ้าย แม้ในตารางขวาจะไม่มีข้อมูลตรงกัน (จะเป็น NULL)\n- **RIGHT JOIN:** ดึงข้อมูลทั้งหมดจากตารางขวาครับ`;
-          }
+          return `💻 **ตัวอย่างโค้ด Binary Search ค้นหาข้อมูลแบบแบ่งครึ่ง (Python):**\n\n\`\`\`python\n${pySample}\n\`\`\`\n\n💡 **ประสิทธิภาพ:** Time Complexity $O(\\log n)$ และ Space Complexity $O(1)$ รวดเร็วมากเมื่อเทียบกับลูปค้นหาปกติครับ!`;
         }
 
-        // 7. OmniVerse Academy Semantic RAG Curriculum Search
+        // 9. Personal Finance & Wealth Management
+        if (qLower.includes('เงิน') || qLower.includes('ดอกเบี้ย') || qLower.includes('ลงทุน') || qLower.includes('หุ้น') || qLower.includes('พอร์ต')) {
+          this.lastTopic = 'finance';
+          return `💰 **ศาสตร์การเงินและการสร้างความมั่งคั่ง (Personal Finance & Investing):**\n\n1. 📈 **พลังแห่งดอกเบี้ยทบต้น (Compound Interest):**\n   - สูตรการเติบโต: $$A = P \\left(1 + \\frac{r}{n}\\right)^{nt}$$\n   - **กฎ 72 (Rule of 72):** เอา 72 หารด้วยอัตราผลตอบแทนต่อปี จะได้จำนวนปีที่เงินต้นจะเพิ่มเป็น 2 เท่า เช่น ผลตอบแทน 8% ต่อปี เงินจะเบิ้ลเป็น 2 เท่าใน $72 / 8 = 9$ ปี!\n\n2. 🛡️ **กฎจัดสรรงบประมาณ 50-30-20:**\n   - **50% Needs (สิ่งจำเป็น):** ค่าที่พัก, อาหาร, ค่าน้ำไฟ, เดินทาง\n   - **30% Wants (รางวัลชีวิต):** ท่องเที่ยว, ช้อปปิ้ง, กิจกรรมหย่อนใจ\n   - **20% Savings & Investments (อนาคต):** กองทุนสำรองฉุกเฉิน, หุ้น, กองทุนรวม\n\n3. 📊 **การกระจายความเสี่ยง (Asset Allocation):** ผสมผสานสินทรัพย์ความเสี่ยงต่ำ (พันธบัตร) และความเสี่ยงสูง (หุ้น/ดัชนี S&P500) เพื่อสร้างผลตอบแทนระยะยาวอย่างมั่นคง`;
+        }
+
+        // 10. Study Techniques & Productivity
+        if (qLower.includes('เทคนิคการเรียน') || qLower.includes('อ่านหนังสือ') || qLower.includes('จำแม่น') || qLower.includes('สมาธิ') || qLower.includes('สอบ')) {
+          this.lastTopic = 'study';
+          return `🎓 **4 สุดยอดเทคนิคการเรียนรู้ที่พิสูจน์แล้วทางประสาทวิทยา (Neuroscience-Backed Study Methods):**\n\n1. 🧠 **Active Recall (การดึงข้อมูลจากความจำ):** ปิดหนังสือแล้วทดสอบตัวเอง เขียนแผนภาพหรือสรุปด้วยคำพูดตัวเอง การดึงข้อมูลจะกระตุ้นการสร้าง Synaptic Plasticity ให้ความจำคงทน\n2. ⏱️ **Spaced Repetition (การทบทวนเว้นระยะ):** ทบทวนก่อนที่กราฟการลืม (Ebbinghaus Forgetting Curve) จะลดฮวบ เช่น ทบทวนในวันที่ 1, 3, 7, 21 และ 30 เพื่อเปลี่ยนเป็นความจำระยะยาว\n3. 🗣️ **Feynman Technique:** อธิบายเรื่องยากให้เด็ก 10 ขวบเข้าใจได้ หากจุดไหนอธิบายติดขัด นั่นคือจุดที่ต้องกลับไปทบทวนใหม่\n4. 🍅 **Pomodoro Technique:** โฟกัสเต็มที่ 25 นาที สลับพัก 5 นาที ช่วยรักษาระดับสารสื่อประสาทโดพามีนและป้องกันสมองล้า`;
+        }
+
+        // 11. Discipline and Lesson Directory Matching
         const searchResult = this.searchCurriculum(q);
         if (searchResult && searchResult.score >= 14) {
           const l = searchResult.lesson;
@@ -6698,7 +7080,6 @@
           return `🔬 **องค์ความรู้เจาะลึก: ${l.title}**\n\n- **หมวดความรู้:** สายวิชา ${d ? d.name_th : ''} (รหัส ${l.field_code || ''} ${l.field_name || ''})\n- **ระดับความเชี่ยวชาญ:** ระดับ${l.tier_th || 'พื้นฐาน'}\n- **สาระสำคัญ:** ${l.desc || ''}\n\n📖 **แก่นทฤษฎีและกลไกสำคัญ:**\n${this.extractTheorySummary(l.theory)}\n\n💡 **สถานการณ์ตัวอย่างจริง:**\n${l.scenario || 'มีการนำหลักการนี้ไปประยุกต์ใช้ในการแก้ปัญหาในระบบจริง'}\n\n📚 **แหล่งค้นคว้าและตำราอ้างอิงระดับโลก:**\n${refs}\n\n*(💡 คุณสามารถคลิกเข้าไปที่หน้ารายวิชา ${d ? d.name_th : ''} เพื่ออ่านบทเรียนฉบับเต็มและทำข้อสอบรับ EXP ได้ทันทีครับ!)*`;
         }
 
-        // 8. Discipline Knowledge Directory Matching
         for (const d of discList) {
           const codeMatch = qLower.includes(d.code) || qLower.includes(d.id);
           const nameThMatch = d.name_th && qLower.includes(d.name_th.toLowerCase());
@@ -6708,18 +7089,28 @@
             this.lastTopic = 'discipline';
             const dLessons = lessonMap[d.id] || [];
             const refs = d.references || [];
-            const fieldsText = d.fields ? d.fields.slice(0, 4).map(f => f.name).join(', ') : '';
-            const refsText = refs.length > 0
-              ? refs.map(r => `  • **${r.name}**: ${r.desc} ([ศึกษาเพิ่มเติม](${r.url}))`).join('\n')
-              : '  • ตำรามาตรฐานระดับโลกและงานวิจัยตีพิมพ์สากล';
+            const refLinks = refs.map(r => `[${r.name}](${r.url})`).join(', ');
 
-            return `🌐 **สายวิชาที่ ${d.code}: ${d.name_th} (${d.name_en})**\n\n- **ภาควิชา:** ${d.part_name || ''}\n- **ปรัชญาประจำศาสตร์:** *"${d.quote || ''}"*\n- **ขอบเขตสาขาความรู้:** ครอบคลุม ${d.fields ? d.fields.length : 0} สาขาวิชา เช่น ${fieldsText}\n- 📚 **บทเรียนในระบบ:** มีทั้งหมด ${dLessons.length} บทเรียน ตั้งแต่ระดับพื้นฐานจนถึงเชี่ยวชาญ\n- 🔗 **ตำราและแหล่งค้นคว้าชั้นนำระดับโลก:**\n${refsText}\n\n💡 *คุณสามารถคลิกเข้าไปที่หน้ารายวิชานี้เพื่อเริ่มเรียนรู้บทเรียนและทำโจทย์ได้ทันทีครับ!*`;
+            let lessonListText = '';
+            if (dLessons.length > 0) {
+              const preview = dLessons.slice(0, 5).map((l, idx) => `${idx + 1}. **${l.title}** (${l.field_name || ''})`).join('\n');
+              lessonListText = `\n\n📚 **ตัวอย่างบทเรียนเด่นในสายวิชานี้ (${dLessons.length} บทเรียน):**\n${preview}`;
+            }
+
+            return `🏛️ **สายวิชา ${d.name_th} (${d.name_en} - รหัส ${d.code})**\n\n${d.desc}\n\n- **ค่านิยมหลัก:** ${d.core_values || 'การแสวงหาความจริงและการคิดวิเคราะห์'}\n- **เป้าหมายสูงสุด:** ${d.ultimate_goal || 'ความเป็นเลิศทางปัญญาและการพัฒนาที่ยั่งยืน'}${lessonListText}\n\n📖 **แหล่งอ้างอิงระดับโลก:** ${refLinks || 'มาตรฐานสากล'}\n\n*คลิกที่แถบเมนูด้านซ้ายเพื่อเข้าสู่ห้องเรียนของสายวิชานี้ได้เลยครับ!*`;
           }
         }
 
-        // 9. Conversational Universal Fallback (Polite, helpful, engaging)
+        // 12. Default Polysophic Response with Persona adaptation
         this.lastTopic = 'general';
-        return `🤖 **สวัสดีครับ! ผมคือ OmniAI Sage 4.0**\n\nผมพร้อมตอบคำถามและสนทนากับคุณในทุกมิติของความรู้:\n- 🌌 **15 มหาศาสตร์ (377 บทเรียน):** ถามสรุปเนื้อหา เจาะลึกทฤษฎี หรือขอคำใบ้ข้อสอบ\n- 📐 **คณิตศาสตร์:** คำนวณเลข แก้สมการ แคลคูลัส เรขาคณิต\n- 💻 **คอมพิวเตอร์:** เขียนโค้ด Python, JS, HTML/CSS, SQL\n- 💬 **ชวนคุยทั่วไป:** ปรึกษาเรื่องเรียน ขอคำแนะนำ หรือให้กำลังใจ\n\n*ลองถามคำถามที่เฉพาะเจาะจง เช่น "ทำไมฝนตก", "เขียนโค้ด Python", หรือ "อธิบายทฤษฎีควอนตัม" ได้เลยครับ!*`;
+        const personaWelcome = {
+          sage: 'ผมคือ OmniAI Sage 5.0 ในโหมด "ปราชญ์พหูสูต" พร้อมให้คำอธิบายที่ลึกซึ้ง ครอบคลุม และละเอียดรอบด้านในทุกสาขาวิชา',
+          speed: 'ผมคือ OmniAI Sage 5.0 ในโหมด "ติวเตอร์เร่งรัด" พร้อมสรุปประเด็นสำคัญ กระชับ ตรงจุดสอบแบบ TL;DR ให้คุณทันที',
+          eli5: 'ผมคือ OmniAI Sage 5.0 ในโหมด "พี่ใจดี ELI5" พร้อมอธิบายเรื่องยากๆ ให้เข้าใจง่ายเหมือนเล่านิทานเห็นภาพชัดเจน',
+          code: 'ผมคือ OmniAI Sage 5.0 ในโหมด "โค้ดดิ้งเมนเทอร์" พร้อมเขียนโค้ด วิเคราะห์ Big-O และตรวจแก้บั๊กให้คุณอย่างเชี่ยวชาญ'
+        }[this.persona] || 'ผมคือ OmniAI Sage 5.0 ผู้ช่วยอัจฉริยะรอบรู้';
+
+        return `🤖 **สวัสดีครับ! ${personaWelcome}**\n\nผมพร้อมตอบคำถามและสนทนากับคุณในทุกมิติของความรู้:\n- 🎯 **สร้างโจทย์ฝึกหัด:** พิมพ์ "ขอโจทย์ซ้อมมือ" เพื่อทำข้อสอบจำลองพร้อมเฉลยวิธีคิด\n- 🌌 **15 มหาศาสตร์ (377 บทเรียน):** ถามสรุปเนื้อหา เจาะลึกทฤษฎี หรือขอคำใบ้ข้อสอบ\n- 📐 **คณิตศาสตร์:** คำนวณเลข แก้สมการ แคลคูลัส เรขาคณิต พร้อมสูตรและวิธีทำ\n- 💻 **คอมพิวเตอร์:** เขียนโค้ด Python, JS, HTML/CSS, SQL พร้อมวิเคราะห์ Big-O\n- 🎙️ **สั่งงานด้วยเสียง:** กดปุ่มไมโครโฟนด้านล่างเพื่อพูดภาษาไทยได้ทันที\n- 💬 **ชวนคุยทั่วไป:** ปรึกษาเรื่องเรียน ขอคำแนะนำ หรือให้กำลังใจ\n\n*ลองถามคำถาม เช่น "ขอโจทย์ซ้อมมือ", "ทำไมฝนตก", "เขียนโค้ด Python", หรือ "อธิบายทฤษฎีควอนตัม" ได้เลยครับ!*`;
       }
 
       searchCurriculum(query) {
@@ -6744,9 +7135,6 @@
             const fieldLower = (l.field_name || '').toLowerCase();
             const theoryLower = (l.theory || '').toLowerCase();
 
-            if (titleLower.includes(query.toLowerCase())) score += 60;
-            else if (descLower.includes(query.toLowerCase())) score += 30;
-
             for (const t of tokens) {
               if (titleLower.includes(t)) score += 20;
               if (descLower.includes(t)) score += 10;
@@ -6768,9 +7156,8 @@
       extractTheorySummary(theoryHtml) {
         if (!theoryHtml) return 'ทำความเข้าใจหลักการพื้นฐานและกลไกการทำงานของทฤษฎีนี้';
         const text = theoryHtml
-          .replace(/<div class="theory-section-title">/g, '\n📌 ')
-          .replace(/<\/div>/g, '\n')
           .replace(/<[^>]+>/g, ' ')
+          .replace(/&nbsp;/g, ' ')
           .replace(/\s+/g, ' ')
           .trim();
 
@@ -6817,36 +7204,46 @@
     <span class="ai-fab-badge">🤖 ถาม AI</span>
   </div>
 
-  <div id="omni-ai-widget" class="omni-ai-widget" style="display: none;">
+    <div id="omni-ai-widget" class="omni-ai-widget" style="display: none;">
     <!-- AI Header -->
     <div class="ai-header">
       <div class="ai-header-info">
-        <div class="ai-avatar-badge">🤖</div>
+        <div class="ai-avatar-badge" id="ai-header-avatar">🤖</div>
         <div>
-          <div class="ai-name">OMNI-AI SAGE 4.0</div>
-          <div class="ai-status" id="ai-header-status"><span class="ai-status-dot"></span> พร้อมสนทนารอบรู้ (Pinnacle Polymath 4.0)</div>
+          <div class="ai-name">OMNI-AI SAGE 5.0</div>
+          <div class="ai-status" id="ai-header-status"><span class="ai-status-dot"></span> พร้อมสนทนารอบรู้ (OmniPolymath Next-Gen)</div>
         </div>
       </div>
       <div class="ai-header-actions">
+        <button class="ai-btn-icon" onclick="omniAI.exportChatNotes()" title="บันทึกสรุปการเรียน (Export Notes)">📥</button>
         <button class="ai-btn-icon" onclick="omniAI.toggleSettings()" title="ตั้งค่า AI Model">⚙️</button>
         <button class="ai-btn-icon" onclick="omniAI.clearChat()" title="ล้างบทสนทนา">🗑️</button>
         <button class="ai-btn-icon" onclick="omniAI.close()" title="ปิดหน้าต่าง">✕</button>
       </div>
     </div>
 
+    <!-- AI Persona Selector Bar -->
+    <div id="ai-persona-bar" class="ai-persona-bar">
+      <button class="ai-persona-tab active" data-persona="sage" onclick="omniAI.setPersona('sage')" title="สุภาพ ละเอียด รอบรู้ ลึกซึ้ง ครอบคลุม">🧙‍♂️ ปราชญ์พหูสูต</button>
+      <button class="ai-persona-tab" data-persona="speed" onclick="omniAI.setPersona('speed')" title="สรุปสั้น กระชับ ตรงประเด็น สรุป 3 บรรทัด">⚡ ติวเตอร์สรุป</button>
+      <button class="ai-persona-tab" data-persona="eli5" onclick="omniAI.setPersona('eli5')" title="เข้าใจง่ายมาก สไตล์นิทาน เหมาะกับทุกคน">👶 พี่ใจดี ELI5</button>
+      <button class="ai-persona-tab" data-persona="code" onclick="omniAI.setPersona('code')" title="เน้นเขียนโค้ด วิเคราะห์ Big-O และ Best Practices">💻 โค้ดเมนเทอร์</button>
+    </div>
+
     <!-- AI Settings Drawer (Collapsible) -->
     <div id="ai-settings-panel" class="ai-settings-panel" style="display: none;">
-      <div style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.35rem;">⚙️ ตั้งค่าระบบ AI Engine 4.0</div>
+      <div style="font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.35rem;">⚙️ ตั้งค่าระบบ AI Engine 5.0</div>
       <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.6rem;">
-        ระบบเชื่อมต่อ <strong>Hybrid Cloud & Local Polymath 4.0</strong> อัตโนมัติ (ตอบโต้ลื่นไหล เสถียร ไม่ต้องใส่ Key) หรือระบุ Gemini API Key ฟรีสำหรับความเร็วสูงสุด
+        ระบบเชื่อมต่อ <strong>Puter.js Cloud LLM & Local OmniBrain 5.0</strong> อัตโนมัติ (ตอบโต้ฉลาดลื่นไหล ฟรี ไม่ต้องใส่ API Key) หรือเชื่อมต่อ Google Gemini / OpenAI ด้วย API Key ของคุณเองได้
       </p>
       <div style="margin-bottom: 0.5rem;">
         <label style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">เลือก AI Provider:</label>
         <select id="ai-provider-select" class="form-input" style="font-size: 0.8rem; padding: 0.4rem 0.6rem; margin-bottom: 0.5rem; width: 100%;" onchange="omniAI.handleProviderChange()">
-          <option value="auto">🌟 Auto (Hybrid Engine 4.0 - พหูสูตโต้ตอบเร็ว ไม่ต้องใส่คีย์)</option>
+          <option value="auto">🌟 Auto (Hybrid Next-Gen 5.0 - Puter Cloud + Pollinations + OmniBrain 5.0 ฟรี ไม่ต้องใช้ Key)</option>
+          <option value="puter">🤖 Puter.js Free Cloud LLM (GPT-4o-mini ฟรี 100%)</option>
           <option value="gemini">💎 Google Gemini API (Gemini 1.5/2.0 Flash)</option>
           <option value="openai">⚡ OpenAI API (GPT-4o / GPT-4o-mini)</option>
-          <option value="local">💾 OmniBrain 4.0 Knowledge Engine (ออฟไลน์ 100%)</option>
+          <option value="local">💾 OmniBrain 5.0 Knowledge Engine (ออฟไลน์ 100%)</option>
         </select>
       </div>
       <div id="ai-custom-key-area" style="display: none;">
@@ -6867,19 +7264,28 @@
 
     <!-- Quick Prompt Suggestions Bar -->
     <div class="ai-quick-chips">
+      <button class="ai-chip" onclick="omniAI.sendQuickPrompt('🎯 ขอโจทย์ซ้อมมือ 1 ข้อพร้อมเฉลย')">🎯 ขอโจทย์ซ้อมมือ</button>
       <button class="ai-chip" onclick="omniAI.sendQuickPrompt('📌 สรุปสาระสำคัญเป็น 3 ข้อย่อย (TL;DR)')">📌 สรุปสั้นๆ (TL;DR)</button>
       <button class="ai-chip" onclick="omniAI.sendQuickPrompt('👶 อธิบายให้เข้าใจง่ายเหมือนเด็ก 10 ขวบ (ELI5)')">👶 อธิบายแบบเด็ก 10 ขวบ</button>
       <button class="ai-chip" onclick="omniAI.sendQuickPrompt('🔬 เจาะลึกเชิงวิชาการ')">🔬 เจาะลึกเชิงวิชาการ</button>
+      <button class="ai-chip" onclick="omniAI.sendQuickPrompt('📐 สรุปสูตรคณิตศาสตร์และตัวอย่างการคำนวณ')">📐 สรุปสูตรคณิตศาสตร์</button>
+      <button class="ai-chip" onclick="omniAI.sendQuickPrompt('💻 สอนเขียนโค้ด Python พร้อมวิเคราะห์ Big-O')">💻 สอนเขียนโค้ด</button>
       <button class="ai-chip" onclick="omniAI.sendQuickPrompt('ช่วยสรุปแก่นความรู้สำคัญของบทเรียนนี้ให้เข้าใจง่ายๆ หน่อย')">💡 สรุปบทเรียนนี้</button>
       <button class="ai-chip" onclick="omniAI.sendQuickPrompt('ช่วยใบ้แนวคิดการคิดวิเคราะห์โจทย์ข้อนี้หน่อย (ไม่ต้องบอกคำตอบ)')">📝 ขอคำใบ้โจทย์</button>
-      <button class="ai-chip" onclick="omniAI.sendQuickPrompt('ช่วยเขียนโค้ด Python ตรวจจับ Palindrome พร้อมอธิบาย')">💻 สอนเขียนโค้ด</button>
       <button class="ai-chip" onclick="omniAI.sendQuickPrompt('แนะนำสายวิชาที่ฉันควรเริ่มต้นศึกษาเป็นอันดับแรก')">🧭 แนะนำสายวิชา</button>
     </div>
 
-    <!-- AI Input Bar -->
+    <!-- AI Input Bar with Microphone Voice STT -->
     <form class="ai-input-bar" onsubmit="event.preventDefault(); omniAI.sendFromInput();">
+      <button type="button" id="omni-ai-mic-btn" class="ai-mic-btn" onclick="omniAI.toggleVoiceInput()" title="สั่งงานด้วยเสียงภาษาไทย (Speech-to-Text)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+          <line x1="12" y1="19" x2="12" y2="22"/>
+        </svg>
+      </button>
       <button type="button" id="omni-ai-stop-btn" class="ai-stop-stream-btn" onclick="omniAI.stopStreaming()" style="display: none;" title="ข้ามการพิมพ์แอนิเมชันและแสดงคำตอบทันที">⏹️ หยุดพิมพ์</button>
-      <textarea id="omni-ai-input" class="ai-textarea" rows="1" placeholder="พิมพ์คำถามของคุณ... (ถามได้ทุกเรื่องใน 15 มหาศาสตร์)" onkeydown="omniAI.handleKeyDown(event)"></textarea>
+      <textarea id="omni-ai-input" class="ai-textarea" rows="1" placeholder="พิมพ์หรือกดไมค์พูดคำถาม... (ถามได้ทุกเรื่องใน 15 มหาศาสตร์)" onkeydown="omniAI.handleKeyDown(event)"></textarea>
       <button type="submit" id="omni-ai-send-btn" class="ai-send-btn" title="ส่งข้อความ">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
