@@ -4593,7 +4593,7 @@
                     <h2 style="font-size: 1.35rem; color: #fff; margin: 0; font-weight: 800;">ศูนย์การเรียนรู้ 20 ภาษาโลกและระบบฝึกออกเสียง (20 World Languages Hub)</h2>
                   </div>
                   <p style="color: var(--text-muted); font-size: 0.88rem; margin: 0.35rem 0 0 0;">
-                    สำรวจ 20 ภาษาหลักของโลกในหมวดภาษาและการสื่อสาร พร้อมระบบฟังเสียงอ่านสำเนียงแท้ (Native Web Speech Audio), ระบบตัวอักษร, คำศัพท์จำเป็น และแบบทดสอบรับ XP
+                    สำรวจ 20 ภาษาหลักของโลกในหมวดภาษาและการสื่อสาร พร้อมระบบฟังเสียงอ่านสำเนียงแท้ (Web Speech Audio), ระบบตัวอักษร, คำศัพท์จำเป็น และแบบทดสอบรับ XP
                   </p>
                 </div>
                 <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
@@ -4606,44 +4606,47 @@
               <!-- Category filter tabs -->
               <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.25rem;">
                 <button class="k-tab active" data-cat="all" onclick="app.setWorldLanguageCategory('all', this)">🌐 ทั้งหมด (20 ภาษา)</button>
-                <button class="k-tab" data-cat="europe-americas" onclick="app.setWorldLanguageCategory('europe-americas', this)">🏛️ ยุโรปและอเมริกา (6)</button>
-                <button class="k-tab" data-cat="east-asia-sea" onclick="app.setWorldLanguageCategory('east-asia-sea', this)">🏯 เอเชียตะวันออกและอาเซียน (5)</button>
-                <button class="k-tab" data-cat="south-asia-me" onclick="app.setWorldLanguageCategory('south-asia-me', this)">🕌 เอเชียใต้และตะวันออกกลาง (8)</button>
-                <button class="k-tab" data-cat="africa" onclick="app.setWorldLanguageCategory('africa', this)">🌍 แอฟริกา (1)</button>
+                <button class="k-tab" data-cat="indo-european" onclick="app.setWorldLanguageCategory('indo-european', this)">🏛️ อินโด-ยูโรเปียน (10)</button>
+                <button class="k-tab" data-cat="sino-tibetan" onclick="app.setWorldLanguageCategory('sino-tibetan', this)">🏯 ชิโน-ทิเบตัน (2)</button>
+                <button class="k-tab" data-cat="dravidian" onclick="app.setWorldLanguageCategory('dravidian', this)">🛕 ดราวิเดียน (2)</button>
+                <button class="k-tab" data-cat="austronesian" onclick="app.setWorldLanguageCategory('austronesian', this)">🏝️ ออสโตรนีเซียน (1)</button>
+                <button class="k-tab" data-cat="other" onclick="app.setWorldLanguageCategory('other', this)">🌍 ตระกูลอื่นๆ (5)</button>
               </div>
 
               <!-- 20 Language Cards Grid -->
               <div class="world-lang-grid" id="world-lang-grid">
                 ${this.getWorldLanguagesData().map(l => {
-                  const lessons = (LESSON_DATA && LESSON_DATA['13']) ? LESSON_DATA['13'] : (BASE_LESSONS['13'] || []);
-                  const realIdx = lessons.findIndex(item => item.id === l.lessonId);
-                  const isDone = auth.currentUser && Array.isArray(auth.currentUser.completedQuizzes) && auth.currentUser.completedQuizzes.includes('13_' + realIdx);
+                  const lessons = (LESSON_DATA && LESSON_DATA['13'] && LESSON_DATA['13'].length > 0) ? LESSON_DATA['13'] : (BASE_LESSONS['13'] || []);
+                  const realIdx = lessons.findIndex(item => item.id === l.id);
+                  const targetIdx = realIdx !== -1 ? realIdx : 0;
+                  const isDone = auth.currentUser && Array.isArray(auth.currentUser.completedQuizzes) && auth.currentUser.completedQuizzes.includes('13_' + targetIdx);
+                  const safeGreeting = (l.greeting || '').replace(/'/g, "\\'");
                   return `
-                    <div class="world-lang-card" data-cat="${l.familyCategory}" data-name="${l.nameTh} ${l.nameEn} ${l.nativeName}">
+                    <div class="world-lang-card" data-cat="${l.familyCategory}" data-name="${l.nameTh} ${l.nameEn} ${l.nativeName}" onclick="app.navigate('#/theory/13_${targetIdx}')" style="cursor: pointer;">
                       <div class="lang-flag">${l.flag}</div>
                       <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.25rem;">
                         <h4 style="font-size: 1.1rem; color: #fff; margin: 0; font-weight: 700;">${l.nameTh}</h4>
                         <span style="font-size: 0.8rem; color: #38bdf8; font-weight: 600;">${l.nameEn}</span>
                       </div>
-                      <div style="font-size: 0.85rem; color: #94a3b8; font-style: italic; margin-bottom: 0.6rem;">${l.nativeName} (${l.writingSystem})</div>
+                      <div style="font-size: 0.85rem; color: #94a3b8; font-style: italic; margin-bottom: 0.6rem;">${l.nativeName} (${l.script || ''})</div>
                       
-                      <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 0.6rem; margin-bottom: 0.75rem;">
+                      <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 0.6rem; margin-bottom: 0.75rem;" onclick="event.stopPropagation()">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.2rem;">
                           <span style="font-size: 0.75rem; color: var(--text-muted);">คำทักทายประจำวัน:</span>
-                          <button class="lang-audio-btn" onclick="app.speakLanguagePhrase('${l.greeting}', '${l.locale}')" title="กดฟังเสียงพูดสำเนียงแท้">
+                          <button class="lang-audio-btn" onclick="event.stopPropagation(); app.speakLanguagePhrase('${safeGreeting}', '${l.speechLang || 'en-US'}')" title="กดฟังเสียงพูดสำเนียงแท้">
                             🔊 ฟังเสียง
                           </button>
                         </div>
                         <div style="font-size: 0.95rem; font-weight: 700; color: #f8fafc;">${l.greeting}</div>
-                        <div style="font-size: 0.78rem; color: #cbd5e1;">${l.meaning}</div>
+                        <div style="font-size: 0.78rem; color: #cbd5e1;">${l.greetingTh || ''}</div>
                       </div>
 
                       <div style="display: flex; gap: 0.35rem; flex-wrap: wrap; margin-bottom: 0.85rem;">
                         <span class="lang-badge" style="background: rgba(14, 165, 233, 0.15); color: #38bdf8;">${l.family}</span>
-                        <span class="lang-badge" style="background: rgba(168, 85, 247, 0.15); color: #c084fc;">${l.features[0] || 'ไวยากรณ์สำคัญ'}</span>
+                        <span class="lang-badge" style="background: rgba(168, 85, 247, 0.15); color: #c084fc;">${l.script || 'ระบบการเขียน'}</span>
                       </div>
 
-                      <button class="btn ${isDone ? 'btn-outline' : 'btn-primary'}" style="margin-top: auto; width: 100%; font-size: 0.85rem; padding: 0.5rem;" onclick="app.navigateToLanguageLesson(${l.lessonId})">
+                      <button class="btn ${isDone ? 'btn-outline' : 'btn-primary'}" style="margin-top: auto; width: 100%; font-size: 0.85rem; padding: 0.5rem;" onclick="event.stopPropagation(); app.navigate('#/theory/13_${targetIdx}')">
                         ${isDone ? '✅ ทบทวนบทเรียน ➔' : '📖 เข้าสู่บทเรียนภาษา ➔'}
                       </button>
                     </div>
@@ -4715,7 +4718,7 @@
                     <h4 style="font-size: 1.15rem; color: #fff; margin-bottom: 0.25rem;">${l.title}</h4>
                     <p style="font-size: 0.86rem; color: var(--text-muted); line-height: 1.45;">${l.desc}</p>
                   </div>
-                  <button class="btn ${isDone ? 'btn-outline' : 'btn-primary'}" style="white-space: nowrap;">
+                  <button class="btn ${isDone ? 'btn-outline' : 'btn-primary'}" style="white-space: nowrap;" onclick="event.stopPropagation(); app.navigate('#/theory/${disc.id}_${realIdx}')">
                     ${isDone ? '📖 ทบทวนบทเรียน ➔' : '📖 ศึกษาทฤษฎี & ทำโจทย์ ➔'}
                   </button>
                 </div>
@@ -4727,7 +4730,9 @@
 
 
       renderTheory(param) {
-        const [rawDiscId, idxStr] = (param || '').split('_');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const normalized = (param || '').replace('/', '_');
+        const [rawDiscId, idxStr] = normalized.split('_');
         const ALIAS_MAP = {
           'tech': '07',
           'academic': '02',
@@ -5050,7 +5055,9 @@
       // INTERACTIVE MULTI-QUESTION QUIZ RUNNER (1-10 QUESTIONS)
       // ============================================================
       renderQuiz(param, restart = false) {
-        const [rawDiscId, idxStr] = (param || '').split('_');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const normalized = (param, restart = false || '').replace('/', '_');
+        const [rawDiscId, idxStr] = normalized.split('_');
         const ALIAS_MAP = {
           'tech': '07',
           'academic': '02',
@@ -5710,10 +5717,10 @@
       }
 
       navigateToLanguageLesson(lessonId, type = 'theory') {
-        const lessons = (LESSON_DATA && LESSON_DATA['13']) ? LESSON_DATA['13'] : (BASE_LESSONS['13'] || []);
-        const idx = lessons.findIndex(l => l.id === lessonId);
+        const lessons = (LESSON_DATA && LESSON_DATA['13'] && LESSON_DATA['13'].length > 0) ? LESSON_DATA['13'] : (BASE_LESSONS['13'] || []);
+        const idx = lessons.findIndex(l => Number(l.id) === Number(lessonId) || String(l.id) === String(lessonId));
         const targetIdx = idx !== -1 ? idx : 0;
-        this.navigate(`#/${type}/13_${targetIdx}`);
+        this.navigate('#/' + type + '/13_' + targetIdx);
       }
 
       filterWorldLanguages() {
