@@ -4459,7 +4459,7 @@
                         <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1rem; font-style: italic; line-height: 1.4;">
                           "${d.quote}"
                         </div>
-                        <button class="btn btn-primary" style="margin-top: auto; width: 100%; background: ${d.color}; border-color: ${d.color}; color: #000; font-weight: 700;">
+                        <button class="btn btn-primary" onclick="event.stopPropagation(); app.navigate('#/discipline/${d.id}')" style="margin-top: auto; width: 100%; background: ${d.color}; border-color: ${d.color}; color: #000; font-weight: 700;">
                           เข้าสู่สายวิชา (${lessons.length} บทเรียน) ➔
                         </button>
                       </div>
@@ -4617,10 +4617,10 @@
               <div class="world-lang-grid" id="world-lang-grid">
                 ${this.getWorldLanguagesData().map(l => {
                   const lessons = (LESSON_DATA && LESSON_DATA['13'] && LESSON_DATA['13'].length > 0) ? LESSON_DATA['13'] : (BASE_LESSONS['13'] || []);
-                  const realIdx = lessons.findIndex(item => item.id === l.id);
+                  const realIdx = lessons.findIndex(item => Number(item.id) === Number(l.id));
                   const targetIdx = realIdx !== -1 ? realIdx : 0;
-                  const isDone = auth.currentUser && Array.isArray(auth.currentUser.completedQuizzes) && auth.currentUser.completedQuizzes.includes('13_' + targetIdx);
-                  const safeGreeting = (l.greeting || '').replace(/'/g, "\\'");
+                  const isDone = (typeof auth !== 'undefined' && auth && auth.currentUser && Array.isArray(auth.currentUser.completedQuizzes)) ? auth.currentUser.completedQuizzes.includes('13_' + targetIdx) : false;
+                  const safePhraseAttr = (l.greeting || '').replace(/"/g, '&quot;');
                   return `
                     <div class="world-lang-card" data-cat="${l.familyCategory}" data-name="${l.nameTh} ${l.nameEn} ${l.nativeName}" onclick="app.navigate('#/theory/13_${targetIdx}')" style="cursor: pointer;">
                       <div class="lang-flag">${l.flag}</div>
@@ -4633,7 +4633,7 @@
                       <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 0.6rem; margin-bottom: 0.75rem;" onclick="event.stopPropagation()">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.2rem;">
                           <span style="font-size: 0.75rem; color: var(--text-muted);">คำทักทายประจำวัน:</span>
-                          <button class="lang-audio-btn" onclick="event.stopPropagation(); app.speakLanguagePhrase('${safeGreeting}', '${l.speechLang || 'en-US'}')" title="กดฟังเสียงพูดสำเนียงแท้">
+                          <button class="lang-audio-btn" data-phrase="${safePhraseAttr}" data-lang="${l.speechLang || 'en-US'}" onclick="event.stopPropagation(); app.speakLanguagePhrase(this.getAttribute('data-phrase'), this.getAttribute('data-lang'), this)" title="กดฟังเสียงพูดสำเนียงแท้">
                             🔊 ฟังเสียง
                           </button>
                         </div>
