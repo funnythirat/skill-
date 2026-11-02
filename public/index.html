@@ -2335,6 +2335,200 @@
       margin: 0.35rem 0;
       color: #e0f2fe;
     }
+  
+    /* ============================================================ */
+    /* ENHANCEMENT SUITE: QUICK SEARCH, POMODORO, ACHIEVEMENTS      */
+    /* ============================================================ */
+    .quick-search-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.65rem 0.9rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      color: #e2e8f0;
+      border: 1px solid transparent;
+      margin-bottom: 0.35rem;
+      text-decoration: none;
+    }
+    .quick-search-item:hover, .quick-search-item.selected {
+      background: rgba(99, 102, 241, 0.22);
+      border-color: rgba(99, 102, 241, 0.45);
+      color: #fff;
+      transform: translateX(3px);
+    }
+    .quick-search-badge {
+      font-size: 0.72rem;
+      padding: 0.18rem 0.45rem;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    /* Floating Pomodoro Widget */
+    .pomodoro-widget {
+      position: fixed;
+      bottom: 85px;
+      right: 22px;
+      z-index: 998;
+      font-family: inherit;
+    }
+    .pomodoro-pill {
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 0.45rem 0.85rem;
+      border-radius: 25px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 15px rgba(56, 189, 248, 0.2);
+      cursor: pointer;
+      color: #fff;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+    .pomodoro-widget.collapsed .pomodoro-pill {
+      display: flex;
+    }
+    .pomodoro-widget.collapsed .pomodoro-card {
+      display: none;
+    }
+    .pomodoro-card {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 18px;
+      width: 300px;
+      padding: 1.2rem;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.7), 0 0 25px rgba(99, 102, 241, 0.2);
+    }
+    .pomodoro-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.85rem;
+    }
+    .pomodoro-modes {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.35rem;
+      margin-bottom: 1rem;
+    }
+    .pomo-mode-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: #94a3b8;
+      font-size: 0.72rem;
+      padding: 0.35rem 0.2rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+    .pomo-mode-btn.active {
+      background: rgba(99, 102, 241, 0.25);
+      border-color: #6366f1;
+      color: #c7d2fe;
+      font-weight: 700;
+    }
+    .pomodoro-display {
+      text-align: center;
+      margin: 0.6rem 0 1rem;
+      padding: 0.75rem;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .pomodoro-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .btn-icon-xs {
+      background: rgba(255,255,255,0.06);
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      border-radius: 5px;
+      padding: 2px 6px;
+      font-size: 0.75rem;
+    }
+    .btn-icon-xs:hover {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+    }
+    .pomodoro-pill-btn {
+      background: #6366f1;
+      border: none;
+      color: #fff;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      font-size: 0.65rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    /* Focus Mode for Theory Reading */
+    body.theory-focus-mode .navbar,
+    body.theory-focus-mode .mobile-nav,
+    body.theory-focus-mode #canvas-background {
+      opacity: 0.1;
+      pointer-events: none;
+    }
+    body.theory-focus-mode .theory-box {
+      max-width: 920px;
+      margin: 0 auto;
+      border-color: rgba(99, 102, 241, 0.5);
+      box-shadow: 0 0 50px rgba(99, 102, 241, 0.2);
+    }
+
+    /* Achievement Badges */
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 0.85rem;
+      margin-top: 1rem;
+      text-align: left;
+    }
+    .achievement-card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 0.9rem;
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+    .achievement-card.unlocked {
+      background: linear-gradient(135deg, rgba(30, 27, 75, 0.7), rgba(15, 23, 42, 0.85));
+      border-color: rgba(245, 158, 11, 0.4);
+      box-shadow: 0 4px 20px -5px rgba(245, 158, 11, 0.2);
+    }
+    .achievement-card.locked {
+      opacity: 0.5;
+      filter: grayscale(0.8);
+    }
+    .achievement-icon {
+      font-size: 1.8rem;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+    .achievement-unlocked .achievement-icon {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+    }
   </style>
   <!-- Puter.js Free Cloud AI SDK -->
   <script src="https://js.puter.com/v2/"></script>
@@ -2529,6 +2723,14 @@
       </ul>
 
       <div class="nav-actions">
+        <!-- Quick Search Button (Ctrl+K) -->
+        <button class="btn btn-outline btn-search-trigger" onclick="app.openQuickSearch()" style="padding: 0.35rem 0.75rem; font-size: 0.82rem; display: inline-flex; align-items: center; gap: 0.4rem; border-color: rgba(255,255,255,0.15); color: #c7d2fe;" title="ค้นหาบทเรียนและทฤษฎีบท (Ctrl+K)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <span class="search-btn-text">ค้นหา</span>
+          <kbd style="background: rgba(255,255,255,0.1); border-radius: 4px; padding: 1px 4px; font-size: 0.7rem; color: #94a3b8;">Ctrl K</kbd>
+        </button>
+        <!-- Pomodoro Timer Toggle -->
+        <button id="btn-pomodoro-toggle" class="btn-icon" onclick="app.togglePomodoro()" title="ตัวจับเวลาโฟกัส Pomodoro (25/5 นาที)"><span style="font-size: 1.05rem;">⏱️</span></button>
         <div id="google_translate_element" style="display: inline-flex; align-items: center;" title="แปลภาษาหน้าเว็บ"></div>
         <button id="btn-sound-toggle" class="btn-icon" onclick="soundEngine.toggleSound()" title="เปิด/ปิดเสียง"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></button>
         
@@ -2544,6 +2746,7 @@
           <div class="user-info-mini">
             <span class="user-name-mini" id="nav-user-name">Player</span>
             <span class="user-level-tag" id="nav-user-level">LV. 1</span>
+            <span id="nav-user-streak" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.35); font-size: 0.75rem; padding: 0.15rem 0.45rem; border-radius: 12px; margin-left: 4px; font-weight: 700;">🔥 1 วัน</span>
           </div>
         </div>
       </div>
@@ -2769,6 +2972,68 @@
           <button type="submit" class="btn btn-primary" style="padding: 0.7rem 1.5rem;">💾 บันทึกการแก้ไข 🌟</button>
         </div>
       </form>
+    </div>
+  </div>
+
+
+  <!-- 6. Universal Quick Search Modal (Ctrl+K) -->
+  <div id="modal-quick-search" class="modal-overlay" onclick="if(event.target===this)app.closeQuickSearch()">
+    <div class="modal-dialog" style="max-width: 640px; padding: 0; overflow: hidden; background: #0b0f19; border: 1px solid rgba(99, 102, 241, 0.4); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85), 0 0 30px rgba(99, 102, 241, 0.2);">
+      <div style="display: flex; align-items: center; padding: 1rem 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.08); gap: 0.75rem; background: rgba(15, 23, 42, 0.8);">
+        <span style="font-size: 1.2rem; color: #818cf8;">🔍</span>
+        <input id="quick-search-input" type="text" placeholder="พิมพ์ค้นหาบทเรียน, ทฤษฎีบท, สายวิชา, 20 ภาษาโลก... (กด ↑↓ เพื่อเลือก)" style="flex: 1; background: transparent; border: none; outline: none; color: #fff; font-size: 1.05rem; font-family: inherit;" oninput="app.onQuickSearchInput(this.value)" onkeydown="app.onQuickSearchKeyDown(event)">
+        <kbd style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; padding: 2px 7px; font-size: 0.72rem; color: #94a3b8;">ESC</kbd>
+        <button class="modal-close" onclick="app.closeQuickSearch()" style="position: static; font-size: 1.25rem; color: #94a3b8; line-height: 1; padding: 0 4px; background: none; border: none; cursor: pointer;">&times;</button>
+      </div>
+      <div id="quick-search-results" style="max-height: 380px; overflow-y: auto; padding: 0.5rem;">
+        <div style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted); font-size: 0.9rem;">
+          💡 พิมพ์เพื่อเริ่มค้นหาบทเรียนและทฤษฎีบทจาก 15 สายวิชาทั่วโลก
+        </div>
+      </div>
+      <div style="padding: 0.65rem 1.25rem; background: rgba(0,0,0,0.4); border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--text-muted);">
+        <div style="display: flex; gap: 0.8rem;">
+          <span><kbd style="background: rgba(255,255,255,0.08); padding: 1px 4px; border-radius: 3px;">↑↓</kbd> เลื่อนเลือก</span>
+          <span><kbd style="background: rgba(255,255,255,0.08); padding: 1px 4px; border-radius: 3px;">↵ Enter</kbd> เปิดบทเรียน</span>
+        </div>
+        <span>OmniVerse Search Engine 🌌</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Pomodoro Study Timer Widget -->
+  <div id="pomodoro-widget" class="pomodoro-widget collapsed" style="display: none;">
+    <div class="pomodoro-pill" onclick="app.togglePomodoroExpand()">
+      <span class="pomodoro-icon">⏱️</span>
+      <span id="pomodoro-pill-time">25:00</span>
+      <span id="pomodoro-pill-mode" style="font-size: 0.72rem; opacity: 0.8;">โฟกัส</span>
+      <button class="pomodoro-pill-btn" onclick="event.stopPropagation(); app.togglePomodoroTimer()" id="pomodoro-pill-play">▶</button>
+    </div>
+    <div class="pomodoro-card">
+      <div class="pomodoro-header">
+        <div style="display: flex; align-items: center; gap: 0.4rem; font-weight: 700; color: #38bdf8; font-size: 0.9rem;">
+          <span>⏱️ Pomodoro Study Timer</span>
+        </div>
+        <div style="display: flex; gap: 0.25rem;">
+          <button class="btn-icon-xs" onclick="app.togglePomodoroExpand()" title="ย่อหน้าต่าง">➖</button>
+          <button class="btn-icon-xs" onclick="app.closePomodoro()" title="ปิดตัวจับเวลา">&times;</button>
+        </div>
+      </div>
+      <div class="pomodoro-modes">
+        <button class="pomo-mode-btn active" id="pomo-mode-focus" onclick="app.setPomodoroMode('focus')">🎯 โฟกัส (25m)</button>
+        <button class="pomo-mode-btn" id="pomo-mode-short" onclick="app.setPomodoroMode('short')">☕ พักสั้น (5m)</button>
+        <button class="pomo-mode-btn" id="pomo-mode-long" onclick="app.setPomodoroMode('long')">🌴 พักยาว (15m)</button>
+      </div>
+      <div class="pomodoro-display">
+        <div id="pomodoro-big-time" style="font-size: 2.8rem; font-weight: 900; letter-spacing: 2px; font-family: monospace; color: #fff;">25:00</div>
+        <div id="pomodoro-status-text" style="font-size: 0.8rem; color: #94a3b8; margin-top: -4px;">พร้อมเริ่มต้นช่วงเวลาโฟกัส</div>
+      </div>
+      <div class="pomodoro-actions">
+        <button class="btn btn-primary" id="pomodoro-main-btn" onclick="app.togglePomodoroTimer()" style="flex: 1; padding: 0.6rem; font-weight: 700;">▶ เริ่มจับเวลา</button>
+        <button class="btn btn-outline" onclick="app.resetPomodoroTimer()" style="padding: 0.6rem 0.9rem;" title="รีเซ็ต">🔄</button>
+      </div>
+      <div style="font-size: 0.72rem; color: var(--text-muted); text-align: center; margin-top: 0.65rem;">
+        สำเร็จแล้ว: <span id="pomodoro-session-count" style="color: #4ade80; font-weight: 700;">0</span> รอบ (+20 EXP/รอบ)
+      </div>
     </div>
   </div>
 
@@ -4681,6 +4946,529 @@
         return s;
       }
 
+
+      // ============================================================
+      // UNIVERSAL QUICK SEARCH SYSTEM (CTRL + K)
+      // ============================================================
+      openQuickSearch() {
+        const modal = document.getElementById('modal-quick-search');
+        if (!modal) return;
+        modal.classList.add('active');
+        const input = document.getElementById('quick-search-input');
+        if (input) {
+          input.value = '';
+          setTimeout(() => input.focus(), 80);
+          this.executeQuickSearch('');
+        }
+        this.quickSearchActiveIdx = 0;
+      }
+
+      closeQuickSearch() {
+        const modal = document.getElementById('modal-quick-search');
+        if (modal) modal.classList.remove('active');
+      }
+
+      onQuickSearchInput(val) {
+        this.quickSearchActiveIdx = 0;
+        this.executeQuickSearch(val);
+      }
+
+      onQuickSearchKeyDown(e) {
+        const resultsEl = document.getElementById('quick-search-results');
+        const items = resultsEl ? resultsEl.querySelectorAll('.quick-search-item') : [];
+        if (!items.length) return;
+
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          this.quickSearchActiveIdx = (this.quickSearchActiveIdx + 1) % items.length;
+          this.updateQuickSearchSelection(items);
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          this.quickSearchActiveIdx = (this.quickSearchActiveIdx - 1 + items.length) % items.length;
+          this.updateQuickSearchSelection(items);
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          const selected = items[this.quickSearchActiveIdx];
+          if (selected) selected.click();
+        }
+      }
+
+      updateQuickSearchSelection(items) {
+        items.forEach((it, idx) => {
+          if (idx === this.quickSearchActiveIdx) {
+            it.classList.add('selected');
+            it.scrollIntoView({ block: 'nearest' });
+          } else {
+            it.classList.remove('selected');
+          }
+        });
+      }
+
+      executeQuickSearch(query) {
+        const resultsEl = document.getElementById('quick-search-results');
+        if (!resultsEl) return;
+        const q = (query || '').trim().toLowerCase();
+
+        if (!q) {
+          resultsEl.innerHTML = `
+            <div style="padding: 1rem 0.5rem;">
+              <div style="font-size: 0.78rem; font-weight: 700; color: #818cf8; text-transform: uppercase; margin-bottom: 0.5rem; padding: 0 0.5rem;">สายวิชาหลัก (15 Disciplines)</div>
+              ${DISCIPLINE_DATA.slice(0, 6).map((d, i) => `
+                <div class="quick-search-item ${i === 0 ? 'selected' : ''}" onclick="app.closeQuickSearch(); app.navigate('#/discipline/${d.id}')">
+                  <div style="display: flex; align-items: center; gap: 0.65rem;">
+                    <span style="font-size: 1.2rem;">${d.icon}</span>
+                    <div>
+                      <div style="font-weight: 600; font-size: 0.95rem;">${d.code} ${d.name_th}</div>
+                      <div style="font-size: 0.78rem; color: var(--text-muted);">${d.name_en}</div>
+                    </div>
+                  </div>
+                  <span class="quick-search-badge" style="background: ${d.color}22; color: ${d.color}; border: 1px solid ${d.color}44;">สายวิชา</span>
+                </div>
+              `).join('')}
+            </div>
+          `;
+          return;
+        }
+
+        const matches = [];
+
+        // 1. Disciplines & Fields/Subfields matching (15 Disciplines, 122 Fields, World Languages)
+        DISCIPLINE_DATA.forEach(d => {
+          if (d.name_th.toLowerCase().includes(q) || d.name_en.toLowerCase().includes(q) || d.code.toLowerCase().includes(q)) {
+            matches.push({
+              type: 'discipline',
+              badge: 'สายวิชา',
+              icon: d.icon,
+              title: `${d.code} ${d.name_th}`,
+              sub: d.name_en,
+              link: `#/discipline/${d.id}`,
+              color: d.color
+            });
+          }
+          if (Array.isArray(d.fields)) {
+            d.fields.forEach(f => {
+              const fName = (f.name || '').toLowerCase();
+              const fCode = (f.code || '').toLowerCase();
+              if (fName.includes(q) || fCode.includes(q)) {
+                matches.push({
+                  type: 'field',
+                  badge: 'สาขาวิชา',
+                  icon: d.icon,
+                  title: `${f.code || ''} ${f.name}`,
+                  sub: `${d.name_th} (${d.name_en})`,
+                  link: `#/discipline/${d.id}`,
+                  color: d.color
+                });
+              }
+              if (Array.isArray(f.subfields)) {
+                f.subfields.forEach(sf => {
+                  const sfName = (sf.name || '').toLowerCase();
+                  const sfCode = (sf.code || '').toLowerCase();
+                  if (sfName.includes(q) || sfCode.includes(q)) {
+                    matches.push({
+                      type: 'subfield',
+                      badge: 'สาขาย่อย',
+                      icon: d.icon,
+                      title: `${sf.code || ''} ${sf.name}`,
+                      sub: `${d.name_th} • ${f.name}`,
+                      link: `#/discipline/${d.id}`,
+                      color: d.color
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+
+        // 2. Lessons matching
+        const lessonSource = (typeof LESSON_DATA !== 'undefined' && Object.keys(LESSON_DATA).length > 0)
+          ? LESSON_DATA
+          : (typeof BASE_LESSONS !== 'undefined' ? BASE_LESSONS : {});
+
+        for (const [discId, lessons] of Object.entries(lessonSource)) {
+          if (!Array.isArray(lessons)) continue;
+          const disc = DISCIPLINE_DATA.find(d => d.id === discId || d.code === discId) || { name_th: 'สายวิชา', color: '#38bdf8', icon: '📖' };
+          for (let idx = 0; idx < lessons.length; idx++) {
+            const l = lessons[idx];
+            const title = (l.title || '').toLowerCase();
+            const desc = (l.desc || '').toLowerCase();
+            const field = (l.field_name || '').toLowerCase();
+            if (title.includes(q) || desc.includes(q) || field.includes(q)) {
+              matches.push({
+                type: 'lesson',
+                badge: l.tier_th ? `ระดับ${l.tier_th}` : 'บทเรียน',
+                icon: disc.icon,
+                title: l.title,
+                sub: `${disc.name_th} • ${l.field_name || ''}`,
+                link: `#/theory/${discId}_${idx}`,
+                color: disc.color
+              });
+              if (matches.length >= 20) break;
+            }
+          }
+          if (matches.length >= 20) break;
+        }
+
+        if (matches.length === 0) {
+          resultsEl.innerHTML = `
+            <div style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted); font-size: 0.9rem;">
+              🔍 ไม่พบบทเรียนหรือสายวิชาที่ตรงกับ "<strong>${q}</strong>"
+            </div>
+          `;
+          return;
+        }
+
+        resultsEl.innerHTML = matches.map((m, idx) => `
+          <div class="quick-search-item ${idx === 0 ? 'selected' : ''}" onclick="app.closeQuickSearch(); app.navigate('${m.link}')">
+            <div style="display: flex; align-items: center; gap: 0.65rem; min-width: 0;">
+              <span style="font-size: 1.25rem; flex-shrink: 0;">${m.icon}</span>
+              <div style="min-width: 0;">
+                <div style="font-weight: 600; font-size: 0.92rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${this.highlightQuery(m.title, q)}</div>
+                <div style="font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${m.sub}</div>
+              </div>
+            </div>
+            <span class="quick-search-badge" style="background: ${m.color}22; color: ${m.color}; border: 1px solid ${m.color}44; flex-shrink: 0; margin-left: 0.5rem;">${m.badge}</span>
+          </div>
+        `).join('');
+      }
+
+      highlightQuery(text, query) {
+        if (!query) return text;
+        const qEsc = query.replace(/[.*+?^$\{}()|[\]\\]/g, '\\$&');
+        return text.replace(new RegExp(`(${qEsc})`, 'gi'), '<mark style="background: rgba(245, 158, 11, 0.4); color: #fff; padding: 0 2px; border-radius: 3px;">$1</mark>');
+      }
+
+      // ============================================================
+      // POMODORO STUDY TIMER SYSTEM (25 FOCUS / 5 SHORT / 15 LONG)
+      // ============================================================
+      initPomodoro() {
+        this.pomo = {
+          mode: 'focus',
+          timeLeft: 25 * 60,
+          isRunning: false,
+          intervalId: null,
+          sessions: parseInt(localStorage.getItem('omni_pomo_sessions') || '0', 10)
+        };
+        this.updatePomodoroUI();
+      }
+
+      togglePomodoro() {
+        const widget = document.getElementById('pomodoro-widget');
+        if (!widget) return;
+        if (widget.style.display === 'none' || widget.style.display === '') {
+          widget.style.display = 'block';
+          widget.classList.remove('collapsed');
+          if (!this.pomo) this.initPomodoro();
+        } else {
+          widget.style.display = 'none';
+        }
+      }
+
+      togglePomodoroExpand() {
+        const widget = document.getElementById('pomodoro-widget');
+        if (widget) widget.classList.toggle('collapsed');
+      }
+
+      closePomodoro() {
+        const widget = document.getElementById('pomodoro-widget');
+        if (widget) widget.style.display = 'none';
+      }
+
+      setPomodoroMode(mode) {
+        if (!this.pomo) this.initPomodoro();
+        this.pomo.mode = mode;
+        if (this.pomo.intervalId) {
+          clearInterval(this.pomo.intervalId);
+          this.pomo.intervalId = null;
+          this.pomo.isRunning = false;
+        }
+        if (mode === 'focus') this.pomo.timeLeft = 25 * 60;
+        else if (mode === 'short') this.pomo.timeLeft = 5 * 60;
+        else if (mode === 'long') this.pomo.timeLeft = 15 * 60;
+
+        document.querySelectorAll('.pomo-mode-btn').forEach(b => b.classList.remove('active'));
+        const activeBtn = document.getElementById(`pomo-mode-${mode}`);
+        if (activeBtn) activeBtn.classList.add('active');
+
+        this.updatePomodoroUI();
+      }
+
+      togglePomodoroTimer() {
+        if (!this.pomo) this.initPomodoro();
+        if (this.pomo.isRunning) {
+          clearInterval(this.pomo.intervalId);
+          this.pomo.intervalId = null;
+          this.pomo.isRunning = false;
+          this.updatePomodoroUI();
+        } else {
+          this.pomo.isRunning = true;
+          this.updatePomodoroUI();
+          this.pomo.intervalId = setInterval(() => {
+            if (this.pomo.timeLeft > 0) {
+              this.pomo.timeLeft--;
+              this.updatePomodoroUI();
+            } else {
+              this.onPomodoroComplete();
+            }
+          }, 1000);
+        }
+      }
+
+      resetPomodoroTimer() {
+        this.setPomodoroMode(this.pomo ? this.pomo.mode : 'focus');
+      }
+
+      updatePomodoroUI() {
+        if (!this.pomo) return;
+        const mins = Math.floor(this.pomo.timeLeft / 60);
+        const secs = this.pomo.timeLeft % 60;
+        const timeStr = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+        const bigTime = document.getElementById('pomodoro-big-time');
+        if (bigTime) bigTime.innerText = timeStr;
+
+        const pillTime = document.getElementById('pomodoro-pill-time');
+        if (pillTime) pillTime.innerText = timeStr;
+
+        const pillMode = document.getElementById('pomodoro-pill-mode');
+        if (pillMode) {
+          pillMode.innerText = this.pomo.mode === 'focus' ? 'โฟกัส' : (this.pomo.mode === 'short' ? 'พักสั้น' : 'พักยาว');
+        }
+
+        const pillPlay = document.getElementById('pomodoro-pill-play');
+        if (pillPlay) pillPlay.innerText = this.pomo.isRunning ? '⏸' : '▶';
+
+        const mainBtn = document.getElementById('pomodoro-main-btn');
+        if (mainBtn) {
+          mainBtn.innerHTML = this.pomo.isRunning ? '⏸ พักจับเวลา' : '▶ เริ่มจับเวลา';
+          mainBtn.className = this.pomo.isRunning ? 'btn btn-outline' : 'btn btn-primary';
+        }
+
+        const sessionCountEl = document.getElementById('pomodoro-session-count');
+        if (sessionCountEl) sessionCountEl.innerText = this.pomo.sessions;
+
+        const statusText = document.getElementById('pomodoro-status-text');
+        if (statusText) {
+          if (this.pomo.isRunning) {
+            statusText.innerText = this.pomo.mode === 'focus' ? '🔥 กำลังโฟกัสเต็มที่... สมาธิต่อเนื่อง!' : '☕ พักผ่อนสายตา ดื่มน้ำสักแก้วครับ';
+          } else {
+            statusText.innerText = 'หยุดชั่วคราว พร้อมกดเริ่มต่อได้ทุกเมื่อ';
+          }
+        }
+      }
+
+      onPomodoroComplete() {
+        clearInterval(this.pomo.intervalId);
+        this.pomo.intervalId = null;
+        this.pomo.isRunning = false;
+
+        soundEngine.playTone(523.25, 0.2);
+        setTimeout(() => soundEngine.playTone(659.25, 0.2), 220);
+        setTimeout(() => soundEngine.playTone(783.99, 0.4), 440);
+
+        if (this.pomo.mode === 'focus') {
+          this.pomo.sessions++;
+          localStorage.setItem('omni_pomo_sessions', String(this.pomo.sessions));
+
+          // Award EXP
+          if (auth.currentUser) {
+            auth.currentUser.xp = (Number(auth.currentUser.xp) || 0) + 20;
+            auth.currentUser.pomodoroSessions = (Number(auth.currentUser.pomodoroSessions) || 0) + 1;
+            auth.saveCurrentUser();
+            this.updateUserUI();
+          }
+
+          this.showToast('🎉 ครบเวลาโฟกัส 25 นาทีแล้ว! ได้เวลาพักสายตา 5 นาที (+20 EXP ⭐)');
+          this.setPomodoroMode('short');
+        } else {
+          this.showToast('🔔 หมดเวลาพักแล้ว! พร้อมกลับมาโฟกัสรอบใหม่แล้วครับ 🎯');
+          this.setPomodoroMode('focus');
+        }
+      }
+
+      // ============================================================
+      // DAILY STREAK & CONTINUITY SYSTEM (🔥)
+      // ============================================================
+      getStreak() {
+        try {
+          const streakData = JSON.parse(localStorage.getItem('omni_streak') || '{}');
+          return streakData.current || 1;
+        } catch (e) {
+          return 1;
+        }
+      }
+
+      recordDailyStreak() {
+        const today = new Date().toISOString().split('T')[0];
+        let streakData = { current: 1, max: 1, lastActive: today, history: [today] };
+
+        try {
+          const saved = JSON.parse(localStorage.getItem('omni_streak') || '{}');
+          if (saved && saved.lastActive) {
+            streakData = saved;
+            if (streakData.lastActive !== today) {
+              const last = new Date(streakData.lastActive);
+              const now = new Date(today);
+              const diffDays = Math.round((now - last) / (1000 * 60 * 60 * 24));
+
+              if (diffDays === 1) {
+                // Streak continued!
+                streakData.current = (streakData.current || 0) + 1;
+                streakData.max = Math.max(streakData.max || 1, streakData.current);
+                this.showToast(`🔥 รักษาสถิติเรียนต่อเนื่อง ${streakData.current} วันติดแล้ว! (+15 Streak EXP)`);
+                if (auth.currentUser) {
+                  auth.currentUser.xp = (Number(auth.currentUser.xp) || 0) + 15;
+                  auth.saveCurrentUser();
+                  this.updateUserUI();
+                }
+              } else if (diffDays > 1) {
+                // Streak reset
+                streakData.current = 1;
+              }
+              streakData.lastActive = today;
+              if (!Array.isArray(streakData.history)) streakData.history = [];
+              if (!streakData.history.includes(today)) streakData.history.push(today);
+            }
+          }
+        } catch (e) {}
+
+        localStorage.setItem('omni_streak', JSON.stringify(streakData));
+        const streakEl = document.getElementById('nav-user-streak');
+        if (streakEl) streakEl.innerHTML = `🔥 ${streakData.current} วัน`;
+      }
+
+      // ============================================================
+      // RECENT LESSON RESUME (⏩)
+      // ============================================================
+      getRecentLessons() {
+        try {
+          return JSON.parse(localStorage.getItem('omni_recent_lessons') || '[]');
+        } catch (e) {
+          return [];
+        }
+      }
+
+      recordRecentLesson(discId, idxStr, title, tier) {
+        let recents = this.getRecentLessons();
+        recents = recents.filter(r => !(r.discId === discId && r.idxStr === idxStr));
+        recents.unshift({
+          discId,
+          idxStr,
+          title,
+          tier: tier || 'foundation',
+          timestamp: Date.now()
+        });
+        localStorage.setItem('omni_recent_lessons', JSON.stringify(recents.slice(0, 5)));
+      }
+
+      // ============================================================
+      // BOOKMARKS & PERSONAL LESSON NOTES (⭐ 📝)
+      // ============================================================
+      getBookmarks() {
+        try {
+          return JSON.parse(localStorage.getItem('omni_bookmarks') || '[]');
+        } catch (e) {
+          return [];
+        }
+      }
+
+      isBookmarked(lessonKey) {
+        const b = this.getBookmarks();
+        return b.includes(lessonKey);
+      }
+
+      toggleBookmark(discId, idxStr) {
+        const key = `${discId}_${idxStr}`;
+        let b = this.getBookmarks();
+        const exists = b.includes(key);
+
+        if (exists) {
+          b = b.filter(k => k !== key);
+          this.showToast('ลบบุ๊กมาร์กออกจากรายการแล้ว');
+        } else {
+          b.unshift(key);
+          soundEngine.playTone(659.25, 0.15);
+          this.showToast('ปักหมุดบทเรียนนี้เรียบร้อยแล้ว ⭐');
+        }
+
+        localStorage.setItem('omni_bookmarks', JSON.stringify(b));
+        if (auth.currentUser) {
+          auth.currentUser.bookmarks = b;
+          auth.saveCurrentUser();
+        }
+
+        const btn = document.getElementById('btn-theory-bookmark');
+        if (btn) {
+          btn.innerHTML = !exists ? '★ ปักหมุดแล้ว' : '☆ ปักหมุดบทเรียนนี้';
+          btn.style.background = !exists ? 'rgba(251, 191, 36, 0.15)' : 'transparent';
+        }
+      }
+
+      getLessonNote(lessonKey) {
+        try {
+          const notes = JSON.parse(localStorage.getItem('omni_lesson_notes') || '{}');
+          return notes[lessonKey] || '';
+        } catch (e) {
+          return '';
+        }
+      }
+
+      saveLessonNote(lessonKey, text) {
+        try {
+          const notes = JSON.parse(localStorage.getItem('omni_lesson_notes') || '{}');
+          notes[lessonKey] = text;
+          localStorage.setItem('omni_lesson_notes', JSON.stringify(notes));
+          const ind = document.getElementById('note-save-indicator');
+          if (ind) {
+            ind.innerText = '✓ บันทึกอัตโนมัติแล้ว';
+            setTimeout(() => { if (ind) ind.innerText = ''; }, 2000);
+          }
+        } catch (e) {}
+      }
+
+      // ============================================================
+      // READING CONTROLS: FONT SIZE & FOCUS MODE (👁️)
+      // ============================================================
+      adjustFontSize(delta) {
+        const theoryBody = document.querySelector('.theory-box');
+        if (!theoryBody) return;
+        let cur = parseFloat(theoryBody.getAttribute('data-font-scale') || '1');
+        cur = Math.min(1.4, Math.max(0.85, cur + delta * 0.1));
+        theoryBody.setAttribute('data-font-scale', String(cur));
+        theoryBody.style.fontSize = `${cur}rem`;
+        this.showToast(`ปรับขนาดตัวอักษร: ${Math.round(cur * 100)}%`);
+      }
+
+      toggleFocusMode() {
+        document.body.classList.toggle('theory-focus-mode');
+        const isFocus = document.body.classList.contains('theory-focus-mode');
+        this.showToast(isFocus ? '👁️ เปิดโหมดโฟกัสอ่านเต็มจอ (กดอีกครั้งเพื่อออก)' : 'ออกจากโหมดโฟกัสแล้ว');
+      }
+
+      // ============================================================
+      // ACHIEVEMENTS BADGE SYSTEM (🏆)
+      // ============================================================
+      getAchievementsList() {
+        const user = auth.currentUser || {};
+        const quizzes = user.completedQuizzes || [];
+        const xp = Number(user.xp) || 0;
+        const streak = this.getStreak();
+        const bookmarks = this.getBookmarks();
+        const pomoSessions = parseInt(localStorage.getItem('omni_pomo_sessions') || '0', 10);
+
+        return [
+          { id: 'first_step', name: 'ก้าวแรกแห่งปัญญา', icon: '🌱', desc: 'ทำแบบทดสอบหรืออ่านบทเรียนแรกสำเร็จ', unlocked: quizzes.length >= 1 || xp > 0, progress: `${Math.min(1, quizzes.length)}/1` },
+          { id: 'quiz_novice', name: 'ยอดนักประลอง', icon: '⚔️', desc: 'ทำแบบทดสอบผ่านอย่างน้อย 3 ชุดวิชา', unlocked: quizzes.length >= 3, progress: `${Math.min(3, quizzes.length)}/3` },
+          { id: 'quiz_veteran', name: 'ผู้พิชิต 10 ข้อสอบ', icon: '🎯', desc: 'ทำแบบทดสอบผ่านครบ 10 ชุดวิชา', unlocked: quizzes.length >= 10, progress: `${Math.min(10, quizzes.length)}/10` },
+          { id: 'streak_3', name: 'เพลิงแห่งความเพียร', icon: '🔥', desc: 'เรียนต่อเนื่องติดต่อกัน 3 วัน', unlocked: streak >= 3, progress: `${Math.min(3, streak)}/3 วัน` },
+          { id: 'streak_7', name: 'วินัยเหล็กกล้า', icon: '⚡', desc: 'เรียนต่อเนื่องติดต่อกัน 7 วัน', unlocked: streak >= 7, progress: `${Math.min(7, streak)}/7 วัน` },
+          { id: 'bookmark_collector', name: 'นักปักหมุดความรู้', icon: '⭐', desc: 'ปักหมุดบทเรียนที่สนใจครบ 3 บท', unlocked: bookmarks.length >= 3, progress: `${Math.min(3, bookmarks.length)}/3` },
+          { id: 'pomodoro_focus', name: 'ผู้มีสมาธิตั้งมั่น', icon: '⏱️', desc: 'โฟกัสอ่านหนังสือครบเวลา Pomodoro 1 รอบ', unlocked: pomoSessions >= 1, progress: `${Math.min(1, pomoSessions)}/1` },
+          { id: 'scholar_100', name: 'เซนจูเรียน 100 EXP', icon: '🏅', desc: 'สะสมแต้มความรู้ครบ 100 EXP', unlocked: xp >= 100, progress: `${Math.min(100, xp)}/100 EXP` },
+          { id: 'grand_master', name: 'มหาปราชญ์ 500 EXP', icon: '👑', desc: 'สะสมแต้มความรู้ครบ 500 EXP', unlocked: xp >= 500, progress: `${Math.min(500, xp)}/500 EXP` }
+        ];
+      }
       handleRoute() {
         const hash = window.location.hash || '#/';
         themeManager.setTheme('default');
@@ -4737,6 +5525,56 @@
               <span class="kl-pill"><span class="kl-num">6 ระดับ</span> จากพื้นฐานสู่เชี่ยวชาญ</span>
             </div>
           </div>
+
+          ${(() => {
+            const recent = this.getRecentLessons();
+            const streak = this.getStreak();
+            let resumeHtml = '';
+            if (recent.length > 0) {
+              const last = recent[0];
+              const disc = DISCIPLINE_DATA.find(d => d.id === last.discId || d.code === last.discId) || { name_th: 'สายวิชา', color: '#6366f1', icon: '🌌' };
+              resumeHtml = `
+                <div class="quick-resume-card" style="background: linear-gradient(135deg, rgba(30, 27, 75, 0.85), rgba(15, 23, 42, 0.9)); border: 1px solid rgba(99, 102, 241, 0.4); border-radius: 16px; padding: 1.25rem 1.5rem; margin-bottom: 1.75rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.3);">
+                  <div style="display: flex; align-items: center; gap: 1rem; min-width: 250px;">
+                    <div style="font-size: 2rem; background: rgba(255,255,255,0.06); width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); flex-shrink: 0;">⏩</div>
+                    <div>
+                      <div style="font-size: 0.75rem; color: #a5b4fc; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.2rem;">เรียนต่อจากที่ค้างไว้ (Continue Learning)</div>
+                      <div style="font-size: 1.1rem; font-weight: 700; color: #fff;">${last.title}</div>
+                      <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem;">${disc.icon} ${disc.name_th} • เข้าศึกษาล่าสุด</div>
+                    </div>
+                  </div>
+                  <div style="display: flex; gap: 0.6rem; align-items: center;">
+                    <button class="btn btn-outline" onclick="app.navigate('#/discipline/${last.discId}')" style="font-size: 0.82rem; padding: 0.45rem 0.85rem;">ดูทั้งสายวิชา</button>
+                    <button class="btn btn-primary" onclick="app.navigate('#/theory/${last.discId}_${last.idxStr}')" style="font-size: 0.85rem; padding: 0.5rem 1.15rem; font-weight: 700; background: linear-gradient(135deg, #4f46e5, #06b6d4);">อ่านต่อทันที ➔</button>
+                  </div>
+                </div>
+              `;
+            }
+            return `
+              ${resumeHtml}
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.85rem; margin-bottom: 2.25rem;">
+                <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 14px; padding: 0.9rem 1.2rem; display: flex; align-items: center; gap: 0.9rem;">
+                  <span style="font-size: 2rem;">🔥</span>
+                  <div>
+                    <div style="font-size: 0.78rem; color: #fbbf24; font-weight: 700;">DAILY LEARNING STREAK</div>
+                    <div style="font-size: 1.1rem; font-weight: 800; color: #fff;">เรียนต่อเนื่อง ${streak} วันติด</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">เข้าเรียนหรือทำโจทย์ทุกวันเพื่อรับโบนัส EXP</div>
+                  </div>
+                </div>
+                <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 14px; padding: 0.9rem 1.2rem; display: flex; align-items: center; justify-content: space-between;">
+                  <div style="display: flex; align-items: center; gap: 0.9rem;">
+                    <span style="font-size: 2rem;">⏱️</span>
+                    <div>
+                      <div style="font-size: 0.78rem; color: #38bdf8; font-weight: 700;">FOCUS POMODORO</div>
+                      <div style="font-size: 1.05rem; font-weight: 700; color: #fff;">จับเวลาอ่าน 25 นาที</div>
+                      <div style="font-size: 0.75rem; color: var(--text-muted);">เพิ่มสมาธิและรับ +20 EXP ต่อรอบ</div>
+                    </div>
+                  </div>
+                  <button class="btn btn-outline" onclick="app.togglePomodoro()" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; border-color: rgba(56, 189, 248, 0.4); color: #38bdf8;">เปิดตัวช่วย</button>
+                </div>
+              </div>
+            `;
+          })()}
 
           ${parts.map(part => {
             const partDisciplines = DISCIPLINE_DATA.filter(d => part.codes.includes(d.code));
@@ -5060,9 +5898,20 @@
 
         const view = document.getElementById('app-view');
         view.innerHTML = `
-          <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem;">
-            <button class="btn btn-outline" onclick="app.navigate('#/discipline/${disc.id}')">⬅️ ย้อนกลับไปรายการบทเรียน</button>
-            <button class="btn btn-primary" style="background: linear-gradient(135deg, #4f46e5, #06b6d4); border-color: #06b6d4; font-size: 0.85rem; padding: 0.45rem 0.9rem;" onclick="omniAI.askFromTheory('${disc.id}', '${idxStr}')">🤖 ปรึกษา AI เกี่ยวกับบทเรียนนี้</button>
+          <div style="display: flex; gap: 0.6rem; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 1.5rem;">
+            <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+              <button class="btn btn-outline" onclick="app.navigate('#/discipline/${disc.id}')">⬅️ รายการบทเรียน</button>
+              <button class="btn btn-primary" style="background: linear-gradient(135deg, #4f46e5, #06b6d4); border-color: #06b6d4; font-size: 0.85rem; padding: 0.45rem 0.9rem;" onclick="omniAI.askFromTheory('${disc.id}', '${idxStr}')">🤖 ปรึกษา AI</button>
+              <button class="btn btn-outline" id="btn-theory-bookmark" onclick="app.toggleBookmark('${disc.id}', '${idxStr}')" style="font-size: 0.85rem; padding: 0.45rem 0.85rem; border-color: rgba(251, 191, 36, 0.4); color: #fbbf24; background: ${this.isBookmarked(`${disc.id}_${idxStr}`) ? 'rgba(251, 191, 36, 0.15)' : 'transparent'};">
+                ${this.isBookmarked(`${disc.id}_${idxStr}`) ? '★ ปักหมุดแล้ว' : '☆ ปักหมุดบทเรียนนี้'}
+              </button>
+            </div>
+            <div class="reading-controls" style="display: flex; gap: 0.4rem; align-items: center; background: rgba(0,0,0,0.3); padding: 0.25rem 0.6rem; border-radius: 10px; border: 1px solid var(--card-border);">
+              <span style="font-size: 0.75rem; color: var(--text-muted); margin-right: 2px;">ตัวอักษร:</span>
+              <button class="btn-icon-xs" onclick="app.adjustFontSize(-1)" title="ลดขนาดตัวอักษร" style="padding: 0.25rem 0.5rem;">A-</button>
+              <button class="btn-icon-xs" onclick="app.adjustFontSize(1)" title="เพิ่มขนาดตัวอักษร" style="padding: 0.25rem 0.5rem;">A+</button>
+              <button class="btn-icon-xs" onclick="app.toggleFocusMode()" title="โหมดโฟกัสอ่านเต็มจอ" style="padding: 0.25rem 0.6rem; color: #38bdf8;">👁️ โฟกัส</button>
+            </div>
           </div>
           
           <div class="theory-box">
@@ -5075,6 +5924,17 @@
             
             <div style="color: var(--text-main); font-size: 1rem;">
               ${lesson.theory}
+            </div>
+
+            <!-- Personal Notes Box -->
+            <div class="personal-notes-box" style="margin-top: 2rem; background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+                <div style="font-weight: 700; font-size: 0.92rem; color: #38bdf8; display: flex; align-items: center; gap: 0.4rem;">
+                  <span>📝 สมุดบันทึกส่วนตัวประจำบทเรียน</span>
+                </div>
+                <span id="note-save-indicator" style="font-size: 0.78rem; color: #4ade80;"></span>
+              </div>
+              <textarea id="lesson-note-input" placeholder="จดสรุปความเข้าใจ สูตรสำคัญ หรือคีย์เวิร์ดช่วยจำของคุณที่นี่... (ระบบจะบันทึกอัตโนมัติ)" style="width: 100%; min-height: 85px; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #f8fafc; padding: 0.75rem; font-family: inherit; font-size: 0.9rem; resize: vertical;" oninput="app.saveLessonNote('${disc.id}_${idxStr}', this.value)">${this.getLessonNote(`${disc.id}_${idxStr}`)}</textarea>
             </div>
 
             
@@ -5104,6 +5964,8 @@
             </div>
           </div>
         `;
+        this.recordRecentLesson(disc.id, idxStr, lesson.title, lesson.tier);
+        this.recordDailyStreak();
         this.renderMath(view);
       }
 
@@ -5410,9 +6272,15 @@
 
         const view = document.getElementById('app-view');
         view.innerHTML = `
-          <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem;">
-            <button class="btn btn-outline" onclick="app.navigate('#/theory/${disc.id}_${idxStr}')">⬅ กลับไปทบทวนทฤษฎี</button>
-            <button class="btn btn-primary" style="background: linear-gradient(135deg, #4f46e5, #06b6d4); border-color: #06b6d4; font-size: 0.85rem; padding: 0.45rem 0.9rem;" onclick="omniAI.askHintFromQuiz('${disc.id}', '${idxStr}', ${currentStep})">🤖 ขอคำใบ้โจทย์จาก AI</button>
+          <div style="display: flex; gap: 0.6rem; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 1.5rem;">
+            <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+              <button class="btn btn-outline" onclick="app.navigate('#/theory/${disc.id}_${idxStr}')">⬅ กลับไปทบทวนทฤษฎี</button>
+              <button class="btn btn-primary" style="background: linear-gradient(135deg, #4f46e5, #06b6d4); border-color: #06b6d4; font-size: 0.85rem; padding: 0.45rem 0.9rem;" onclick="omniAI.askHintFromQuiz('${disc.id}', '${idxStr}', ${currentStep})">🤖 ขอคำใบ้โจทย์จาก AI</button>
+              <button class="btn btn-outline" id="btn-quiz-bookmark" onclick="app.toggleBookmark('${disc.id}', '${idxStr}')" style="font-size: 0.85rem; padding: 0.45rem 0.85rem; border-color: rgba(251, 191, 36, 0.4); color: #fbbf24; background: ${this.isBookmarked(`${disc.id}_${idxStr}`) ? 'rgba(251, 191, 36, 0.15)' : 'transparent'};">
+                ${this.isBookmarked(`${disc.id}_${idxStr}`) ? '★ ปักหมุดแล้ว' : '☆ ปักหมุดบทเรียนนี้'}
+              </button>
+            </div>
+            <button class="btn btn-outline" onclick="app.togglePomodoro()" style="font-size: 0.82rem; padding: 0.4rem 0.75rem; border-color: rgba(56, 189, 248, 0.4); color: #38bdf8;">⏱️ ตัวจับเวลาโฟกัส</button>
           </div>
           <div class="quiz-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
@@ -6225,18 +7093,22 @@
             <h2>${auth.currentUser.username} ${auth.currentUser.role === 'admin' ? '<span style="background: #38bdf8; color: #000; font-size: 0.75rem; vertical-align: middle; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 5px;">ADMIN</span>' : ''}</h2>
             <div style="color: var(--accent); font-weight: 700; margin-bottom: 1.5rem;">${this.getRank()}</div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
-              <div style="background: rgba(0,0,0,0.3); padding: 1rem 0.5rem; border-radius: 12px;">
-                <div style="font-size: 0.8rem; color: var(--text-muted);">เลเวลรวม</div>
-                <strong style="font-size: 1.5rem; color: #fff;">LV. ${this.getLevel()}</strong>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem; margin-bottom: 1.25rem;">
+              <div style="background: rgba(0,0,0,0.3); padding: 0.85rem 0.5rem; border-radius: 12px;">
+                <div style="font-size: 0.75rem; color: var(--text-muted);">เลเวลรวม</div>
+                <strong style="font-size: 1.4rem; color: #fff;">LV. ${this.getLevel()}</strong>
               </div>
-              <div style="background: rgba(0,0,0,0.3); padding: 1rem 0.5rem; border-radius: 12px;">
-                <div style="font-size: 0.8rem; color: var(--text-muted);">EXP สะสม</div>
-                <strong style="font-size: 1.5rem; color: #fbbf24;">${auth.currentUser.xp || 0}</strong>
+              <div style="background: rgba(0,0,0,0.3); padding: 0.85rem 0.5rem; border-radius: 12px;">
+                <div style="font-size: 0.75rem; color: var(--text-muted);">EXP สะสม</div>
+                <strong style="font-size: 1.4rem; color: #fbbf24;">${auth.currentUser.xp || 0}</strong>
               </div>
-              <div style="background: rgba(0,0,0,0.3); padding: 1rem 0.5rem; border-radius: 12px;">
-                <div style="font-size: 0.8rem; color: var(--text-muted);">โจทย์ที่สำเร็จ</div>
-                <strong style="font-size: 1.5rem; color: #34d399;">${(auth.currentUser.completedQuizzes || []).length} / 168 บทเรียน</strong>
+              <div style="background: rgba(0,0,0,0.3); padding: 0.85rem 0.5rem; border-radius: 12px;">
+                <div style="font-size: 0.75rem; color: var(--text-muted);">โจทย์ที่สำเร็จ</div>
+                <strong style="font-size: 1.4rem; color: #34d399;">${(auth.currentUser.completedQuizzes || []).length} ชุด</strong>
+              </div>
+              <div style="background: rgba(0,0,0,0.3); padding: 0.85rem 0.5rem; border-radius: 12px;">
+                <div style="font-size: 0.75rem; color: var(--text-muted);">วันเรียนต่อเนื่อง</div>
+                <strong style="font-size: 1.4rem; color: #f97316;">🔥 ${this.getStreak()} วัน</strong>
               </div>
             </div>
 
@@ -6266,6 +7138,64 @@
                 <button class="btn btn-primary" onclick="app.navigate('#/admin')">🛡️ เข้าสู่ศูนย์ควบคุม Admin Backoffice ➡️</button>
               </div>
             ` : ''}
+
+            <!-- Section: Bookmarked Lessons -->
+            ${(() => {
+              const bookmarks = this.getBookmarks();
+              if (bookmarks.length === 0) return '';
+              const lessonSource = (typeof LESSON_DATA !== 'undefined' && Object.keys(LESSON_DATA).length > 0) ? LESSON_DATA : (typeof BASE_LESSONS !== 'undefined' ? BASE_LESSONS : {});
+              return `
+                <div style="margin-top: 1.5rem; margin-bottom: 1.5rem; text-align: left;">
+                  <div style="font-weight: 700; color: #fbbf24; font-size: 0.95rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem;">
+                    <span>⭐ บทเรียนที่ปักหมุดไว้ (${bookmarks.length} บท)</span>
+                  </div>
+                  <div style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 240px; overflow-y: auto;">
+                    ${bookmarks.map(key => {
+                      const [dId, idx] = key.split('_');
+                      const lessons = lessonSource[dId] || [];
+                      const l = lessons[parseInt(idx, 10)] || { title: `บทเรียน ${key}` };
+                      const disc = DISCIPLINE_DATA.find(d => d.id === dId || d.code === dId) || { name_th: 'สายวิชา', icon: '📖', color: '#6366f1' };
+                      return `
+                        <div style="background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 0.65rem 0.9rem; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;">
+                          <div style="display: flex; align-items: center; gap: 0.6rem; min-width: 0;">
+                            <span>${disc.icon}</span>
+                            <div style="min-width: 0;">
+                              <div style="font-size: 0.88rem; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${l.title}</div>
+                              <div style="font-size: 0.75rem; color: var(--text-muted);">${disc.name_th}</div>
+                            </div>
+                          </div>
+                          <div style="display: flex; gap: 0.4rem; flex-shrink: 0;">
+                            <button class="btn btn-primary" onclick="app.navigate('#/theory/${dId}_${idx}')" style="padding: 0.25rem 0.65rem; font-size: 0.78rem;">อ่าน</button>
+                            <button class="btn btn-outline" onclick="app.toggleBookmark('${dId}', '${idx}'); app.renderProfile();" style="padding: 0.25rem 0.55rem; font-size: 0.78rem; color: #ef4444;" title="ลบบุ๊กมาร์ก">✕</button>
+                          </div>
+                        </div>
+                      `;
+                    }).join('')}
+                  </div>
+                </div>
+              `;
+            })()}
+
+            <!-- Section: Achievement Badges -->
+            <div style="margin-top: 1.5rem; margin-bottom: 2rem; text-align: left;">
+              <div style="font-weight: 700; color: #c084fc; font-size: 0.95rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem;">
+                <span>🏆 เหรียญตราเกียรติยศและความสำเร็จ (Achievements)</span>
+              </div>
+              <div class="achievements-grid">
+                ${this.getAchievementsList().map(a => `
+                  <div class="achievement-card ${a.unlocked ? 'unlocked achievement-unlocked' : 'locked'}">
+                    <div class="achievement-icon">${a.icon}</div>
+                    <div style="min-width: 0;">
+                      <div style="font-weight: 700; font-size: 0.88rem; color: ${a.unlocked ? '#fbbf24' : '#94a3b8'};">${a.name}</div>
+                      <div style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.3;">${a.desc}</div>
+                      <div style="font-size: 0.72rem; margin-top: 0.25rem; font-weight: 700; color: ${a.unlocked ? '#4ade80' : '#64748b'};">
+                        ${a.unlocked ? '✅ ปลดล็อกแล้ว' : `🔒 ${a.progress}`}
+                      </div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
 
             <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
               <button class="btn btn-outline" onclick="auth.logout()">🚪 ออกจากระบบ</button>
@@ -8445,6 +9375,21 @@ ${this.getPersonaInstruction()}
   </script>
   <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
 <script>
+
+window.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+    e.preventDefault();
+    if (window.app && typeof window.app.openQuickSearch === 'function') {
+      window.app.openQuickSearch();
+    }
+  }
+  if (e.key === 'Escape') {
+    if (window.app && typeof window.app.closeQuickSearch === 'function') {
+      window.app.closeQuickSearch();
+    }
+  }
+});
+
 window.addEventListener('DOMContentLoaded', () => {
   if (window.app && typeof window.app.renderMath === 'function') {
     window.app.renderMath(document.body);
