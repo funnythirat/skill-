@@ -2708,6 +2708,181 @@
       transform: translateY(-1px);
     }
 
+  
+    /* ============================================================ */
+    /* OMNILAB: INTERACTIVE TOOLS & SIMULATORS SUITE STYLES          */
+    /* ============================================================ */
+    .omnilab-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-bottom: 3rem;
+    }
+    .omnilab-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .omnilab-nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding: 0.5rem 0.25rem 1rem 0.25rem;
+      margin-bottom: 1.75rem;
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
+    }
+    .omnilab-tab-btn {
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      color: var(--text-muted);
+      padding: 0.65rem 1.15rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .omnilab-tab-btn:hover {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.35);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    .omnilab-tab-btn.active {
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.35), rgba(6, 182, 212, 0.25));
+      border-color: #38bdf8;
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(56, 189, 248, 0.25);
+    }
+    .omnilab-panel {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 20px;
+      padding: 1.75rem;
+      box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+    }
+    .omnilab-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    @media (min-width: 900px) {
+      .omnilab-grid-2 {
+        grid-template-columns: 1fr 340px;
+      }
+    }
+    .omnilab-canvas-box {
+      background: #090d16;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 380px;
+    }
+    .omnilab-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .omnilab-control-card {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 14px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .omnilab-slider-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .omnilab-slider-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    .omnilab-slider-val {
+      font-weight: 700;
+      color: #38bdf8;
+      font-family: var(--font-mono);
+    }
+    .omnilab-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.65rem;
+      margin-top: 1rem;
+    }
+    .omnilab-metric-card {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 0.65rem 0.85rem;
+    }
+    .omnilab-metric-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-bottom: 0.15rem;
+    }
+    .omnilab-metric-number {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      font-family: var(--font-mono);
+    }
+    .omnilab-pill-group {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .omnilab-pill-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: #cbd5e1;
+      padding: 0.3rem 0.65rem;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .omnilab-pill-btn:hover, .omnilab-pill-btn.active {
+      background: rgba(99, 102, 241, 0.25);
+      border-color: #818cf8;
+      color: #fff;
+    }
+    .logic-gate-led {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #1e293b;
+      border: 2px solid #334155;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #64748b;
+      transition: all 0.25s ease;
+    }
+    .logic-gate-led.on {
+      background: #22c55e;
+      border-color: #4ade80;
+      color: #fff;
+      box-shadow: 0 0 25px rgba(34, 197, 94, 0.7);
+    }
+
   </style>
   <!-- Puter.js Free Cloud AI SDK -->
   <script src="https://js.puter.com/v2/"></script>
@@ -2897,6 +3072,7 @@
 
       <ul class="nav-links">
         <li class="nav-item active" data-route="#/" onclick="app.navigate('#/')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg></span> <span>คลังสายวิชา</span></li>
+        <li class="nav-item" data-route="#/lab" onclick="app.navigate('#/lab')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31L4.69 17.5A2 2 0 0 0 6.38 21h11.24a2 2 0 0 0 1.69-3.5L14 9.31V2"/><line x1="8" y1="2" x2="16" y2="2"/></svg></span> <span>ห้องแล็บจำลอง (Lab)</span></li>
         <li class="nav-item" onclick="omniAI.open()"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span> <span>ปรึกษา AI</span></li>
                 <li class="nav-item" data-route="#/leaderboard" onclick="app.navigate('#/leaderboard')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span> <span>ตารางอันดับ</span></li>
         <li class="nav-item" data-route="#/tickets" onclick="app.navigate('#/tickets')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span> <span>ศูนย์ช่วยเหลือ</span></li>
@@ -3668,6 +3844,934 @@
     // ============================================================
     // SAFE STORAGE & GLOBAL ERROR RESILIENCE
     // ============================================================
+    
+    // ============================================================
+    // OMNILAB ENGINE: INTERACTIVE TOOLS & SIMULATORS SUITE
+    // ============================================================
+    class OmniLabEngine {
+      constructor() {
+        this.activeTab = 'grapher';
+        this.animFrameId = null;
+        this.periodicTable = {
+          H: 1.008, He: 4.0026, Li: 6.94, Be: 9.0122, B: 10.81, C: 12.011, N: 14.007, O: 15.999,
+          F: 18.998, Ne: 20.180, Na: 22.990, Mg: 24.305, Al: 26.982, Si: 28.085, P: 30.974,
+          S: 32.06, Cl: 35.45, K: 39.098, Ar: 39.948, Ca: 40.078, Sc: 44.956, Ti: 47.867,
+          V: 50.942, Cr: 51.996, Mn: 54.938, Fe: 55.845, Co: 58.933, Ni: 58.693, Cu: 63.546,
+          Zn: 65.38, Ga: 69.723, Ge: 72.63, As: 74.922, Se: 78.971, Br: 79.904, Kr: 83.798,
+          Rb: 85.468, Sr: 87.62, Ag: 107.87, I: 126.90, Ba: 137.33, Au: 196.97, Hg: 200.59,
+          Pb: 207.2, U: 238.03
+        };
+
+        // Projectile state
+        this.proj = {
+          v0: 25,
+          angle: 45,
+          g: 9.8,
+          planet: 'Earth',
+          running: false,
+          t: 0,
+          history: []
+        };
+
+        // Wave state
+        this.wave = {
+          f1: 1.0,
+          a1: 35,
+          f2: 1.2,
+          a2: 35,
+          phase: 0,
+          t: 0
+        };
+
+        // Logic gate state
+        this.logic = {
+          gate: 'AND',
+          inA: 1,
+          inB: 0
+        };
+
+        // Grapher state
+        this.graph = {
+          func: 'sin',
+          a: 1,
+          b: 1,
+          c: 0,
+          cursorX: 0
+        };
+      }
+
+      switchTab(tabId) {
+        if (this.animFrameId) {
+          cancelAnimationFrame(this.animFrameId);
+          this.animFrameId = null;
+        }
+        this.activeTab = tabId;
+        app.renderLab(`#/lab?tool=${tabId}`);
+      }
+
+      // ----------------------------------------------------------
+      // 1. Math Grapher
+      // ----------------------------------------------------------
+      initGrapher() {
+        const canvas = document.getElementById('canvas-math-grapher');
+        if (!canvas) return;
+        this.drawGraph();
+        canvas.onmousemove = (e) => {
+          const rect = canvas.getBoundingClientRect();
+          const px = e.clientX - rect.left;
+          const w = canvas.width;
+          const xRange = 14;
+          this.graph.cursorX = ((px - w / 2) / (w / 2)) * (xRange / 2);
+          this.drawGraph();
+        };
+      }
+
+      setGraphFunc(f) {
+        this.graph.func = f;
+        const fnNameEl = document.getElementById('graph-func-title');
+        if (fnNameEl) {
+          const names = {
+            sin: 'y = a · sin(b · x) + c',
+            cos: 'y = a · cos(b · x) + c',
+            poly2: 'y = a · x² + b · x + c',
+            poly3: 'y = a · x³ - b · x + c',
+            exp: 'y = a · e^(b · x / 4) + c',
+            damped: 'y = a · e^(-0.15·x) · sin(b · x) + c'
+          };
+          fnNameEl.textContent = names[f] || f;
+        }
+        this.drawGraph();
+      }
+
+      evalGraphFunc(x) {
+        const { a, b, c, func } = this.graph;
+        switch (func) {
+          case 'sin': return a * Math.sin(b * x) + c;
+          case 'cos': return a * Math.cos(b * x) + c;
+          case 'poly2': return a * (x * x) + b * x + c;
+          case 'poly3': return a * Math.pow(x, 3) - b * x + c;
+          case 'exp': return a * Math.exp((b * x) / 4) + c;
+          case 'damped': return a * Math.exp(-0.15 * Math.abs(x)) * Math.sin(b * x) + c;
+          default: return a * Math.sin(b * x) + c;
+        }
+      }
+
+      evalGraphDerivative(x) {
+        const h = 0.001;
+        return (this.evalGraphFunc(x + h) - this.evalGraphFunc(x - h)) / (2 * h);
+      }
+
+      updateGraphParams() {
+        const aInput = document.getElementById('graph-slider-a');
+        const bInput = document.getElementById('graph-slider-b');
+        const cInput = document.getElementById('graph-slider-c');
+        if (aInput) this.graph.a = parseFloat(aInput.value);
+        if (bInput) this.graph.b = parseFloat(bInput.value);
+        if (cInput) this.graph.c = parseFloat(cInput.value);
+
+        const aVal = document.getElementById('val-graph-a');
+        const bVal = document.getElementById('val-graph-b');
+        const cVal = document.getElementById('val-graph-c');
+        if (aVal) aVal.textContent = this.graph.a.toFixed(1);
+        if (bVal) bVal.textContent = this.graph.b.toFixed(1);
+        if (cVal) cVal.textContent = this.graph.c.toFixed(1);
+
+        this.drawGraph();
+      }
+
+      drawGraph() {
+        const canvas = document.getElementById('canvas-math-grapher');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const w = (canvas.width = canvas.parentElement.clientWidth || 600);
+        const h = (canvas.height = 380);
+
+        ctx.clearRect(0, 0, w, h);
+
+        const xMin = -7, xMax = 7;
+        const yMin = -5, yMax = 5;
+        const toPxX = (x) => ((x - xMin) / (xMax - xMin)) * w;
+        const toPxY = (y) => h - ((y - yMin) / (yMax - yMin)) * h;
+
+        // Grid
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+        ctx.lineWidth = 1;
+        for (let gx = Math.ceil(xMin); gx <= Math.floor(xMax); gx++) {
+          ctx.beginPath();
+          ctx.moveTo(toPxX(gx), 0);
+          ctx.lineTo(toPxX(gx), h);
+          ctx.stroke();
+        }
+        for (let gy = Math.ceil(yMin); gy <= Math.floor(yMax); gy++) {
+          ctx.beginPath();
+          ctx.moveTo(0, toPxY(gy));
+          ctx.lineTo(w, toPxY(gy));
+          ctx.stroke();
+        }
+
+        // Axes
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(0, toPxY(0)); ctx.lineTo(w, toPxY(0)); // X axis
+        ctx.moveTo(toPxX(0), 0); ctx.lineTo(toPxX(0), h); // Y axis
+        ctx.stroke();
+
+        // Axis labels
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+        ctx.font = '11px sans-serif';
+        for (let gx = xMin; gx <= xMax; gx += 2) {
+          if (gx !== 0) ctx.fillText(gx, toPxX(gx) - 4, toPxY(0) + 14);
+        }
+        for (let gy = yMin; gy <= yMax; gy += 2) {
+          if (gy !== 0) ctx.fillText(gy, toPxX(0) + 6, toPxY(gy) + 4);
+        }
+
+        // Curve
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        let started = false;
+        for (let px = 0; px <= w; px += 2) {
+          const x = xMin + (px / w) * (xMax - xMin);
+          const y = this.evalGraphFunc(x);
+          const py = toPxY(y);
+          if (isFinite(py) && py >= -100 && py <= h + 100) {
+            if (!started) { ctx.moveTo(px, py); started = true; }
+            else ctx.lineTo(px, py);
+          } else {
+            started = false;
+          }
+        }
+        ctx.stroke();
+
+        // Tangent Slope at cursorX
+        const curX = this.graph.cursorX;
+        const curY = this.evalGraphFunc(curX);
+        const slope = this.evalGraphDerivative(curX);
+
+        if (isFinite(curY) && isFinite(slope)) {
+          const ptX = toPxX(curX);
+          const ptY = toPxY(curY);
+
+          // Tangent line: y - curY = slope * (x - curX)
+          const tanDelta = 2.0;
+          const x1 = curX - tanDelta;
+          const y1 = curY - slope * tanDelta;
+          const x2 = curX + tanDelta;
+          const y2 = curY + slope * tanDelta;
+
+          ctx.strokeStyle = 'rgba(244, 63, 94, 0.8)';
+          ctx.lineWidth = 2;
+          ctx.setLineDash([4, 4]);
+          ctx.beginPath();
+          ctx.moveTo(toPxX(x1), toPxY(y1));
+          ctx.lineTo(toPxX(x2), toPxY(y2));
+          ctx.stroke();
+          ctx.setLineDash([]);
+
+          // Tangent point
+          ctx.fillStyle = '#f43f5e';
+          ctx.beginPath();
+          ctx.arc(ptX, ptY, 5, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Update metric pills
+          const xPill = document.getElementById('metric-graph-x');
+          const yPill = document.getElementById('metric-graph-y');
+          const dyPill = document.getElementById('metric-graph-dy');
+          if (xPill) xPill.textContent = curX.toFixed(2);
+          if (yPill) yPill.textContent = curY.toFixed(2);
+          if (dyPill) dyPill.textContent = slope.toFixed(2);
+        }
+      }
+
+      // ----------------------------------------------------------
+      // 2. Physics Motion & Projectile Simulator
+      // ----------------------------------------------------------
+      initProjectile() {
+        this.resetProjectile();
+      }
+
+      setPlanetGravity(name, gVal) {
+        this.proj.planet = name;
+        this.proj.g = gVal;
+        document.querySelectorAll('.planet-btn').forEach(b => {
+          b.classList.toggle('active', b.getAttribute('data-planet') === name);
+        });
+        const gLabel = document.getElementById('val-proj-g');
+        if (gLabel) gLabel.textContent = `${gVal} m/s² (${name})`;
+        this.updateProjectileMetrics();
+        this.drawProjectile();
+      }
+
+      updateProjectileParams() {
+        const vInput = document.getElementById('proj-slider-v');
+        const aInput = document.getElementById('proj-slider-a');
+        if (vInput) this.proj.v0 = parseFloat(vInput.value);
+        if (aInput) this.proj.angle = parseFloat(aInput.value);
+
+        const vLabel = document.getElementById('val-proj-v');
+        const aLabel = document.getElementById('val-proj-a');
+        if (vLabel) vLabel.textContent = `${this.proj.v0} m/s`;
+        if (aLabel) aLabel.textContent = `${this.proj.angle}°`;
+
+        this.updateProjectileMetrics();
+        this.drawProjectile();
+      }
+
+      updateProjectileMetrics() {
+        const { v0, angle, g } = this.proj;
+        const rad = (angle * Math.PI) / 180;
+        const vx = v0 * Math.cos(rad);
+        const vy = v0 * Math.sin(rad);
+        const flightTime = (2 * vy) / g;
+        const maxHeight = (vy * vy) / (2 * g);
+        const range = vx * flightTime;
+
+        const rPill = document.getElementById('metric-proj-r');
+        const hPill = document.getElementById('metric-proj-h');
+        const tPill = document.getElementById('metric-proj-t');
+        if (rPill) rPill.textContent = `${range.toFixed(1)} m`;
+        if (hPill) hPill.textContent = `${maxHeight.toFixed(1)} m`;
+        if (tPill) tPill.textContent = `${flightTime.toFixed(2)} s`;
+      }
+
+      toggleProjectileLaunch() {
+        if (this.proj.running) {
+          this.proj.running = false;
+        } else {
+          this.proj.running = true;
+          this.proj.t = 0;
+          this.proj.history = [];
+          this.runProjectileLoop();
+        }
+      }
+
+      resetProjectile() {
+        this.proj.running = false;
+        this.proj.t = 0;
+        this.proj.history = [];
+        this.updateProjectileParams();
+        this.drawProjectile();
+      }
+
+      runProjectileLoop() {
+        if (!this.proj.running) return;
+        const dt = 0.035;
+        this.proj.t += dt;
+
+        const { v0, angle, g, t } = this.proj;
+        const rad = (angle * Math.PI) / 180;
+        const x = v0 * Math.cos(rad) * t;
+        const y = v0 * Math.sin(rad) * t - 0.5 * g * t * t;
+
+        if (y < 0 && t > 0.05) {
+          this.proj.running = false;
+          this.drawProjectile();
+          return;
+        }
+
+        this.proj.history.push({ x, y });
+        this.drawProjectile();
+        this.animFrameId = requestAnimationFrame(() => this.runProjectileLoop());
+      }
+
+      drawProjectile() {
+        const canvas = document.getElementById('canvas-physics-proj');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const w = (canvas.width = canvas.parentElement.clientWidth || 600);
+        const h = (canvas.height = 380);
+
+        ctx.clearRect(0, 0, w, h);
+
+        const groundY = h - 45;
+        const originX = 50;
+
+        // Ground line
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(0, groundY);
+        ctx.lineTo(w, groundY);
+        ctx.stroke();
+
+        ctx.fillStyle = 'rgba(30, 41, 59, 0.4)';
+        ctx.fillRect(0, groundY, w, 45);
+
+        // Theoretical trajectory arc
+        const { v0, angle, g } = this.proj;
+        const rad = (angle * Math.PI) / 180;
+        const vx = v0 * Math.cos(rad);
+        const vy = v0 * Math.sin(rad);
+        const flightTime = (2 * vy) / g;
+        const maxRange = Math.max(10, vx * flightTime);
+        const maxHeight = Math.max(5, (vy * vy) / (2 * g));
+
+        // Scale factors to fit within canvas
+        const scaleX = (w - 120) / Math.max(50, maxRange * 1.15);
+        const scaleY = (h - 100) / Math.max(20, maxHeight * 1.35);
+
+        // Draw predicted arc
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.25)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        for (let simT = 0; simT <= flightTime; simT += 0.05) {
+          const simX = originX + (vx * simT) * scaleX;
+          const simY = groundY - (vy * simT - 0.5 * g * simT * simT) * scaleY;
+          if (simT === 0) ctx.moveTo(simX, simY);
+          else ctx.lineTo(simX, simY);
+        }
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Cannon base
+        ctx.fillStyle = '#6366f1';
+        ctx.beginPath();
+        ctx.arc(originX, groundY, 12, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Cannon barrel
+        const barrelLen = 28;
+        ctx.strokeStyle = '#a5b4fc';
+        ctx.lineWidth = 6;
+        ctx.beginPath();
+        ctx.moveTo(originX, groundY);
+        ctx.lineTo(originX + barrelLen * Math.cos(rad), groundY - barrelLen * Math.sin(rad));
+        ctx.stroke();
+
+        // Draw history trail
+        if (this.proj.history.length > 0) {
+          ctx.strokeStyle = '#38bdf8';
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          this.proj.history.forEach((pt, idx) => {
+            const px = originX + pt.x * scaleX;
+            const py = groundY - pt.y * scaleY;
+            if (idx === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+          });
+          ctx.stroke();
+
+          // Ball current position
+          const last = this.proj.history[this.proj.history.length - 1];
+          const ballX = originX + last.x * scaleX;
+          const ballY = groundY - last.y * scaleY;
+
+          ctx.fillStyle = '#f59e0b';
+          ctx.shadowColor = '#f59e0b';
+          ctx.shadowBlur = 12;
+          ctx.beginPath();
+          ctx.arc(ballX, ballY, 7, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+      }
+
+      // ----------------------------------------------------------
+      // 3. Wave Interference & Superposition Lab
+      // ----------------------------------------------------------
+      initWave() {
+        this.runWaveLoop();
+      }
+
+      updateWaveParams() {
+        const f1In = document.getElementById('wave-slider-f1');
+        const f2In = document.getElementById('wave-slider-f2');
+        const phIn = document.getElementById('wave-slider-phase');
+
+        if (f1In) this.wave.f1 = parseFloat(f1In.value);
+        if (f2In) this.wave.f2 = parseFloat(f2In.value);
+        if (phIn) this.wave.phase = parseFloat(phIn.value);
+
+        const f1Val = document.getElementById('val-wave-f1');
+        const f2Val = document.getElementById('val-wave-f2');
+        const phVal = document.getElementById('val-wave-phase');
+        if (f1Val) f1Val.textContent = `${this.wave.f1.toFixed(1)} Hz`;
+        if (f2Val) f2Val.textContent = `${this.wave.f2.toFixed(1)} Hz`;
+        if (phVal) phVal.textContent = `${this.wave.phase}°`;
+      }
+
+      runWaveLoop() {
+        if (this.activeTab !== 'wave') return;
+        this.wave.t += 0.03;
+        this.drawWave();
+        this.animFrameId = requestAnimationFrame(() => this.runWaveLoop());
+      }
+
+      drawWave() {
+        const canvas = document.getElementById('canvas-wave-interf');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const w = (canvas.width = canvas.parentElement.clientWidth || 600);
+        const h = (canvas.height = 380);
+
+        ctx.clearRect(0, 0, w, h);
+
+        const y1Center = h * 0.22;
+        const y2Center = h * 0.48;
+        const ySumCenter = h * 0.78;
+
+        const { f1, a1, f2, a2, phase, t } = this.wave;
+        const phaseRad = (phase * Math.PI) / 180;
+        const k = 0.025; // wave number
+
+        // Helper to draw horizontal baseline
+        const drawAxis = (y, label, color) => {
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+
+          ctx.fillStyle = color;
+          ctx.font = '11px sans-serif';
+          ctx.fillText(label, 12, y - 8);
+        };
+
+        drawAxis(y1Center, `คลื่น 1 (Wave 1: ${f1.toFixed(1)} Hz)`, '#38bdf8');
+        drawAxis(y2Center, `คลื่น 2 (Wave 2: ${f2.toFixed(1)} Hz, เฟส ${phase}°)`, '#c084fc');
+        drawAxis(ySumCenter, 'คลื่นรวมผลลัพธ์ (Resultant Superposition Wave)', '#4ade80');
+
+        // Draw Wave 1
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for (let x = 0; x <= w; x += 3) {
+          const y = y1Center - a1 * Math.sin(k * x - f1 * t * 3);
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        // Draw Wave 2
+        ctx.strokeStyle = '#c084fc';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for (let x = 0; x <= w; x += 3) {
+          const y = y2Center - a2 * Math.sin(k * x - f2 * t * 3 + phaseRad);
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        // Draw Resultant Wave
+        ctx.strokeStyle = '#4ade80';
+        ctx.lineWidth = 2.8;
+        ctx.beginPath();
+        for (let x = 0; x <= w; x += 2) {
+          const w1 = a1 * Math.sin(k * x - f1 * t * 3);
+          const w2 = a2 * Math.sin(k * x - f2 * t * 3 + phaseRad);
+          const y = ySumCenter - (w1 + w2) * 0.7;
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }
+
+      // ----------------------------------------------------------
+      // 4. CS Base Converter & Logic Gates
+      // ----------------------------------------------------------
+      initLogic() {
+        this.updateLogicGate();
+      }
+
+      onBaseInput(base, val) {
+        val = (val || '').trim();
+        const binInput = document.getElementById('base-input-bin');
+        const octInput = document.getElementById('base-input-oct');
+        const decInput = document.getElementById('base-input-dec');
+        const hexInput = document.getElementById('base-input-hex');
+
+        if (!val) {
+          if (binInput) binInput.value = '';
+          if (octInput) octInput.value = '';
+          if (decInput) decInput.value = '';
+          if (hexInput) hexInput.value = '';
+          return;
+        }
+
+        let num = 0;
+        try {
+          if (base === 2) num = parseInt(val, 2);
+          else if (base === 8) num = parseInt(val, 8);
+          else if (base === 10) num = parseInt(val, 10);
+          else if (base === 16) num = parseInt(val, 16);
+
+          if (isNaN(num)) return;
+
+          if (base !== 2 && binInput) binInput.value = num.toString(2);
+          if (base !== 8 && octInput) octInput.value = num.toString(8);
+          if (base !== 10 && decInput) decInput.value = num.toString(10);
+          if (base !== 16 && hexInput) hexInput.value = num.toString(16).toUpperCase();
+
+          // Bit visualization
+          const byteStr = (num & 0xFF).toString(2).padStart(8, '0');
+          const bitBox = document.getElementById('logic-bit-leds');
+          if (bitBox) {
+            bitBox.innerHTML = byteStr.split('').map((b, i) => `
+              <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                <span style="font-size: 0.65rem; color: #64748b;">bit${7 - i}</span>
+                <div style="width: 22px; height: 22px; border-radius: 4px; background: ${b === '1' ? '#22c55e' : '#1e293b'}; border: 1px solid ${b === '1' ? '#4ade80' : '#334155'}; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: ${b === '1' ? '#fff' : '#64748b'};">${b}</div>
+              </div>
+            `).join('');
+          }
+        } catch(e) {}
+      }
+
+      setLogicGate(gate) {
+        this.logic.gate = gate;
+        document.querySelectorAll('.logic-gate-btn').forEach(b => {
+          b.classList.toggle('active', b.getAttribute('data-gate') === gate);
+        });
+        this.updateLogicGate();
+      }
+
+      toggleLogicInput(inputKey) {
+        this.logic[inputKey] = this.logic[inputKey] === 1 ? 0 : 1;
+        this.updateLogicGate();
+      }
+
+      updateLogicGate() {
+        const { gate, inA, inB } = this.logic;
+        let out = 0;
+
+        switch (gate) {
+          case 'AND': out = (inA && inB) ? 1 : 0; break;
+          case 'OR': out = (inA || inB) ? 1 : 0; break;
+          case 'NOT': out = inA ? 0 : 1; break;
+          case 'XOR': out = (inA ^ inB) ? 1 : 0; break;
+          case 'NAND': out = !(inA && inB) ? 1 : 0; break;
+          case 'NOR': out = !(inA || inB) ? 1 : 0; break;
+        }
+
+        const btnA = document.getElementById('btn-logic-inA');
+        const btnB = document.getElementById('btn-logic-inB');
+        const led = document.getElementById('logic-out-led');
+        const titleEl = document.getElementById('logic-gate-name');
+
+        if (btnA) {
+          btnA.textContent = inA;
+          btnA.style.borderColor = inA ? '#22c55e' : 'rgba(255,255,255,0.15)';
+          btnA.style.background = inA ? 'rgba(34, 197, 94, 0.2)' : 'rgba(255,255,255,0.05)';
+        }
+        if (btnB) {
+          if (gate === 'NOT') {
+            btnB.style.opacity = '0.3';
+            btnB.style.pointerEvents = 'none';
+          } else {
+            btnB.style.opacity = '1';
+            btnB.style.pointerEvents = 'auto';
+            btnB.textContent = inB;
+            btnB.style.borderColor = inB ? '#22c55e' : 'rgba(255,255,255,0.15)';
+            btnB.style.background = inB ? 'rgba(34, 197, 94, 0.2)' : 'rgba(255,255,255,0.05)';
+          }
+        }
+        if (led) {
+          led.classList.toggle('on', out === 1);
+          led.textContent = out;
+        }
+        if (titleEl) titleEl.textContent = `${gate} Gate`;
+
+        // Update truth table rows
+        const tableBody = document.getElementById('logic-truth-table');
+        if (tableBody) {
+          const combinations = gate === 'NOT' ? [[0], [1]] : [[0,0], [0,1], [1,0], [1,1]];
+          tableBody.innerHTML = combinations.map(row => {
+            const rA = row[0];
+            const rB = row[1];
+            let rOut = 0;
+            switch (gate) {
+              case 'AND': rOut = (rA && rB) ? 1 : 0; break;
+              case 'OR': rOut = (rA || rB) ? 1 : 0; break;
+              case 'NOT': rOut = rA ? 0 : 1; break;
+              case 'XOR': rOut = (rA ^ rB) ? 1 : 0; break;
+              case 'NAND': rOut = !(rA && rB) ? 1 : 0; break;
+              case 'NOR': rOut = !(rA || rB) ? 1 : 0; break;
+            }
+            const isCurrent = gate === 'NOT' ? (rA === inA) : (rA === inA && rB === inB);
+            return `
+              <tr style="background: ${isCurrent ? 'rgba(99, 102, 241, 0.25)' : 'transparent'}; font-weight: ${isCurrent ? '700' : '400'};">
+                <td style="padding: 0.35rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.06); text-align: center;">${rA}</td>
+                ${gate !== 'NOT' ? `<td style="padding: 0.35rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.06); text-align: center;">${rB}</td>` : ''}
+                <td style="padding: 0.35rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.06); text-align: center; color: ${rOut ? '#4ade80' : '#94a3b8'};">${rOut}</td>
+              </tr>
+            `;
+          }).join('');
+        }
+      }
+
+      // ----------------------------------------------------------
+      // 5. Chemistry Molar Mass & Molecular Composition
+      // ----------------------------------------------------------
+      setChemFormula(f) {
+        const inp = document.getElementById('chem-formula-input');
+        if (inp) {
+          inp.value = f;
+          this.calcMolarMass();
+        }
+      }
+
+      calcMolarMass() {
+        const input = document.getElementById('chem-formula-input');
+        const resultBox = document.getElementById('chem-results-box');
+        if (!input || !resultBox) return;
+
+        const formula = (input.value || '').trim();
+        if (!formula) {
+          resultBox.innerHTML = '<div style="color: var(--text-muted); text-align: center; padding: 1.5rem;">พิมพ์สูตรเคมีด้านบน เช่น H2O, C6H12O6, NaCl</div>';
+          return;
+        }
+
+        const counts = {};
+        const regex = /([A-Z][a-z]*)(\d*)|(\()|(\))(\d*)/g;
+        const stack = [{}];
+
+        let match;
+        while ((match = regex.exec(formula)) !== null) {
+          if (match[1]) {
+            const el = match[1];
+            const count = parseInt(match[2] || '1', 10);
+            const top = stack[stack.length - 1];
+            top[el] = (top[el] || 0) + count;
+          } else if (match[3]) {
+            stack.push({});
+          } else if (match[4]) {
+            const multiplier = parseInt(match[5] || '1', 10);
+            const popped = stack.pop();
+            const top = stack[stack.length - 1];
+            for (const [el, count] of Object.entries(popped)) {
+              top[el] = (top[el] || 0) + count * multiplier;
+            }
+          }
+        }
+
+        const finalCounts = stack[0];
+        let totalMass = 0;
+        const breakdown = [];
+
+        for (const [el, count] of Object.entries(finalCounts)) {
+          const atomicMass = this.periodicTable[el];
+          if (!atomicMass) {
+            resultBox.innerHTML = `<div style="color: #f87171; text-align: center; padding: 1rem;">⚠️ ไม่พบสัญลักษณ์ธาตุ "${el}" ในตารางธาตุมาตรฐาน กรุณาตรวจสอบตัวพิมพ์เล็ก-ใหญ่</div>`;
+            return;
+          }
+          const mass = count * atomicMass;
+          totalMass += mass;
+          breakdown.push({ element: el, count, atomicMass, mass });
+        }
+
+        breakdown.forEach(b => {
+          b.percentage = ((b.mass / totalMass) * 100).toFixed(2);
+        });
+
+        // Sort by mass descending
+        breakdown.sort((a, b) => b.mass - a.mass);
+
+        resultBox.innerHTML = `
+          <div style="background: rgba(0,0,0,0.3); border-radius: 12px; padding: 1.25rem; margin-top: 1rem;">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.75rem;">
+              <div>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">มวลโมเลกุลรวม (Total Molar Mass)</span>
+                <div style="font-size: 1.8rem; font-weight: 800; color: #38bdf8; font-family: var(--font-mono);">
+                  ${totalMass.toFixed(3)} <span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;">g/mol</span>
+                </div>
+              </div>
+              <div style="font-size: 0.85rem; color: #a5b4fc; font-weight: 600;">
+                สูตร: ${formula}
+              </div>
+            </div>
+
+            <!-- Visual Percentage Bar -->
+            <div style="display: flex; height: 12px; border-radius: 6px; overflow: hidden; margin-bottom: 1.25rem;">
+              ${breakdown.map((b, i) => {
+                const colors = ['#38bdf8', '#818cf8', '#c084fc', '#f43f5e', '#fbbf24', '#34d399'];
+                return `<div style="width: ${b.percentage}%; background: ${colors[i % colors.length]};" title="${b.element}: ${b.percentage}%"></div>`;
+              }).join('')}
+            </div>
+
+            <!-- Breakdown Table -->
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+              <thead>
+                <tr style="color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left;">
+                  <th style="padding: 0.4rem 0.5rem;">ธาตุ (Element)</th>
+                  <th style="padding: 0.4rem 0.5rem; text-align: center;">จำนวนอะตอม</th>
+                  <th style="padding: 0.4rem 0.5rem; text-align: right;">มวลอะตอม</th>
+                  <th style="padding: 0.4rem 0.5rem; text-align: right;">มวลรวม</th>
+                  <th style="padding: 0.4rem 0.5rem; text-align: right;">ร้อยละ (% Mass)</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${breakdown.map(b => `
+                  <tr style="border-bottom: 1px solid rgba(255,255,255,0.04);">
+                    <td style="padding: 0.5rem; font-weight: 700; color: #fff;">${b.element}</td>
+                    <td style="padding: 0.5rem; text-align: center;">${b.count}</td>
+                    <td style="padding: 0.5rem; text-align: right; color: var(--text-muted);">${b.atomicMass.toFixed(3)}</td>
+                    <td style="padding: 0.5rem; text-align: right; font-weight: 600; color: #e2e8f0;">${b.mass.toFixed(3)}</td>
+                    <td style="padding: 0.5rem; text-align: right; font-weight: 700; color: #38bdf8;">${b.percentage}%</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      // ----------------------------------------------------------
+      // 6. Compound Interest & Investment Growth Simulator
+      // ----------------------------------------------------------
+      initCompound() {
+        this.updateCompound();
+      }
+
+      updateCompound() {
+        const pIn = document.getElementById('comp-slider-p');
+        const mIn = document.getElementById('comp-slider-m');
+        const rIn = document.getElementById('comp-slider-r');
+        const yIn = document.getElementById('comp-slider-y');
+
+        const P = (pIn && !isNaN(parseFloat(pIn.value))) ? parseFloat(pIn.value) : 50000;
+        const PMT = (mIn && !isNaN(parseFloat(mIn.value))) ? parseFloat(mIn.value) : 3000;
+        const r = (rIn && !isNaN(parseFloat(rIn.value))) ? parseFloat(rIn.value) / 100 : 0.08;
+        const years = (yIn && !isNaN(parseInt(yIn.value, 10))) ? parseInt(yIn.value, 10) : 15;
+
+        const valP = document.getElementById('val-comp-p');
+        const valM = document.getElementById('val-comp-m');
+        const valR = document.getElementById('val-comp-r');
+        const valY = document.getElementById('val-comp-y');
+
+        if (valP) valP.textContent = P.toLocaleString() + ' บาท';
+        if (valM) valM.textContent = PMT.toLocaleString() + ' บาท/ด.';
+        if (valR) valR.textContent = (r * 100).toFixed(1) + '%';
+        if (valY) valY.textContent = years + ' ปี';
+
+        // Monthly compound calculation over years
+        let balance = P;
+        let totalDeposited = P;
+        const history = [{ year: 0, balance: P, deposited: P, interest: 0 }];
+
+        for (let yr = 1; yr <= years; yr++) {
+          for (let mo = 1; mo <= 12; mo++) {
+            balance = (balance + PMT) * (1 + r / 12);
+            totalDeposited += PMT;
+          }
+          history.push({
+            year: yr,
+            balance: Math.round(balance),
+            deposited: Math.round(totalDeposited),
+            interest: Math.round(balance - totalDeposited)
+          });
+        }
+
+        const totalBalance = Math.round(balance);
+        const totalInterest = Math.round(balance - totalDeposited);
+        const growthMult = (totalBalance / totalDeposited).toFixed(2);
+
+        const balPill = document.getElementById('metric-comp-total');
+        const depPill = document.getElementById('metric-comp-dep');
+        const intPill = document.getElementById('metric-comp-int');
+        const multPill = document.getElementById('metric-comp-mult');
+
+        if (balPill) balPill.textContent = totalBalance.toLocaleString() + ' ฿';
+        if (depPill) depPill.textContent = totalDeposited.toLocaleString() + ' ฿';
+        if (intPill) intPill.textContent = totalInterest.toLocaleString() + ' ฿';
+        if (multPill) multPill.textContent = growthMult + 'x';
+
+        this.drawCompoundChart(history);
+      }
+
+      drawCompoundChart(history) {
+        const canvas = document.getElementById('canvas-compound-chart');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const w = (canvas.width = canvas.parentElement.clientWidth || 600);
+        const h = (canvas.height = 360);
+
+        ctx.clearRect(0, 0, w, h);
+
+        const padLeft = 70;
+        const padRight = 30;
+        const padBottom = 40;
+        const padTop = 30;
+
+        const maxVal = history[history.length - 1].balance * 1.1;
+
+        const toPxX = (idx) => padLeft + (idx / (history.length - 1)) * (w - padLeft - padRight);
+        const toPxY = (val) => h - padBottom - (val / maxVal) * (h - padTop - padBottom);
+
+        // Grid lines
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+        ctx.lineWidth = 1;
+        for (let g = 0; g <= 4; g++) {
+          const val = (maxVal / 4) * g;
+          const py = toPxY(val);
+          ctx.beginPath();
+          ctx.moveTo(padLeft, py);
+          ctx.lineTo(w - padRight, py);
+          ctx.stroke();
+
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
+          ctx.font = '10px sans-serif';
+          ctx.textAlign = 'right';
+          ctx.fillText((val / 1000).toFixed(0) + 'k', padLeft - 8, py + 3);
+        }
+
+        // Draw Total Balance Area (Cyan/Blue gradient)
+        ctx.beginPath();
+        ctx.moveTo(toPxX(0), toPxY(0));
+        history.forEach((pt, i) => ctx.lineTo(toPxX(i), toPxY(pt.balance)));
+        ctx.lineTo(toPxX(history.length - 1), toPxY(0));
+        ctx.closePath();
+        const balGrad = ctx.createLinearGradient(0, padTop, 0, h - padBottom);
+        balGrad.addColorStop(0, 'rgba(56, 189, 248, 0.45)');
+        balGrad.addColorStop(1, 'rgba(56, 189, 248, 0.05)');
+        ctx.fillStyle = balGrad;
+        ctx.fill();
+
+        // Draw Principal Deposited Area (Purple/Indigo gradient)
+        ctx.beginPath();
+        ctx.moveTo(toPxX(0), toPxY(0));
+        history.forEach((pt, i) => ctx.lineTo(toPxX(i), toPxY(pt.deposited)));
+        ctx.lineTo(toPxX(history.length - 1), toPxY(0));
+        ctx.closePath();
+        const depGrad = ctx.createLinearGradient(0, padTop, 0, h - padBottom);
+        depGrad.addColorStop(0, 'rgba(99, 102, 241, 0.6)');
+        depGrad.addColorStop(1, 'rgba(99, 102, 241, 0.15)');
+        ctx.fillStyle = depGrad;
+        ctx.fill();
+
+        // Lines
+        ctx.lineWidth = 2.5;
+        ctx.strokeStyle = '#38bdf8';
+        ctx.beginPath();
+        history.forEach((pt, i) => {
+          if (i === 0) ctx.moveTo(toPxX(i), toPxY(pt.balance));
+          else ctx.lineTo(toPxX(i), toPxY(pt.balance));
+        });
+        ctx.stroke();
+
+        ctx.strokeStyle = '#a5b4fc';
+        ctx.beginPath();
+        history.forEach((pt, i) => {
+          if (i === 0) ctx.moveTo(toPxX(i), toPxY(pt.deposited));
+          else ctx.lineTo(toPxX(i), toPxY(pt.deposited));
+        });
+        ctx.stroke();
+
+        // X labels
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+        ctx.textAlign = 'center';
+        history.forEach((pt, i) => {
+          if (i % Math.ceil(history.length / 6) === 0 || i === history.length - 1) {
+            ctx.fillText('ปี ' + pt.year, toPxX(i), h - padBottom + 16);
+          }
+        });
+      }
+    }
+
+    const omniLab = new OmniLabEngine();
+
     window.safeStorage = {
       _mem: {},
       getItem(key) {
@@ -5310,6 +6414,30 @@
           }
         });
 
+        // 1.5. OmniLab Interactive Tools matching
+        const OMNILAB_TOOLS = [
+          { tab: 'grapher', icon: '📈', title: 'Interactive Math Grapher (เครื่องวาดกราฟคณิตศาสตร์)', sub: 'พล็อตกราฟฟังก์ชัน ตรีโกณมิติ อนุพันธ์แคลคูลัส', badge: 'ห้องแล็บ' },
+          { tab: 'projectile', icon: '🚀', title: 'Physics Projectile Simulator (แบบจำลองโพรเจกไทล์)', sub: 'จำลองการเคลื่อนที่และแรงโน้มถ่วง โลก/ดวงจันทร์/ดาวอังคาร', badge: 'ห้องแล็บ' },
+          { tab: 'wave', icon: '🌊', title: 'Wave Interference Lab (การแทรกสอดของคลื่น)', sub: 'จำลองคลื่นซ้อนทับ ความถี่ แอมพลิจูด และผลต่างเฟส', badge: 'ห้องแล็บ' },
+          { tab: 'logic', icon: '💻', title: 'Logic Gates & Base Converter (ลอจิกเกตและเลขฐาน)', sub: 'แปลงเลขฐาน 2/8/10/16 ทูเวย์ และทดลองวงจรตรรกศาสตร์', badge: 'ห้องแล็บ' },
+          { tab: 'chemistry', icon: '🧪', title: 'Chemistry Molar Mass Calculator (คำนวณมวลโมเลกุล)', sub: 'วิเคราะห์สูตรเคมี คำนวณมวลโมเลกุลและร้อยละของธาตุ', badge: 'ห้องแล็บ' },
+          { tab: 'compound', icon: '💰', title: 'Compound Interest Simulator (ดอกเบี้ยทบต้น)', sub: 'จำลองการเติบโตของเงินออมและการลงทุนระยะยาว', badge: 'ห้องแล็บ' }
+        ];
+
+        OMNILAB_TOOLS.forEach(tool => {
+          if (tool.title.toLowerCase().includes(q) || tool.sub.toLowerCase().includes(q) || 'แล็บ lab simulator เครื่องคิดเลข กราฟ'.includes(q)) {
+            matches.push({
+              type: 'lab',
+              badge: tool.badge,
+              icon: tool.icon,
+              title: tool.title,
+              sub: tool.sub,
+              link: `#/lab?tool=${tool.tab}`,
+              color: '#38bdf8'
+            });
+          }
+        });
+
         // 2. Lessons matching
         const lessonSource = (typeof LESSON_DATA !== 'undefined' && Object.keys(LESSON_DATA).length > 0)
           ? LESSON_DATA
@@ -5717,6 +6845,7 @@
         else if (hash.startsWith('#/discipline/')) this.renderDiscipline(hash.replace('#/discipline/', ''));
         else if (hash.startsWith('#/theory/')) this.renderTheory(hash.replace('#/theory/', ''));
         else if (hash.startsWith('#/quiz/')) this.renderQuiz(hash.replace('#/quiz/', ''));
+        else if (hash === '#/lab' || hash.startsWith('#/lab')) this.renderLab(hash);
         else if (hash === '#/leaderboard') this.renderLeaderboard();
         else if (hash === '#/profile') this.renderProfile();
         else if (hash === '#/languages') { this.navigate('#/discipline/13'); return; }
@@ -5746,6 +6875,451 @@
             </div>
           </div>
         `;
+      }
+
+      
+      renderLab(hash = '') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const view = document.getElementById('app-view');
+        if (!view) return;
+
+        // Parse query params if any
+        let toolParam = 'grapher';
+        if (hash.includes('tool=')) {
+          toolParam = hash.split('tool=')[1].split('&')[0];
+        } else if (hash.includes('disc=')) {
+          const disc = hash.split('disc=')[1].split('&')[0];
+          if (['01', 'PHYS'].includes(disc)) toolParam = 'projectile';
+          else if (['02', 'CHEM'].includes(disc)) toolParam = 'chemistry';
+          else if (['06', 'MATH'].includes(disc)) toolParam = 'grapher';
+          else if (['07', 'CS'].includes(disc)) toolParam = 'logic';
+          else if (['12', 'ECON'].includes(disc)) toolParam = 'compound';
+        }
+        omniLab.activeTab = toolParam;
+
+        const tabs = [
+          { id: 'grapher', icon: '📈', name: 'กราฟคณิตศาสตร์' },
+          { id: 'projectile', icon: '🚀', name: 'ฟิสิกส์โพรเจกไทล์' },
+          { id: 'wave', icon: '🌊', name: 'การแทรกสอดของคลื่น' },
+          { id: 'logic', icon: '💻', name: 'เลขฐานและลอจิกเกต' },
+          { id: 'chemistry', icon: '🧪', name: 'เคมีมวลโมเลกุล' },
+          { id: 'compound', icon: '💰', name: 'ดอกเบี้ยทบต้น' }
+        ];
+
+        view.innerHTML = `
+          <div class="omnilab-container">
+            <!-- Breadcrumbs -->
+            <div class="omni-breadcrumb">
+              <a onclick="app.navigate('#/')">🏠 หน้าหลัก</a>
+              <span class="omni-breadcrumb-sep">❯</span>
+              <span class="omni-breadcrumb-current">🔬 OmniLab: ห้องแล็บจำลองและเครื่องคิดเลขอินเทอร์แอคทีฟ</span>
+            </div>
+
+            <!-- Header -->
+            <div class="omnilab-header">
+              <div class="hero-badge" style="background: rgba(56, 189, 248, 0.15); border-color: rgba(56, 189, 248, 0.3); color: #38bdf8;">
+                ⚡ OMNILAB SIMULATOR SUITE
+              </div>
+              <h1 style="font-size: 2.2rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem; letter-spacing: -0.02em;">
+                ห้องแล็บจำลอง & เครื่องคิดเลขอินเทอร์แอคทีฟ
+              </h1>
+              <p style="color: var(--text-muted); font-size: 1rem; max-width: 650px; margin: 0 auto;">
+                ทดลองสูตรคำนวณ กราฟคณิตศาสตร์ กฎฟิสิกส์ เคมี และตรรกศาสตร์ดิจิทัลแบบเรียลไทม์
+              </p>
+            </div>
+
+            <!-- Tab Buttons -->
+            <div class="omnilab-nav-tabs">
+              ${tabs.map(t => `
+                <button class="omnilab-tab-btn ${t.id === omniLab.activeTab ? 'active' : ''}" onclick="omniLab.switchTab('${t.id}')">
+                  <span>${t.icon}</span>
+                  <span>${t.name}</span>
+                </button>
+              `).join('')}
+            </div>
+
+            <!-- Dynamic Tab Content -->
+            <div id="omnilab-content-area" class="omnilab-panel">
+              ${this.renderLabTabContent(omniLab.activeTab)}
+            </div>
+          </div>
+        `;
+
+        // Initialize active lab tool after DOM render
+        setTimeout(() => {
+          if (omniLab.activeTab === 'grapher') omniLab.initGrapher();
+          else if (omniLab.activeTab === 'projectile') omniLab.initProjectile();
+          else if (omniLab.activeTab === 'wave') omniLab.initWave();
+          else if (omniLab.activeTab === 'logic') omniLab.initLogic();
+          else if (omniLab.activeTab === 'chemistry') omniLab.calcMolarMass();
+          else if (omniLab.activeTab === 'compound') omniLab.initCompound();
+        }, 50);
+      }
+
+      renderLabTabContent(tab) {
+        switch (tab) {
+          case 'grapher':
+            return `
+              <div class="omnilab-grid-2">
+                <div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                    <div style="font-weight: 700; color: #38bdf8;" id="graph-func-title">y = a · sin(b · x) + c</div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">เลื่อนเมาส์บนกราฟเพื่อดูเส้นสัมผัสความชัน (Slope)</div>
+                  </div>
+                  <div class="omnilab-canvas-box">
+                    <canvas id="canvas-math-grapher" class="omnilab-canvas"></canvas>
+                  </div>
+                  <div class="omnilab-metrics-grid">
+                    <div class="omnilab-metric-card">
+                      <div class="omnilab-metric-label">ตำแหน่ง X</div>
+                      <div class="omnilab-metric-number" id="metric-graph-x">0.00</div>
+                    </div>
+                    <div class="omnilab-metric-card">
+                      <div class="omnilab-metric-label">ค่าฟังก์ชัน f(X)</div>
+                      <div class="omnilab-metric-number" id="metric-graph-y" style="color: #38bdf8;">0.00</div>
+                    </div>
+                    <div class="omnilab-metric-card">
+                      <div class="omnilab-metric-label">ความชัน dy/dx</div>
+                      <div class="omnilab-metric-number" id="metric-graph-dy" style="color: #f43f5e;">1.00</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="omnilab-control-card">
+                  <div style="font-weight: 700; font-size: 0.95rem; color: #fff;">เลือกฟังก์ชันสำเร็จรูป</div>
+                  <div class="omnilab-pill-group">
+                    <button class="omnilab-pill-btn active" onclick="omniLab.setGraphFunc('sin')">sin(x)</button>
+                    <button class="omnilab-pill-btn" onclick="omniLab.setGraphFunc('cos')">cos(x)</button>
+                    <button class="omnilab-pill-btn" onclick="omniLab.setGraphFunc('poly2')">x² - 4</button>
+                    <button class="omnilab-pill-btn" onclick="omniLab.setGraphFunc('poly3')">x³ - 3x</button>
+                    <button class="omnilab-pill-btn" onclick="omniLab.setGraphFunc('exp')">e^(x/4)</button>
+                    <button class="omnilab-pill-btn" onclick="omniLab.setGraphFunc('damped')">Damped wave</button>
+                  </div>
+
+                  <div style="margin-top: 0.5rem; font-weight: 700; font-size: 0.95rem; color: #fff;">ปรับแต่งพารามิเตอร์</div>
+                  <div class="omnilab-slider-row">
+                    <div class="omnilab-slider-header">
+                      <span>แอมพลิจูด / ยืดแกน (a)</span>
+                      <span class="omnilab-slider-val" id="val-graph-a">1.0</span>
+                    </div>
+                    <input type="range" id="graph-slider-a" min="-4" max="4" step="0.2" value="1" oninput="omniLab.updateGraphParams()">
+                  </div>
+
+                  <div class="omnilab-slider-row">
+                    <div class="omnilab-slider-header">
+                      <span>ความถี่ / สเกล (b)</span>
+                      <span class="omnilab-slider-val" id="val-graph-b">1.0</span>
+                    </div>
+                    <input type="range" id="graph-slider-b" min="0.2" max="4" step="0.2" value="1" oninput="omniLab.updateGraphParams()">
+                  </div>
+
+                  <div class="omnilab-slider-row">
+                    <div class="omnilab-slider-header">
+                      <span>เลื่อนแกนตั้ง (c)</span>
+                      <span class="omnilab-slider-val" id="val-graph-c">0.0</span>
+                    </div>
+                    <input type="range" id="graph-slider-c" min="-3" max="3" step="0.2" value="0" oninput="omniLab.updateGraphParams()">
+                  </div>
+                </div>
+              </div>
+            `;
+
+          case 'projectile':
+            return `
+              <div class="omnilab-grid-2">
+                <div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                    <div style="font-weight: 700; color: #38bdf8;">การเคลื่อนที่แบบโพรเจกไทล์ (Projectile Simulation)</div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);" id="val-proj-g">9.8 m/s² (Earth)</div>
+                  </div>
+                  <div class="omnilab-canvas-box">
+                    <canvas id="canvas-physics-proj" class="omnilab-canvas"></canvas>
+                  </div>
+                  <div class="omnilab-metrics-grid">
+                    <div class="omnilab-metric-card">
+                      <div class="omnilab-metric-label">ระยะตกไกลสุด (Range R)</div>
+                      <div class="omnilab-metric-number" id="metric-proj-r" style="color: #38bdf8;">--</div>
+                    </div>
+                    <div class="omnilab-metric-card">
+                      <div class="omnilab-metric-label">จุดสูงสุด (Max Height H)</div>
+                      <div class="omnilab-metric-number" id="metric-proj-h" style="color: #c084fc;">--</div>
+                    </div>
+                    <div class="omnilab-metric-card">
+                      <div class="omnilab-metric-label">เวลาลอยในอากาศ (Time T)</div>
+                      <div class="omnilab-metric-number" id="metric-proj-t" style="color: #4ade80;">--</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="omnilab-control-card">
+                  <div style="font-weight: 700; font-size: 0.95rem; color: #fff;">เลือกแรงโน้มถ่วงดาวเคราะห์</div>
+                  <div class="omnilab-pill-group">
+                    <button class="omnilab-pill-btn planet-btn active" data-planet="Earth" onclick="omniLab.setPlanetGravity('Earth', 9.8)">🌍 โลก (9.8)</button>
+                    <button class="omnilab-pill-btn planet-btn" data-planet="Moon" onclick="omniLab.setPlanetGravity('Moon', 1.62)">🌕 ดวงจันทร์ (1.62)</button>
+                    <button class="omnilab-pill-btn planet-btn" data-planet="Mars" onclick="omniLab.setPlanetGravity('Mars', 3.72)">🪐 อังคาร (3.72)</button>
+                    <button class="omnilab-pill-btn planet-btn" data-planet="Jupiter" onclick="omniLab.setPlanetGravity('Jupiter', 24.79)">⚡ พฤหัส (24.79)</button>
+                  </div>
+
+                  <div class="omnilab-slider-row" style="margin-top: 0.5rem;">
+                    <div class="omnilab-slider-header">
+                      <span>ความเร็วต้น (v₀)</span>
+                      <span class="omnilab-slider-val" id="val-proj-v">25 m/s</span>
+                    </div>
+                    <input type="range" id="proj-slider-v" min="5" max="50" step="1" value="25" oninput="omniLab.updateProjectileParams()">
+                  </div>
+
+                  <div class="omnilab-slider-row">
+                    <div class="omnilab-slider-header">
+                      <span>มุมยิง (θ)</span>
+                      <span class="omnilab-slider-val" id="val-proj-a">45°</span>
+                    </div>
+                    <input type="range" id="proj-slider-a" min="5" max="85" step="1" value="45" oninput="omniLab.updateProjectileParams()">
+                  </div>
+
+                  <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                    <button class="btn btn-primary" onclick="omniLab.toggleProjectileLaunch()" style="flex: 1; padding: 0.5rem 1rem;">🚀 ยิงจำลอง</button>
+                    <button class="btn btn-outline" onclick="omniLab.resetProjectile()" style="padding: 0.5rem 0.85rem;">🔄 รีเซ็ต</button>
+                  </div>
+                </div>
+              </div>
+            `;
+
+          case 'wave':
+            return `
+              <div class="omnilab-grid-2">
+                <div>
+                  <div style="font-weight: 700; color: #38bdf8; margin-bottom: 0.75rem;">การซ้อนทับและแทรกสอดของคลื่น (Wave Superposition & Interference)</div>
+                  <div class="omnilab-canvas-box">
+                    <canvas id="canvas-wave-interf" class="omnilab-canvas"></canvas>
+                  </div>
+                </div>
+
+                <div class="omnilab-control-card">
+                  <div style="font-weight: 700; font-size: 0.95rem; color: #fff;">ปรับค่าคลื่นทั้ง 2 ขบวน</div>
+
+                  <div class="omnilab-slider-row">
+                    <div class="omnilab-slider-header">
+                      <span>ความถี่คลื่น 1 (f₁)</span>
+                      <span class="omnilab-slider-val" id="val-wave-f1">1.0 Hz</span>
+                    </div>
+                    <input type="range" id="wave-slider-f1" min="0.5" max="3" step="0.1" value="1.0" oninput="omniLab.updateWaveParams()">
+                  </div>
+
+                  <div class="omnilab-slider-row">
+                    <div class="omnilab-slider-header">
+                      <span>ความถี่คลื่น 2 (f₂)</span>
+                      <span class="omnilab-slider-val" id="val-wave-f2">1.2 Hz</span>
+                    </div>
+                    <input type="range" id="wave-slider-f2" min="0.5" max="3" step="0.1" value="1.2" oninput="omniLab.updateWaveParams()">
+                  </div>
+
+                  <div class="omnilab-slider-row">
+                    <div class="omnilab-slider-header">
+                      <span>ผลต่างเฟส (Δφ)</span>
+                      <span class="omnilab-slider-val" id="val-wave-phase">0°</span>
+                    </div>
+                    <input type="range" id="wave-slider-phase" min="0" max="360" step="15" value="0" oninput="omniLab.updateWaveParams()">
+                  </div>
+
+                  <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 0.75rem; font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; margin-top: 0.5rem;">
+                    💡 เมื่อความถี่เท่ากันและเฟสตรงกัน (0°) คลื่นจะแทรกสอดแบบเสริมกันสูงสุด หากเฟสตรงข้าม (180°) คลื่นจะหักล้างกันจนราบเรียบ!
+                  </div>
+                </div>
+              </div>
+            `;
+
+          case 'logic':
+            return `
+              <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
+                <!-- Part 1: Logic Gates -->
+                <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 1.25rem;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+                    <div style="font-weight: 700; color: #38bdf8; font-size: 1.05rem;" id="logic-gate-name">AND Gate Simulator</div>
+                    <div class="omnilab-pill-group">
+                      <button class="omnilab-pill-btn logic-gate-btn active" data-gate="AND" onclick="omniLab.setLogicGate('AND')">AND</button>
+                      <button class="omnilab-pill-btn logic-gate-btn" data-gate="OR" onclick="omniLab.setLogicGate('OR')">OR</button>
+                      <button class="omnilab-pill-btn logic-gate-btn" data-gate="NOT" onclick="omniLab.setLogicGate('NOT')">NOT</button>
+                      <button class="omnilab-pill-btn logic-gate-btn" data-gate="XOR" onclick="omniLab.setLogicGate('XOR')">XOR</button>
+                      <button class="omnilab-pill-btn logic-gate-btn" data-gate="NAND" onclick="omniLab.setLogicGate('NAND')">NAND</button>
+                      <button class="omnilab-pill-btn logic-gate-btn" data-gate="NOR" onclick="omniLab.setLogicGate('NOR')">NOR</button>
+                    </div>
+                  </div>
+
+                  <div style="display: flex; align-items: center; justify-content: center; gap: 2rem; padding: 1.5rem 0; flex-wrap: wrap;">
+                    <!-- Inputs -->
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                      <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <span style="font-weight: 700; font-size: 0.9rem; color: #a5b4fc; width: 60px;">Input A:</span>
+                        <button id="btn-logic-inA" onclick="omniLab.toggleLogicInput('inA')" style="width: 45px; height: 45px; border-radius: 10px; font-weight: 800; font-size: 1.2rem; cursor: pointer; border: 1px solid rgba(255,255,255,0.2); color: #fff;">1</button>
+                      </div>
+                      <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <span style="font-weight: 700; font-size: 0.9rem; color: #a5b4fc; width: 60px;">Input B:</span>
+                        <button id="btn-logic-inB" onclick="omniLab.toggleLogicInput('inB')" style="width: 45px; height: 45px; border-radius: 10px; font-weight: 800; font-size: 1.2rem; cursor: pointer; border: 1px solid rgba(255,255,255,0.2); color: #fff;">0</button>
+                      </div>
+                    </div>
+
+                    <div style="font-size: 2rem; color: #64748b;">➔</div>
+
+                    <!-- Output LED -->
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                      <span style="font-weight: 700; font-size: 0.85rem; color: #94a3b8;">OUTPUT LED</span>
+                      <div id="logic-out-led" class="logic-gate-led">0</div>
+                    </div>
+
+                    <!-- Truth Table -->
+                    <div style="background: rgba(0,0,0,0.3); border-radius: 10px; padding: 0.75rem; min-width: 170px;">
+                      <div style="font-size: 0.75rem; font-weight: 700; color: #a5b4fc; margin-bottom: 0.4rem; text-align: center;">ตารางค่าความจริง (Truth Table)</div>
+                      <table style="width: 100%; font-size: 0.82rem; font-family: var(--font-mono);">
+                        <thead>
+                          <tr style="color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <th style="padding: 0.25rem 0.5rem; text-align: center;">A</th>
+                            <th style="padding: 0.25rem 0.5rem; text-align: center;">B</th>
+                            <th style="padding: 0.25rem 0.5rem; text-align: center;">OUT</th>
+                          </tr>
+                        </thead>
+                        <tbody id="logic-truth-table"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Part 2: Base Converter -->
+                <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 1.25rem;">
+                  <div style="font-weight: 700; color: #38bdf8; font-size: 1.05rem; margin-bottom: 1rem;">เครื่องแปลงระบบเลขฐานเรียลไทม์ (Live Multi-Base Converter)</div>
+                  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.25rem;">
+                    <div>
+                      <label style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">ฐาน 10 (Decimal)</label>
+                      <input type="text" id="base-input-dec" value="42" placeholder="เช่น 42" oninput="omniLab.onBaseInput(10, this.value)" style="width: 100%; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #38bdf8; font-weight: 700; padding: 0.55rem; font-family: var(--font-mono); font-size: 1rem;">
+                    </div>
+                    <div>
+                      <label style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">ฐาน 2 (Binary)</label>
+                      <input type="text" id="base-input-bin" value="101010" placeholder="เช่น 101010" oninput="omniLab.onBaseInput(2, this.value)" style="width: 100%; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #4ade80; font-weight: 700; padding: 0.55rem; font-family: var(--font-mono); font-size: 1rem;">
+                    </div>
+                    <div>
+                      <label style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">ฐาน 16 (Hexadecimal)</label>
+                      <input type="text" id="base-input-hex" value="2A" placeholder="เช่น 2A" oninput="omniLab.onBaseInput(16, this.value)" style="width: 100%; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #fbbf24; font-weight: 700; padding: 0.55rem; font-family: var(--font-mono); font-size: 1rem;">
+                    </div>
+                    <div>
+                      <label style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">ฐาน 8 (Octal)</label>
+                      <input type="text" id="base-input-oct" value="52" placeholder="เช่น 52" oninput="omniLab.onBaseInput(8, this.value)" style="width: 100%; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #c084fc; font-weight: 700; padding: 0.55rem; font-family: var(--font-mono); font-size: 1rem;">
+                    </div>
+                  </div>
+
+                  <!-- 8-Bit Visualization -->
+                  <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.5rem;">การแสดงผล 8 บิต (Byte Visualization):</div>
+                  <div id="logic-bit-leds" style="display: flex; gap: 0.5rem; flex-wrap: wrap;"></div>
+                </div>
+              </div>
+            `;
+
+          case 'chemistry':
+            return `
+              <div>
+                <div style="font-weight: 700; color: #38bdf8; font-size: 1.1rem; margin-bottom: 0.5rem;">เครื่องคำนวณมวลโมเลกุลและร้อยละของธาตุ (Molar Mass Calculator)</div>
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1rem;">
+                  พิมพ์สูตรเคมี (รองรับวงเล็บ เช่น Ca(OH)2, (NH4)2SO4) หรือเลือกสูตรตัวอย่างด้านล่าง
+                </p>
+
+                <div style="display: flex; gap: 0.6rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                  <input type="text" id="chem-formula-input" value="C6H12O6" placeholder="พิมพ์สูตรเคมี เช่น H2O, C6H12O6" oninput="omniLab.calcMolarMass()" style="flex: 1; min-width: 200px; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; color: #fff; font-size: 1.1rem; font-family: var(--font-mono); padding: 0.65rem 1rem;">
+                  <button class="btn btn-primary" onclick="omniLab.calcMolarMass()" style="padding: 0.65rem 1.25rem;">🔬 วิเคราะห์มวล</button>
+                </div>
+
+                <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                  <span style="font-size: 0.78rem; color: var(--text-muted); align-self: center; margin-right: 4px;">ตัวอย่างยอดนิยม:</span>
+                  <button class="omnilab-pill-btn" onclick="omniLab.setChemFormula('H2O')">H₂O (น้ำ)</button>
+                  <button class="omnilab-pill-btn" onclick="omniLab.setChemFormula('CO2')">CO₂ (คาร์บอนไดออกไซด์)</button>
+                  <button class="omnilab-pill-btn" onclick="omniLab.setChemFormula('NaCl')">NaCl (เกลือแกง)</button>
+                  <button class="omnilab-pill-btn" onclick="omniLab.setChemFormula('C6H12O6')">C₆H₁₂O₆ (กลูโคส)</button>
+                  <button class="omnilab-pill-btn" onclick="omniLab.setChemFormula('H2SO4')">H₂SO₄ (กรดซัลฟิวริก)</button>
+                  <button class="omnilab-pill-btn" onclick="omniLab.setChemFormula('Ca(OH)2')">Ca(OH)₂ (ปูนขาว)</button>
+                  <button class="omnilab-pill-btn" onclick="omniLab.setChemFormula('C8H10N4O2')">C₈H₁₀N₄O₂ (คาเฟอีน)</button>
+                </div>
+
+                <div id="chem-results-box"></div>
+              </div>
+            `;
+
+          case 'compound':
+            return `
+              <div class="omnilab-grid-2">
+                <div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                    <div style="font-weight: 700; color: #38bdf8;">กราฟการเติบโตดอกเบี้ยทบต้น (Compound Growth Chart)</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); display: flex; gap: 0.75rem;">
+                      <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 10px; height: 10px; background: #6366f1; border-radius: 2px;"></span> เงินต้นสะสม</span>
+                      <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 10px; height: 10px; background: #38bdf8; border-radius: 2px;"></span> ผลตอบแทนรวม</span>
+                    </div>
+                  </div>
+                  <div class="omnilab-canvas-box">
+                    <canvas id="canvas-compound-chart" class="omnilab-canvas"></canvas>
+                  </div>
+
+                  <div class="omnilab-metrics-grid">
+                    <div class="omnilab-metric-card">
+                      <div class="omnilab-metric-label">มูลค่ารวมทั้งหมด (Balance)</div>
+                      <div class="omnilab-metric-number" id="metric-comp-total" style="color: #38bdf8;">--</div>
+                    </div>
+                    <div class="omnilab-metric-card">
+                      <div class="omnilab-metric-label">เงินต้นที่ฝาก (Deposited)</div>
+                      <div class="omnilab-metric-number" id="metric-comp-dep">--</div>
+                    </div>
+                    <div class="omnilab-metric-card">
+                      <div class="omnilab-metric-label">ดอกเบี้ยกำไร (Interest)</div>
+                      <div class="omnilab-metric-number" id="metric-comp-int" style="color: #4ade80;">--</div>
+                    </div>
+                    <div class="omnilab-metric-card">
+                      <div class="omnilab-metric-label">ตัวคูณการเติบโต</div>
+                      <div class="omnilab-metric-number" id="metric-comp-mult" style="color: #fbbf24;">--</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="omnilab-control-card">
+                  <div style="font-weight: 700; font-size: 0.95rem; color: #fff;">ตั้งค่าการลงทุน</div>
+
+                  <div class="omnilab-slider-row">
+                    <div class="omnilab-slider-header">
+                      <span>เงินต้นเริ่มต้น (P)</span>
+                      <span class="omnilab-slider-val" id="val-comp-p">50,000 ฿</span>
+                    </div>
+                    <input type="range" id="comp-slider-p" min="0" max="500000" step="5000" value="50000" oninput="omniLab.updateCompound()">
+                  </div>
+
+                  <div class="omnilab-slider-row">
+                    <div class="omnilab-slider-header">
+                      <span>เงินออมเพิ่มรายเดือน (PMT)</span>
+                      <span class="omnilab-slider-val" id="val-comp-m">3,000 ฿/ด.</span>
+                    </div>
+                    <input type="range" id="comp-slider-m" min="0" max="30000" step="500" value="3000" oninput="omniLab.updateCompound()">
+                  </div>
+
+                  <div class="omnilab-slider-row">
+                    <div class="omnilab-slider-header">
+                      <span>ผลตอบแทนต่อปี (r%)</span>
+                      <span class="omnilab-slider-val" id="val-comp-r">8.0%</span>
+                    </div>
+                    <input type="range" id="comp-slider-r" min="1" max="18" step="0.5" value="8" oninput="omniLab.updateCompound()">
+                  </div>
+
+                  <div class="omnilab-slider-row">
+                    <div class="omnilab-slider-header">
+                      <span>ระยะเวลา (ปี)</span>
+                      <span class="omnilab-slider-val" id="val-comp-y">15 ปี</span>
+                    </div>
+                    <input type="range" id="comp-slider-y" min="1" max="35" step="1" value="15" oninput="omniLab.updateCompound()">
+                  </div>
+
+                  <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 0.75rem; font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; margin-top: 0.5rem;">
+                    💡 สมการ $A = P(1 + r/n)^{nt}$: ดอกเบี้ยทบต้นสร้างการเติบโตแบบก้าวกระโดด ยิ่งลงทุนนาน กำไรจากดอกเบี้ยจะมากกว่าเงินต้นหลายเท่า!
+                  </div>
+                </div>
+              </div>
+            `;
+
+          default:
+            return '<div>เลือกแล็บที่ต้องการทดลอง</div>';
+        }
       }
 
       renderHome() {
