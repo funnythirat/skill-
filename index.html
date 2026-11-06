@@ -7,7 +7,7 @@
   <title>OmniVerse Academy - ศูนย์รวมการเรียนรู้และฝึกฝนทุกสายวิชาบนโลก</title>
   
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
 
     :root {
       --bg-primary: #070913;
@@ -2529,6 +2529,185 @@
       background: rgba(245, 158, 11, 0.15);
       border: 1px solid rgba(245, 158, 11, 0.35);
     }
+  
+    /* ============================================================ */
+    /* ULTRA-MODERN PROFESSIONAL UI & GLASSMORPHISM 2.0 ENHANCEMENT */
+    /* ============================================================ */
+    :root {
+      --font-main: 'Prompt', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-heading: 'Plus Jakarta Sans', 'Prompt', sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    }
+
+    html {
+      font-family: var(--font-main);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-main);
+    }
+
+    h1, h2, h3, h4, h5, h6, .hero-title, .nav-brand, .discipline-title {
+      font-family: var(--font-heading);
+      letter-spacing: -0.015em;
+    }
+
+    code, pre, .katex-display, .formula-block {
+      font-family: var(--font-mono);
+    }
+
+    /* Reading Progress Bar */
+    #reading-progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3.5px;
+      width: 0%;
+      background: linear-gradient(90deg, #6366f1, #06b6d4, #a855f7, #fbbf24);
+      z-index: 999999;
+      transition: width 0.08s ease-out;
+      box-shadow: 0 0 12px rgba(99, 102, 241, 0.8), 0 0 4px rgba(6, 182, 212, 0.6);
+      pointer-events: none;
+    }
+
+    /* Glassmorphism 2.0 Elevation & Cards */
+    .discipline-card {
+      background: rgba(15, 23, 42, 0.72) !important;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.09) !important;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    .discipline-card:hover {
+      transform: translateY(-5px) !important;
+      border-color: rgba(99, 102, 241, 0.5) !important;
+      box-shadow: 0 20px 45px -12px rgba(99, 102, 241, 0.3), 0 0 25px rgba(99, 102, 241, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+    }
+
+    /* Buttons Micro-interactions */
+    .btn {
+      user-select: none;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn:active {
+      transform: scale(0.97) !important;
+    }
+    .btn-primary:hover {
+      box-shadow: 0 8px 25px -4px rgba(99, 102, 241, 0.55);
+      transform: translateY(-2px);
+    }
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+
+    /* Breadcrumbs Navigation */
+    .omni-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      padding: 0.6rem 1rem;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    .omni-breadcrumb a {
+      color: #818cf8;
+      text-decoration: none;
+      transition: color 0.15s;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .omni-breadcrumb a:hover {
+      color: #c7d2fe;
+      text-decoration: underline;
+    }
+    .omni-breadcrumb-sep {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.72rem;
+    }
+    .omni-breadcrumb-current {
+      color: #f1f5f9;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 340px;
+    }
+
+    /* Empty State & 404 View */
+    .empty-state-card {
+      text-align: center;
+      padding: 3.5rem 1.75rem;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      max-width: 580px;
+      margin: 3rem auto;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(99, 102, 241, 0.15);
+    }
+
+    /* Custom Sleek Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.7);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(99, 102, 241, 0.35);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(99, 102, 241, 0.65);
+    }
+
+    /* Mobile Overflow & Formula Protection */
+    .katex-display, .formula-block, pre, table {
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Nav Icon Buttons */
+    .nav-icon-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      color: var(--text-main);
+      padding: 0.4rem 0.65rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+    }
+    .nav-icon-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(99, 102, 241, 0.4);
+      transform: translateY(-1px);
+    }
+
   </style>
   <!-- Puter.js Free Cloud AI SDK -->
   <script src="https://js.puter.com/v2/"></script>
@@ -2704,6 +2883,8 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="window.__katexLoaded = true; if(window.app && typeof window.app.renderMath === 'function') window.app.renderMath(document.body);"></script>
 </head>
 <body>
+  <!-- Top Reading Progress Indicator -->
+  <div id="reading-progress-bar"></div>
   <canvas id="canvas-background"></canvas>
 
   <div class="app-wrapper">
@@ -3204,12 +3385,24 @@
     // 2. Web Audio Sound Engine
     class SoundEngine {
       constructor() { this.enabled = true; this.ctx = null; }
-      async init() { if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); }
+      async init() {
+    try {
+      if (!this.ctx && typeof AudioContext !== 'undefined') {
+        this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (this.ctx && this.ctx.state === 'suspended') {
+        await this.ctx.resume();
+      }
+    } catch(e) {
+      console.warn('AudioContext resume policy warning:', e);
+    }
+  }
       toggleSound() {
         this.enabled = !this.enabled;
+        try { if (window.safeStorage) safeStorage.setItem('omni_sound_enabled', this.enabled ? 'true' : 'false'); } catch(e) {}
         const btn = document.getElementById('btn-sound-toggle');
         if (btn) btn.innerHTML = this.enabled ? UI_ICONS.soundOn : UI_ICONS.soundOff;
-        app.showToast(this.enabled ? 'เปิดเสียงแล้ว' : 'ปิดเสียงแล้ว');
+        app.showToast(this.enabled ? '🔊 เปิดเสียงเอฟเฟกต์แล้ว' : '🔇 ปิดเสียงเอฟเฟกต์แล้ว');
       }
       playTone(freq, duration = 0.1, type = 'sine') {
         if (!this.enabled) return;
@@ -3471,6 +3664,31 @@
 
 
     // 6. Main Application Controller
+    
+    // ============================================================
+    // SAFE STORAGE & GLOBAL ERROR RESILIENCE
+    // ============================================================
+    window.safeStorage = {
+      _mem: {},
+      getItem(key) {
+        try { return localStorage.getItem(key); } catch (e) { return this._mem[key] !== undefined ? this._mem[key] : null; }
+      },
+      setItem(key, value) {
+        try { localStorage.setItem(key, String(value)); } catch (e) { this._mem[key] = String(value); }
+      },
+      removeItem(key) {
+        try { localStorage.removeItem(key); } catch (e) { delete this._mem[key]; }
+      }
+    };
+
+    // Global Error Boundary - prevent unhandled exceptions from halting scripts
+    window.addEventListener('error', function(e) {
+      console.warn('[OmniVerse Warning] Runtime error caught safely:', e.message || e);
+    });
+    window.addEventListener('unhandledrejection', function(e) {
+      console.warn('[OmniVerse Warning] Unhandled promise rejection caught safely:', e.reason);
+    });
+
     class AppController {
       constructor() {
         this.combo = 1;
@@ -3515,6 +3733,17 @@
       init() {
         this.initAvatarPickers();
         window.addEventListener('hashchange', () => this.handleRoute());
+
+        // Top Reading Progress Bar Listener
+        window.addEventListener('scroll', () => {
+          const bar = document.getElementById('reading-progress-bar');
+          if (!bar) return;
+          const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+          const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+          const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+          bar.style.width = Math.min(100, Math.max(0, scrolled)) + '%';
+        }, { passive: true });
+
         this.updateUserUI();
 
         // ⚡ Immediate render on load! Zero-delay routing without waiting for Firebase!
@@ -5494,8 +5723,29 @@
         else if (hash === '#/tickets') this.renderTickets();
         else if (hash === '#/admin') this.renderAdmin();
         else if (hash === '#/knowledge-map') this.navigate('#/');
+        else {
+          this.render404(hash);
+        }
 
         this.renderMath();
+      }
+
+      render404(hash) {
+        const view = document.getElementById('app-view');
+        if (!view) return;
+        view.innerHTML = `
+          <div class="empty-state-card">
+            <div style="font-size: 3.5rem; margin-bottom: 0.75rem;">🌌</div>
+            <h2 style="font-size: 1.75rem; margin-bottom: 0.5rem; color: #fff;">ไม่พบบทเรียนหรือหน้าที่ต้องการ</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.75rem; font-size: 0.95rem; line-height: 1.6;">
+              หน้าที่ระบุ <code>${(hash || '').replace(/</g, '&lt;')}</code> อาจถูกย้ายหรือไม่มีอยู่ในระบบ OmniVerse Academy
+            </p>
+            <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+              <button class="btn btn-primary" onclick="app.navigate('#/')" style="padding: 0.6rem 1.4rem;">🏠 กลับสู่หน้าหลัก</button>
+              <button class="btn btn-outline" onclick="app.openQuickSearch()" style="padding: 0.6rem 1.25rem;">🔍 ค้นหาบทเรียนด่วน</button>
+            </div>
+          </div>
+        `;
       }
 
       renderHome() {
@@ -5666,6 +5916,13 @@
 
         const view = document.getElementById('app-view');
         view.innerHTML = `
+          <!-- Breadcrumb Navigation -->
+          <div class="omni-breadcrumb">
+            <a onclick="app.navigate('#/')">🏠 หน้าหลัก</a>
+            <span class="omni-breadcrumb-sep">❯</span>
+            <span class="omni-breadcrumb-current">${disc.icon} ${disc.name_th}</span>
+          </div>
+
           <button class="btn btn-outline" style="margin-bottom: 1.5rem;" onclick="app.navigate('#/')">⬅ กลับหน้าหลักคลัง 15 สายวิชา</button>
           
           <!-- Hero Banner -->
@@ -5898,6 +6155,15 @@
 
         const view = document.getElementById('app-view');
         view.innerHTML = `
+          <!-- Breadcrumb Navigation -->
+          <div class="omni-breadcrumb">
+            <a onclick="app.navigate('#/')">🏠 หน้าหลัก</a>
+            <span class="omni-breadcrumb-sep">❯</span>
+            <a onclick="app.navigate('#/discipline/${disc.id}')">${disc.icon} ${disc.name_th}</a>
+            <span class="omni-breadcrumb-sep">❯</span>
+            <span class="omni-breadcrumb-current">${lesson.title}</span>
+          </div>
+
           <div style="display: flex; gap: 0.6rem; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 1.5rem;">
             <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
               <button class="btn btn-outline" onclick="app.navigate('#/discipline/${disc.id}')">⬅️ รายการบทเรียน</button>
@@ -6223,7 +6489,7 @@
       // ============================================================
       renderQuiz(param, restart = false) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        const normalized = (param, restart = false || '').replace('/', '_');
+        const normalized = (typeof param === 'string' ? param : '').replace('/', '_');
         const [rawDiscId, idxStr] = normalized.split('_');
         const ALIAS_MAP = {
           'tech': '07',
@@ -6272,6 +6538,17 @@
 
         const view = document.getElementById('app-view');
         view.innerHTML = `
+          <!-- Breadcrumb Navigation -->
+          <div class="omni-breadcrumb">
+            <a onclick="app.navigate('#/')">🏠 หน้าหลัก</a>
+            <span class="omni-breadcrumb-sep">❯</span>
+            <a onclick="app.navigate('#/discipline/${disc.id}')">${disc.icon} ${disc.name_th}</a>
+            <span class="omni-breadcrumb-sep">❯</span>
+            <a onclick="app.navigate('#/theory/${disc.id}_${idxStr}')">${lesson.title}</a>
+            <span class="omni-breadcrumb-sep">❯</span>
+            <span class="omni-breadcrumb-current">📝 แบบทดสอบ</span>
+          </div>
+
           <div style="display: flex; gap: 0.6rem; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 1.5rem;">
             <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
               <button class="btn btn-outline" onclick="app.navigate('#/theory/${disc.id}_${idxStr}')">⬅ กลับไปทบทวนทฤษฎี</button>
