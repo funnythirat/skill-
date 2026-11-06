@@ -3040,7 +3040,280 @@
       font-weight: 500;
     }
 
-  </style>
+  
+    /* ============================================================ */
+    /* COSMIC NEXT-GEN & AURORA GLASSMORPHISM DESIGN SYSTEM         */
+    /* ============================================================ */
+    .badge-dot-live {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 10px #22c55e, 0 0 18px #22c55e;
+      display: inline-block;
+      margin-right: 6px;
+      animation: liveDotPulse 2s infinite ease-in-out;
+      vertical-align: middle;
+    }
+    @keyframes liveDotPulse {
+      0%, 100% { transform: scale(0.85); opacity: 0.75; }
+      50% { transform: scale(1.3); opacity: 1; }
+    }
+
+    .hero-title-gradient {
+      background: linear-gradient(135deg, #ffffff 10%, #e0e7ff 45%, #a5b4fc 80%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 45px rgba(99, 102, 241, 0.28);
+      letter-spacing: -0.02em;
+    }
+
+    .hero-banner {
+      background: radial-gradient(circle at 50% -20%, rgba(99, 102, 241, 0.22) 0%, transparent 65%), var(--hero-gradient) !important;
+      border: 1px solid rgba(255, 255, 255, 0.14) !important;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.65), inset 0 1px 2px rgba(255, 255, 255, 0.2) !important;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      position: relative;
+    }
+
+    /* Embedded Hero Search Bar */
+    .hero-search-wrapper {
+      max-width: 680px;
+      margin: 1.6rem auto 0.4rem auto;
+      cursor: pointer;
+    }
+    .hero-search-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.8rem 1.4rem;
+      background: rgba(15, 23, 42, 0.78);
+      border: 1px solid rgba(99, 102, 241, 0.38);
+      border-radius: 9999px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 20px rgba(99, 102, 241, 0.18);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hero-search-bar:hover {
+      border-color: rgba(99, 102, 241, 0.75);
+      background: rgba(15, 23, 42, 0.95);
+      box-shadow: 0 12px 40px rgba(99, 102, 241, 0.35), 0 0 30px rgba(99, 102, 241, 0.25);
+      transform: translateY(-2px);
+    }
+    .hero-search-icon {
+      color: #818cf8;
+      display: flex;
+      align-items: center;
+      filter: drop-shadow(0 0 6px rgba(129, 140, 248, 0.5));
+    }
+    .hero-search-placeholder {
+      flex: 1;
+      text-align: left;
+      font-size: 0.94rem;
+      color: #cbd5e1;
+      font-weight: 400;
+    }
+    .hero-search-kbd {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #c7d2fe;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      letter-spacing: 0.5px;
+    }
+
+    /* Feature Quick Hub Cards */
+    .feature-hub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2.25rem;
+    }
+    .feature-hub-card {
+      background: rgba(15, 23, 42, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 16px;
+      padding: 1.15rem 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 1.05rem;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-hub-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+      transition: 0.6s ease;
+    }
+    .feature-hub-card:hover::before {
+      left: 100%;
+    }
+    .feature-hub-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(99, 102, 241, 0.5);
+      box-shadow: 0 14px 35px -5px rgba(99, 102, 241, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.15);
+      background: rgba(26, 35, 64, 0.8);
+    }
+    .feature-hub-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.55rem;
+      flex-shrink: 0;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .feature-hub-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.2rem;
+    }
+    .feature-hub-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    /* Discipline Card Elevated */
+    .discipline-card {
+      box-shadow: 0 8px 30px -5px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.09) !important;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+    .discipline-card:hover {
+      transform: translateY(-5px) !important;
+      border-color: var(--disc-accent, var(--card-hover-border)) !important;
+      box-shadow: 0 18px 45px -8px var(--disc-accent, rgba(99, 102, 241, 0.45)), inset 0 1px 2px rgba(255, 255, 255, 0.25) !important;
+    }
+    .btn-arrow {
+      display: inline-block;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      margin-left: 5px;
+    }
+    .discipline-card:hover .btn-arrow,
+    .btn:hover .btn-arrow {
+      transform: translateX(4px);
+    }
+
+    /* macOS Terminal Code Block */
+    .code-terminal {
+      background: #070a13;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      margin: 1.25rem 0;
+      overflow: hidden;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.55);
+    }
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 0.95rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .dot-red { width: 10px; height: 10px; border-radius: 50%; background: #ef4444; }
+    .dot-yellow { width: 10px; height: 10px; border-radius: 50%; background: #f59e0b; }
+    .dot-green { width: 10px; height: 10px; border-radius: 50%; background: #10b981; }
+    .terminal-title {
+      font-size: 0.74rem;
+      color: #94a3b8;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .copy-code-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #94a3b8;
+      font-size: 0.72rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .copy-code-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
+    /* Editorial Callout Boxes */
+    .callout-box {
+      display: flex;
+      gap: 0.95rem;
+      padding: 1.15rem 1.35rem;
+      border-radius: 12px;
+      margin: 1.35rem 0;
+      font-size: 0.94rem;
+      line-height: 1.65;
+      background: rgba(15, 23, 42, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .callout-tip {
+      border-left: 4px solid #38bdf8;
+      background: rgba(14, 165, 233, 0.09);
+      border-color: rgba(56, 189, 248, 0.35);
+    }
+    .callout-warning {
+      border-left: 4px solid #f59e0b;
+      background: rgba(245, 158, 11, 0.09);
+      border-color: rgba(245, 158, 11, 0.35);
+    }
+    .callout-lab {
+      border-left: 4px solid #10b981;
+      background: rgba(16, 185, 129, 0.09);
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+
+    /* Custom Range Slider Styling */
+    input[type="range"].omnilab-slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: linear-gradient(90deg, #4f46e5, #06b6d4);
+      outline: none;
+      margin: 0.5rem 0;
+    }
+    input[type="range"].omnilab-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #6366f1;
+      box-shadow: 0 0 10px #6366f1;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+    input[type="range"].omnilab-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+
+</style>
   <!-- Puter.js Free Cloud AI SDK -->
   <script src="https://js.puter.com/v2/"></script>
   <style>
@@ -3643,6 +3916,8 @@
         this.canvas = document.getElementById('canvas-background');
         this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
         this.particles = [];
+        this.mouseX = -1000;
+        this.mouseY = -1000;
         this.initCanvas();
       }
 
@@ -3660,6 +3935,14 @@
           this.resetParticles();
         };
         window.addEventListener('resize', resize);
+        window.addEventListener('mousemove', (e) => {
+          this.mouseX = e.clientX;
+          this.mouseY = e.clientY;
+        });
+        window.addEventListener('mouseleave', () => {
+          this.mouseX = -1000;
+          this.mouseY = -1000;
+        });
         resize();
         this.animate();
       }
@@ -3667,16 +3950,16 @@
       resetParticles() {
         if (!this.canvas) return;
         this.particles = [];
-        const count = Math.floor((this.canvas.width * this.canvas.height) / 14000);
+        const count = Math.min(65, Math.floor((this.canvas.width * this.canvas.height) / 18000));
         const colors = {
-          default: ['#38bdf8', '#818cf8', '#ffffff'],
-          academic: ['#38bdf8', '#fbbf24', '#e0f2fe'],
-          survival: ['#22c55e', '#4ade80', '#eab308'],
-          tech: ['#06b6d4', '#22d3ee', '#a855f7'],
-          arts: ['#c084fc', '#f472b6', '#e879f9'],
-          combat: ['#ef4444', '#f97316', '#fca5a5'],
-          wealth: ['#10b981', '#eab308', '#34d399'],
-          engineering: ['#f59e0b', '#fbbf24', '#f97316']
+          default: ['#38bdf8', '#818cf8', '#c084fc', '#ffffff'],
+          academic: ['#38bdf8', '#60a5fa', '#fbbf24', '#e0f2fe'],
+          survival: ['#22c55e', '#4ade80', '#eab308', '#86efac'],
+          tech: ['#06b6d4', '#22d3ee', '#a855f7', '#67e8f9'],
+          arts: ['#c084fc', '#f472b6', '#e879f9', '#fbcfe8'],
+          combat: ['#ef4444', '#f97316', '#fca5a5', '#f87171'],
+          wealth: ['#10b981', '#eab308', '#34d399', '#6ee7b7'],
+          engineering: ['#f59e0b', '#fbbf24', '#f97316', '#fde68a']
         };
         const palette = colors[this.currentTheme] || colors.default;
 
@@ -3684,33 +3967,94 @@
           this.particles.push({
             x: Math.random() * this.canvas.width,
             y: Math.random() * this.canvas.height,
-            radius: Math.random() * 2.2 + 0.8,
+            radius: Math.random() * 2.0 + 0.8,
             color: palette[Math.floor(Math.random() * palette.length)],
-            vx: (Math.random() - 0.5) * 0.4,
-            vy: (Math.random() - 0.5) * 0.4 - (this.currentTheme === 'survival' || this.currentTheme === 'combat' ? 0.3 : 0),
-            alpha: Math.random() * 0.6 + 0.2
+            vx: (Math.random() - 0.5) * 0.35,
+            vy: (Math.random() - 0.5) * 0.35 - (this.currentTheme === 'survival' || this.currentTheme === 'combat' ? 0.2 : 0),
+            alpha: Math.random() * 0.55 + 0.25
           });
         }
       }
 
       animate() {
         if (!this.ctx || !this.canvas) return;
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        const w = this.canvas.width;
+        const h = this.canvas.height;
+        this.ctx.clearRect(0, 0, w, h);
+
+        // 1. Dual Orbiting Aurora Glow Orbs
+        const t = (typeof performance !== "undefined" ? performance.now() : Date.now()) * 0.00025;
+        const orb1X = w * 0.25 + Math.cos(t) * 120;
+        const orb1Y = h * 0.3 + Math.sin(t * 0.8) * 90;
+        const orb2X = w * 0.78 + Math.sin(t * 0.9) * 130;
+        const orb2Y = h * 0.65 + Math.cos(t * 0.7) * 90;
+
+        const auroraGrd1 = this.ctx.createRadialGradient(orb1X, orb1Y, 0, orb1X, orb1Y, w * 0.45);
+        auroraGrd1.addColorStop(0, 'rgba(99, 102, 241, 0.08)');
+        auroraGrd1.addColorStop(0.5, 'rgba(129, 140, 248, 0.03)');
+        auroraGrd1.addColorStop(1, 'transparent');
+        this.ctx.fillStyle = auroraGrd1;
+        this.ctx.fillRect(0, 0, w, h);
+
+        const auroraGrd2 = this.ctx.createRadialGradient(orb2X, orb2Y, 0, orb2X, orb2Y, w * 0.42);
+        auroraGrd2.addColorStop(0, 'rgba(168, 85, 247, 0.06)');
+        auroraGrd2.addColorStop(0.5, 'rgba(6, 182, 212, 0.025)');
+        auroraGrd2.addColorStop(1, 'transparent');
+        this.ctx.fillStyle = auroraGrd2;
+        this.ctx.fillRect(0, 0, w, h);
+
+        // 2. Constellation Connecting Lines
+        const pLen = this.particles.length;
+        this.ctx.lineWidth = 0.75;
+        for (let i = 0; i < pLen; i++) {
+          const p1 = this.particles[i];
+          for (let j = i + 1; j < pLen; j++) {
+            const p2 = this.particles[j];
+            const dx = p1.x - p2.x;
+            const dy = p1.y - p2.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 95) {
+              const lineAlpha = (1 - dist / 95) * 0.16;
+              this.ctx.strokeStyle = "rgba(165, 180, 252, " + lineAlpha + ")";
+              this.ctx.beginPath();
+              this.ctx.moveTo(p1.x, p1.y);
+              this.ctx.lineTo(p2.x, p2.y);
+              this.ctx.stroke();
+            }
+          }
+        }
+
+        // 3. Particles & Mouse Reaction
         for (let p of this.particles) {
+          if (this.mouseX > 0) {
+            const mdx = p.x - this.mouseX;
+            const mdy = p.y - this.mouseY;
+            const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+            if (mdist < 100 && mdist > 0) {
+              const force = (1 - mdist / 100) * 1.5;
+              p.x += (mdx / mdist) * force;
+              p.y += (mdy / mdist) * force;
+            }
+          }
+
           p.x += p.vx;
           p.y += p.vy;
-          if (p.x < 0) p.x = this.canvas.width;
-          if (p.x > this.canvas.width) p.x = 0;
-          if (p.y < 0) p.y = this.canvas.height;
-          if (p.y > this.canvas.height) p.y = 0;
+          if (p.x < 0) p.x = w;
+          if (p.x > w) p.x = 0;
+          if (p.y < 0) p.y = h;
+          if (p.y > h) p.y = 0;
+
           this.ctx.save();
           this.ctx.globalAlpha = p.alpha;
           this.ctx.fillStyle = p.color;
+          this.ctx.shadowBlur = 6;
+          this.ctx.shadowColor = p.color;
           this.ctx.beginPath();
           this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
           this.ctx.fill();
           this.ctx.restore();
         }
+
         requestAnimationFrame(() => this.animate());
       }
     }
@@ -7964,15 +8308,61 @@
 
         view.innerHTML = `
           <div class="hero-banner">
-            <div class="hero-badge">🌌 OMNIVERSE ACADEMY</div>
-            <h1 class="hero-title">สายวิชาแห่งมนุษยชาติ (Universal Curriculum)</h1>
-            <p class="hero-quote">"จัดระเบียบองค์ความรู้สากลของมนุษย์สู่ สายวิชาหลัก พร้อมบทเรียน ทฤษฎีเจาะลึก และข้อสอบปฏิบัติการทุกระดับขั้น"</p>
-            <div class="hero-stats-row" style="display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;">
+            <div class="hero-badge"><span class="badge-dot-live"></span> 🌌 OMNIVERSE ACADEMY 3.0</div>
+            <h1 class="hero-title hero-title-gradient">สายวิชาแห่งมนุษยชาติ (Universal Curriculum)</h1>
+            <p class="hero-quote">"จัดระเบียบองค์ความรู้สากลของมนุษย์สู่ 15 สายวิชาหลัก พร้อมบทเรียน ทฤษฎีเจาะลึก มินิแล็บจำลอง และข้อสอบปฏิบัติการ"</p>
+            
+            <!-- Quick Search Bar in Hero -->
+            <div class="hero-search-wrapper" onclick="app.openQuickSearch()">
+              <div class="hero-search-bar">
+                <span class="hero-search-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+                <span class="hero-search-placeholder">ค้นหาจาก 15 สายวิชา, 100+ ทฤษฎี, ห้องแล็บ, หรือสำรับบัตรคำ...</span>
+                <kbd class="hero-search-kbd">Ctrl K</kbd>
+              </div>
+            </div>
+
+            <div class="hero-stats-row" style="display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-top: 1.25rem;">
               <span class="kl-pill"><span class="kl-num">3 ภาควิชา</span> โครงสร้างมหาภาค</span>
               <span class="kl-pill"><span class="kl-num">15 สายวิชา</span> ศาสตร์สากล</span>
               <span class="kl-pill"><span class="kl-num">122 สาขาวิชา</span> แขนงความรู้</span>
               <span class="kl-pill"><span class="kl-num">${totalLessonsCount}+ บทเรียน</span> ทฤษฎีเข้มข้น & โจทย์</span>
-              <span class="kl-pill"><span class="kl-num">6 ระดับ</span> จากพื้นฐานสู่เชี่ยวชาญ</span>
+              <span class="kl-pill"><span class="kl-num">6 มินิแล็บ</span> เครื่องคิดเลข & ซิมูเลเตอร์</span>
+              <span class="kl-pill"><span class="kl-num">20 ภาษาโลก</span> สำรับบัตรคำ SRS</span>
+            </div>
+          </div>
+
+          <!-- Feature Quick Hub: 4 Key Systems -->
+          <div class="feature-hub-grid">
+            <div class="feature-hub-card" onclick="app.navigate('#/lab')">
+              <div class="feature-hub-icon" style="background: rgba(99, 102, 241, 0.18); color: #818cf8; border-color: rgba(99, 102, 241, 0.3);">🔬</div>
+              <div>
+                <div class="feature-hub-title">ห้องแล็บจำลอง (OmniLab)</div>
+                <div class="feature-hub-sub">6 เครื่องมืออินเทอร์แอคทีฟ กราฟคณิตศาสตร์ วิถีกระสุน และคลื่น</div>
+              </div>
+            </div>
+
+            <div class="feature-hub-card" onclick="app.navigate('#/flashcards')">
+              <div class="feature-hub-icon" style="background: rgba(168, 85, 247, 0.18); color: #c084fc; border-color: rgba(168, 85, 247, 0.3);">🗂️</div>
+              <div>
+                <div class="feature-hub-title">บัตรคำช่วยจำอัจฉริยะ (SRS)</div>
+                <div class="feature-hub-sub">ท่องจำ 20 ภาษาโลกและสูตรสำคัญด้วยแอนิเมชัน 3D พลิกการ์ด</div>
+              </div>
+            </div>
+
+            <div class="feature-hub-card" onclick="omniAI.open()">
+              <div class="feature-hub-icon" style="background: rgba(6, 182, 212, 0.18); color: #22d3ee; border-color: rgba(6, 182, 212, 0.3);">⚡</div>
+              <div>
+                <div class="feature-hub-title">ที่ปรึกษาการเรียนรู้ AI</div>
+                <div class="feature-hub-sub">วิเคราะห์ข้อสงสัย อธิบายทฤษฎี และตอบคำถามได้แบบเรียลไทม์</div>
+              </div>
+            </div>
+
+            <div class="feature-hub-card" onclick="app.navigate('#/leaderboard')">
+              <div class="feature-hub-icon" style="background: rgba(245, 158, 11, 0.18); color: #fbbf24; border-color: rgba(245, 158, 11, 0.3);">🏆</div>
+              <div>
+                <div class="feature-hub-title">ตารางอันดับ & เกียรติยศ</div>
+                <div class="feature-hub-sub">สะสม EXP เลื่อนยศระดับโลก และรักษา Daily Streak ต่อเนื่อง</div>
+              </div>
             </div>
           </div>
 
