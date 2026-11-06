@@ -2883,6 +2883,163 @@
       box-shadow: 0 0 25px rgba(34, 197, 94, 0.7);
     }
 
+  
+    /* ============================================================ */
+    /* FLASHCARDS & SPACED REPETITION (SRS) STYLES                  */
+    /* ============================================================ */
+    .flashcards-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding-bottom: 3.5rem;
+    }
+    .flashcard-scene {
+      perspective: 1200px;
+      width: 100%;
+      max-width: 660px;
+      margin: 1.5rem auto 1.75rem auto;
+      height: 380px;
+    }
+    .flashcard-card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      border-radius: 24px;
+    }
+    .flashcard-card.flipped {
+      transform: rotateY(180deg);
+    }
+    .flashcard-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2.25rem 2.5rem;
+      box-sizing: border-box;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      user-select: none;
+    }
+    .flashcard-front {
+      background: linear-gradient(135deg, rgba(30, 27, 75, 0.92), rgba(15, 23, 42, 0.96));
+      border: 1px solid rgba(99, 102, 241, 0.4);
+    }
+    .flashcard-back {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(6, 78, 59, 0.92));
+      border: 1px solid rgba(52, 211, 153, 0.45);
+      transform: rotateY(180deg);
+    }
+    .flashcard-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      width: fit-content;
+    }
+    .flashcard-main-text {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.3;
+      text-align: center;
+      margin: auto 0;
+    }
+    .flashcard-reading {
+      font-size: 1.05rem;
+      color: #38bdf8;
+      font-family: var(--font-mono);
+      margin-top: 0.65rem;
+      font-weight: 600;
+    }
+    .flashcard-example {
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border-left: 3px solid #34d399;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+    .flashcard-hint-click {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+    }
+    .flashcard-srs-bar {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      max-width: 660px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+    .btn-srs {
+      flex: 1;
+      min-width: 140px;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid transparent;
+    }
+    .btn-srs:hover {
+      transform: translateY(-2px);
+    }
+    .btn-srs-again {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #f87171;
+    }
+    .btn-srs-again:hover {
+      background: rgba(239, 68, 68, 0.25);
+      box-shadow: 0 4px 20px rgba(239, 68, 68, 0.3);
+    }
+    .btn-srs-hard {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: rgba(245, 158, 11, 0.4);
+      color: #fbbf24;
+    }
+    .btn-srs-hard:hover {
+      background: rgba(245, 158, 11, 0.25);
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+    }
+    .btn-srs-easy {
+      background: rgba(34, 197, 94, 0.15);
+      border-color: rgba(34, 197, 94, 0.4);
+      color: #4ade80;
+    }
+    .btn-srs-easy:hover {
+      background: rgba(34, 197, 94, 0.25);
+      box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
+    }
+    .srs-key-badge {
+      font-size: 0.68rem;
+      opacity: 0.7;
+      font-weight: 500;
+    }
+
   </style>
   <!-- Puter.js Free Cloud AI SDK -->
   <script src="https://js.puter.com/v2/"></script>
@@ -3072,6 +3229,7 @@
 
       <ul class="nav-links">
         <li class="nav-item active" data-route="#/" onclick="app.navigate('#/')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg></span> <span>คลังสายวิชา</span></li>
+        <li class="nav-item" data-route="#/flashcards" onclick="app.navigate('#/flashcards')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h10M7 12h10M7 17h6"/></svg></span> <span>บัตรคำ (Cards)</span></li>
         <li class="nav-item" data-route="#/lab" onclick="app.navigate('#/lab')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31L4.69 17.5A2 2 0 0 0 6.38 21h11.24a2 2 0 0 0 1.69-3.5L14 9.31V2"/><line x1="8" y1="2" x2="16" y2="2"/></svg></span> <span>ห้องแล็บจำลอง (Lab)</span></li>
         <li class="nav-item" onclick="omniAI.open()"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span> <span>ปรึกษา AI</span></li>
                 <li class="nav-item" data-route="#/leaderboard" onclick="app.navigate('#/leaderboard')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span> <span>ตารางอันดับ</span></li>
@@ -4772,6 +4930,312 @@
 
     const omniLab = new OmniLabEngine();
 
+    
+    // ============================================================
+    // FLASHCARD DECKS DATASET & SPACED REPETITION ENGINE
+    // ============================================================
+    const FLASHCARD_DECKS = {
+      languages: {
+        id: 'languages',
+        name: '20 ภาษาโลก (20 World Languages)',
+        icon: '🌐',
+        color: '#06b6d4',
+        cards: [
+          { front: 'Opportunity (ภาษาอังกฤษ)', reading: 'ˌɑː.pɚˈtuː.nə.t̬i', back: 'โอกาสที่ดี / จังหวะที่เหมาะสมในชีวิต', example: 'Learning every day creates endless opportunities.' },
+          { front: '知识 (Zhīshì - ภาษาจีนกลาง)', reading: 'จือ-ซื่อ (Zhīshì)', back: 'ความรู้ (Knowledge / Wisdom)', example: '知识就是力量。(Zhīshì jiùshì lìliàng - ความรู้คือพลัง)' },
+          { front: 'Esperanza (ภาษาสเปน)', reading: 'เอส-เป-รัน-ซา (Silent H)', back: 'ความหวัง (Hope / Trust)', example: 'La esperanza nunca se pierde. (ความหวังไม่มีวันสูญสิ้น)' },
+          { front: 'ज्ञान (Gyaan - ภาษาฮินดี)', reading: 'เกียน (Gyaan)', back: 'ปัญญา / ความรู้แจ้งเห็นจริง', example: 'ज्ञान सबसे बड़ा धन है। (Gyaan sabse bada dhan hai - ปัญญาคือทรัพย์อันประเสริฐ)' },
+          { front: 'Savoir (ภาษาฝรั่งเศส)', reading: 'ซา-วัวร์', back: 'ความรู้ / ศาสตร์ความเข้าใจ', example: 'Le savoir est une arme puissante. (ความรู้คืออาวุธที่ทรงพลัง)' },
+          { front: 'حكمة (Hikmah - ภาษาอาหรับ)', reading: 'ฮิก-มะฮ์', back: 'ปรีชาญาณ / ความเฉลียวฉลาดลึกซึ้ง', example: 'الحكمة ضالة المؤمن (ความเฉลียวฉลาดคือเป้าหมายของผู้แสวงหา)' },
+          { front: '向上心 (Kōjōshin - ภาษาญี่ปุ่น)', reading: 'โค-โจ-ชิน', back: 'ความมุ่งมั่นที่จะพัฒนาตนเองให้ดียิ่งขึ้นเสมอ', example: '常に向上心を持って学ぶ。(จงเรียนรู้ด้วยใจที่มุ่งมั่นพัฒนาตนเองอยู่เสมอ)' },
+          { front: 'Wissenschaft (ภาษาเยอรมัน)', reading: 'วิส-เซิน-ชาฟท์', back: 'วิทยาศาสตร์ / ความรู้ที่เป็นระบบและพิสูจน์ได้', example: 'Die Wissenschaft erweitert unseren Horizont. (วิทยาศาสตร์ขยายขอบฟ้าของมนุษย์)' },
+          { front: "Мудрость (Mudrost - ภาษารัสเซีย)", reading: 'มูด-รอสต์', back: 'ปัญญา / ความรอบรู้จากประสบการณ์', example: 'Мудрость приходит с опытом. (ปัญญาเกิดจากประสบการณ์ชีวิต)' },
+          { front: 'Desenvolvimento (ภาษาโปรตุเกส)', reading: 'เด-เซน-โวล-วิ-เมน-ตู', back: 'การพัฒนา / วิวัฒนาการสู่สิ่งที่ดีกว่า', example: 'O desenvolvimento contínuo é essencial. (การพัฒนาต่อเนื่องเป็นสิ่งจำเป็น)' },
+          { front: 'Meraviglia (ภาษาอิตาลี)', reading: 'เม-รา-วิล-ยา', back: 'ความอัศจรรย์ใจ / จุดเริ่มต้นของความใคร่รู้', example: "La meraviglia è l'inizio della filosofia. (ความอัศจรรย์ใจคือจุดเริ่มต้นของปรัชญา)" },
+          { front: '성장 (Seongjang - ภาษาเกาหลี)', reading: 'ซอง-จัง', back: 'การเติบโต / การก้าวหน้าในชีวิต', example: '매일 조금씩 성장해 나간다. (เราเติบโตขึ้นทีละน้อยในทุกๆ วัน)' }
+        ]
+      },
+      physics: {
+        id: 'physics',
+        name: 'ฟิสิกส์และกฎจักรวาล (Physics)',
+        icon: '🚀',
+        color: '#6366f1',
+        cards: [
+          { front: 'กฎข้อที่ 2 ของนิวตัน (Newton\'s 2nd Law)', reading: 'F = m · a', back: 'แรงลัพธ์ที่กระทำต่อวัตถุเท่ากับมวลคูณความเร่ง (Force = Mass × Acceleration)', example: 'ยิ่งมวลมากหรือต้องการเร่งความเร็วมาก ยิ่งต้องออกแรงมากขึ้นเป็นสัดส่วนตรง' },
+          { front: 'สมการสมมูลมวล-พลังงาน (Mass-Energy Equivalence)', reading: 'E = m · c²', back: 'มวลและพลังงานสามารถเปลี่ยนรูปข้ามกันได้ โดย c คือความเร็วแสง (3×10⁸ m/s)', example: 'อธิบายแหล่งพลังงานมหาศาลของปฏิกิริยานิวเคลียร์ฟิวชันบนดวงอาทิตย์' },
+          { front: 'กฎแรงดึงดูดสากล (Universal Gravitation)', reading: 'F = G · (m₁ · m₂) / r²', back: 'แรงดึงดูดระหว่างสองมวลแปรผันตามผลคูณมวล และแปรผกผันกับระยะทางยกกำลังสอง', example: 'อธิบายการโคจรของดวงจันทร์รอบโลก และดาวเคราะห์รอบดวงอาทิตย์' },
+          { front: 'พลังงานจลน์ (Kinetic Energy)', reading: 'Ek = ½ · m · v²', back: 'พลังงานที่มีอยู่ในวัตถุขณะเคลื่อนที่ด้วยความเร็ว v', example: 'หากความเร็วเพิ่มขึ้นเป็น 2 เท่า พลังงานจลน์จะเพิ่มขึ้นเป็น 4 เท่า!' },
+          { front: 'อัตราเร็วของคลื่น (Wave Equation)', reading: 'v = f · λ', back: 'ความเร็วคลื่นเท่ากับความถี่ (Frequency) คูณด้วยความยาวคลื่น (Wavelength)', example: 'ใช้คำนวณคลื่นเสียง คลื่นแสง และคลื่นแม่เหล็กไฟฟ้าทั้งหมด' },
+          { front: 'หลักความไม่แน่นอนของไฮเซนเบิร์ก', reading: 'Δx · Δp ≥ ℏ / 2', back: 'เราไม่สามารถวัดตำแหน่งและโมเมนตัมของอนุภาคควอนตัมให้แม่นยำพร้อมกันได้อย่างสมบูรณ์', example: 'หัวใจสำคัญที่แบ่งแยกฟิสิกส์คลาสสิกออกจากฟิสิกส์ควอนตัม' }
+        ]
+      },
+      math: {
+        id: 'math',
+        name: 'คณิตศาสตร์และแคลคูลัส (Math)',
+        icon: '📐',
+        color: '#ec4899',
+        cards: [
+          { front: 'สูตรสมการกำลังสอง (Quadratic Formula)', reading: 'x = (-b ± √(b² - 4ac)) / (2a)', back: 'คำตอบของสมการพหุนามกำลังสอง ax² + bx + c = 0', example: 'ถ้า b² - 4ac > 0 จะมี 2 คำตอบจริง, ถ้า = 0 มี 1 คำตอบ, ถ้า < 0 เป็นจำนวนเชิงซ้อน' },
+          { front: 'เอกลักษณ์ของออยเลอร์ (Euler\'s Identity)', reading: 'e^(i·π) + 1 = 0', back: 'สมการที่งดงามที่สุดในคณิตศาสตร์ เชื่อมโยง 5 ค่าคงที่พื้นฐาน (e, i, π, 1, 0)', example: 'หัวใจสำคัญของการวิเคราะห์เชิงซ้อนและคลื่นฟูเรียร์' },
+          { front: 'อนุพันธ์ของฟังก์ชันไซน์ (Derivative of Sine)', reading: 'd/dx [sin(x)] = cos(x)', back: 'อัตราการเปลี่ยนแปลงความชันของกราฟไซน์จะให้ค่ากราฟโคไซน์เสมอ', example: 'อนุพันธ์ของ cos(x) จะได้ -sin(x)' },
+          { front: 'ทฤษฎีบทพื้นฐานของแคลคูลัส (FTC)', reading: '∫[a to b] f(x) dx = F(b) - F(a)', back: 'การอินทิเกรตหาพื้นที่ใต้กราฟคือกระบวนการตรงกันข้ามกับการหาอนุพันธ์', example: 'เชื่อมโยงแนวคิดเรื่องความชัน (Derivatives) และพื้นที่สะสม (Integrals)' },
+          { front: 'ทฤษฎีบทพีทาโกรัส (Pythagorean Theorem)', reading: 'a² + b² = c²', back: 'ในสามเหลี่ยมมุมฉาก ผลรวมกำลังสองของด้านประกอบมุมฉากเท่ากับกำลังสองของด้านตรงข้ามมุมฉาก', example: 'พื้นฐานสำคัญของตรีโกณมิติและเรขาคณิตระนาบ' },
+          { front: 'กฎผลคูณของอนุพันธ์ (Product Rule)', reading: '(u · v)\' = u\'v + uv\'', back: 'อนุพันธ์ของฟังก์ชันสองตัวคูณกันเท่ากับ หน้าดิฟหลัง บวก หลังดิฟหน้า', example: 'd/dx [x · e^x] = 1·e^x + x·e^x = (1 + x)e^x' }
+        ]
+      },
+      cs: {
+        id: 'cs',
+        name: 'วิทยาการคอมพิวเตอร์ (Computer Science)',
+        icon: '💻',
+        color: '#3b82f6',
+        cards: [
+          { front: 'Binary Search Time Complexity', reading: 'O(log n)', back: 'การค้นหาข้อมูลแบบแบ่งครึ่งในอาร์เรย์ที่เรียงลำดับแล้ว รวดเร็วกว่า Linear Search มหาศาล', example: 'ข้อมูล 1,000,000 ชิ้น ใช้การเปรียบเทียบไม่เกิน 20 ครั้ง!' },
+          { front: 'Stack vs Queue', reading: 'LIFO vs FIFO', back: 'Stack: เข้าทีหลังออกก่อน (Last-In First-Out) | Queue: เข้าก่อนออกก่อน (First-In First-Out)', example: 'Stack ใช้ในปุ่ม Undo และ Call Stack | Queue ใช้ในคิวสั่งพิมพ์งานและ Task Queue' },
+          { front: 'Hash Table Lookup Complexity', reading: 'O(1) Average', back: 'การค้นหาและเข้าถึงข้อมูลในตารางแฮชใช้เวลาเฉลี่ยคงที่ รวดเร็วทันที', example: 'ทำงานโดยแปลง Key เป็น Index ผ่านฟังก์ชัน Hash' },
+          { front: 'อัลกอริทึมของไดก์สตรา (Dijkstra\'s Algorithm)', reading: 'Single-Source Shortest Path', back: 'หาเส้นทางที่สั้นที่สุดจากจุดเริ่มต้นไปยังทุกจุดในกราฟที่มีน้ำหนักไม่เป็นลบ', example: 'หัวใจของระบบนำทาง GPS แผนที่ และเราเตอร์โครงข่ายอินเทอร์เน็ต' },
+          { front: 'OSI 7 Layers Model', reading: 'Physical to Application', back: '7 ลำดับชั้นเครือข่าย: Physical, Data Link, Network, Transport, Session, Presentation, Application', example: 'ช่วยให้ระบบคอมพิวเตอร์ต่างผู้ผลิตสามารถสื่อสารกันได้ตามมาตรฐานสากล' },
+          { front: 'Recursion Base Case', reading: 'เงื่อนไขหยุดการเรียกซ้ำ', back: 'เงื่อนไขสำคัญที่ต้องมีเสมอในฟังก์ชันแบบเรียกซ้ำ เพื่อป้องกัน Infinite Loop และ Stack Overflow', example: 'ใน factorial(n): ถ้า n <= 1 return 1 คือ Base Case' }
+        ]
+      },
+      bio: {
+        id: 'bio',
+        name: 'เคมี ชีววิทยา และการแพทย์ (Chemistry & Bio)',
+        icon: '🧬',
+        color: '#10b981',
+        cards: [
+          { front: 'สมการการสังเคราะห์ด้วยแสง (Photosynthesis)', reading: '6CO₂ + 6H₂O + แสง ➔ C₆H₁₂O₆ + 6O₂', back: 'พืชเปลี่ยนก๊าซคาร์บอนไดออกไซด์และน้ำ ให้เป็นน้ำตาลกลูโคสและออกซิเจน', example: 'แหล่งกำเนิดพลังงานและออกซิเจนหลักที่หล่อเลี้ยงสิ่งมีชีวิตทั่วโลก' },
+          { front: 'การจับคู่เบสในสาย DNA (Base Pairing)', reading: 'A - T และ C - G', back: 'อะดีนีน (A) จับกับไทมีน (T) ด้วยพันธะไฮโดรเจน 2 พันธะ, ไซโตซีน (C) จับกับกวานีน (G) 3 พันธะ', example: 'ความจำเพาะนี้ทำให้ DNA สามารถจำลองรหัสพันธุกรรมได้อย่างแม่นยำ' },
+          { front: 'ATP (Adenosine Triphosphate)', reading: 'สกุลเงินพลังงานของเซลล์', back: 'สารชีวโมเลกุลที่กักเก็บและปลดปล่อยพลังงานเคมีสำหรับกระบวนการทุกอย่างในเซลล์', example: 'สร้างขึ้นเป็นจำนวนมากผ่านกระบวนการ Cellular Respiration ในไมโทคอนเดรีย' },
+          { front: 'พันธะโควาเลนต์ (Covalent Bond)', reading: 'การใช้อิเล็กตรอนร่วมกัน', back: 'พันธะเคมีที่เกิดจากอะตอมใช้อิเล็กตรอนวงนอกร่วมกันเพื่อให้ครบออกเตต (Octet Rule)', example: 'เช่น พันธะระหว่างไฮโดรเจนและออกซิเจนในโมเลกุลของน้ำ (H₂O)' },
+          { front: 'Central Dogma of Molecular Biology', reading: 'DNA ➔ RNA ➔ Protein', back: 'หลักการพื้นฐานของการถ่ายทอดข้อมูลทางพันธุกรรม: การถอดรหัส (Transcription) และแปลรหัส (Translation)', example: 'DNA เก็บข้อมูล ➔ ถอดเป็น mRNA ➔ ไรโบโซมแปลเป็นสายโปรตีน' },
+          { front: 'ไมโทคอนเดรีย (Mitochondria)', reading: 'Powerhouse of the Cell', back: 'ออร์แกเนลล์ที่มีเยื่อหุ้มสองชั้น ทำหน้าที่สังเคราะห์พลังงาน ATP ผ่านวงจรเครบส์และการขนส่งอิเล็กตรอน', example: 'เซลล์ที่ใช้พลังงานสูง เช่น เซลล์กล้ามเนื้อและสมอง จะมีไมโทคอนเดรียหนาแน่น' }
+        ]
+      },
+      society: {
+        id: 'society',
+        name: 'เศรษฐศาสตร์ สังคม และปรัชญา (Society & Philosophy)',
+        icon: '🏛️',
+        color: '#f59e0b',
+        cards: [
+          { front: 'กฎของอุปสงค์และอุปทาน (Supply & Demand)', reading: 'กลไกราคาตลาด', back: 'เมื่อราคาสูงขึ้น ผู้ซื้อต้องการซื้อน้อยลง (Demand ลด) แต่ผู้ผลิตต้องการขายมากขึ้น (Supply เพิ่ม)', example: 'จุดตัดระหว่างเส้นอุปสงค์และอุปทานคือกราฟราคาดุลยภาพ (Equilibrium Price)' },
+          { front: 'ผลิตภัณฑ์มวลรวมในประเทศ (GDP)', reading: 'Gross Domestic Product', back: 'มูลค่าตลาดรวมของสินค้าและบริการขั้นสุดท้ายทั้งหมดที่ผลิตขึ้นภายในประเทศในช่วงเวลาหนึ่ง', example: 'GDP = C + I + G + (X - M) (บริโภค + ลงทุน + ภาครัฐ + ส่งออกสุทธิ)' },
+          { front: 'ต้นทุนค่าเสียโอกาส (Opportunity Cost)', reading: 'มูลค่าของทางเลือกที่ดีที่สุดที่ต้องสละไป', back: 'ประโยชน์หรือผลตอบแทนสูงสุดที่คุณต้องละทิ้งเมื่อตัดสินใจเลือกทำสิ่งใดสิ่งหนึ่ง', example: 'การเลือกนั่งเล่นเกม 2 ชั่วโมง มีต้นทุนค่าเสียโอกาสคือเวลาอ่านหนังสือเพื่อสอบ' },
+          { front: 'ปรัชญาสโตอิก: การแบ่งแยกสิ่งควบคุมได้ (Dichotomy of Control)', reading: 'Epictetus & Marcus Aurelius', back: 'ชีวิตแบ่งเป็นสองส่วน: สิ่งที่เราควบคุมได้ (ความคิด การกระทำ) และสิ่งที่เราควบคุมไม่ได้ (ผลลัพธ์ โชคชะตา)', example: 'จงทุ่มเทใจกับสิ่งที่เราเลือกได้ และยอมรับสิ่งที่ควบคุมไม่ได้ด้วยความสงบ' },
+          { front: 'Categorical Imperative (อิมมานูเอล คานท์)', reading: 'หลักการจริยศาสตร์สากล', back: 'จงกระทำเฉพาะสิ่งที่ท่านปรารถนาให้การกระทำนั้นกลายเป็นกฎสากลสำหรับมนุษย์ทุกคน', example: 'หากไม่ต้องการให้ผู้อื่นโกหกตนเอง เราก็ต้องไม่โกหกผู้อื่นในทุกสถานการณ์' },
+          { front: 'ความได้เปรียบโดยเปรียบเทียบ (Comparative Advantage)', reading: 'David Ricardo', back: 'ประเทศหรือบุคคลควรเชี่ยวชาญในการผลิตสินค้าที่มีต้นทุนค่าเสียโอกาสต่ำกว่า แล้วนำมาแลกเปลี่ยนกัน', example: 'เป็นรากฐานสำคัญของการค้าเสรีและการแบ่งงานกันทำระหว่างประเทศ' }
+        ]
+      }
+    };
+
+    class OmniFlashcardsEngine {
+      constructor() {
+        this.activeDeckId = 'languages';
+        this.currentIndex = 0;
+        this.isFlipped = false;
+        this.currentCards = [];
+        this.progress = this.loadProgress();
+        this.keyListenerBound = false;
+      }
+
+      init() {
+        this.loadDeck(this.activeDeckId);
+        if (!this.keyListenerBound) {
+          window.addEventListener('keydown', (e) => this.onKeyDown(e));
+          this.keyListenerBound = true;
+        }
+      }
+
+      loadProgress() {
+        try {
+          const raw = window.safeStorage ? safeStorage.getItem('omni_flashcard_progress') : localStorage.getItem('omni_flashcard_progress');
+          return raw ? JSON.parse(raw) : {};
+        } catch (e) {
+          return {};
+        }
+      }
+
+      saveProgress() {
+        try {
+          if (window.safeStorage) safeStorage.setItem('omni_flashcard_progress', JSON.stringify(this.progress));
+        } catch (e) {}
+      }
+
+      loadDeck(deckId) {
+        this.activeDeckId = deckId;
+        const deck = FLASHCARD_DECKS[deckId] || FLASHCARD_DECKS.languages;
+        this.currentCards = [...deck.cards];
+        this.currentIndex = 0;
+        this.isFlipped = false;
+        if (!this.progress[deckId]) {
+          this.progress[deckId] = { mastered: [], learning: [] };
+        }
+        this.updateCardView();
+      }
+
+      flipCard() {
+        this.isFlipped = !this.isFlipped;
+        const cardEl = document.getElementById('active-flashcard-card');
+        if (cardEl) {
+          cardEl.classList.toggle('flipped', this.isFlipped);
+        }
+        if (typeof soundEngine !== 'undefined') {
+          soundEngine.playTone(480, 0.04, 'sine');
+        }
+      }
+
+      rateCard(rating) {
+        const deck = FLASHCARD_DECKS[this.activeDeckId];
+        const card = this.currentCards[this.currentIndex];
+        if (!card || !deck) return;
+
+        const cardKey = card.front;
+        const deckProg = this.progress[this.activeDeckId];
+
+        if (rating === 'easy') {
+          // Mastered!
+          if (!deckProg.mastered.includes(cardKey)) {
+            deckProg.mastered.push(cardKey);
+          }
+          deckProg.learning = deckProg.learning.filter(k => k !== cardKey);
+
+          // Award +5 EXP
+          if (typeof auth !== 'undefined' && auth.currentUser) {
+            auth.currentUser.xp = (auth.currentUser.xp || 0) + 5;
+            auth.saveCurrentUser();
+            if (typeof app !== 'undefined') app.showToast('🌟 เชี่ยวชาญบัตรคำนี้แล้ว! +5 EXP');
+          }
+          if (typeof soundEngine !== 'undefined') {
+            soundEngine.playTone(659, 0.08, 'triangle');
+            setTimeout(() => soundEngine.playTone(880, 0.12, 'sine'), 80);
+          }
+        } else if (rating === 'hard') {
+          if (!deckProg.learning.includes(cardKey)) {
+            deckProg.learning.push(cardKey);
+          }
+        } else if (rating === 'again') {
+          // Re-insert card at end of current review queue
+          this.currentCards.push(card);
+          deckProg.mastered = deckProg.mastered.filter(k => k !== cardKey);
+          if (!deckProg.learning.includes(cardKey)) {
+            deckProg.learning.push(cardKey);
+          }
+        }
+
+        this.saveProgress();
+        this.nextCard();
+      }
+
+      nextCard() {
+        this.isFlipped = false;
+        if (this.currentIndex < this.currentCards.length - 1) {
+          this.currentIndex++;
+        } else {
+          this.currentIndex = 0; // loop or completed
+        }
+        this.updateCardView();
+      }
+
+      prevCard() {
+        this.isFlipped = false;
+        if (this.currentIndex > 0) {
+          this.currentIndex--;
+        } else {
+          this.currentIndex = this.currentCards.length - 1;
+        }
+        this.updateCardView();
+      }
+
+      shuffleDeck() {
+        for (let i = this.currentCards.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [this.currentCards[i], this.currentCards[j]] = [this.currentCards[j], this.currentCards[i]];
+        }
+        this.currentIndex = 0;
+        this.isFlipped = false;
+        this.updateCardView();
+        if (typeof app !== 'undefined') app.showToast('🔀 สลับลำดับบัตรคำเรียบร้อยแล้ว');
+      }
+
+      updateCardView() {
+        const card = this.currentCards[this.currentIndex];
+        if (!card) return;
+
+        const deck = FLASHCARD_DECKS[this.activeDeckId];
+        const cardEl = document.getElementById('active-flashcard-card');
+        if (cardEl) {
+          cardEl.classList.toggle('flipped', this.isFlipped);
+        }
+
+        // Front face elements
+        const frontBadge = document.getElementById('fc-front-badge');
+        const frontText = document.getElementById('fc-front-text');
+        const frontReading = document.getElementById('fc-front-reading');
+
+        if (frontBadge) frontBadge.textContent = `${deck.icon} ${deck.name}`;
+        if (frontText) frontText.textContent = card.front;
+        if (frontReading) frontReading.textContent = card.reading ? `[ ${card.reading} ]` : '';
+
+        // Back face elements
+        const backBadge = document.getElementById('fc-back-badge');
+        const backText = document.getElementById('fc-back-text');
+        const backExample = document.getElementById('fc-back-example');
+
+        if (backBadge) backBadge.textContent = 'คำตอบและความหมาย';
+        if (backText) backText.textContent = card.back;
+        if (backExample) {
+          backExample.style.display = card.example ? 'block' : 'none';
+          backExample.textContent = card.example ? `ตัวอย่าง: "${card.example}"` : '';
+        }
+
+        // Progress indicators
+        const progCounter = document.getElementById('fc-progress-counter');
+        const progFill = document.getElementById('fc-progress-fill');
+        const masteryBadge = document.getElementById('fc-mastery-badge');
+
+        const total = this.currentCards.length;
+        const currentNum = this.currentIndex + 1;
+        if (progCounter) progCounter.textContent = `${currentNum} / ${total} บัตรคำ`;
+        if (progFill) progFill.style.width = `${(currentNum / total) * 100}%`;
+
+        const deckProg = this.progress[this.activeDeckId] || { mastered: [] };
+        const masteredCount = (deckProg.mastered || []).length;
+        const origTotal = (deck.cards || []).length;
+        const masteryPct = origTotal > 0 ? Math.min(100, Math.round((masteredCount / origTotal) * 100)) : 0;
+
+        if (masteryBadge) {
+          masteryBadge.innerHTML = `🏆 เชี่ยวชาญแล้ว ${masteryPct}% (${masteredCount}/${origTotal})`;
+        }
+
+        // Math re-render if KaTeX is used
+        if (typeof app !== 'undefined' && app.renderMath) {
+          const cardContainer = document.querySelector('.flashcard-scene');
+          if (cardContainer) app.renderMath(cardContainer);
+        }
+      }
+
+      onKeyDown(e) {
+        if (!window.location.hash.startsWith('#/flashcards')) return;
+        // Don't capture keys if user is typing in an input
+        if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+
+        if (e.code === 'Space' || e.key === ' ') {
+          e.preventDefault();
+          this.flipCard();
+        } else if (e.key === 'ArrowLeft' || e.key === '1') {
+          e.preventDefault();
+          this.rateCard('again');
+        } else if (e.key === 'ArrowDown' || e.key === '2') {
+          e.preventDefault();
+          this.rateCard('hard');
+        } else if (e.key === 'ArrowRight' || e.key === '3') {
+          e.preventDefault();
+          this.rateCard('easy');
+        }
+      }
+    }
+
+    const omniFlashcards = new OmniFlashcardsEngine();
+
     window.safeStorage = {
       _mem: {},
       getItem(key) {
@@ -6438,6 +6902,30 @@
           }
         });
 
+        // 1.8. Flashcard Decks matching
+        const FLASHCARD_SEARCH_ITEMS = [
+          { deck: 'languages', title: 'บัตรคำ 20 ภาษาโลก (20 World Languages Cards)', sub: 'ทบทวนคำศัพท์ วลี และคำอ่าน Pinyin/Romaji 20 ภาษา' },
+          { deck: 'physics', title: 'บัตรคำฟิสิกส์และกฎจักรวาล (Physics Formula Cards)', sub: 'ทบทวนกฎนิวตัน พลังงาน สัมพัทธภาพ ควอนตัม' },
+          { deck: 'math', title: 'บัตรคำคณิตศาสตร์และแคลคูลัส (Math & Calculus Cards)', sub: 'ทบทวนสูตรอนุพันธ์ อินทิกรัล ตรีโกณมิติ พีชคณิต' },
+          { deck: 'cs', title: 'บัตรคำวิทยาการคอมพิวเตอร์ (CS & Algorithm Cards)', sub: 'ทบทวน Big-O โครงสร้างข้อมูล และอัลกอริทึม' },
+          { deck: 'bio', title: 'บัตรคำเคมีและชีววิทยา (Chemistry & Bio Cards)', sub: 'ทบทวนพันธะเคมี เซลล์ DNA และกระบวนการทางชีวภาพ' },
+          { deck: 'society', title: 'บัตรคำเศรษฐศาสตร์และปรัชญา (Society & Philosophy Cards)', sub: 'ทบทวนหลักเศรษฐศาสตร์ อุปสงค์-อุปทาน และแนวคิดปรัชญา' }
+        ];
+
+        FLASHCARD_SEARCH_ITEMS.forEach(fc => {
+          if (fc.title.toLowerCase().includes(q) || fc.sub.toLowerCase().includes(q) || 'บัตรคำ flashcard ท่องจำ คำศัพท์ จำ'.includes(q)) {
+            matches.push({
+              type: 'flashcard',
+              badge: 'บัตรคำช่วยจำ',
+              icon: '🗂️',
+              title: fc.title,
+              sub: fc.sub,
+              link: `#/flashcards?deck=${fc.deck}`,
+              color: '#a855f7'
+            });
+          }
+        });
+
         // 2. Lessons matching
         const lessonSource = (typeof LESSON_DATA !== 'undefined' && Object.keys(LESSON_DATA).length > 0)
           ? LESSON_DATA
@@ -6845,6 +7333,7 @@
         else if (hash.startsWith('#/discipline/')) this.renderDiscipline(hash.replace('#/discipline/', ''));
         else if (hash.startsWith('#/theory/')) this.renderTheory(hash.replace('#/theory/', ''));
         else if (hash.startsWith('#/quiz/')) this.renderQuiz(hash.replace('#/quiz/', ''));
+        else if (hash === '#/flashcards' || hash.startsWith('#/flashcards')) this.renderFlashcards(hash);
         else if (hash === '#/lab' || hash.startsWith('#/lab')) this.renderLab(hash);
         else if (hash === '#/leaderboard') this.renderLeaderboard();
         else if (hash === '#/profile') this.renderProfile();
@@ -7322,6 +7811,143 @@
         }
       }
 
+      
+      renderFlashcards(hash = '') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const view = document.getElementById('app-view');
+        if (!view) return;
+
+        let deckParam = 'languages';
+        if (hash.includes('deck=')) {
+          deckParam = hash.split('deck=')[1].split('&')[0];
+        }
+        omniFlashcards.activeDeckId = deckParam;
+
+        const decksList = Object.values(FLASHCARD_DECKS);
+
+        view.innerHTML = `
+          <div class="flashcards-container">
+            <!-- Breadcrumbs -->
+            <div class="omni-breadcrumb">
+              <a onclick="app.navigate('#/')">🏠 หน้าหลัก</a>
+              <span class="omni-breadcrumb-sep">❯</span>
+              <span class="omni-breadcrumb-current">🗂️ บัตรคำช่วยจำอัจฉริยะ (Interactive Flashcards & SRS)</span>
+            </div>
+
+            <!-- Header -->
+            <div style="text-align: center; margin-bottom: 2rem;">
+              <div class="hero-badge" style="background: rgba(168, 85, 247, 0.15); border-color: rgba(168, 85, 247, 0.3); color: #c084fc;">
+                🧠 SPACED REPETITION SYSTEM
+              </div>
+              <h1 style="font-size: 2.2rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem; letter-spacing: -0.02em;">
+                บัตรคำช่วยจำอัจฉริยะ (Smart Flashcards)
+              </h1>
+              <p style="color: var(--text-muted); font-size: 0.98rem; max-width: 650px; margin: 0 auto; line-height: 1.6;">
+                ทบทวนคำศัพท์ 20 ภาษาโลกและสูตรวิทยาศาสตร์/คณิตศาสตร์สำคัญ พลิกการ์ด 3D และประเมินความจำเพื่อรับ +5 EXP
+              </p>
+            </div>
+
+            <!-- Deck Selector Pills -->
+            <div style="display: flex; gap: 0.5rem; overflow-x: auto; padding: 0.5rem 0.25rem 1rem 0.25rem; margin-bottom: 1.5rem; scrollbar-width: thin; -webkit-overflow-scrolling: touch;">
+              ${decksList.map(d => `
+                <button class="omnilab-tab-btn ${d.id === omniFlashcards.activeDeckId ? 'active' : ''}" onclick="app.navigate('#/flashcards?deck=${d.id}')">
+                  <span>${d.icon}</span>
+                  <span>${d.name}</span>
+                </button>
+              `).join('')}
+            </div>
+
+            <!-- Progress Bar & Actions Header -->
+            <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 1rem 1.4rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem;">
+              <div style="display: flex; align-items: center; gap: 0.85rem; flex: 1; min-width: 250px;">
+                <span id="fc-progress-counter" style="font-weight: 700; color: #fff; font-size: 0.95rem; font-family: var(--font-mono);">1 / 10 บัตรคำ</span>
+                <div style="flex: 1; height: 7px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; max-width: 280px;">
+                  <div id="fc-progress-fill" style="width: 10%; height: 100%; background: linear-gradient(90deg, #6366f1, #38bdf8); border-radius: 4px; transition: width 0.25s ease;"></div>
+                </div>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 0.6rem;">
+                <span id="fc-mastery-badge" style="font-size: 0.78rem; font-weight: 700; color: #4ade80; background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); padding: 0.25rem 0.65rem; border-radius: 12px;">🏆 เชี่ยวชาญแล้ว 0%</span>
+                <button class="btn btn-outline" onclick="omniFlashcards.shuffleDeck()" title="สลับลำดับการ์ดแบบสุ่ม" style="padding: 0.35rem 0.65rem; font-size: 0.82rem;">🔀 สลับ</button>
+              </div>
+            </div>
+
+            <!-- 3D Flashcard Scene -->
+            <div class="flashcard-scene" onclick="omniFlashcards.flipCard()">
+              <div id="active-flashcard-card" class="flashcard-card">
+                <!-- Front Face -->
+                <div class="flashcard-face flashcard-front">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span id="fc-front-badge" class="flashcard-badge" style="background: rgba(99, 102, 241, 0.2); color: #a5b4fc; border: 1px solid rgba(99, 102, 241, 0.35);">
+                      🌐 20 ภาษาโลก
+                    </span>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">ด้านหน้า (Question / Word)</span>
+                  </div>
+
+                  <div style="margin: auto 0; text-align: center;">
+                    <div id="fc-front-text" class="flashcard-main-text">Hello</div>
+                    <div id="fc-front-reading" class="flashcard-reading"></div>
+                  </div>
+
+                  <div class="flashcard-hint-click">
+                    <span>💡 คลิกการ์ด หรือกด <strong>Space</strong> เพื่อพลิกดูคำแปล / เฉลย</span>
+                  </div>
+                </div>
+
+                <!-- Back Face -->
+                <div class="flashcard-face flashcard-back">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span id="fc-back-badge" class="flashcard-badge" style="background: rgba(52, 211, 153, 0.2); color: #4ade80; border: 1px solid rgba(52, 211, 153, 0.35);">
+                      คำตอบและความหมาย
+                    </span>
+                    <span style="font-size: 0.8rem; color: #86efac;">ด้านหลัง (Answer / Meaning)</span>
+                  </div>
+
+                  <div style="margin: auto 0; text-align: center;">
+                    <div id="fc-back-text" style="font-size: 1.45rem; font-weight: 700; color: #fff; line-height: 1.4;">สวัสดี</div>
+                    <div id="fc-back-example" class="flashcard-example"></div>
+                  </div>
+
+                  <div class="flashcard-hint-click" style="color: #a7f3d0;">
+                    <span>เลือกระดับความจำด้านล่างเพื่อบันทึก Spaced Repetition (SRS)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SRS Review Buttons -->
+            <div class="flashcard-srs-bar">
+              <button class="btn-srs btn-srs-again" onclick="omniFlashcards.rateCard('again')" title="กด 1 หรือ ลูกศรซ้าย">
+                <span>🔴 ยังจำไม่ได้ (Again)</span>
+                <span class="srs-key-badge">ทบทวนซ้ำเร็วๆ นี้ [← หรือ 1]</span>
+              </button>
+              <button class="btn-srs btn-srs-hard" onclick="omniFlashcards.rateCard('hard')" title="กด 2 หรือ ลูกศรลง">
+                <span>🟡 พอจำได้ (Hard)</span>
+                <span class="srs-key-badge">ทบทวนรอบหน้า [↓ หรือ 2]</span>
+              </button>
+              <button class="btn-srs btn-srs-easy" onclick="omniFlashcards.rateCard('easy')" title="กด 3 หรือ ลูกศรขวา">
+                <span>🟢 จำได้แม่นยำ (Easy)</span>
+                <span class="srs-key-badge">+5 EXP [→ หรือ 3]</span>
+              </button>
+            </div>
+
+            <!-- Keyboard Guide Footer -->
+            <div style="text-align: center; margin-top: 1.75rem; font-size: 0.8rem; color: var(--text-muted); display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+              <span>⌨️ คีย์ลัด:</span>
+              <span><kbd style="background: rgba(255,255,255,0.1); padding: 1px 5px; border-radius: 4px;">Space</kbd> พลิกบัตรคำ</span>
+              <span><kbd style="background: rgba(255,255,255,0.1); padding: 1px 5px; border-radius: 4px;">1</kbd> / <kbd style="background: rgba(255,255,255,0.1); padding: 1px 5px; border-radius: 4px;">←</kbd> ยังจำไม่ได้</span>
+              <span><kbd style="background: rgba(255,255,255,0.1); padding: 1px 5px; border-radius: 4px;">2</kbd> / <kbd style="background: rgba(255,255,255,0.1); padding: 1px 5px; border-radius: 4px;">↓</kbd> พอจำได้</span>
+              <span><kbd style="background: rgba(255,255,255,0.1); padding: 1px 5px; border-radius: 4px;">3</kbd> / <kbd style="background: rgba(255,255,255,0.1); padding: 1px 5px; border-radius: 4px;">→</kbd> จำได้แม่นยำ</span>
+            </div>
+          </div>
+        `;
+
+        // Initialize engine after DOM render
+        setTimeout(() => {
+          omniFlashcards.init();
+        }, 50);
+      }
+
       renderHome() {
         const view = document.getElementById('app-view');
         
@@ -7496,6 +8122,13 @@
             <span class="omni-breadcrumb-sep">❯</span>
             <span class="omni-breadcrumb-current">${disc.icon} ${disc.name_th}</span>
           </div>
+        <!-- Flashcard Quick Access Button -->
+        <div style="display: flex; justify-content: flex-end; margin-top: -0.5rem; margin-bottom: 1rem;">
+          <button class="btn btn-outline" onclick="app.navigate('#/flashcards?deck=${disc.id === '13' || disc.id === 'LANG' ? 'languages' : (['01','PHYS'].includes(disc.id) ? 'physics' : (['06','MATH'].includes(disc.id) ? 'math' : (['07','CS'].includes(disc.id) ? 'cs' : (['02','03','04','CHEM','BIO','MED'].includes(disc.id) ? 'bio' : 'society'))))}')" style="font-size: 0.82rem; padding: 0.4rem 0.85rem; border-color: rgba(99, 102, 241, 0.4); color: #a5b4fc;">
+            🗂️ ทบทวนบัตรคำประจำสายวิชานี้ ➔
+          </button>
+        </div>
+        
 
           <button class="btn btn-outline" style="margin-bottom: 1.5rem;" onclick="app.navigate('#/')">⬅ กลับหน้าหลักคลัง 15 สายวิชา</button>
           
