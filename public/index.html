@@ -3106,11 +3106,32 @@
       margin: auto 0;
     }
     .flashcard-reading {
-      font-size: 1.05rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      font-size: 1rem;
       color: #38bdf8;
-      font-family: var(--font-mono);
-      margin-top: 0.65rem;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      border-radius: 999px;
+      padding: 0.4rem 1.15rem;
+      margin-top: 0.85rem;
       font-weight: 600;
+      font-family: var(--font-main);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(8px);
+      letter-spacing: 0.01em;
+    }
+    .flashcard-reading .fc-reading-icon {
+      color: #94a3b8;
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+    .flashcard-reading .fc-reading-text {
+      color: #67e8f9;
+      font-weight: 700;
+      letter-spacing: 0.02em;
     }
     .flashcard-example {
       font-size: 0.9rem;
@@ -5776,18 +5797,26 @@
         icon: '🌐',
         color: '#06b6d4',
         cards: [
-          { front: 'Opportunity (ภาษาอังกฤษ)', reading: 'ˌɑː.pɚˈtuː.nə.t̬i', back: 'โอกาสที่ดี / จังหวะที่เหมาะสมในชีวิต', example: 'Learning every day creates endless opportunities.' },
-          { front: '知识 (Zhīshì - ภาษาจีนกลาง)', reading: 'จือ-ซื่อ (Zhīshì)', back: 'ความรู้ (Knowledge / Wisdom)', example: '知识就是力量。(Zhīshì jiùshì lìliàng - ความรู้คือพลัง)' },
-          { front: 'Esperanza (ภาษาสเปน)', reading: 'เอส-เป-รัน-ซา (Silent H)', back: 'ความหวัง (Hope / Trust)', example: 'La esperanza nunca se pierde. (ความหวังไม่มีวันสูญสิ้น)' },
-          { front: 'ज्ञान (Gyaan - ภาษาฮินดี)', reading: 'เกียน (Gyaan)', back: 'ปัญญา / ความรู้แจ้งเห็นจริง', example: 'ज्ञान सबसे बड़ा धन है। (Gyaan sabse bada dhan hai - ปัญญาคือทรัพย์อันประเสริฐ)' },
-          { front: 'Savoir (ภาษาฝรั่งเศส)', reading: 'ซา-วัวร์', back: 'ความรู้ / ศาสตร์ความเข้าใจ', example: 'Le savoir est une arme puissante. (ความรู้คืออาวุธที่ทรงพลัง)' },
-          { front: 'حكمة (Hikmah - ภาษาอาหรับ)', reading: 'ฮิก-มะฮ์', back: 'ปรีชาญาณ / ความเฉลียวฉลาดลึกซึ้ง', example: 'الحكمة ضالة المؤمن (ความเฉลียวฉลาดคือเป้าหมายของผู้แสวงหา)' },
-          { front: '向上心 (Kōjōshin - ภาษาญี่ปุ่น)', reading: 'โค-โจ-ชิน', back: 'ความมุ่งมั่นที่จะพัฒนาตนเองให้ดียิ่งขึ้นเสมอ', example: '常に向上心を持って学ぶ。(จงเรียนรู้ด้วยใจที่มุ่งมั่นพัฒนาตนเองอยู่เสมอ)' },
-          { front: 'Wissenschaft (ภาษาเยอรมัน)', reading: 'วิส-เซิน-ชาฟท์', back: 'วิทยาศาสตร์ / ความรู้ที่เป็นระบบและพิสูจน์ได้', example: 'Die Wissenschaft erweitert unseren Horizont. (วิทยาศาสตร์ขยายขอบฟ้าของมนุษย์)' },
-          { front: "Мудрость (Mudrost - ภาษารัสเซีย)", reading: 'มูด-รอสต์', back: 'ปัญญา / ความรอบรู้จากประสบการณ์', example: 'Мудрость приходит с опытом. (ปัญญาเกิดจากประสบการณ์ชีวิต)' },
-          { front: 'Desenvolvimento (ภาษาโปรตุเกส)', reading: 'เด-เซน-โวล-วิ-เมน-ตู', back: 'การพัฒนา / วิวัฒนาการสู่สิ่งที่ดีกว่า', example: 'O desenvolvimento contínuo é essencial. (การพัฒนาต่อเนื่องเป็นสิ่งจำเป็น)' },
-          { front: 'Meraviglia (ภาษาอิตาลี)', reading: 'เม-รา-วิล-ยา', back: 'ความอัศจรรย์ใจ / จุดเริ่มต้นของความใคร่รู้', example: "La meraviglia è l'inizio della filosofia. (ความอัศจรรย์ใจคือจุดเริ่มต้นของปรัชญา)" },
-          { front: '성장 (Seongjang - ภาษาเกาหลี)', reading: 'ซอง-จัง', back: 'การเติบโต / การก้าวหน้าในชีวิต', example: '매일 조금씩 성장해 나간다. (เราเติบโตขึ้นทีละน้อยในทุกๆ วัน)' }
+          { front: 'Opportunity (ภาษาอังกฤษ)', reading: 'ออป-เพอร์-ทู-นิตี (Op-per-tu-ni-ty)', back: 'โอกาสที่ดี / จังหวะที่เหมาะสมในชีวิต', example: 'Learning every day creates endless opportunities.' },
+          { front: '知识 (Zhīshì - ภาษาจีนกลาง)', reading: 'จือ-ซื่อ (Zhī-shì)', back: 'ความรู้ (Knowledge / Wisdom)', example: '知识就是力量。(Zhīshì jiùshì lìliàng - ความรู้คือพลัง)' },
+          { front: 'Esperanza (ภาษาสเปน)', reading: 'เอส-เป-รัน-ซา (Es-pe-ran-za)', back: 'ความหวัง (Hope / Trust)', example: 'La esperanza nunca se pierde. (ความหวังไม่มีวันสูญสิ้น)' },
+          { front: 'ज्ञान (Gyaan - ภาษาฮินดี)', reading: 'กยาน (Gyaan)', back: 'ปัญญา / ความรู้แจ้งเห็นจริง', example: 'ज्ञान सबसे बड़ा धन है। (Gyaan sabse bada dhan hai - ปัญญาคือทรัพย์อันประเสริฐ)' },
+          { front: 'Savoir (ภาษาฝรั่งเศส)', reading: 'ซา-วัวร์ (Sa-voir)', back: 'ความรู้ / ศาสตร์ความเข้าใจ', example: 'Le savoir est une arme puissante. (ความรู้คืออาวุธที่ทรงพลัง)' },
+          { front: 'حكمة (Hikmah - ภาษาอาหรับ)', reading: 'ฮิก-มะฮ์ (Hik-mah)', back: 'ปรีชาญาณ / ความเฉลียวฉลาดลึกซึ้ง', example: 'الحكمة ضالة المؤمن (ความเฉลียวฉลาดคือเป้าหมายของผู้แสวงหา)' },
+          { front: '向上心 (Kōjōshin - ภาษาญี่ปุ่น)', reading: 'โค-โจ-ชิน (Kō-jō-shin)', back: 'ความมุ่งมั่นที่จะพัฒนาตนเองให้ดียิ่งขึ้นเสมอ', example: '常に向上心を持って学ぶ。(จงเรียนรู้ด้วยใจที่มุ่งมั่นพัฒนาตนเองอยู่เสมอ)' },
+          { front: 'Wissenschaft (ภาษาเยอรมัน)', reading: 'วิส-เซิน-ชาฟท์ (Vis-sen-schaft)', back: 'วิทยาศาสตร์ / ความรู้ที่เป็นระบบและพิสูจน์ได้', example: 'Die Wissenschaft erweitert unseren Horizont. (วิทยาศาสตร์ขยายขอบฟ้าของมนุษย์)' },
+          { front: 'Мудрость (Mudrost - ภาษารัสเซีย)', reading: 'มูด-รอสต์ (Mud-rost)', back: 'ปัญญา / ความรอบรู้จากประสบการณ์', example: 'Мудрость приходит с опытом. (ปัญญาเกิดจากประสบการณ์ชีวิต)' },
+          { front: 'Desenvolvimento (ภาษาโปรตุเกส)', reading: 'เด-เซง-โวล-วิ-เมน-ตู (De-zen-vol-vi-men-tu)', back: 'การพัฒนา / วิวัฒนาการสู่สิ่งที่ดีกว่า', example: 'O desenvolvimento contínuo é essencial. (การพัฒนาต่อเนื่องเป็นสิ่งจำเป็น)' },
+          { front: 'Meraviglia (ภาษาอิตาลี)', reading: 'เม-รา-วิล-ยา (Me-ra-vi-glia)', back: 'ความอัศจรรย์ใจ / จุดเริ่มต้นของความใคร่รู้', example: 'La meraviglia è l\'inizio della filosofia. (ความอัศจรรย์ใจคือจุดเริ่มต้นของปรัชญา)' },
+          { front: '성장 (Seongjang - ภาษาเกาหลี)', reading: 'ซอง-จัง (Seong-jang)', back: 'การเติบโต / การก้าวหน้าในชีวิต', example: '매일 조금씩 성장해 나간다. (เราเติบโตขึ้นทีละน้อยในทุกๆ วัน)' },
+          { front: 'ज्ञान (Gyan - ภาษาเบงกอล)', reading: 'กยาน (Gyan)', back: 'ความรู้ / ปรีชาญาณ (Knowledge / Wisdom)', example: 'জ্ঞানের আলো অন্ধকার দূর করে। (แสงสว่างแห่งปัญญาขจัดความมืดมน)' },
+          { front: 'دانش (Danish - ภาษาอูรดู)', reading: 'ดา-นิช (Da-nish)', back: 'ความรู้แจ้ง / ปัญญาญาณ (Wisdom)', example: 'دانش بڑی دولت ہے (ปัญญาคือความมั่งคั่งอันยิ่งใหญ่)' },
+          { front: 'Pengetahuan (ภาษาอินโดนีเซีย)', reading: 'เปิน-เกอ-ตา-ฮู-อัน (Pen-ge-ta-hu-an)', back: 'องค์ความรู้ / สารสนเทศ (Knowledge)', example: 'Pengetahuan adalah kunci masa depan. (ความรู้คือกุญแจสู่อนาคต)' },
+          { front: 'ज्ञान (Dnyan - ภาษามราฐี)', reading: 'ยาน / ดยาน (Dnyan)', back: 'ปัญญา / ความรอบรู้ (Wisdom)', example: 'ज्ञान हेच सामर्थ्य आहे. (ความรู้คือพลังอำนาจ)' },
+          { front: 'జ్ఞానము (Jnanamu - ภาษาเตลูกู)', reading: 'กญา-นะ-มู (Gnya-na-mu)', back: 'ความรู้แจ้ง / ปัญญาอันประเสริฐ', example: 'జ్ఞానమే నిజమైన సంపద (ปัญญาคือสมบัติที่แท้จริง)' },
+          { front: 'Bilgelik (ภาษาตุรกี)', reading: 'บิล-เก-ลิก (Bil-ge-lik)', back: 'ปรีชาญาณ / ความฉลาดหลักแหลม (Wisdom)', example: 'Bilgelik deneyimle kazanılır. (ปรีชาญาณได้มาจากประสบการณ์)' },
+          { front: 'அறிவு (Arivu - ภาษาทมิฬ)', reading: 'อะ-ริ-วู (A-ri-vu)', back: 'ความรู้ / สติปัญญา (Knowledge / Intellect)', example: 'அறிவே ஆற்றல் (ความรู้คือพลัง)' },
+          { front: 'Trí tuệ (ภาษาเวียดนาม)', reading: 'จี๊-เตวย (Tri tue)', back: 'สติปัญญา / เชาวน์ปัญญา (Wisdom / Intelligence)', example: 'Trí tuệ là tài sản quý giá nhất. (สติปัญญาคือทรัพย์สินที่ล้ำค่าที่สุด)' }
         ]
       },
       physics: {
@@ -6009,7 +6038,25 @@
 
         if (frontBadge) frontBadge.textContent = `${deck.icon} ${deck.name}`;
         if (frontText) frontText.textContent = card.front;
-        if (frontReading) frontReading.textContent = card.reading ? `[ ${card.reading} ]` : '';
+        if (frontReading) {
+          if (card.reading) {
+            frontReading.style.display = 'inline-flex';
+            let label = '🗣️ คำอ่าน:';
+            if (this.activeDeckId === 'physics' || this.activeDeckId === 'math') {
+              label = '💡 สูตร/สมการ:';
+            } else if (this.activeDeckId === 'cs') {
+              label = '💡 คีย์เวิร์ด/แนวคิด:';
+            } else if (this.activeDeckId === 'bio') {
+              label = '💡 คีย์เวิร์ด/สมการ:';
+            } else if (this.activeDeckId === 'society') {
+              label = '💡 แนวคิดหลัก:';
+            }
+            frontReading.innerHTML = `<span class="fc-reading-icon">${label}</span> <span class="fc-reading-text">${card.reading}</span>`;
+          } else {
+            frontReading.style.display = 'none';
+            frontReading.innerHTML = '';
+          }
+        }
 
         // Back face elements
         const backBadge = document.getElementById('fc-back-badge');
