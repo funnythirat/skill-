@@ -3313,6 +3313,257 @@
       transform: scale(1.2);
     }
 
+
+    /* ============================================================ */
+    /* ROV-STYLE ACADEMIC RANK TIERS & DAILY QUESTS STYLES          */
+    /* ============================================================ */
+    .rank-emblem {
+      display: inline-block;
+      vertical-align: middle;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s;
+    }
+    .rank-emblem:hover {
+      transform: scale(1.08) translateY(-2px);
+    }
+    .rank-emblem.rank-bronze { filter: drop-shadow(0 4px 14px rgba(205, 127, 50, 0.5)); }
+    .rank-emblem.rank-silver { filter: drop-shadow(0 4px 16px rgba(148, 163, 184, 0.6)); }
+    .rank-emblem.rank-gold { filter: drop-shadow(0 4px 18px rgba(251, 191, 36, 0.7)); }
+    .rank-emblem.rank-platinum { filter: drop-shadow(0 4px 20px rgba(45, 212, 191, 0.75)); }
+    .rank-emblem.rank-diamond { filter: drop-shadow(0 4px 22px rgba(56, 189, 248, 0.85)); }
+    .rank-emblem.rank-master { filter: drop-shadow(0 4px 24px rgba(192, 132, 252, 0.9)); }
+    .rank-emblem.rank-supreme { filter: drop-shadow(0 4px 28px rgba(244, 63, 94, 0.95)) drop-shadow(0 0 16px rgba(251, 191, 36, 0.7)); }
+
+    /* Nav Rank Pill */
+    .nav-rank-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.25rem 0.65rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .nav-rank-badge:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(99, 102, 241, 0.5);
+      transform: translateY(-1px);
+    }
+
+    /* Rank Showcase Card (Profile & Ranks View) */
+    .rank-showcase-card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 27, 75, 0.85));
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 20px;
+      padding: 1.75rem;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+    .rank-showcase-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, var(--tier-glow, rgba(99, 102, 241, 0.15)) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .rank-stars-display {
+      display: inline-flex;
+      gap: 0.35rem;
+      font-size: 1.3rem;
+      color: #fbbf24;
+      filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.6));
+      margin: 0.4rem 0 0.8rem 0;
+    }
+
+    /* Rank Up Promotion Overlay Modal */
+    .rank-up-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(5, 7, 16, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: rankOverlayIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes rankOverlayIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .rank-up-dialog {
+      background: linear-gradient(135deg, rgba(20, 24, 48, 0.96), rgba(9, 13, 26, 0.98));
+      border: 2px solid var(--promo-color, #fbbf24);
+      border-radius: 24px;
+      padding: 2.75rem 2.25rem;
+      max-width: 520px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 0 60px var(--promo-glow, rgba(251, 191, 36, 0.5)), 0 25px 60px rgba(0, 0, 0, 0.8);
+      position: relative;
+      animation: rankCardPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes rankCardPop {
+      0% { transform: scale(0.65) translateY(40px); opacity: 0; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .rank-up-shockwave {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 220px;
+      height: 220px;
+      margin-top: -110px;
+      margin-left: -110px;
+      border-radius: 50%;
+      border: 2px solid var(--promo-color, #fbbf24);
+      opacity: 0;
+      animation: shockwavePulse 1.8s infinite ease-out;
+      pointer-events: none;
+    }
+    @keyframes shockwavePulse {
+      0% { transform: scale(0.6); opacity: 0.9; }
+      100% { transform: scale(1.8); opacity: 0; }
+    }
+    .rank-up-emblem-halo {
+      position: relative;
+      margin: 1.25rem auto 1.5rem auto;
+      width: 140px;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .rank-up-emblem-halo svg {
+      width: 130px;
+      height: 130px;
+      animation: rankFloat 3s infinite ease-in-out;
+    }
+    @keyframes rankFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* Daily Quests Styling */
+    .quest-card {
+      background: rgba(15, 23, 42, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 1.25rem 1.4rem;
+      margin-bottom: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+      position: relative;
+    }
+    .quest-card:hover {
+      border-color: rgba(99, 102, 241, 0.4);
+      background: rgba(22, 30, 56, 0.8);
+      transform: translateY(-2px);
+    }
+    .quest-card.completed {
+      border-color: rgba(34, 197, 94, 0.45);
+      background: linear-gradient(135deg, rgba(20, 38, 28, 0.75), rgba(15, 23, 42, 0.85));
+    }
+    .quest-card.claimed {
+      opacity: 0.65;
+      border-color: rgba(255, 255, 255, 0.08);
+      background: rgba(15, 23, 42, 0.5);
+    }
+    .quest-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 13px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+    .quest-progress-track {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 0.45rem;
+      max-width: 320px;
+    }
+    .quest-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #06b6d4);
+      border-radius: 6px;
+      transition: width 0.3s ease;
+    }
+    .quest-card.completed .quest-progress-fill {
+      background: linear-gradient(90deg, #22c55e, #4ade80);
+    }
+    .quest-claim-btn {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #fff;
+      font-weight: 700;
+      padding: 0.5rem 1.15rem;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
+      animation: claimPulse 1.5s infinite alternate ease-in-out;
+      white-space: nowrap;
+    }
+    @keyframes claimPulse {
+      0% { transform: scale(1); box-shadow: 0 0 10px rgba(34, 197, 94, 0.4); }
+      100% { transform: scale(1.05); box-shadow: 0 0 20px rgba(34, 197, 94, 0.8); }
+    }
+
+    /* Rank Codex Grid */
+    .ranks-codex-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .rank-codex-card {
+      background: rgba(15, 23, 42, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .rank-codex-card.current-user-rank {
+      border-color: var(--tier-accent, #6366f1);
+      box-shadow: 0 0 30px var(--tier-glow, rgba(99, 102, 241, 0.35));
+      background: linear-gradient(135deg, rgba(26, 32, 64, 0.85), rgba(15, 23, 42, 0.95));
+    }
+    .rank-codex-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px -5px rgba(0, 0, 0, 0.6);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
 </style>
   <!-- Puter.js Free Cloud AI SDK -->
   <script src="https://js.puter.com/v2/"></script>
@@ -3502,6 +3753,7 @@
 
       <ul class="nav-links">
         <li class="nav-item active" data-route="#/" onclick="app.navigate('#/')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg></span> <span>คลังสายวิชา</span></li>
+        <li class="nav-item" data-route="#/ranks" onclick="app.navigate('#/ranks')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span> <span>ทำเนียบยศ & เควสต์</span></li>
         <li class="nav-item" data-route="#/flashcards" onclick="app.navigate('#/flashcards')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h10M7 12h10M7 17h6"/></svg></span> <span>บัตรคำ (Cards)</span></li>
         <li class="nav-item" data-route="#/lab" onclick="app.navigate('#/lab')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31L4.69 17.5A2 2 0 0 0 6.38 21h11.24a2 2 0 0 0 1.69-3.5L14 9.31V2"/><line x1="8" y1="2" x2="16" y2="2"/></svg></span> <span>ห้องแล็บจำลอง (Lab)</span></li>
         <li class="nav-item" onclick="omniAI.open()"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span> <span>ปรึกษา AI</span></li>
@@ -4314,6 +4566,7 @@
       }
     }
     const auth = new AuthManager();
+    if (typeof window !== 'undefined') window.auth = auth;
 
     
     // 3.5 Six-Tier Curriculum Mastery Framework
@@ -5436,6 +5689,7 @@
         const deckProg = this.progress[this.activeDeckId];
 
         if (rating === 'easy') {
+        if (typeof omniQuest !== 'undefined') omniQuest.recordAction('review_flashcard');
           // Mastered!
           if (!deckProg.mastered.includes(cardKey)) {
             deckProg.mastered.push(cardKey);
@@ -5601,7 +5855,200 @@
       console.warn('[OmniVerse Warning] Unhandled promise rejection caught safely:', e.reason);
     });
 
-    class AppController {
+    
+    // ============================================================
+    // ROV-STYLE ACADEMIC RANK SVG & DATA DEFINITIONS
+    // ============================================================
+    function getRankSvg(tierId, size = 64) {
+      const svgs = {
+        bronze: '<svg class="rank-emblem rank-bronze" width="' + size + '" height="' + size + '" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="brzGrad' + size + '" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ea580c"/><stop offset="50%" stop-color="#b45309"/><stop offset="100%" stop-color="#78350f"/></linearGradient><radialGradient id="brzCore' + size + '" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fed7aa"/><stop offset="60%" stop-color="#f97316"/><stop offset="100%" stop-color="#9a3412"/></radialGradient><filter id="brzGlow' + size + '" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#ea580c" flood-opacity="0.6"/></filter></defs><path d="M22 42 L8 28 L14 55 L28 62 Z" fill="#9a3412" stroke="#ea580c" stroke-width="1.5"/><path d="M78 42 L92 28 L86 55 L72 62 Z" fill="#9a3412" stroke="#ea580c" stroke-width="1.5"/><path d="M14 55 L6 68 L24 70 L30 65 Z" fill="#78350f" stroke="#c2410c" stroke-width="1"/><path d="M86 55 L94 68 L76 70 L70 65 Z" fill="#78350f" stroke="#c2410c" stroke-width="1"/><path d="M50 12 L76 26 L76 60 L50 90 L24 60 L24 26 Z" fill="url(#brzGrad' + size + ')" stroke="#fed7aa" stroke-width="2" filter="url(#brzGlow' + size + ')"/><path d="M50 20 L70 32 L70 56 L50 82 L30 56 L30 32 Z" fill="#451a03" stroke="#f97316" stroke-width="1.5"/><polygon points="50,34 62,48 50,68 38,48" fill="url(#brzCore' + size + ')" stroke="#ffedd5" stroke-width="1.5"/><polygon points="50,38 58,48 50,62 42,48" fill="#ffedd5" opacity="0.6"/></svg>',
+        silver: '<svg class="rank-emblem rank-silver" width="' + size + '" height="' + size + '" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="slvGrad' + size + '" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="40%" stop-color="#cbd5e1"/><stop offset="80%" stop-color="#64748b"/><stop offset="100%" stop-color="#334155"/></linearGradient><radialGradient id="slvCore' + size + '" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffffff"/><stop offset="50%" stop-color="#93c5fd"/><stop offset="100%" stop-color="#2563eb"/></radialGradient><filter id="slvGlow' + size + '" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#93c5fd" flood-opacity="0.7"/></filter></defs><path d="M22 36 L4 18 L10 50 L26 58 Z" fill="#475569" stroke="#94a3b8" stroke-width="1.5"/><path d="M78 36 L96 18 L90 50 L74 58 Z" fill="#475569" stroke="#94a3b8" stroke-width="1.5"/><path d="M10 50 L2 66 L22 68 L26 60 Z" fill="#334155" stroke="#cbd5e1" stroke-width="1.2"/><path d="M90 50 L98 66 L78 68 L74 60 Z" fill="#334155" stroke="#cbd5e1" stroke-width="1.2"/><path d="M50 10 L78 24 L74 64 L50 92 L26 64 L22 24 Z" fill="url(#slvGrad' + size + ')" stroke="#ffffff" stroke-width="2" filter="url(#slvGlow' + size + ')"/><path d="M50 18 L70 30 L66 60 L50 82 L34 60 L30 30 Z" fill="#0f172a" stroke="#94a3b8" stroke-width="1.5"/><polygon points="50,30 64,46 50,72 36,46" fill="url(#slvCore' + size + ')" stroke="#ffffff" stroke-width="1.5"/><polygon points="50,34 58,46 50,64 42,46" fill="#ffffff" opacity="0.75"/></svg>',
+        gold: '<svg class="rank-emblem rank-gold" width="' + size + '" height="' + size + '" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gldGrad' + size + '" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#fef08a"/><stop offset="35%" stop-color="#f59e0b"/><stop offset="75%" stop-color="#b45309"/><stop offset="100%" stop-color="#78350f"/></linearGradient><radialGradient id="gldCore' + size + '" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffffff"/><stop offset="30%" stop-color="#fef08a"/><stop offset="70%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#b45309"/></radialGradient><filter id="gldGlow' + size + '" x="-25%" y="-25%" width="150%" height="150%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#f59e0b" flood-opacity="0.85"/></filter></defs><path d="M24 32 L2 10 L8 46 L28 54 Z" fill="#b45309" stroke="#fef08a" stroke-width="1.5"/><path d="M76 32 L98 10 L92 46 L72 54 Z" fill="#b45309" stroke="#fef08a" stroke-width="1.5"/><path d="M8 46 L0 64 L20 66 L26 58 Z" fill="#78350f" stroke="#f59e0b" stroke-width="1.2"/><path d="M92 46 L100 64 L80 66 L74 58 Z" fill="#78350f" stroke="#f59e0b" stroke-width="1.2"/><path d="M38 14 L50 2 L62 14 Z" fill="#fef08a" stroke="#b45309" stroke-width="1.2"/><path d="M50 8 L80 22 L74 66 L50 94 L26 66 L20 22 Z" fill="url(#gldGrad' + size + ')" stroke="#fef08a" stroke-width="2.5" filter="url(#gldGlow' + size + ')"/><path d="M50 16 L72 28 L66 62 L50 84 L34 62 L28 28 Z" fill="#241400" stroke="#fcd34d" stroke-width="1.5"/><polygon points="50,26 66,45 50,74 34,45" fill="url(#gldCore' + size + ')" stroke="#ffffff" stroke-width="2"/><polygon points="50,30 60,45 50,66 40,45" fill="#ffffff" opacity="0.85"/><circle cx="50" cy="48" r="4" fill="#ffffff"/></svg>',
+        platinum: '<svg class="rank-emblem rank-platinum" width="' + size + '" height="' + size + '" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="pltGrad' + size + '" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#a7f3d0"/><stop offset="30%" stop-color="#2dd4bf"/><stop offset="70%" stop-color="#0f766e"/><stop offset="100%" stop-color="#134e4a"/></linearGradient><radialGradient id="pltCore' + size + '" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffffff"/><stop offset="40%" stop-color="#67e8f9"/><stop offset="80%" stop-color="#06b6d4"/><stop offset="100%" stop-color="#0e7490"/></radialGradient><filter id="pltGlow' + size + '" x="-25%" y="-25%" width="150%" height="150%"><feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#2dd4bf" flood-opacity="0.9"/></filter></defs><path d="M26 30 L4 6 L6 42 L26 52 Z" fill="#115e59" stroke="#67e8f9" stroke-width="1.5"/><path d="M74 30 L96 6 L94 42 L74 52 Z" fill="#115e59" stroke="#67e8f9" stroke-width="1.5"/><path d="M6 42 L0 60 L18 64 L24 54 Z" fill="#042f2e" stroke="#2dd4bf" stroke-width="1.2"/><path d="M94 42 L100 60 L82 64 L76 54 Z" fill="#042f2e" stroke="#2dd4bf" stroke-width="1.2"/><path d="M50 4 L56 14 L44 14 Z" fill="#a7f3d0" stroke="#0f766e" stroke-width="1"/><path d="M50 6 L82 20 L76 66 L50 96 L24 66 L18 20 Z" fill="url(#pltGrad' + size + ')" stroke="#ccfbf1" stroke-width="2.5" filter="url(#pltGlow' + size + ')"/><path d="M50 14 L74 26 L68 62 L50 86 L32 62 L26 26 Z" fill="#042f2e" stroke="#2dd4bf" stroke-width="1.8"/><polygon points="50,24 68,44 50,76 32,44" fill="url(#pltCore' + size + ')" stroke="#ffffff" stroke-width="2"/><polygon points="50,28 62,44 50,68 38,44" fill="#ffffff" opacity="0.8"/><circle cx="50" cy="46" r="4.5" fill="#ffffff"/></svg>',
+        diamond: '<svg class="rank-emblem rank-diamond" width="' + size + '" height="' + size + '" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="diaGrad' + size + '" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="30%" stop-color="#7dd3fc"/><stop offset="70%" stop-color="#0284c7"/><stop offset="100%" stop-color="#0c4a6e"/></linearGradient><radialGradient id="diaCore' + size + '" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffffff"/><stop offset="40%" stop-color="#bae6fd"/><stop offset="70%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0369a1"/></radialGradient><filter id="diaGlow' + size + '" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#38bdf8" flood-opacity="0.95"/></filter></defs><path d="M28 26 L2 -2 L6 38 L28 48 Z" fill="#0369a1" stroke="#e0f2fe" stroke-width="1.5"/><path d="M72 26 L98 -2 L94 38 L72 48 Z" fill="#0369a1" stroke="#e0f2fe" stroke-width="1.5"/><path d="M6 38 L-2 58 L18 64 L24 50 Z" fill="#075985" stroke="#7dd3fc" stroke-width="1.2"/><path d="M94 38 L102 58 L82 64 L76 50 Z" fill="#075985" stroke="#7dd3fc" stroke-width="1.2"/><polygon points="50,0 56,12 44,12" fill="#ffffff" stroke="#38bdf8" stroke-width="1.2"/><polygon points="34,6 40,16 30,16" fill="#bae6fd" stroke="#0284c7" stroke-width="1"/><polygon points="66,6 70,16 60,16" fill="#bae6fd" stroke="#0284c7" stroke-width="1"/><path d="M50 4 L84 18 L76 68 L50 96 L24 68 L16 18 Z" fill="url(#diaGrad' + size + ')" stroke="#ffffff" stroke-width="2.5" filter="url(#diaGlow' + size + ')"/><path d="M50 12 L76 24 L68 62 L50 86 L32 62 L24 24 Z" fill="#082f49" stroke="#7dd3fc" stroke-width="1.8"/><polygon points="50,22 70,44 50,78 30,44" fill="url(#diaCore' + size + ')" stroke="#ffffff" stroke-width="2.2"/><polygon points="50,26 64,44 50,70 36,44" fill="#ffffff" opacity="0.85"/><polygon points="50,34 58,44 50,58 42,44" fill="#ffffff"/></svg>',
+        master: '<svg class="rank-emblem rank-master" width="' + size + '" height="' + size + '" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="mstGrad' + size + '" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f5d0fe"/><stop offset="30%" stop-color="#c084fc"/><stop offset="70%" stop-color="#7e22ce"/><stop offset="100%" stop-color="#3b0764"/></linearGradient><radialGradient id="mstCore' + size + '" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffffff"/><stop offset="30%" stop-color="#f0abfc"/><stop offset="70%" stop-color="#a855f7"/><stop offset="100%" stop-color="#581c87"/></radialGradient><filter id="mstGlow' + size + '" x="-35%" y="-35%" width="170%" height="170%"><feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#c084fc" flood-opacity="0.95"/></filter></defs><path d="M30 24 L0 -6 L4 34 L28 46 Z" fill="#581c87" stroke="#f5d0fe" stroke-width="1.8"/><path d="M4 34 L-6 56 L16 62 L24 48 Z" fill="#3b0764" stroke="#c084fc" stroke-width="1.4"/><path d="M70 24 L100 -6 L96 34 L72 46 Z" fill="#581c87" stroke="#f5d0fe" stroke-width="1.8"/><path d="M96 34 L106 56 L84 62 L76 48 Z" fill="#3b0764" stroke="#c084fc" stroke-width="1.4"/><path d="M50 -2 L58 10 L42 10 Z" fill="#fbbf24" stroke="#fef08a" stroke-width="1.5"/><path d="M32 4 L40 14 L28 14 Z" fill="#f59e0b" stroke="#fde68a" stroke-width="1.2"/><path d="M68 4 L72 14 L60 14 Z" fill="#f59e0b" stroke="#fde68a" stroke-width="1.2"/><path d="M50 2 L86 16 L78 70 L50 98 L22 70 L14 16 Z" fill="url(#mstGrad' + size + ')" stroke="#fef08a" stroke-width="2.8" filter="url(#mstGlow' + size + ')"/><path d="M50 10 L78 22 L70 64 L50 88 L30 64 L22 22 Z" fill="#1e0b36" stroke="#c084fc" stroke-width="1.8"/><polygon points="50,20 72,44 50,80 28,44" fill="url(#mstCore' + size + ')" stroke="#ffffff" stroke-width="2.4"/><polygon points="50,24 66,44 50,72 34,44" fill="#ffffff" opacity="0.88"/><circle cx="50" cy="46" r="8" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="3 2"/><circle cx="50" cy="46" r="4.5" fill="#ffffff"/></svg>',
+        supreme: '<svg class="rank-emblem rank-supreme" width="' + size + '" height="' + size + '" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="supGrad' + size + '" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="25%" stop-color="#f43f5e"/><stop offset="60%" stop-color="#be123c"/><stop offset="100%" stop-color="#4c0519"/></linearGradient><radialGradient id="supCore' + size + '" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffffff"/><stop offset="25%" stop-color="#fef08a"/><stop offset="60%" stop-color="#f43f5e"/><stop offset="100%" stop-color="#881337"/></radialGradient><filter id="supGlow' + size + '" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="#f43f5e" flood-opacity="1"/><feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#fbbf24" flood-opacity="0.8"/></filter></defs><circle cx="50" cy="48" r="44" stroke="#fbbf24" stroke-width="1.5" stroke-opacity="0.6" stroke-dasharray="4 4"/><path d="M32 20 L-4 -10 L0 32 L26 44 Z" fill="#881337" stroke="#fbbf24" stroke-width="2"/><path d="M0 32 L-10 54 L12 60 L22 46 Z" fill="#4c0519" stroke="#f43f5e" stroke-width="1.5"/><path d="M68 20 L104 -10 L100 32 L74 44 Z" fill="#881337" stroke="#fbbf24" stroke-width="2"/><path d="M100 32 L110 54 L88 60 L78 46 Z" fill="#4c0519" stroke="#f43f5e" stroke-width="1.5"/><polygon points="50,-6 60,8 40,8" fill="#fbbf24" stroke="#ffffff" stroke-width="1.8"/><polygon points="28,0 36,12 24,12" fill="#f59e0b" stroke="#fef08a" stroke-width="1.2"/><polygon points="72,0 76,12 64,12" fill="#f59e0b" stroke="#fef08a" stroke-width="1.2"/><path d="M50 -1 L88 14 L80 72 L50 100 L20 72 L12 14 Z" fill="url(#supGrad' + size + ')" stroke="#fbbf24" stroke-width="3" filter="url(#supGlow' + size + ')"/><path d="M50 8 L80 20 L72 66 L50 90 L28 66 L20 20 Z" fill="#1c030a" stroke="#f43f5e" stroke-width="2"/><polygon points="50,18 74,44 50,82 26,44" fill="url(#supCore' + size + ')" stroke="#ffffff" stroke-width="2.5"/><polygon points="50,22 68,44 50,74 32,44" fill="#ffffff" opacity="0.9"/><circle cx="50" cy="46" r="10" fill="none" stroke="#fbbf24" stroke-width="2"/><circle cx="50" cy="46" r="5" fill="#ffffff"/></svg>'
+      };
+      return svgs[tierId] || svgs.bronze;
+    }
+
+    const ACADEMIC_RANKS = [
+      { id: 'bronze', nameTh: 'ผู้แสวงหาชั้นทองแดง', nameEn: 'Bronze Novice', minXp: 0, maxXp: 99, color: '#cd7f32', accent: '#ea580c', glow: 'rgba(205, 127, 50, 0.5)', desc: 'ศิลาทองแดงสลักอักษรรูนแห่งก้าวแรกในจักรวาลความรู้' },
+      { id: 'silver', nameTh: 'ปราชญ์ฝึกหัดชั้นเงิน', nameEn: 'Silver Apprentice', minXp: 100, maxXp: 299, color: '#cbd5e1', accent: '#94a3b8', glow: 'rgba(203, 213, 225, 0.5)', desc: 'ตราโล่เงินแท้ประดับผลึกแก้วมนตราแห่งความเพียรพยายาม' },
+      { id: 'gold', nameTh: 'พหูสูตชั้นทองคำ', nameEn: 'Gold Adept', minXp: 300, maxXp: 599, color: '#fbbf24', accent: '#f59e0b', glow: 'rgba(251, 191, 36, 0.6)', desc: 'ตราสุริยันทองคำเปลวพร้อมปีกวิหคแห่งปัญญาอันเจิดจ้า' },
+      { id: 'platinum', nameTh: 'มหาบัณฑิตแพลตทินัม', nameEn: 'Platinum Expert', minXp: 600, maxXp: 999, color: '#2dd4bf', accent: '#0d9488', glow: 'rgba(45, 212, 191, 0.65)', desc: 'ตราแพลตทินัมพร้อมออร่ามรกตสัจธรรมและผลึกวิทยาการล้ำยุค' },
+      { id: 'diamond', nameTh: 'มหาปราชญ์ชั้นเพชร', nameEn: 'Diamond Scholar', minXp: 1000, maxXp: 1799, color: '#38bdf8', accent: '#0284c7', glow: 'rgba(56, 189, 248, 0.75)', desc: 'มงกุฎเพชรเจียระไนพร้อมประกายแสงดวงดาวแห่งจักรวาล OmniVerse' },
+      { id: 'master', nameTh: 'จอมปราชญ์คอนเคอเรอร์', nameEn: 'Master Conqueror', minXp: 1800, maxXp: 2999, color: '#c084fc', accent: '#9333ea', glow: 'rgba(192, 132, 252, 0.85)', desc: 'ตราปีกมังกรทองคำโอบล้อมผลึกอเมทิสต์แห่งชัยชนะเหนือศาสตร์ทั้งปวง' },
+      { id: 'supreme', nameTh: 'มหาจักรพรรดิแห่งปัญญา', nameEn: 'Supreme Omniscient', minXp: 3000, maxXp: 999999, color: '#f43f5e', accent: '#fbbf24', glow: 'rgba(244, 63, 94, 0.95)', desc: 'ยศสูงสุดระดับมหาปราชญ์นิรันดร์ รัศมีสุริยะหมุนวนพร้อมวงแหวนแห่งจักรวาล' }
+    ];
+
+    function getRankTierData(xp) {
+      const currentXp = Math.max(0, Number(xp) || 0);
+      let tier = ACADEMIC_RANKS[0];
+      let nextTier = ACADEMIC_RANKS[1];
+
+      for (let i = 0; i < ACADEMIC_RANKS.length; i++) {
+        if (currentXp >= ACADEMIC_RANKS[i].minXp) {
+          tier = ACADEMIC_RANKS[i];
+          nextTier = ACADEMIC_RANKS[i + 1] || null;
+        }
+      }
+
+      const range = (nextTier ? nextTier.minXp : 3500) - tier.minXp;
+      const progressInTier = currentXp - tier.minXp;
+      const fraction = Math.max(0, Math.min(1, progressInTier / range));
+      const stars = Math.min(3, Math.floor(fraction * 3) + 1);
+      const division = stars === 3 ? 'I' : (stars === 2 ? 'II' : 'III');
+
+      return {
+        ...tier,
+        currentXp,
+        progressInTier,
+        range,
+        percentage: Math.round(fraction * 100),
+        stars,
+        division,
+        nextTier
+      };
+    }
+
+    class OmniQuestEngine {
+      constructor() {
+        this.storageKey = 'omni_daily_quests_data';
+        this.todayStr = new Date().toISOString().slice(0, 10);
+        this.data = this.loadData();
+      }
+
+      loadData() {
+        const defaultQuests = [
+          { id: 'quest_read_theory', title: 'เปิดประตูสู่ปัญญา', desc: 'เข้าศึกษาบทเรียนทฤษฎี 2 บทเรียน', target: 2, current: 0, rewardXp: 30, icon: '📖', completed: false, claimed: false },
+          { id: 'quest_quiz_pass', title: 'นักคิดผู้แม่นยำ', desc: 'ทำแบบฝึกหัดบทเรียนผ่าน 1 ชุดวิชา', target: 1, current: 0, rewardXp: 40, icon: '🎯', completed: false, claimed: false },
+          { id: 'quest_flashcard', title: 'สมองกลความจำ', desc: 'ทบทวนบัตรคำ Flashcards สำเร็จ 10 ใบ', target: 10, current: 0, rewardXp: 25, icon: '🗂️', completed: false, claimed: false },
+          { id: 'quest_lab_exp', title: 'นวัตกรห้องแล็บ', desc: 'ทดลองใช้งานเครื่องมือจำลองใน OmniLab 1 ครั้ง', target: 1, current: 0, rewardXp: 20, icon: '🔬', completed: false, claimed: false },
+          { id: 'quest_pomodoro', title: 'คลื่นสมาธิแน่วแน่', desc: 'เข้าสู่โหมดจับเวลาอ่านหนังสือ Pomodoro 1 ครั้ง', target: 1, current: 0, rewardXp: 30, icon: '⏱️', completed: false, claimed: false }
+        ];
+
+        try {
+          const raw = (typeof safeStorage !== 'undefined') ? safeStorage.getItem(this.storageKey) : localStorage.getItem(this.storageKey);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed && parsed.date === this.todayStr && Array.isArray(parsed.quests)) {
+              return parsed;
+            }
+          }
+        } catch(e) {}
+
+        const fresh = { date: this.todayStr, quests: defaultQuests, allClearClaimed: false };
+        this.saveData(fresh);
+        return fresh;
+      }
+
+      saveData(dataToSave) {
+        this.data = dataToSave || this.data;
+        try {
+          const serialized = JSON.stringify(this.data);
+          if (typeof safeStorage !== 'undefined') safeStorage.setItem(this.storageKey, serialized);
+          else localStorage.setItem(this.storageKey, serialized);
+        } catch(e) {}
+      }
+
+      recordAction(actionType, amount = 1) {
+        if (!this.data || !this.data.quests) return;
+        let changed = false;
+
+        this.data.quests.forEach(q => {
+          let matches = false;
+          if (actionType === 'read_theory' && q.id === 'quest_read_theory') matches = true;
+          if (actionType === 'pass_quiz' && q.id === 'quest_quiz_pass') matches = true;
+          if (actionType === 'review_flashcard' && q.id === 'quest_flashcard') matches = true;
+          if (actionType === 'run_lab' && q.id === 'quest_lab_exp') matches = true;
+          if (actionType === 'pomodoro' && q.id === 'quest_pomodoro') matches = true;
+
+          if (matches && !q.completed) {
+            q.current = Math.min(q.target, q.current + amount);
+            if (q.current >= q.target) {
+              q.completed = true;
+              if (window.soundEngine && typeof window.soundEngine.playSuccess === 'function') {
+                window.soundEngine.playSuccess();
+              }
+              if (window.app && typeof window.app.showToast === 'function') {
+                window.app.showToast('🎯 ภารกิจประจำวันสำเร็จ: ' + q.title + '! กดรับรางวัล EXP ได้แล้ว ✨');
+              }
+            }
+            changed = true;
+          }
+        });
+
+        if (changed) {
+          this.saveData();
+          if (window.app) {
+            const el = document.getElementById('home-daily-quests-summary');
+            if (el) el.innerHTML = this.getHomeSummaryHtml();
+          }
+        }
+      }
+
+      claimReward(questId) {
+        const quest = this.data.quests.find(q => q.id === questId);
+        if (!quest || !quest.completed || quest.claimed) return;
+
+        quest.claimed = true;
+        this.saveData();
+
+        if (window.app && typeof window.app.awardXp === 'function') {
+          window.app.awardXp(quest.rewardXp, 'ภารกิจ ' + quest.title);
+        }
+
+        if (window.soundEngine && typeof window.soundEngine.playSuccess === 'function') {
+          window.soundEngine.playSuccess();
+        }
+
+        const allDone = this.data.quests.every(q => q.claimed);
+        if (allDone && !this.data.allClearClaimed) {
+          this.data.allClearClaimed = true;
+          this.saveData();
+          setTimeout(() => {
+            if (window.app && typeof window.app.awardXp === 'function') {
+              window.app.awardXp(50, '⭐ เคลียร์เควสต์ประจำวันครบทุกภารกิจ (All-Clear Bonus)!');
+            }
+            if (window.app && typeof window.app.showToast === 'function') {
+              window.app.showToast('🌟 สุดยอดมาก! เคลียร์ภารกิจประจำวันครบทั้งหมด รับโบนัสพิเศษ +50 EXP! 🏆');
+            }
+          }, 600);
+        }
+
+        if (window.app && window.location.hash.startsWith('#/ranks')) {
+          window.app.renderRanksView();
+        } else if (window.app && window.location.hash.startsWith('#/quests')) {
+          window.app.renderRanksView('quests');
+        }
+      }
+
+      getQuests() {
+        return (this.data && this.data.quests) ? this.data.quests : [];
+      }
+
+      getCompletedCount() {
+        return this.data.quests.filter(q => q.completed).length;
+      }
+
+      getHomeSummaryHtml() {
+        const comp = this.getCompletedCount();
+        const total = this.data.quests.length;
+        const allClaimed = this.data.quests.every(q => q.claimed);
+        return '<div style="display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;"><div style="display: flex; align-items: center; gap: 0.75rem;"><span style="font-size: 1.8rem;">🎯</span><div><div style="font-size: 0.78rem; color: #38bdf8; font-weight: 700;">DAILY QUESTS</div><div style="font-size: 1.05rem; font-weight: 700; color: #fff;">สำเร็จ ' + comp + '/' + total + ' ภารกิจ ' + (allClaimed ? '🌟 เคลียร์ครบแล้ว' : '') + '</div><div style="font-size: 0.75rem; color: var(--text-muted);">ทำเควสต์เพื่อรับ EXP ไต่แรงค์สู่ระดับมหาปราชญ์</div></div></div><button class="btn btn-primary" onclick="app.navigate(\'#/ranks?tab=quests\')" style="padding: 0.45rem 0.9rem; font-size: 0.8rem; background: linear-gradient(135deg, #06b6d4, #6366f1); font-weight: 700;">' + (comp > 0 && !allClaimed ? 'รับรางวัล ➔' : 'ดูเควสต์ ➔') + '</button></div>';
+      }
+    }
+
+    const omniQuest = new OmniQuestEngine();
+    if (typeof window !== 'undefined') {
+      window.ACADEMIC_RANKS = ACADEMIC_RANKS;
+      window.getRankSvg = getRankSvg;
+      window.getRankTierData = getRankTierData;
+      window.omniQuest = omniQuest;
+    }
+
+class AppController {
       constructor() {
         this.combo = 1;
         this.currentTierFilter = 'all';
@@ -5626,6 +6073,98 @@
         this.loadCachedLessons();
         this.mergeCustomLessons();
       }
+
+      // Centralized EXP Award & RoV Rank Promotion Checker
+      awardXp(amount, reason = '') {
+        const added = Math.max(0, Number(amount) || 0);
+        if (added <= 0) return;
+
+        let prevXp = 0;
+        let newXp = 0;
+
+        if (auth.currentUser) {
+          prevXp = Number(auth.currentUser.xp) || 0;
+          newXp = prevXp + added;
+          auth.currentUser.xp = newXp;
+          auth.currentUser.level = this.getLevelForXp(newXp);
+          auth.saveCurrentUser();
+        } else {
+          try {
+            prevXp = parseInt(localStorage.getItem('omni_guest_xp') || '0', 10);
+            newXp = prevXp + added;
+            localStorage.setItem('omni_guest_xp', String(newXp));
+          } catch(e) {}
+        }
+
+        this.updateUserUI();
+
+        // Check RoV Rank Promotion
+        const prevTier = getRankTierData(prevXp);
+        const newTier = getRankTierData(newXp);
+
+        if (newTier.id !== prevTier.id && newTier.minXp > prevTier.minXp) {
+          this.showRankPromotionModal(newTier);
+        } else {
+          if (reason) this.showToast('+' + added + ' EXP (' + reason + ') ✨');
+        }
+      }
+
+      showRankPromotionModal(tier) {
+        if (soundEngine && typeof soundEngine.playSuccess === 'function') {
+          soundEngine.playSuccess();
+        }
+
+        const modal = document.createElement('div');
+        modal.className = 'rank-up-overlay';
+        modal.id = 'modal-rank-promotion';
+        modal.style.setProperty('--promo-color', tier.color);
+        modal.style.setProperty('--promo-glow', tier.glow);
+
+        modal.innerHTML = `
+          <div class="rank-up-dialog" style="border-color: ${tier.color};">
+            <div class="rank-up-shockwave" style="border-color: ${tier.color};"></div>
+            <div style="font-size: 0.85rem; color: ${tier.color}; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;">
+              ⚔️ RANK PROMOTION UNLOCKED ⚔️
+            </div>
+            <h1 style="font-size: 2.1rem; color: #fff; margin: 0.35rem 0; font-weight: 800; text-shadow: 0 0 25px ${tier.glow};">
+              ยินดีด้วย! คุณเลื่อนขั้นสู่
+            </h1>
+            <div style="font-size: 1.5rem; font-weight: 800; color: ${tier.color}; margin-bottom: 0.5rem;">
+              ${tier.nameEn}
+            </div>
+            <div style="font-size: 1.05rem; color: #cbd5e1; margin-bottom: 0.5rem;">
+              (${tier.nameTh})
+            </div>
+
+            <div class="rank-up-emblem-halo">
+              ${getRankSvg(tier.id, 130)}
+            </div>
+
+            <div class="rank-stars-display" style="font-size: 1.6rem; margin-bottom: 0.75rem;">
+              ${'⭐'.repeat(tier.stars)}
+            </div>
+
+            <p style="font-size: 0.9rem; color: #94a3b8; max-width: 420px; margin: 0 auto 1.75rem auto; line-height: 1.5;">
+              "${tier.desc}"
+            </p>
+
+            <button class="btn btn-primary" onclick="document.getElementById('modal-rank-promotion').remove();" style="width: 100%; padding: 0.85rem 1.5rem; font-size: 1.05rem; font-weight: 800; background: linear-gradient(135deg, ${tier.color}, ${tier.accent}); color: #000; box-shadow: 0 0 25px ${tier.glow};">
+              น้อมรับเกียรติยศและก้าวต่อไป ➔
+            </button>
+          </div>
+        `;
+
+        document.body.appendChild(modal);
+      }
+
+      getRankSvg(tierId, size = 64) {
+        return getRankSvg(tierId, size);
+      }
+
+      getRankTierData(xp) {
+        return getRankTierData(xp);
+      }
+
 
       loadCachedLessons() {
         try {
@@ -6504,12 +7043,7 @@
       }
 
       getRankForXp(xp) {
-        const currentXp = Math.max(0, Number(xp) || 0);
-        if (currentXp >= 1500) return 'Omniscient Sage';
-        if (currentXp >= 600) return 'Platinum Expert';
-        if (currentXp >= 300) return 'Gold Adept';
-        if (currentXp >= 150) return 'Silver Apprentice';
-        return 'Bronze Novice';
+        return getRankTierData(xp).nameEn;
       }
 
       updateUserUI() {
@@ -6524,7 +7058,8 @@
           userStatus.style.display = 'flex';
           document.getElementById('nav-user-avatar').innerHTML = this.avatarMarkup(auth.currentUser.avatar);
           document.getElementById('nav-user-name').innerText = auth.currentUser.username;
-          document.getElementById('nav-user-level').innerText = `LV. ${this.getLevel()} • ${this.getRank()}`;
+          const currentRank = getRankTierData(auth.currentUser.xp || 0);
+          document.getElementById('nav-user-level').innerHTML = `<span style="color: ${currentRank.color}; font-weight: 700;">${currentRank.nameEn}</span> <span style="color: #fbbf24; font-size: 0.72rem;">${'⭐'.repeat(currentRank.stars)}</span> • LV. ${this.getLevel()}`;
           mobProfileLabel.innerText = 'โปรไฟล์';
 
           const isAdmin = auth.currentUser.role === 'admin';
@@ -7679,6 +8214,8 @@
         else if (hash.startsWith('#/quiz/')) this.renderQuiz(hash.replace('#/quiz/', ''));
         else if (hash === '#/flashcards' || hash.startsWith('#/flashcards')) this.renderFlashcards(hash);
         else if (hash === '#/lab' || hash.startsWith('#/lab')) this.renderLab(hash);
+        else if (hash === '#/ranks' || hash.startsWith('#/ranks')) this.renderRanksView();
+        else if (hash === '#/quests' || hash.startsWith('#/quests')) this.renderRanksView('quests');
         else if (hash === '#/leaderboard') this.renderLeaderboard();
         else if (hash === '#/profile') this.renderProfile();
         else if (hash === '#/languages') { this.navigate('#/discipline/13'); return; }
@@ -7694,6 +8231,7 @@
 
       render404(hash) {
         const view = document.getElementById('app-view');
+        if (typeof omniQuest !== 'undefined') omniQuest.recordAction('read_theory');
         if (!view) return;
         view.innerHTML = `
           <div class="empty-state-card">
@@ -8401,6 +8939,10 @@
                     <div style="font-size: 0.75rem; color: var(--text-muted);">เข้าเรียนหรือทำโจทย์ทุกวันเพื่อรับโบนัส EXP</div>
                   </div>
                 </div>
+
+                <div id="home-daily-quests-summary" style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(6, 182, 212, 0.25); border-radius: 14px; padding: 0.9rem 1.2rem;">
+                  ${omniQuest.getHomeSummaryHtml()}
+                </div></div>
                 <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 14px; padding: 0.9rem 1.2rem; display: flex; align-items: center; justify-content: space-between;">
                   <div style="display: flex; align-items: center; gap: 0.9rem;">
                     <span style="font-size: 2rem;">⏱️</span>
@@ -9891,6 +10433,147 @@
         `;
       }
 
+      
+      renderRanksView(initialTab = 'ranks') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const view = document.getElementById('app-view');
+        if (!view) return;
+
+        const uXp = (auth.currentUser && auth.currentUser.xp) ? auth.currentUser.xp : parseInt(localStorage.getItem('omni_guest_xp') || '0', 10);
+        const userTier = getRankTierData(uXp);
+        const quests = omniQuest.data.quests;
+        const compCount = omniQuest.getCompletedCount();
+
+        view.innerHTML = `
+          <!-- Hero Header -->
+          <div class="hero-banner">
+            <div class="hero-badge"><span class="badge-dot-live"></span> 🛡️ OMNIVERSE RANK CODEX & QUESTS</div>
+            <h1 class="hero-title hero-title-gradient">ทำเนียบชั้นยศปราชญ์ & เควสต์ประจำวัน</h1>
+            <p class="hero-quote">"จำแนก 7 ลำดับชั้นแห่งปัญญา สะสม EXP ไต่แรงค์สู่ระดับมหาจักรพรรดิ พร้อมพิชิตภารกิจประจำวัน"</p>
+            
+            <!-- Tab Switcher -->
+            <div style="display: flex; gap: 0.5rem; justify-content: center; margin-top: 1.5rem;">
+              <button id="btn-tab-ranks" class="btn ${initialTab === 'ranks' ? 'btn-primary' : 'btn-outline'}" onclick="document.getElementById('section-ranks-tab').style.display='block'; document.getElementById('section-quests-tab').style.display='none'; this.className='btn btn-primary'; document.getElementById('btn-tab-quests').className='btn btn-outline';" style="font-weight: 700; padding: 0.55rem 1.35rem;">
+                🛡️ 7 ชั้นยศปราชญ์ (Rank Codex)
+              </button>
+              <button id="btn-tab-quests" class="btn ${initialTab === 'quests' ? 'btn-primary' : 'btn-outline'}" onclick="document.getElementById('section-ranks-tab').style.display='none'; document.getElementById('section-quests-tab').style.display='block'; this.className='btn btn-primary'; document.getElementById('btn-tab-ranks').className='btn btn-outline';" style="font-weight: 700; padding: 0.55rem 1.35rem;">
+                🎯 เควสต์ประจำวัน (${compCount}/5 สำเร็จ)
+              </button>
+            </div>
+          </div>
+
+          <!-- Section 1: Ranks Codex Tab -->
+          <div id="section-ranks-tab" style="display: ${initialTab === 'ranks' ? 'block' : 'none'};">
+            <!-- Current User Rank Showcase Card -->
+            <div class="rank-showcase-card" style="--tier-glow: ${userTier.glow}; border-color: ${userTier.color}66;">
+              <div style="display: inline-block; font-size: 0.78rem; font-weight: 800; color: ${userTier.color}; background: rgba(255,255,255,0.06); padding: 0.3rem 0.8rem; border-radius: 20px; border: 1px solid ${userTier.color}44; text-transform: uppercase; margin-bottom: 0.75rem;">
+                🏆 ยศปัจจุบันของคุณ (Current Tier)
+              </div>
+              <div style="display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                ${getRankSvg(userTier.id, 96)}
+                <div style="text-align: left;">
+                  <h2 style="font-size: 1.85rem; color: #fff; margin-bottom: 0.2rem;">${userTier.nameEn} <span style="color: ${userTier.color}; font-size: 1.3rem;">Division ${userTier.division}</span></h2>
+                  <div style="font-size: 1.1rem; color: ${userTier.color}; font-weight: 700;">${userTier.nameTh}</div>
+                  <div class="rank-stars-display">${'⭐'.repeat(userTier.stars)}</div>
+                </div>
+              </div>
+
+              <!-- Progress bar to next rank -->
+              <div style="max-width: 480px; margin: 0 auto; text-align: left;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.4rem;">
+                  <span style="color: var(--text-muted);">ความก้าวหน้าสู่ ${userTier.nextTier ? userTier.nextTier.nameEn : 'Max Rank'}</span>
+                  <span style="color: ${userTier.color}; font-weight: 700;">${userTier.progressInTier} / ${userTier.range} EXP (${userTier.percentage}%)</span>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.08); height: 10px; border-radius: 8px; overflow: hidden;">
+                  <div style="background: linear-gradient(90deg, ${userTier.color}, ${userTier.accent}); height: 100%; width: ${userTier.percentage}%; transition: width 0.4s ease;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- All 7 Tiers Showcase Grid -->
+            <div style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
+              <h3 style="font-size: 1.3rem; color: #fff;">ทำเนียบ 7 ชั้นยศแห่ง OmniVerse Academy</h3>
+              <span style="font-size: 0.85rem; color: var(--text-muted);">สะสม EXP จากบทเรียน ข้อสอบ และบัตรคำเพื่อเลื่อนขั้นยศ</span>
+            </div>
+
+            <div class="ranks-codex-grid">
+              ${ACADEMIC_RANKS.map(t => {
+                const isCurrent = userTier.id === t.id;
+                return `
+                  <div class="rank-codex-card ${isCurrent ? 'current-user-rank' : ''}" style="--tier-accent: ${t.color}; --tier-glow: ${t.glow};">
+                    ${isCurrent ? '<div style="position: absolute; top: 12px; right: 12px; background: ' + t.color + '; color: #000; font-size: 0.72rem; font-weight: 800; padding: 0.2rem 0.55rem; border-radius: 12px;">ยศปัจจุบัน</div>' : ''}
+                    <div style="margin-bottom: 1rem;">
+                      ${getRankSvg(t.id, 76)}
+                    </div>
+                    <h4 style="font-size: 1.15rem; color: #fff; margin-bottom: 0.25rem;">${t.nameEn}</h4>
+                    <div style="font-size: 0.92rem; color: ${t.color}; font-weight: 700; margin-bottom: 0.5rem;">${t.nameTh}</div>
+                    <div style="font-size: 0.78rem; color: #fbbf24; background: rgba(251, 191, 36, 0.12); padding: 0.15rem 0.5rem; border-radius: 12px; margin-bottom: 0.75rem; border: 1px solid rgba(251, 191, 36, 0.25);">
+                      เกณฑ์ EXP: ${t.minXp} - ${t.maxXp === 999999 ? '∞' : t.maxXp} EXP
+                    </div>
+                    <p style="font-size: 0.82rem; color: #94a3b8; line-height: 1.5; margin-bottom: 1rem; flex: 1;">
+                      ${t.desc}
+                    </p>
+                    <div style="color: #fbbf24; font-size: 0.95rem;">
+                      ⭐⭐⭐ (3 Divisions)
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+
+          <!-- Section 2: Daily Quests Tab -->
+          <div id="section-quests-tab" style="display: ${initialTab === 'quests' ? 'block' : 'none'};">
+            <div style="background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.75rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+              <div>
+                <h3 style="font-size: 1.25rem; color: #fff; margin-bottom: 0.3rem;">🎯 ภารกิจประจำวัน (Daily Quests)</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">ภารกิจจะรีเซ็ตอัตโนมัติทุกเที่ยงคืน (00:00 น.) สะสม EXP เพื่อเลื่อนขั้นยศแรงค์</p>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span style="font-size: 0.88rem; color: #38bdf8; font-weight: 700;">ความสำเร็จวันนี้: ${compCount}/5</span>
+                ${omniQuest.data.allClearClaimed ? '<span style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; padding: 0.25rem 0.6rem; border-radius: 12px; font-size: 0.75rem; font-weight: 700;">🌟 All-Clear +50 EXP รับแล้ว</span>' : ''}
+              </div>
+            </div>
+
+            <!-- Quests List -->
+            <div class="daily-quests-list">
+              ${quests.map(q => {
+                const pct = Math.min(100, Math.round((q.current / q.target) * 100));
+                let actionBtn = '';
+                if (q.claimed) {
+                  actionBtn = '<span style="color: #4ade80; font-size: 0.85rem; font-weight: 700;">✓ รับแล้ว (+' + q.rewardXp + ' EXP)</span>';
+                } else if (q.completed) {
+                  actionBtn = '<button class="quest-claim-btn" onclick="omniQuest.claimReward(\'' + q.id + '\')">🎁 รับ +' + q.rewardXp + ' EXP</button>';
+                } else {
+                  actionBtn = '<span style="color: #fbbf24; font-size: 0.82rem; font-weight: 700; background: rgba(251, 191, 36, 0.1); padding: 0.3rem 0.65rem; border-radius: 8px; border: 1px solid rgba(251, 191, 36, 0.2);">+' + q.rewardXp + ' EXP</span>';
+                }
+
+                return `
+                  <div class="quest-card ${q.claimed ? 'claimed' : (q.completed ? 'completed' : '')}">
+                    <div style="display: flex; align-items: center; gap: 1rem; flex: 1; min-width: 240px;">
+                      <div class="quest-icon-box">${q.icon}</div>
+                      <div style="flex: 1;">
+                        <div style="font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 0.2rem;">${q.title}</div>
+                        <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.4rem;">${q.desc}</div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                          <div class="quest-progress-track" style="flex: 1;">
+                            <div class="quest-progress-fill" style="width: ${pct}%;"></div>
+                          </div>
+                          <span style="font-size: 0.78rem; font-weight: 700; color: #cbd5e1;">${q.current}/${q.target}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      ${actionBtn}
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }
+
       renderLeaderboard() {
         const view = document.getElementById('app-view');
         // Filter out admin accounts from leaderboard while preserving them in database & admin control
@@ -9928,7 +10611,16 @@
                         
                       </div>
                     </td>
-                    <td><span style="color: var(--accent); font-weight: 600;">${this.getRankForXp(user.xp || 0)}</span></td>
+                    <td>
+                      ${(() => {
+                        const r = getRankTierData(user.xp || 0);
+                        return `<div style="display: inline-flex; align-items: center; gap: 0.45rem;">
+                          ${getRankSvg(r.id, 24)}
+                          <span style="color: ${r.color}; font-weight: 700;">${r.nameEn}</span>
+                          <span style="color: #fbbf24; font-size: 0.72rem;">${'⭐'.repeat(r.stars)}</span>
+                        </div>`;
+                      })()}
+                    </td>
                     <td><strong>LV. ${this.getLevelForXp(user.xp || 0)}</strong></td>
                     <td style="text-align: right;"><strong style="color: #38bdf8;">${user.xp || 0} EXP</strong></td>
                   </tr>
@@ -9965,7 +10657,39 @@
             <button class="btn btn-outline" style="padding: 0.35rem 0.8rem; font-size: 0.82rem; margin-bottom: 1.25rem;" onclick="app.openModal('modal-avatar-picker')">🎨 เปลี่ยนรูปโปรไฟล์ (Avatar)</button>
 
             <h2>${auth.currentUser.username} ${auth.currentUser.role === 'admin' ? '<span style="background: #38bdf8; color: #000; font-size: 0.75rem; vertical-align: middle; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 5px;">ADMIN</span>' : ''}</h2>
-            <div style="color: var(--accent); font-weight: 700; margin-bottom: 1.5rem;">${this.getRank()}</div>
+            ${(() => {
+              const r = getRankTierData(auth.currentUser.xp || 0);
+              const starIcons = '⭐'.repeat(r.stars) + '☆'.repeat(3 - r.stars);
+              return `
+                <div class="rank-showcase-card" style="margin: 1.25rem 0 1.75rem 0; padding: 1.5rem 1.25rem; --tier-glow: ${r.glow};">
+                  <div style="display: flex; align-items: center; justify-content: center; gap: 1.25rem; flex-wrap: wrap;">
+                    <div style="filter: drop-shadow(0 0 16px ${r.glow});">
+                      ${getRankSvg(r.id, 80)}
+                    </div>
+                    <div style="text-align: left; min-width: 220px;">
+                      <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted);">ตราเกียรติยศแรงค์วิชาการ (Academic Rank)</div>
+                      <div style="font-size: 1.35rem; font-weight: 900; color: ${r.color}; display: flex; align-items: center; gap: 0.5rem;">
+                        <span>${r.nameEn} ${r.division}</span>
+                        <span style="font-size: 0.95rem; color: #cbd5e1; font-weight: 600;">(${r.nameTh})</span>
+                      </div>
+                      <div class="rank-stars-display" style="margin: 0.25rem 0 0.5rem 0; font-size: 1.15rem;">
+                        ${starIcons}
+                      </div>
+                      <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.35rem;">
+                        ${r.nextTier ? `ความก้าวหน้าสู่ <strong>${r.nextTier.nameEn} III</strong> (ขาดอีก ${(r.nextTier.minXp - r.currentXp).toLocaleString()} EXP)` : '🏆 คุณบรรลุระดับเกียรติยศสูงสุดแห่งจักรวาลแล้ว!'}
+                      </div>
+                      <div class="quest-progress-track" style="height: 8px; width: 100%; max-width: 280px;">
+                        <div class="quest-progress-fill" style="width: ${r.percentage}%; background: linear-gradient(90deg, ${r.color}, #f59e0b);"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
+                    <button class="btn btn-outline" style="font-size: 0.8rem; padding: 0.35rem 0.85rem;" onclick="app.navigate('#/ranks')">🏆 ดูทำเนียบยศทั้ง 7 ขั้น</button>
+                    <button class="btn btn-primary" style="font-size: 0.8rem; padding: 0.35rem 0.85rem;" onclick="app.navigate('#/quests')">📜 ทำเควสต์รายวันเพิ่ม EXP</button>
+                  </div>
+                </div>
+              `;
+            })()}
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem; margin-bottom: 1.25rem;">
               <div style="background: rgba(0,0,0,0.3); padding: 0.85rem 0.5rem; border-radius: 12px;">
