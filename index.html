@@ -3363,6 +3363,208 @@
       line-height: 1.35;
     }
 
+    /* Quick Resume (Continue Learning) Card */
+    .quick-resume-card {
+      position: relative;
+      background: linear-gradient(135deg, rgba(30, 27, 75, 0.72) 0%, rgba(15, 23, 42, 0.88) 100%);
+      border: 1px solid rgba(99, 102, 241, 0.32);
+      border-left: 3.5px solid #6366f1;
+      border-radius: 14px;
+      padding: 0.75rem 1.15rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      box-shadow: 0 6px 20px -4px rgba(0, 0, 0, 0.45), 0 0 16px -4px rgba(99, 102, 241, 0.15) inset;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+    .quick-resume-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent);
+      transition: 0.7s ease;
+      pointer-events: none;
+    }
+    .quick-resume-card:hover::before {
+      left: 100%;
+    }
+    .quick-resume-card:hover {
+      border-color: rgba(129, 140, 248, 0.55);
+      border-left-color: #22d3ee;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px -4px rgba(99, 102, 241, 0.28), 0 0 20px -4px rgba(6, 182, 212, 0.15) inset;
+    }
+    .quick-resume-main {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      min-width: 0;
+      flex: 1;
+    }
+    .quick-resume-icon-box {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      border-radius: 11px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.22), rgba(6, 182, 212, 0.18));
+      border: 1px solid rgba(129, 140, 248, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      box-shadow: 0 0 12px rgba(99, 102, 241, 0.25);
+      flex-shrink: 0;
+      transition: transform 0.25s ease;
+    }
+    .quick-resume-card:hover .quick-resume-icon-box {
+      transform: scale(1.06);
+      border-color: rgba(34, 211, 238, 0.5);
+      box-shadow: 0 0 16px rgba(34, 211, 238, 0.35);
+    }
+    .quick-resume-content {
+      min-width: 0;
+      flex: 1;
+    }
+    .quick-resume-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.15rem;
+    }
+    .quick-resume-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      color: #a5b4fc;
+      text-transform: uppercase;
+    }
+    .quick-resume-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22d3ee;
+      box-shadow: 0 0 6px #22d3ee;
+      animation: resumeDotPulse 1.8s ease-in-out infinite;
+    }
+    @keyframes resumeDotPulse {
+      0%, 100% { opacity: 0.6; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.25); }
+    }
+    .quick-resume-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.1rem 0.45rem;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #c7d2fe;
+      background: rgba(99, 102, 241, 0.16);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+    }
+    .quick-resume-title {
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: #f8fafc;
+      line-height: 1.35;
+      margin: 0.15rem 0;
+      max-width: 620px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .quick-resume-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      line-height: 1.2;
+    }
+    .quick-resume-meta-dot {
+      opacity: 0.5;
+    }
+    .quick-resume-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+    .quick-resume-btn-outline {
+      font-size: 0.78rem !important;
+      padding: 0.38rem 0.8rem !important;
+      border-radius: 8px !important;
+      border-color: rgba(255, 255, 255, 0.16) !important;
+      color: #cbd5e1 !important;
+      background: rgba(255, 255, 255, 0.04) !important;
+      transition: all 0.2s ease !important;
+    }
+    .quick-resume-btn-outline:hover {
+      background: rgba(255, 255, 255, 0.1) !important;
+      border-color: rgba(255, 255, 255, 0.3) !important;
+      color: #fff !important;
+    }
+    .quick-resume-btn-primary {
+      font-size: 0.8rem !important;
+      padding: 0.42rem 1.05rem !important;
+      border-radius: 8px !important;
+      font-weight: 700 !important;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4) !important;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35) !important;
+      border: none !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 0.35rem !important;
+      transition: all 0.2s ease !important;
+    }
+    .quick-resume-btn-primary:hover {
+      box-shadow: 0 6px 18px rgba(79, 70, 229, 0.5) !important;
+      transform: translateY(-1px) !important;
+    }
+    .quick-resume-btn-arrow {
+      transition: transform 0.2s ease;
+    }
+    .quick-resume-btn-primary:hover .quick-resume-btn-arrow {
+      transform: translateX(2px);
+    }
+    @media (max-width: 900px) {
+      .quick-resume-title {
+        max-width: 360px;
+      }
+    }
+    @media (max-width: 680px) {
+      .quick-resume-card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+        padding: 0.8rem 0.95rem;
+      }
+      .quick-resume-title {
+        max-width: 100%;
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+      .quick-resume-actions {
+        justify-content: flex-end;
+        width: 100%;
+      }
+    }
+
+
     /* Discipline Card Elevated */
     .discipline-card {
       box-shadow: 0 8px 30px -5px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.09) !important;
@@ -9949,19 +10151,33 @@ class AppController {
             if (recent.length > 0) {
               const last = recent[0];
               const disc = DISCIPLINE_DATA.find(d => d.id === last.discId || d.code === last.discId) || { name_th: 'สายวิชา', color: '#6366f1', icon: '🌌' };
+              const tierTh = last.tier === 'expert' ? 'ขั้นสูง' : (last.tier === 'advanced' ? 'ขั้นปลาย' : 'พื้นฐาน');
               resumeHtml = `
-                <div class="quick-resume-card" style="background: linear-gradient(135deg, rgba(30, 27, 75, 0.85), rgba(15, 23, 42, 0.9)); border: 1px solid rgba(99, 102, 241, 0.4); border-radius: 16px; padding: 1.25rem 1.5rem; margin-bottom: 1.75rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.3);">
-                  <div style="display: flex; align-items: center; gap: 1rem; min-width: 250px;">
-                    <div style="font-size: 2rem; background: rgba(255,255,255,0.06); width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); flex-shrink: 0;">⏩</div>
-                    <div>
-                      <div style="font-size: 0.75rem; color: #a5b4fc; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.2rem;">เรียนต่อจากที่ค้างไว้ (Continue Learning)</div>
-                      <div style="font-size: 1.1rem; font-weight: 700; color: #fff;">${last.title}</div>
-                      <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem;">${disc.icon} ${disc.name_th} • เข้าศึกษาล่าสุด</div>
+                <div class="quick-resume-card">
+                  <div class="quick-resume-main">
+                    <div class="quick-resume-icon-box">⏩</div>
+                    <div class="quick-resume-content">
+                      <div class="quick-resume-header">
+                        <span class="quick-resume-badge">
+                          <span class="quick-resume-badge-dot"></span>
+                          เรียนต่อจากที่ค้างไว้
+                        </span>
+                        <span class="quick-resume-tag">${disc.icon} ${disc.name_th}</span>
+                      </div>
+                      <div class="quick-resume-title" title="${last.title}">${last.title}</div>
+                      <div class="quick-resume-meta">
+                        <span class="quick-resume-meta-item">🎯 ระดับ${tierTh}</span>
+                        <span class="quick-resume-meta-dot">•</span>
+                        <span class="quick-resume-meta-item">เข้าศึกษาล่าสุด</span>
+                      </div>
                     </div>
                   </div>
-                  <div style="display: flex; gap: 0.6rem; align-items: center;">
-                    <button class="btn btn-outline" onclick="app.navigate('#/discipline/${last.discId}')" style="font-size: 0.82rem; padding: 0.45rem 0.85rem;">ดูทั้งสายวิชา</button>
-                    <button class="btn btn-primary" onclick="app.navigate('#/theory/${last.discId}_${last.idxStr}')" style="font-size: 0.85rem; padding: 0.5rem 1.15rem; font-weight: 700; background: linear-gradient(135deg, #4f46e5, #06b6d4);">อ่านต่อทันที ➔</button>
+                  <div class="quick-resume-actions">
+                    <button class="btn btn-outline quick-resume-btn-outline" onclick="app.navigate('#/discipline/${last.discId}')">ดูสายวิชา</button>
+                    <button class="btn btn-primary quick-resume-btn-primary" onclick="app.navigate('#/theory/${last.discId}_${last.idxStr}')">
+                      <span>อ่านต่อทันที</span>
+                      <span class="quick-resume-btn-arrow">➔</span>
+                    </button>
                   </div>
                 </div>
               `;
@@ -9980,7 +10196,8 @@ class AppController {
 
                 <div id="home-daily-quests-summary" style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(6, 182, 212, 0.25); border-radius: 14px; padding: 0.9rem 1.2rem;">
                   ${omniQuest.getHomeSummaryHtml()}
-                </div></div>
+                </div>
+
                 <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 14px; padding: 0.9rem 1.2rem; display: flex; align-items: center; justify-content: space-between;">
                   <div style="display: flex; align-items: center; gap: 0.9rem;">
                     <span style="font-size: 2rem;">⏱️</span>
@@ -9996,7 +10213,8 @@ class AppController {
             `;
           })()}
 
-          ${parts.map(part => {
+          
+${parts.map(part => {
             const partDisciplines = DISCIPLINE_DATA.filter(d => part.codes.includes(d.code));
             return `
 
