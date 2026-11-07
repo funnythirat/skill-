@@ -4794,7 +4794,7 @@
       emailForUsername(username) {
         const normalized = String(username).trim().toLowerCase();
         const hash = Array.from(normalized).reduce((value, char) => (((value * 31) + char.charCodeAt(0)) >>> 0), 7);
-        return `user-${hash}@skill-3d6c1.firebaseapp.com`;
+        return `user-${hash}@namemyskill.firebaseapp.com`;
       }
 
       async saveCurrentUser() {
@@ -4989,7 +4989,8 @@
           const messages = {
             'auth/user-not-found': 'ไม่พบบัญชีผู้ใช้นี้ในระบบ',
             'auth/wrong-password': 'รหัสผ่านไม่ถูกต้อง',
-            'auth/invalid-credential': 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
+            'auth/invalid-credential': 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง (หากยังไม่มีบัญชี กรุณากดสมัครสมาชิกด้านล่าง)',
+            'auth/user-not-found': 'ไม่พบบัญชีนี้ในระบบ กรุณากดสมัครสมาชิกด้านล่าง',
             'auth/invalid-email': 'รูปแบบอีเมลไม่ถูกต้อง',
             'auth/operation-not-allowed': 'ระบบ Authentication ยังไม่พร้อมใช้งาน'
           };
