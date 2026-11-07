@@ -394,6 +394,78 @@
       margin-top: 2px;
     }
 
+    /* ============================================================ */
+    /* UNIFIED COMPACT MENU BUTTON & MEGA DROPDOWN PANEL            */
+    /* ============================================================ */
+    .nav-unified-dropdown {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      margin-left: 0.5rem;
+    }
+
+    .nav-unified-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.42rem 0.85rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 10px;
+      color: #e2e8f0;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .nav-unified-btn:hover,
+    .nav-unified-dropdown.open .nav-unified-btn {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: rgba(99, 102, 241, 0.5);
+      color: #fff;
+      box-shadow: 0 0 18px rgba(99, 102, 241, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .nav-unified-dropdown.active .nav-unified-btn {
+      border-color: rgba(99, 102, 241, 0.5);
+      color: #c7d2fe;
+      background: rgba(99, 102, 241, 0.15);
+      box-shadow: 0 0 14px rgba(99, 102, 241, 0.25);
+    }
+
+    .nav-unified-btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #a5b4fc;
+    }
+
+    .nav-unified-menu-panel {
+      min-width: 320px;
+      max-width: 360px;
+      padding: 0.75rem;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(13, 18, 36, 0.98), rgba(20, 24, 48, 0.97));
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 0 30px rgba(99, 102, 241, 0.2);
+    }
+
+    .nav-menu-group-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #94a3b8;
+      padding: 0.4rem 0.6rem 0.25rem 0.6rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      margin-bottom: 0.25rem;
+    }
+
     .nav-actions {
       display: flex;
       align-items: center;
@@ -3936,82 +4008,86 @@
         <span class="nav-title">OMNIVERSE</span>
       </div>
 
-      <ul class="nav-links">
-        <!-- 1. คลังวิชา -->
-        <li class="nav-item active" data-route="#/" onclick="app.navigate('#/')">
-          <span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg></span>
-          <span>คลังวิชา</span>
-        </li>
-
-        <!-- 2. ทำเนียบยศ & เควสต์ -->
-        <li class="nav-item" data-route="#/ranks" onclick="app.navigate('#/ranks')">
-          <span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
-          <span>ยศ & เควสต์</span>
-        </li>
-
-        <!-- 3. เครื่องมือการเรียนรู้ (Dropdown) -->
-        <li class="nav-dropdown" id="nav-dropdown-tools">
-          <div class="nav-dropdown-trigger" onclick="app.toggleNavDropdown('nav-dropdown-tools', event)" title="เครื่องมือการเรียนรู้และ AI">
-            <span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
-            <span>เครื่องมือ</span>
-            <span class="nav-dropdown-arrow">▾</span>
-          </div>
-          <div class="nav-dropdown-menu">
-            <div class="nav-dropdown-item" data-route="#/flashcards" onclick="app.navigate('#/flashcards'); app.closeAllNavDropdowns();">
-              <span class="nav-dropdown-icon">🗂️</span>
-              <div class="nav-dropdown-text">
-                <span class="nav-dropdown-title">บัตรคำช่วยจำ (Flashcards)</span>
-                <span class="nav-dropdown-desc">ทบทวนศัพท์ 20 ภาษาและสูตรสำคัญ</span>
-              </div>
-            </div>
-            <div class="nav-dropdown-item" data-route="#/lab" onclick="app.navigate('#/lab'); app.closeAllNavDropdowns();">
-              <span class="nav-dropdown-icon">🔬</span>
-              <div class="nav-dropdown-text">
-                <span class="nav-dropdown-title">ห้องแล็บจำลอง (OmniLab)</span>
-                <span class="nav-dropdown-desc">การทดลองฟิสิกส์ คณิต เคมี อินเทอร์แอคทีฟ</span>
-              </div>
-            </div>
-            <div class="nav-dropdown-item" onclick="omniAI.open(); app.closeAllNavDropdowns();">
-              <span class="nav-dropdown-icon">⚡</span>
-              <div class="nav-dropdown-text">
-                <span class="nav-dropdown-title">ปรึกษา AI (OmniAI)</span>
-                <span class="nav-dropdown-desc">ผู้ช่วยติวเตอร์ปัญญาประดิษฐ์ส่วนตัว</span>
-              </div>
+      <!-- Unified Menu (รวมคลังสายวิชา, ทำเนียบยศ, ห้องแล็บจำลอง และอื่นๆ) -->
+      <div class="nav-dropdown nav-unified-dropdown" id="nav-unified-menu">
+        <button class="nav-unified-btn" onclick="app.toggleNavDropdown('nav-unified-menu', event)" title="เปิดเมนูตัวเลือกทั้งหมด">
+          <span class="nav-unified-btn-icon">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </span>
+          <span class="nav-unified-btn-text">เมนูตัวเลือก</span>
+          <span class="nav-dropdown-arrow">▾</span>
+        </button>
+        <div class="nav-dropdown-menu nav-unified-menu-panel">
+          <!-- 1. สรรพวิชา & ระดับยศ -->
+          <div class="nav-menu-group-label">📚 สรรพวิชา & ตราเกียรติยศ</div>
+          <div class="nav-dropdown-item active" data-route="#/" onclick="app.navigate('#/'); app.closeAllNavDropdowns();">
+            <span class="nav-dropdown-icon">📖</span>
+            <div class="nav-dropdown-text">
+              <span class="nav-dropdown-title">คลังสายวิชา</span>
+              <span class="nav-dropdown-desc">15 สายวิชาแห่งสรรพความรู้และบทเรียน</span>
             </div>
           </div>
-        </li>
-
-        <!-- 4. ตารางอันดับ -->
-        <li class="nav-item" data-route="#/leaderboard" onclick="app.navigate('#/leaderboard')">
-          <span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span>
-          <span>อันดับ</span>
-        </li>
-
-        <!-- 5. เพิ่มเติม & จัดการ (Dropdown) -->
-        <li class="nav-dropdown" id="nav-dropdown-more">
-          <div class="nav-dropdown-trigger" onclick="app.toggleNavDropdown('nav-dropdown-more', event)" title="เมนูเพิ่มเติม">
-            <span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></span>
-            <span>เพิ่มเติม</span>
-            <span class="nav-dropdown-arrow">▾</span>
-          </div>
-          <div class="nav-dropdown-menu">
-            <div class="nav-dropdown-item" data-route="#/tickets" onclick="app.navigate('#/tickets'); app.closeAllNavDropdowns();">
-              <span class="nav-dropdown-icon">🎫</span>
-              <div class="nav-dropdown-text">
-                <span class="nav-dropdown-title">ศูนย์ช่วยเหลือ</span>
-                <span class="nav-dropdown-desc">แจ้งปัญหา ส่งคำถาม และติดต่อผู้พัฒนา</span>
-              </div>
-            </div>
-            <div class="nav-dropdown-item" id="nav-admin-link" style="display: none;" data-route="#/admin" onclick="app.navigate('#/admin'); app.closeAllNavDropdowns();">
-              <span class="nav-dropdown-icon">🛡️</span>
-              <div class="nav-dropdown-text">
-                <span class="nav-dropdown-title">จัดการระบบ (Admin)</span>
-                <span class="nav-dropdown-desc">ศูนย์ควบคุมหลังบ้านเฉพาะแอดมิน</span>
-              </div>
+          <div class="nav-dropdown-item" data-route="#/ranks" onclick="app.navigate('#/ranks'); app.closeAllNavDropdowns();">
+            <span class="nav-dropdown-icon">🛡️</span>
+            <div class="nav-dropdown-text">
+              <span class="nav-dropdown-title">ทำเนียบยศ & เควสต์ประจำวัน</span>
+              <span class="nav-dropdown-desc">ตราเกียรติยศ 7 ขั้นสไตล์ RoV และเควสต์รับ EXP</span>
             </div>
           </div>
-        </li>
-      </ul>
+
+          <!-- 2. เครื่องมือจำลอง & AI -->
+          <div class="nav-menu-group-label" style="margin-top: 0.35rem;">🔬 เครื่องมือจำลอง & AI</div>
+          <div class="nav-dropdown-item" data-route="#/lab" onclick="app.navigate('#/lab'); app.closeAllNavDropdowns();">
+            <span class="nav-dropdown-icon">🔬</span>
+            <div class="nav-dropdown-text">
+              <span class="nav-dropdown-title">ห้องแล็บจำลอง (OmniLab)</span>
+              <span class="nav-dropdown-desc">การทดลองฟิสิกส์ คณิต เคมี และกราฟอินเทอร์แอคทีฟ</span>
+            </div>
+          </div>
+          <div class="nav-dropdown-item" data-route="#/flashcards" onclick="app.navigate('#/flashcards'); app.closeAllNavDropdowns();">
+            <span class="nav-dropdown-icon">🗂️</span>
+            <div class="nav-dropdown-text">
+              <span class="nav-dropdown-title">บัตรคำช่วยจำ (Flashcards)</span>
+              <span class="nav-dropdown-desc">ทบทวนศัพท์ 20 ภาษาโลกและสูตรด้วย 3D Flip</span>
+            </div>
+          </div>
+          <div class="nav-dropdown-item" onclick="omniAI.open(); app.closeAllNavDropdowns();">
+            <span class="nav-dropdown-icon">⚡</span>
+            <div class="nav-dropdown-text">
+              <span class="nav-dropdown-title">ที่ปรึกษาการเรียนรู้ AI (OmniAI)</span>
+              <span class="nav-dropdown-desc">ติวเตอร์ปัญญาประดิษฐ์ ถาม-ตอบข้อสงสัยแบบเรียลไทม์</span>
+            </div>
+          </div>
+
+          <!-- 3. ชุมชน & บริการ -->
+          <div class="nav-menu-group-label" style="margin-top: 0.35rem;">🌐 ชุมชน & บริการช่วยเหลือ</div>
+          <div class="nav-dropdown-item" data-route="#/leaderboard" onclick="app.navigate('#/leaderboard'); app.closeAllNavDropdowns();">
+            <span class="nav-dropdown-icon">🏆</span>
+            <div class="nav-dropdown-text">
+              <span class="nav-dropdown-title">ตารางอันดับเกียรติยศ (Leaderboard)</span>
+              <span class="nav-dropdown-desc">ประลอง EXP และอันดับผู้เรียนยอดเยี่ยม</span>
+            </div>
+          </div>
+          <div class="nav-dropdown-item" data-route="#/tickets" onclick="app.navigate('#/tickets'); app.closeAllNavDropdowns();">
+            <span class="nav-dropdown-icon">🎫</span>
+            <div class="nav-dropdown-text">
+              <span class="nav-dropdown-title">ศูนย์ช่วยเหลือ & แจ้งปัญหา (Support)</span>
+              <span class="nav-dropdown-desc">ติดต่อทีมงาน แจ้งข้อผิดพลาด และคำแนะนำ</span>
+            </div>
+          </div>
+          <div class="nav-dropdown-item" id="nav-admin-link" style="display: none;" data-route="#/admin" onclick="app.navigate('#/admin'); app.closeAllNavDropdowns();">
+            <span class="nav-dropdown-icon">🛡️</span>
+            <div class="nav-dropdown-text">
+              <span class="nav-dropdown-title">ศูนย์ควบคุมหลังบ้าน (Admin)</span>
+              <span class="nav-dropdown-desc">จัดการผู้ใช้ เนื้อหาบทเรียน และระบบ</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div class="nav-actions">
         <!-- Quick Search Button (Ctrl+K) -->
