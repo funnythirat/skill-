@@ -3962,6 +3962,159 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="window.__katexLoaded = true; if(window.app && typeof window.app.renderMath === 'function') window.app.renderMath(document.body);"></script>
+<style>
+    /* === 7 ACADEMIC RANK FRAMES & COSMIC AURAS === */
+    .profile-avatar-frame.frame-bronze {
+      background: linear-gradient(135deg, #ea580c, #b45309, #78350f) !important;
+      border: 3px solid #fed7aa !important;
+      box-shadow: 0 0 18px rgba(234, 88, 12, 0.7), inset 0 0 10px rgba(0,0,0,0.5) !important;
+    }
+    .profile-avatar-frame.frame-silver {
+      background: linear-gradient(135deg, #ffffff, #cbd5e1, #64748b) !important;
+      border: 3px solid #ffffff !important;
+      box-shadow: 0 0 20px rgba(147, 197, 253, 0.8), inset 0 0 10px rgba(0,0,0,0.5) !important;
+    }
+    .profile-avatar-frame.frame-gold {
+      background: linear-gradient(135deg, #fef08a, #f59e0b, #b45309) !important;
+      border: 3px solid #fef08a !important;
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.9), inset 0 0 12px rgba(0,0,0,0.5) !important;
+      animation: goldFramePulse 2.5s infinite alternate;
+    }
+    .profile-avatar-frame.frame-platinum {
+      background: linear-gradient(135deg, #a7f3d0, #2dd4bf, #0f766e) !important;
+      border: 3px solid #ccfbf1 !important;
+      box-shadow: 0 0 26px rgba(45, 212, 191, 0.9), inset 0 0 12px rgba(0,0,0,0.5) !important;
+      animation: platFramePulse 3s infinite alternate;
+    }
+    .profile-avatar-frame.frame-diamond {
+      background: linear-gradient(135deg, #ffffff, #7dd3fc, #0284c7, #0c4a6e) !important;
+      border: 3px solid #ffffff !important;
+      box-shadow: 0 0 30px rgba(56, 189, 248, 1), 0 0 15px rgba(255, 255, 255, 0.8) !important;
+      animation: diamondShimmer 2.2s infinite alternate;
+    }
+    .profile-avatar-frame.frame-master {
+      background: linear-gradient(135deg, #f5d0fe, #c084fc, #7e22ce, #3b0764) !important;
+      border: 3px solid #fef08a !important;
+      box-shadow: 0 0 35px rgba(192, 132, 252, 1), 0 0 15px rgba(251, 191, 36, 0.7) !important;
+      animation: masterDragonAura 2s infinite alternate;
+    }
+    .profile-avatar-frame.frame-supreme {
+      background: linear-gradient(135deg, #ffffff, #f43f5e, #be123c, #fbbf24) !important;
+      border: 3px solid #fbbf24 !important;
+      box-shadow: 0 0 45px rgba(244, 63, 94, 1), 0 0 25px rgba(251, 191, 36, 0.9) !important;
+      animation: supremeCosmicPulse 1.8s infinite alternate;
+    }
+
+    @keyframes goldFramePulse {
+      0% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.6); }
+      100% { box-shadow: 0 0 28px rgba(245, 158, 11, 1); }
+    }
+    @keyframes platFramePulse {
+      0% { box-shadow: 0 0 16px rgba(45, 212, 191, 0.6); }
+      100% { box-shadow: 0 0 30px rgba(45, 212, 191, 1); }
+    }
+    @keyframes diamondShimmer {
+      0% { box-shadow: 0 0 20px rgba(56, 189, 248, 0.7), 0 0 10px rgba(255, 255, 255, 0.5); }
+      100% { box-shadow: 0 0 35px rgba(56, 189, 248, 1), 0 0 20px rgba(255, 255, 255, 0.9); }
+    }
+    @keyframes masterDragonAura {
+      0% { box-shadow: 0 0 22px rgba(192, 132, 252, 0.7), 0 0 10px rgba(251, 191, 36, 0.5); }
+      100% { box-shadow: 0 0 40px rgba(192, 132, 252, 1), 0 0 22px rgba(251, 191, 36, 0.9); }
+    }
+    @keyframes supremeCosmicPulse {
+      0% { box-shadow: 0 0 25px rgba(244, 63, 94, 0.8), 0 0 15px rgba(251, 191, 36, 0.7); }
+      100% { box-shadow: 0 0 50px rgba(244, 63, 94, 1), 0 0 30px rgba(251, 191, 36, 1); }
+    }
+
+    /* === RANK REWARDS ROAD STYLING === */
+    .rewards-summary-banner {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(30, 27, 75, 0.88));
+      border: 1px solid rgba(251, 191, 36, 0.35);
+      border-radius: 20px;
+      padding: 1.75rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 25px rgba(251, 191, 36, 0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .rewards-milestones-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .reward-milestone-card {
+      background: rgba(15, 23, 42, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .reward-milestone-card.unlocked-ready {
+      border-color: #fbbf24;
+      background: linear-gradient(135deg, rgba(30, 27, 75, 0.85), rgba(15, 23, 42, 0.95));
+      box-shadow: 0 0 30px rgba(251, 191, 36, 0.25);
+    }
+    .reward-milestone-card.claimed {
+      border-color: rgba(34, 197, 94, 0.4);
+      background: linear-gradient(135deg, rgba(20, 35, 28, 0.7), rgba(15, 23, 42, 0.85));
+    }
+    .reward-milestone-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    }
+    .reward-item-row {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 0.6rem 0.85rem;
+      margin-bottom: 0.5rem;
+    }
+    .reward-item-row.highlight-coin {
+      background: rgba(251, 191, 36, 0.08);
+      border-color: rgba(251, 191, 36, 0.25);
+    }
+    .reward-item-row.highlight-title {
+      background: rgba(56, 189, 248, 0.08);
+      border-color: rgba(56, 189, 248, 0.25);
+    }
+    .reward-item-row.highlight-frame {
+      background: rgba(168, 85, 247, 0.08);
+      border-color: rgba(168, 85, 247, 0.25);
+    }
+    .wardrobe-panel {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 20px;
+      padding: 1.75rem;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+      margin-top: 2rem;
+    }
+    .btn-claim-pulse {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
+      color: #000 !important;
+      font-weight: 800 !important;
+      border: none !important;
+      box-shadow: 0 0 20px rgba(251, 191, 36, 0.7) !important;
+      animation: claimPulseAnim 1.6s infinite alternate ease-in-out !important;
+    }
+    @keyframes claimPulseAnim {
+      0% { transform: scale(1); box-shadow: 0 0 12px rgba(251, 191, 36, 0.5); }
+      100% { transform: scale(1.04); box-shadow: 0 0 25px rgba(251, 191, 36, 0.9); }
+    }
+</style>
 </head>
 <body>
   <!-- Top Reading Progress Indicator -->
@@ -4081,6 +4234,10 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
           <span class="search-btn-text">ค้นหา</span>
           <kbd style="background: rgba(255,255,255,0.1); border-radius: 4px; padding: 1px 4px; font-size: 0.7rem; color: #94a3b8;">Ctrl K</kbd>
+        </button>
+        <!-- OmniCoins Balance Button -->
+        <button id="nav-coins-btn" class="nav-rank-badge" onclick="app.navigate('#/ranks?tab=rewards')" title="OmniCoins สะสม (คลิกดูของรางวัล)" style="border-color: rgba(251, 191, 36, 0.4); background: rgba(251, 191, 36, 0.12); color: #fbbf24; font-weight: 800; font-size: 0.82rem; display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.3rem 0.7rem;">
+          <span id="nav-coins-amount">🪙 0</span>
         </button>
         <!-- Pomodoro Timer Toggle -->
         <button id="btn-pomodoro-toggle" class="btn-icon" onclick="app.togglePomodoro()" title="ตัวจับเวลาโฟกัส Pomodoro (25/5 นาที)"><span style="font-size: 1.05rem;">⏱️</span></button>
@@ -6387,6 +6544,88 @@
       return svgs[tierId] || svgs.bronze;
     }
 
+    // RANK REWARDS CONFIGURATION (7 TIERS)
+    const RANK_REWARDS_CONFIG = {
+      bronze: {
+        tierId: 'bronze',
+        minXp: 0,
+        coins: 100,
+        title: '🌱 ผู้เริ่มแสวงปัญญา',
+        frame: 'frame-bronze',
+        frameName: 'Bronze Rune Frame (กรอบศิลาทองแดง)',
+        perk: '📜 ตราบัณฑิตปฐมบท (Novice Codex Badge)',
+        desc: 'เริ่มต้นก้าวแรกแห่งการเรียนรู้ ปลดล็อกฉายาและกรอบทองแดงรูน',
+        icon: '🌱'
+      },
+      silver: {
+        tierId: 'silver',
+        minXp: 500,
+        coins: 250,
+        title: '🛡️ ผู้พิทักษ์ตำราศิลา',
+        frame: 'frame-silver',
+        frameName: 'Silver Crystalline Frame (กรอบโล่เงินแท้)',
+        perk: '📖 คัมภีร์สรุปย่อความจำ (SRS Memory Scroll)',
+        desc: 'ความเพียรพยายามได้รับการยอมรับ ปลดล็อกคัมภีร์สรุปและกรอบโล่เงิน',
+        icon: '🛡️'
+      },
+      gold: {
+        tierId: 'gold',
+        minXp: 1500,
+        coins: 500,
+        title: '✨ พหูสูตสุริยันเรืองรอง',
+        frame: 'frame-gold',
+        frameName: 'Golden Wing Crest Frame (กรอบสุริยันปีกทองคำ)',
+        perk: '⚡ บูสเตอร์ปัญญา x1.2 EXP ในห้องแล็บวิทยาศาสตร์',
+        desc: 'ปัญญาเจิดจ้าดั่งตะวัน ปลดล็อกกรอบปีกทองคำและบูสเตอร์ EXP',
+        icon: '✨'
+      },
+      platinum: {
+        tierId: 'platinum',
+        minXp: 3000,
+        coins: 1000,
+        title: '🧪 ปราชญ์วิทยาการล้ำยุค',
+        frame: 'frame-platinum',
+        frameName: 'Platinum Cyber-Aura Frame (กรอบนีออนมรกต)',
+        perk: '🗂️ กุญแจคลังบัตรคำพิเศษ (Master Flashcard Vault)',
+        desc: 'บรรลุวิทยาการขั้นสูง ปลดล็อกกรอบนีออนไซเบอร์และคลังบัตรคำลับ',
+        icon: '🧪'
+      },
+      diamond: {
+        tierId: 'diamond',
+        minXp: 5000,
+        coins: 2000,
+        title: '💎 มหาปราชญ์ประกายเพชร',
+        frame: 'frame-diamond',
+        frameName: 'Diamond Starlight Frame (กรอบมงกุฎเพชรเจียระไน)',
+        perk: '🌟 สิทธิ์เข้าถึงโจทย์ท้าทายระดับโอลิมปิกวิชาการ',
+        desc: 'ประกายเพชรแห่งจักรวาล ปลดล็อกกรอบปริซึมแสงดาวและโจทย์ท้าทายโอลิมปิก',
+        icon: '💎'
+      },
+      master: {
+        tierId: 'master',
+        minXp: 9000,
+        coins: 3500,
+        title: '👑 จอมราชันย์แห่งศาสตร์ทั้งปวง',
+        frame: 'frame-master',
+        frameName: 'Master Dragon Amethyst Frame (กรอบปีกมังกรทองอเมทิสต์)',
+        perk: '🏆 ป้ายเกียรติยศ Hall of Fame สลักชื่อทองคำ',
+        desc: 'ชัยชนะเหนือศาสตร์ทั้งปวง ปลดล็อกกรอบมังกรม่วงและจารึกชื่อในทำเนียบเกียรติยศ',
+        icon: '👑'
+      },
+      supreme: {
+        tierId: 'supreme',
+        minXp: 15000,
+        coins: 5000,
+        title: '🌌 มหาจักรพรรดิแห่งอนันตจักรวาล',
+        frame: 'frame-supreme',
+        frameName: 'Supreme Cosmic Pulsar Frame (กรอบจักรวาลหมุนวน)',
+        perk: '🪐 มงกุฎแสงแห่งสัจธรรมนิรันดร์ (Eternal Zenith)',
+        desc: 'ยศสูงสุดแห่งจักรวาล OmniVerse รัศมีสุริยะหมุนวนพร้อมบัลลังก์นิรันดร์',
+        icon: '🌌'
+      }
+    };
+    if (typeof window !== 'undefined') window.RANK_REWARDS_CONFIG = RANK_REWARDS_CONFIG;
+
     const ACADEMIC_RANKS = [
       { id: 'bronze', nameTh: 'ผู้แสวงหาชั้นทองแดง', nameEn: 'Bronze Novice', minXp: 0, maxXp: 499, color: '#cd7f32', accent: '#ea580c', glow: 'rgba(205, 127, 50, 0.5)', desc: 'ศิลาทองแดงสลักอักษรรูนแห่งก้าวแรกในจักรวาลความรู้' },
       { id: 'silver', nameTh: 'ปราชญ์ฝึกหัดชั้นเงิน', nameEn: 'Silver Apprentice', minXp: 500, maxXp: 1499, color: '#cbd5e1', accent: '#94a3b8', glow: 'rgba(203, 213, 225, 0.5)', desc: 'ตราโล่เงินแท้ประดับผลึกแก้วมนตราแห่งความเพียรพยายาม' },
@@ -6590,6 +6829,229 @@ class AppController {
       }
 
       // Centralized EXP Award & RoV Rank Promotion Checker
+      // === OMNIVERSE RANK REWARDS & ECONOMY ENGINE ===
+      getCoins() {
+        if (auth.currentUser) {
+          return Number(auth.currentUser.coins) || 0;
+        }
+        try {
+          return parseInt(localStorage.getItem('omni_guest_coins') || '0', 10);
+        } catch(e) {
+          return 0;
+        }
+      }
+
+      addCoins(amount, reason = '') {
+        const added = Math.max(0, Number(amount) || 0);
+        if (added <= 0) return;
+        if (auth.currentUser) {
+          auth.currentUser.coins = (Number(auth.currentUser.coins) || 0) + added;
+          auth.saveCurrentUser();
+        } else {
+          try {
+            const current = parseInt(localStorage.getItem('omni_guest_coins') || '0', 10);
+            localStorage.setItem('omni_guest_coins', String(current + added));
+          } catch(e) {}
+        }
+        this.updateUserUI();
+        if (reason) this.showToast('🪙 +' + added.toLocaleString() + ' OmniCoins (' + reason + ')! ✨');
+      }
+
+      getClaimedRankRewards() {
+        if (auth.currentUser) {
+          if (!Array.isArray(auth.currentUser.claimedRankRewards)) {
+            auth.currentUser.claimedRankRewards = [];
+          }
+          return auth.currentUser.claimedRankRewards;
+        }
+        try {
+          const raw = localStorage.getItem('omni_guest_claimed_rewards');
+          return raw ? JSON.parse(raw) : [];
+        } catch(e) {
+          return [];
+        }
+      }
+
+      isRankRewardClaimed(tierId) {
+        return this.getClaimedRankRewards().includes(tierId);
+      }
+
+      canClaimRankReward(tierId) {
+        const reward = RANK_REWARDS_CONFIG[tierId];
+        if (!reward) return false;
+        if (this.isRankRewardClaimed(tierId)) return false;
+        const uXp = (auth.currentUser && auth.currentUser.xp) ? auth.currentUser.xp : parseInt(localStorage.getItem('omni_guest_xp') || '0', 10);
+        return uXp >= reward.minXp;
+      }
+
+      getUnclaimedRewardsCount() {
+        const uXp = (auth.currentUser && auth.currentUser.xp) ? auth.currentUser.xp : parseInt(localStorage.getItem('omni_guest_xp') || '0', 10);
+        const claimed = this.getClaimedRankRewards();
+        let count = 0;
+        ACADEMIC_RANKS.forEach(t => {
+          if (uXp >= t.minXp && !claimed.includes(t.id)) count++;
+        });
+        return count;
+      }
+
+      getEquippedTitle() {
+        if (auth.currentUser && auth.currentUser.equippedTitle) {
+          return auth.currentUser.equippedTitle;
+        }
+        try {
+          return localStorage.getItem('omni_guest_title') || '🌱 ผู้เริ่มแสวงปัญญา';
+        } catch(e) {
+          return '🌱 ผู้เริ่มแสวงปัญญา';
+        }
+      }
+
+      equipTitle(title) {
+        if (auth.currentUser) {
+          auth.currentUser.equippedTitle = title;
+          auth.saveCurrentUser();
+        } else {
+          try {
+            localStorage.setItem('omni_guest_title', title);
+          } catch(e) {}
+        }
+        this.updateUserUI();
+        this.showToast('🏷️ สวมใส่ฉายา "' + title + '" เรียบร้อยแล้ว! ✨');
+        if (window.location.hash.startsWith('#/ranks')) this.renderRanksView('rewards');
+        else if (window.location.hash.startsWith('#/profile')) this.renderProfile();
+      }
+
+      getEquippedFrame() {
+        if (auth.currentUser && (auth.currentUser.frame || auth.currentUser.equippedFrame)) {
+          return auth.currentUser.frame || auth.currentUser.equippedFrame;
+        }
+        try {
+          return localStorage.getItem('omni_guest_frame') || 'default';
+        } catch(e) {
+          return 'default';
+        }
+      }
+
+      equipFrame(frameId) {
+        if (auth.currentUser) {
+          auth.currentUser.frame = frameId;
+          auth.currentUser.equippedFrame = frameId;
+          auth.saveCurrentUser();
+        } else {
+          try {
+            localStorage.setItem('omni_guest_frame', frameId);
+          } catch(e) {}
+        }
+        this.updateUserUI();
+        this.showToast('🖼️ สวมใส่กรอบรูปออร่าเรียบร้อยแล้ว! ✨');
+        if (window.location.hash.startsWith('#/ranks')) this.renderRanksView('rewards');
+        else if (window.location.hash.startsWith('#/profile')) this.renderProfile();
+      }
+
+      claimRankReward(tierId, autoEquip = false) {
+        const reward = RANK_REWARDS_CONFIG[tierId];
+        if (!reward) return;
+        if (this.isRankRewardClaimed(tierId)) {
+          this.showToast('คุณได้รับรางวัลของยศนี้ไปแล้ว');
+          return;
+        }
+        if (!this.canClaimRankReward(tierId)) {
+          this.showToast('EXP ของคุณยังไม่ถึงเกณฑ์ปลดล็อกรางวัลนี้');
+          return;
+        }
+
+        if (auth.currentUser) {
+          if (!Array.isArray(auth.currentUser.claimedRankRewards)) auth.currentUser.claimedRankRewards = [];
+          auth.currentUser.claimedRankRewards.push(tierId);
+          auth.currentUser.coins = (Number(auth.currentUser.coins) || 0) + reward.coins;
+          if (autoEquip) {
+            auth.currentUser.equippedTitle = reward.title;
+            auth.currentUser.frame = reward.frame;
+            auth.currentUser.equippedFrame = reward.frame;
+          }
+          auth.saveCurrentUser();
+        } else {
+          try {
+            const claimed = this.getClaimedRankRewards();
+            claimed.push(tierId);
+            localStorage.setItem('omni_guest_claimed_rewards', JSON.stringify(claimed));
+            const currentCoins = parseInt(localStorage.getItem('omni_guest_coins') || '0', 10);
+            localStorage.setItem('omni_guest_coins', String(currentCoins + reward.coins));
+            if (autoEquip) {
+              localStorage.setItem('omni_guest_title', reward.title);
+              localStorage.setItem('omni_guest_frame', reward.frame);
+            }
+          } catch(e) {}
+        }
+
+        if (soundEngine && typeof soundEngine.playSuccess === 'function') {
+          soundEngine.playSuccess();
+        }
+
+        this.updateUserUI();
+        this.showToast('🎉 รับรางวัลยศ ' + tierId.toUpperCase() + ': +' + reward.coins.toLocaleString() + ' Coins, ฉายา และกรอบออร่า! 🎁');
+
+        if (window.location.hash.startsWith('#/ranks')) {
+          this.renderRanksView('rewards');
+        } else if (window.location.hash.startsWith('#/profile')) {
+          this.renderProfile();
+        }
+      }
+
+      claimAllRankRewards() {
+        const uXp = (auth.currentUser && auth.currentUser.xp) ? auth.currentUser.xp : parseInt(localStorage.getItem('omni_guest_xp') || '0', 10);
+        let totalCoins = 0;
+        const newClaimed = [];
+        let highestTier = null;
+
+        ACADEMIC_RANKS.forEach(t => {
+          if (uXp >= t.minXp && !this.isRankRewardClaimed(t.id)) {
+            const rew = RANK_REWARDS_CONFIG[t.id];
+            if (rew) {
+              totalCoins += rew.coins;
+              newClaimed.push(t.id);
+              highestTier = rew;
+            }
+          }
+        });
+
+        if (newClaimed.length === 0) {
+          this.showToast('ไม่มีของรางวัลที่รอรับในขณะนี้');
+          return;
+        }
+
+        if (auth.currentUser) {
+          if (!Array.isArray(auth.currentUser.claimedRankRewards)) auth.currentUser.claimedRankRewards = [];
+          auth.currentUser.claimedRankRewards.push(...newClaimed);
+          auth.currentUser.coins = (Number(auth.currentUser.coins) || 0) + totalCoins;
+          if (highestTier) {
+            auth.currentUser.equippedTitle = highestTier.title;
+            auth.currentUser.frame = highestTier.frame;
+            auth.currentUser.equippedFrame = highestTier.frame;
+          }
+          auth.saveCurrentUser();
+        } else {
+          try {
+            const claimed = this.getClaimedRankRewards();
+            claimed.push(...newClaimed);
+            localStorage.setItem('omni_guest_claimed_rewards', JSON.stringify(claimed));
+            const curCoins = parseInt(localStorage.getItem('omni_guest_coins') || '0', 10);
+            localStorage.setItem('omni_guest_coins', String(curCoins + totalCoins));
+            if (highestTier) {
+              localStorage.setItem('omni_guest_title', highestTier.title);
+              localStorage.setItem('omni_guest_frame', highestTier.frame);
+            }
+          } catch(e) {}
+        }
+
+        if (soundEngine && typeof soundEngine.playSuccess === 'function') {
+          soundEngine.playSuccess();
+        }
+
+        this.updateUserUI();
+        this.showToast('🌟 รับรางวัลทั้งหมด ' + newClaimed.length + ' ขั้นยศสำเร็จ! รับรวม +' + totalCoins.toLocaleString() + ' 🪙 OmniCoins! 🎉');
+        this.renderRanksView('rewards');
+      }
+
       awardXp(amount, reason = '') {
         const added = Math.max(0, Number(amount) || 0);
         if (added <= 0) return;
@@ -6629,6 +7091,8 @@ class AppController {
           soundEngine.playSuccess();
         }
 
+        const rew = (typeof RANK_REWARDS_CONFIG !== 'undefined') ? RANK_REWARDS_CONFIG[tier.id] : null;
+
         const modal = document.createElement('div');
         modal.className = 'rank-up-overlay';
         modal.id = 'modal-rank-promotion';
@@ -6659,13 +7123,38 @@ class AppController {
               ${'⭐'.repeat(tier.stars)}
             </div>
 
-            <p style="font-size: 0.9rem; color: #94a3b8; max-width: 420px; margin: 0 auto 1.75rem auto; line-height: 1.5;">
+            <p style="font-size: 0.9rem; color: #94a3b8; max-width: 420px; margin: 0 auto 1rem auto; line-height: 1.5;">
               "${tier.desc}"
             </p>
 
-            <button class="btn btn-primary" onclick="document.getElementById('modal-rank-promotion').remove();" style="width: 100%; padding: 0.85rem 1.5rem; font-size: 1.05rem; font-weight: 800; background: linear-gradient(135deg, ${tier.color}, ${tier.accent}); color: #000; box-shadow: 0 0 25px ${tier.glow};">
-              น้อมรับเกียรติยศและก้าวต่อไป ➔
-            </button>
+            ${rew ? `
+              <div style="background: rgba(0,0,0,0.45); border: 1px solid ${tier.color}66; border-radius: 14px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; text-align: left;">
+                <div style="font-size: 0.82rem; font-weight: 800; color: #fbbf24; margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 0.35rem;">
+                  <span>🎁</span> ของรางวัลเลื่อนขั้นยศที่ปลดล็อก:
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.82rem;">
+                  <div style="color: #fbbf24; font-weight: 700; background: rgba(251, 191, 36, 0.1); padding: 0.4rem 0.6rem; border-radius: 8px;">🪙 +${rew.coins.toLocaleString()} OmniCoins</div>
+                  <div style="color: #38bdf8; font-weight: 700; background: rgba(56, 189, 248, 0.1); padding: 0.4rem 0.6rem; border-radius: 8px;">🏷️ ${rew.title}</div>
+                  <div style="color: #cbd5e1; background: rgba(255, 255, 255, 0.05); padding: 0.4rem 0.6rem; border-radius: 8px;">🖼️ ${rew.frameName}</div>
+                  <div style="color: #a7f3d0; background: rgba(34, 197, 94, 0.1); padding: 0.4rem 0.6rem; border-radius: 8px;">${rew.perk}</div>
+                </div>
+              </div>
+            ` : ''}
+
+            <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+              ${rew ? `
+                <button class="btn btn-primary" onclick="if(window.app){app.claimRankReward('${tier.id}', true);} document.getElementById('modal-rank-promotion').remove();" style="width: 100%; padding: 0.85rem 1.5rem; font-size: 1.05rem; font-weight: 800; background: linear-gradient(135deg, ${tier.color}, ${tier.accent}); color: #000; box-shadow: 0 0 25px ${tier.glow};">
+                  🎁 รับรางวัลและสวมใส่ทันที ➔
+                </button>
+              ` : `
+                <button class="btn btn-primary" onclick="document.getElementById('modal-rank-promotion').remove();" style="width: 100%; padding: 0.85rem 1.5rem; font-size: 1.05rem; font-weight: 800; background: linear-gradient(135deg, ${tier.color}, ${tier.accent}); color: #000; box-shadow: 0 0 25px ${tier.glow};">
+                  น้อมรับเกียรติยศและก้าวต่อไป ➔
+                </button>
+              `}
+              <button class="btn btn-outline" onclick="document.getElementById('modal-rank-promotion').remove();" style="padding: 0.5rem; font-size: 0.85rem;">
+                ปิดหน้าต่าง
+              </button>
+            </div>
           </div>
         `;
 
@@ -7531,8 +8020,10 @@ class AppController {
       }
 
       profileAvatarMarkup(user, className = '') {
-        const avatar = this.avatarMarkup(user.avatarUrl || user.avatar);
-        return `<span class="profile-avatar-frame ${user.frame || 'default'} ${className}">${avatar}</span>`;
+        const u = user || auth.currentUser;
+        const avatar = this.avatarMarkup(u ? (u.avatarUrl || u.avatar) : 'av-1');
+        const frame = (u && (u.frame || u.equippedFrame)) ? (u.frame || u.equippedFrame) : (this.getEquippedFrame ? this.getEquippedFrame() : 'default');
+        return `<span class="profile-avatar-frame ${frame || 'default'} ${className}">${avatar}</span>`;
       }
 
       getLevel(user) {
@@ -7567,6 +8058,11 @@ class AppController {
         const adminNav = document.getElementById('nav-admin-link');
         const mobAdmin = document.getElementById('mob-admin-item');
         const mobProfileLabel = document.getElementById('mob-profile-label');
+        const navCoins = document.getElementById('nav-coins-amount');
+
+        if (navCoins && this.getCoins) {
+          navCoins.innerText = '🪙 ' + this.getCoins().toLocaleString();
+        }
 
         if (auth.currentUser) {
           authActions.style.display = 'none';
@@ -7574,7 +8070,8 @@ class AppController {
           document.getElementById('nav-user-avatar').innerHTML = this.avatarMarkup(auth.currentUser.avatarUrl || auth.currentUser.avatar);
           document.getElementById('nav-user-name').innerText = auth.currentUser.username;
           const currentRank = getRankTierData(auth.currentUser.xp || 0);
-          document.getElementById('nav-user-level').innerHTML = `<span style="color: ${currentRank.color}; font-weight: 700;">${currentRank.nameEn}</span> <span style="color: #fbbf24; font-size: 0.72rem;">${'⭐'.repeat(currentRank.stars)}</span> • LV. ${this.getLevel()}`;
+          const eqTitle = this.getEquippedTitle ? this.getEquippedTitle() : '';
+          document.getElementById('nav-user-level').innerHTML = `<span style="color: ${currentRank.color}; font-weight: 700;">${currentRank.nameEn}</span> <span style="color: #fbbf24; font-size: 0.72rem;">${'⭐'.repeat(currentRank.stars)}</span> • LV. ${this.getLevel()}${eqTitle ? '<span style="display:block; font-size:0.7rem; color:#38bdf8; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:140px;">' + eqTitle + '</span>' : ''}`;
           mobProfileLabel.innerText = 'โปรไฟล์';
 
           const isAdmin = auth.currentUser.role === 'admin';
@@ -7589,9 +8086,6 @@ class AppController {
         }
       }
 
-            // ============================================================
-      // UNIVERSAL KNOWLEDGE CODEX (15 DIVISIONS) CONTROLLER METHODS
-      // ============================================================
       toggleDeepDive() {
         const el = document.getElementById('deep-dive-content');
         const btn = document.getElementById('btn-deep-dive-toggle');
@@ -8736,7 +9230,11 @@ class AppController {
         else if (hash.startsWith('#/quiz/')) this.renderQuiz(hash.replace('#/quiz/', ''));
         else if (hash === '#/flashcards' || hash.startsWith('#/flashcards')) this.renderFlashcards(hash);
         else if (hash === '#/lab' || hash.startsWith('#/lab')) this.renderLab(hash);
-        else if (hash === '#/ranks' || hash.startsWith('#/ranks')) this.renderRanksView();
+        else if (hash === '#/ranks' || hash.startsWith('#/ranks')) {
+          const tab = hash.includes('tab=rewards') ? 'rewards' : (hash.includes('tab=quests') ? 'quests' : 'ranks');
+          this.renderRanksView(tab);
+        }
+        else if (hash === '#/rewards' || hash.startsWith('#/rewards')) this.renderRanksView('rewards');
         else if (hash === '#/quests' || hash.startsWith('#/quests')) this.renderRanksView('quests');
         else if (hash === '#/leaderboard') this.renderLeaderboard();
         else if (hash === '#/profile') this.renderProfile();
@@ -10983,21 +11481,30 @@ class AppController {
         const userTier = getRankTierData(uXp);
         const quests = omniQuest.data.quests;
         const compCount = omniQuest.getCompletedCount();
+        const unclaimedCount = this.getUnclaimedRewardsCount ? this.getUnclaimedRewardsCount() : 0;
+        const currentCoins = this.getCoins ? this.getCoins() : 0;
+        const equippedTitle = this.getEquippedTitle ? this.getEquippedTitle() : '🌱 ผู้เริ่มแสวงปัญญา';
+        const equippedFrame = this.getEquippedFrame ? this.getEquippedFrame() : 'default';
+        const claimedRewards = this.getClaimedRankRewards ? this.getClaimedRankRewards() : [];
 
         view.innerHTML = `
           <!-- Hero Header -->
           <div class="hero-banner">
-            <div class="hero-badge"><span class="badge-dot-live"></span> 🛡️ OMNIVERSE RANK CODEX & QUESTS</div>
-            <h1 class="hero-title hero-title-gradient">ทำเนียบชั้นยศปราชญ์ & เควสต์ประจำวัน</h1>
-            <p class="hero-quote">"จำแนก 7 ลำดับชั้นแห่งปัญญา สะสม EXP ไต่แรงค์สู่ระดับมหาจักรพรรดิ พร้อมพิชิตภารกิจประจำวัน"</p>
+            <div class="hero-badge"><span class="badge-dot-live"></span> 🛡️ OMNIVERSE RANK CODEX & REWARDS</div>
+            <h1 class="hero-title hero-title-gradient">ทำเนียบชั้นยศปราชญ์ & รางวัลเลื่อนยศ</h1>
+            <p class="hero-quote">"สะสม EXP ไต่แรงค์สู่ระดับมหาจักรพรรดิ ปลดล็อกฉายา กรอบโปรไฟล์ออร่า และเหรียญ OmniCoins"</p>
             
-            <!-- Tab Switcher -->
-            <div style="display: flex; gap: 0.5rem; justify-content: center; margin-top: 1.5rem;">
-              <button id="btn-tab-ranks" class="btn ${initialTab === 'ranks' ? 'btn-primary' : 'btn-outline'}" onclick="document.getElementById('section-ranks-tab').style.display='block'; document.getElementById('section-quests-tab').style.display='none'; this.className='btn btn-primary'; document.getElementById('btn-tab-quests').className='btn btn-outline';" style="font-weight: 700; padding: 0.55rem 1.35rem;">
-                🛡️ 7 ชั้นยศปราชญ์ (Rank Codex)
+            <!-- Tab Switcher (3 Tabs) -->
+            <div style="display: flex; gap: 0.5rem; justify-content: center; margin-top: 1.5rem; flex-wrap: wrap;">
+              <button id="btn-tab-ranks" class="btn ${initialTab === 'ranks' ? 'btn-primary' : 'btn-outline'}" onclick="document.getElementById('section-ranks-tab').style.display='block'; document.getElementById('section-rewards-tab').style.display='none'; document.getElementById('section-quests-tab').style.display='none'; this.className='btn btn-primary'; document.getElementById('btn-tab-rewards').className='btn btn-outline'; document.getElementById('btn-tab-quests').className='btn btn-outline';" style="font-weight: 700; padding: 0.55rem 1.25rem;">
+                🛡️ 7 ชั้นยศปราชญ์ (Codex)
               </button>
-              <button id="btn-tab-quests" class="btn ${initialTab === 'quests' ? 'btn-primary' : 'btn-outline'}" onclick="document.getElementById('section-ranks-tab').style.display='none'; document.getElementById('section-quests-tab').style.display='block'; this.className='btn btn-primary'; document.getElementById('btn-tab-ranks').className='btn btn-outline';" style="font-weight: 700; padding: 0.55rem 1.35rem;">
-                🎯 เควสต์ประจำวัน (${compCount}/5 สำเร็จ)
+              <button id="btn-tab-rewards" class="btn ${initialTab === 'rewards' ? 'btn-primary' : 'btn-outline'}" onclick="document.getElementById('section-ranks-tab').style.display='none'; document.getElementById('section-rewards-tab').style.display='block'; document.getElementById('section-quests-tab').style.display='none'; this.className='btn btn-primary'; document.getElementById('btn-tab-ranks').className='btn btn-outline'; document.getElementById('btn-tab-quests').className='btn btn-outline';" style="font-weight: 700; padding: 0.55rem 1.25rem; position: relative;">
+                🎁 เส้นทางรางวัลเลื่อนยศ (Rewards Road)
+                ${unclaimedCount > 0 ? '<span style="background: #ef4444; color: #fff; font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 10px; margin-left: 0.35rem; font-weight: 800;">' + unclaimedCount + '</span>' : ''}
+              </button>
+              <button id="btn-tab-quests" class="btn ${initialTab === 'quests' ? 'btn-primary' : 'btn-outline'}" onclick="document.getElementById('section-ranks-tab').style.display='none'; document.getElementById('section-rewards-tab').style.display='none'; document.getElementById('section-quests-tab').style.display='block'; this.className='btn btn-primary'; document.getElementById('btn-tab-ranks').className='btn btn-outline'; document.getElementById('btn-tab-rewards').className='btn btn-outline';" style="font-weight: 700; padding: 0.55rem 1.25rem;">
+                🎯 เควสต์ประจำวัน (${compCount}/5)
               </button>
             </div>
           </div>
@@ -11027,6 +11534,12 @@ class AppController {
                 <div style="background: rgba(255, 255, 255, 0.08); height: 10px; border-radius: 8px; overflow: hidden;">
                   <div style="background: linear-gradient(90deg, ${userTier.color}, ${userTier.accent}); height: 100%; width: ${userTier.percentage}%; transition: width 0.4s ease;"></div>
                 </div>
+              </div>
+
+              <div style="margin-top: 1.25rem;">
+                <button class="btn btn-primary" onclick="document.getElementById('btn-tab-rewards').click()" style="background: linear-gradient(135deg, #f59e0b, #ef4444); color: #000; font-weight: 800; padding: 0.5rem 1.2rem;">
+                  🎁 ดูและรับของรางวัลเลื่อนยศ (Rewards Road) ➔
+                </button>
               </div>
             </div>
 
@@ -11062,7 +11575,191 @@ class AppController {
             </div>
           </div>
 
-          <!-- Section 2: Daily Quests Tab -->
+          <!-- Section 2: Rank Rewards Road Tab -->
+          <div id="section-rewards-tab" style="display: ${initialTab === 'rewards' ? 'block' : 'none'};">
+            <!-- Rewards Summary Header -->
+            <div class="rewards-summary-banner">
+              <div style="display: flex; align-items: center; gap: 1.25rem;">
+                <div style="filter: drop-shadow(0 0 20px ${userTier.glow});">
+                  ${getRankSvg(userTier.id, 80)}
+                </div>
+                <div>
+                  <div style="font-size: 0.8rem; color: #fbbf24; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">
+                    🏆 RANK REWARDS CODEX & INVENTORY
+                  </div>
+                  <h2 style="font-size: 1.6rem; color: #fff; margin: 0.2rem 0;">
+                    ยศของคุณ: <span style="color: ${userTier.color};">${userTier.nameEn}</span> (${uXp.toLocaleString()} EXP)
+                  </h2>
+                  <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 0.4rem; font-size: 0.9rem;">
+                    <span style="color: #fbbf24; font-weight: 800;">🪙 สะสม: ${currentCoins.toLocaleString()} OmniCoins</span>
+                    <span style="color: #38bdf8; font-weight: 700;">🏷️ ฉายา: ${equippedTitle}</span>
+                    <span style="color: #4ade80;">ปลดล็อกแล้ว ${claimedRewards.length}/7 ขั้นยศ</span>
+                  </div>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-end;">
+                ${unclaimedCount > 0 ? `
+                  <button class="btn btn-claim-pulse" onclick="app.claimAllRankRewards()" style="padding: 0.65rem 1.4rem; font-size: 0.95rem;">
+                    🎁 กดรับรางวัลทั้งหมด (${unclaimedCount} รางวัล) ✨
+                  </button>
+                ` : `
+                  <span style="background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid #22c55e; padding: 0.45rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 700;">
+                    ✅ รับรางวัลตามยศปัจจุบันครบแล้ว
+                  </span>
+                `}
+                <span style="font-size: 0.78rem; color: var(--text-muted);">ทำโจทย์และบทเรียนเพิ่มเพื่อปลดล็อกยศต่อไป</span>
+              </div>
+            </div>
+
+            <!-- Milestones Grid (7 Ranks) -->
+            <div style="margin-bottom: 1.25rem;">
+              <h3 style="font-size: 1.3rem; color: #fff; margin-bottom: 0.35rem;">🛤️ เส้นทางปลดล็อกของรางวัลทั้ง 7 ขั้นยศ (Rewards Road)</h3>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">เมื่อคะแนน EXP ถึงเกณฑ์ คุณสามารถกดรับเหรียญ OmniCoins, ฉายาพิเศษ, และกรอบออร่าได้ทันที</p>
+            </div>
+
+            <div class="rewards-milestones-grid">
+              ${ACADEMIC_RANKS.map(t => {
+                const rew = RANK_REWARDS_CONFIG[t.id];
+                const isClaimed = claimedRewards.includes(t.id);
+                const isUnlocked = uXp >= t.minXp;
+                const canClaim = isUnlocked && !isClaimed;
+                const isTitleEquipped = equippedTitle === rew.title;
+                const isFrameEquipped = equippedFrame === rew.frame;
+
+                return `
+                  <div class="reward-milestone-card ${canClaim ? 'unlocked-ready' : (isClaimed ? 'claimed' : '')}">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                      <div style="display: flex; align-items: center; gap: 0.85rem;">
+                        ${getRankSvg(t.id, 56)}
+                        <div>
+                          <div style="font-size: 1.15rem; font-weight: 800; color: #fff;">${t.nameEn}</div>
+                          <div style="font-size: 0.85rem; color: ${t.color}; font-weight: 700;">${t.nameTh}</div>
+                          <div style="font-size: 0.75rem; color: #fbbf24; margin-top: 2px;">เกณฑ์: ${t.minXp.toLocaleString()} EXP</div>
+                        </div>
+                      </div>
+                      ${isClaimed ? '<span style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.72rem; font-weight: 800;">✅ รับแล้ว</span>' : (canClaim ? '<span style="background: #fbbf24; color: #000; font-size: 0.72rem; font-weight: 800; padding: 0.2rem 0.6rem; border-radius: 12px;">พร้อมรับ!</span>' : '<span style="background: rgba(255,255,255,0.08); color: #94a3b8; font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 12px;">🔒 ล็อกอยู่</span>')}
+                    </div>
+
+                    <!-- Items Included -->
+                    <div style="flex: 1; margin-bottom: 1.25rem;">
+                      <div class="reward-item-row highlight-coin">
+                        <span style="font-size: 1.1rem;">🪙</span>
+                        <div style="flex: 1;">
+                          <div style="font-weight: 800; color: #fbbf24; font-size: 0.85rem;">+${rew.coins.toLocaleString()} OmniCoins</div>
+                          <div style="font-size: 0.72rem; color: var(--text-muted);">เหรียญสะสมในระบบ</div>
+                        </div>
+                      </div>
+                      <div class="reward-item-row highlight-title">
+                        <span style="font-size: 1.1rem;">🏷️</span>
+                        <div style="flex: 1;">
+                          <div style="font-weight: 700; color: #38bdf8; font-size: 0.85rem;">ฉายา: ${rew.title}</div>
+                          <div style="font-size: 0.72rem; color: var(--text-muted);">แสดงใต้ชื่อผู้ใช้และบอร์ดอันดับ</div>
+                        </div>
+                      </div>
+                      <div class="reward-item-row highlight-frame">
+                        <span style="font-size: 1.1rem;">🖼️</span>
+                        <div style="flex: 1;">
+                          <div style="font-weight: 700; color: #c084fc; font-size: 0.85rem;">${rew.frameName}</div>
+                          <div style="font-size: 0.72rem; color: var(--text-muted);">กรอบออร่าเรืองแสงรอบอวาตาร์</div>
+                        </div>
+                      </div>
+                      <div class="reward-item-row">
+                        <span style="font-size: 1.1rem;">📜</span>
+                        <div style="flex: 1;">
+                          <div style="font-weight: 600; color: #a7f3d0; font-size: 0.82rem;">${rew.perk}</div>
+                          <div style="font-size: 0.72rem; color: var(--text-muted);">${rew.desc}</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Card Actions -->
+                    <div>
+                      ${canClaim ? `
+                        <button class="btn btn-claim-pulse" onclick="app.claimRankReward('${t.id}', true)" style="width: 100%; padding: 0.65rem 1rem; font-size: 0.92rem;">
+                          🎁 กดรับของรางวัลยศนี้! ✨
+                        </button>
+                      ` : (isClaimed ? `
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem;">
+                          <button class="btn ${isTitleEquipped ? 'btn-primary' : 'btn-outline'}" onclick="app.equipTitle('${rew.title}')" style="font-size: 0.78rem; padding: 0.4rem 0.5rem;">
+                            ${isTitleEquipped ? '⚡ สวมฉายาอยู่' : 'สวมฉายา'}
+                          </button>
+                          <button class="btn ${isFrameEquipped ? 'btn-primary' : 'btn-outline'}" onclick="app.equipFrame('${rew.frame}')" style="font-size: 0.78rem; padding: 0.4rem 0.5rem;">
+                            ${isFrameEquipped ? '⚡ สวมกรอบอยู่' : 'สวมกรอบรูป'}
+                          </button>
+                        </div>
+                      ` : `
+                        <div style="background: rgba(0,0,0,0.3); border: 1px dashed rgba(255,255,255,0.1); border-radius: 10px; padding: 0.55rem; text-align: center; font-size: 0.8rem; color: #94a3b8;">
+                          🔒 ขาดอีก ${(t.minXp - uXp).toLocaleString()} EXP เพื่อปลดล็อก
+                        </div>
+                      `)}
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+
+            <!-- Wardrobe & Customization Section -->
+            <div class="wardrobe-panel">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                  <h3 style="font-size: 1.35rem; color: #fff; margin-bottom: 0.25rem;">✨ ตู้สะสมฉายา & กรอบรูปออร่า (Wardrobe & Customizer)</h3>
+                  <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">เลือกเปลี่ยนฉายาและกรอบรูปที่ปลดล็อกแล้วได้อิสระตามต้องการ</p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                  <div style="text-align: right;">
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">พรีวิวอวาตาร์ของคุณ:</div>
+                    <div style="font-weight: 700; color: #38bdf8; font-size: 0.85rem;">${equippedTitle}</div>
+                  </div>
+                  <div>
+                    ${this.profileAvatarMarkup(auth.currentUser)}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Unlocked Titles Grid -->
+              <div style="margin-bottom: 1.75rem;">
+                <div style="font-weight: 700; color: #38bdf8; font-size: 0.95rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem;">
+                  <span>🏷️</span> เลือกฉายาเกียรติยศ (Equip Title)
+                </div>
+                <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+                  ${ACADEMIC_RANKS.map(t => {
+                    const rew = RANK_REWARDS_CONFIG[t.id];
+                    const isUnlocked = claimedRewards.includes(t.id) || uXp >= t.minXp;
+                    const isEq = equippedTitle === rew.title;
+                    return `
+                      <button class="btn ${isEq ? 'btn-primary' : 'btn-outline'}" onclick="${isUnlocked ? "app.equipTitle('" + rew.title + "')" : "app.showToast('🔒 ต้องปลดล็อกยศ " + t.nameEn + " ก่อนจึงจะใช้งานฉายานี้ได้')"}" style="font-size: 0.85rem; padding: 0.45rem 0.9rem; border-radius: 20px; ${!isUnlocked ? 'opacity: 0.45; cursor: not-allowed;' : ''}">
+                        ${rew.title} ${isEq ? '⚡' : (!isUnlocked ? '🔒' : '')}
+                      </button>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+
+              <!-- Unlocked Frames Grid -->
+              <div>
+                <div style="font-weight: 700; color: #c084fc; font-size: 0.95rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem;">
+                  <span>🖼️</span> เลือกกรอบรูปออร่า (Equip Avatar Frame)
+                </div>
+                <div style="display: flex; gap: 0.85rem; flex-wrap: wrap;">
+                  <button class="btn ${equippedFrame === 'default' ? 'btn-primary' : 'btn-outline'}" onclick="app.equipFrame('default')" style="font-size: 0.85rem; padding: 0.45rem 0.9rem; border-radius: 20px;">
+                    กรอบมาตรฐาน (Default) ${equippedFrame === 'default' ? '⚡' : ''}
+                  </button>
+                  ${ACADEMIC_RANKS.map(t => {
+                    const rew = RANK_REWARDS_CONFIG[t.id];
+                    const isUnlocked = claimedRewards.includes(t.id) || uXp >= t.minXp;
+                    const isEq = equippedFrame === rew.frame;
+                    return `
+                      <button class="btn ${isEq ? 'btn-primary' : 'btn-outline'}" onclick="${isUnlocked ? "app.equipFrame('" + rew.frame + "')" : "app.showToast('🔒 ต้องปลดล็อกยศ " + t.nameEn + " ก่อนจึงจะใช้งานกรอบนี้ได้')"}" style="font-size: 0.85rem; padding: 0.45rem 0.9rem; border-radius: 20px; border-color: ${t.color}88; ${!isUnlocked ? 'opacity: 0.45; cursor: not-allowed;' : ''}">
+                        ${rew.icon} ${rew.frameName.split(' ')[0]} Frame ${isEq ? '⚡' : (!isUnlocked ? '🔒' : '')}
+                      </button>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Daily Quests Tab -->
           <div id="section-quests-tab" style="display: ${initialTab === 'quests' ? 'block' : 'none'};">
             <div style="background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.75rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
               <div>
@@ -11146,9 +11843,11 @@ class AppController {
                     <td><strong style="color: ${index === 0 ? '#fbbf24' : (index === 1 ? '#94a3b8' : (index === 2 ? '#cd7f32' : '#cbd5e1'))};">#${index + 1}</strong></td>
                     <td>
                       <div class="table-user-cell">
-                        <span class="table-avatar">${this.avatarMarkup(user.avatar)}</span>
-                        <span>${user.username}</span>
-                        
+                        ${this.profileAvatarMarkup(user, 'table-avatar')}
+                        <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                          <span style="font-weight: 700; color: #fff;">${user.username}</span>
+                          ${(user.equippedTitle || user.title) ? `<span style="font-size: 0.7rem; color: #38bdf8; font-weight: 600;">${user.equippedTitle || user.title}</span>` : ''}
+                        </div>
                       </div>
                     </td>
                     <td>
@@ -11204,6 +11903,10 @@ class AppController {
               </div>
             ` : ''}
             <h2>${auth.currentUser.username} ${auth.currentUser.role === 'admin' ? '<span style="background: #38bdf8; color: #000; font-size: 0.75rem; vertical-align: middle; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 5px;">ADMIN</span>' : ''}</h2>
+            <div style="display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.35); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem; color: #38bdf8; font-weight: 700; margin: 0.2rem 0 0.8rem 0;">
+              <span>🏷️ ฉายา:</span>
+              <span>${this.getEquippedTitle ? this.getEquippedTitle() : '🌱 ผู้เริ่มแสวงปัญญา'}</span>
+            </div>
             ${(() => {
               const r = getRankTierData(auth.currentUser.xp || 0);
               const starIcons = '⭐'.repeat(r.stars) + '☆'.repeat(3 - r.stars);
@@ -11232,7 +11935,8 @@ class AppController {
                   </div>
                   <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
                     <button class="btn btn-outline" style="font-size: 0.8rem; padding: 0.35rem 0.85rem;" onclick="app.navigate('#/ranks')">🏆 ดูทำเนียบยศทั้ง 7 ขั้น</button>
-                    <button class="btn btn-primary" style="font-size: 0.8rem; padding: 0.35rem 0.85rem;" onclick="app.navigate('#/quests')">📜 ทำเควสต์รายวันเพิ่ม EXP</button>
+                    <button class="btn btn-primary" style="font-size: 0.8rem; padding: 0.35rem 0.85rem;" <button class="btn btn-primary" style="font-size: 0.8rem; padding: 0.35rem 0.85rem; background: linear-gradient(135deg, #f59e0b, #ef4444); color: #000; font-weight: 700;" onclick="app.navigate('#/ranks?tab=rewards')">🎁 รับของรางวัลเลื่อนยศ</button>
+                    onclick="app.navigate('#/quests')">📜 ทำเควสต์รายวันเพิ่ม EXP</button>
                   </div>
                 </div>
               `;
@@ -11245,6 +11949,10 @@ class AppController {
               </div>
               <div style="background: rgba(0,0,0,0.3); padding: 0.85rem 0.5rem; border-radius: 12px;">
                 <div style="font-size: 0.75rem; color: var(--text-muted);">EXP สะสม</div>
+              <div style="background: rgba(0,0,0,0.3); padding: 0.85rem 0.5rem; border-radius: 12px; cursor: pointer;" onclick="app.navigate('#/ranks?tab=rewards')" title="คลิกเพื่อไปที่หน้าของรางวัล">
+                <div style="font-size: 0.75rem; color: var(--text-muted);">เหรียญปัญญา</div>
+                <strong style="font-size: 1.4rem; color: #fbbf24;">🪙 ${(this.getCoins ? this.getCoins() : 0).toLocaleString()}</strong>
+              </div>
                 <strong style="font-size: 1.4rem; color: #fbbf24;">${auth.currentUser.xp || 0}</strong>
               </div>
               <div style="background: rgba(0,0,0,0.3); padding: 0.85rem 0.5rem; border-radius: 12px;">
