@@ -6111,13 +6111,13 @@
     }
 
     const ACADEMIC_RANKS = [
-      { id: 'bronze', nameTh: 'ผู้แสวงหาชั้นทองแดง', nameEn: 'Bronze Novice', minXp: 0, maxXp: 99, color: '#cd7f32', accent: '#ea580c', glow: 'rgba(205, 127, 50, 0.5)', desc: 'ศิลาทองแดงสลักอักษรรูนแห่งก้าวแรกในจักรวาลความรู้' },
-      { id: 'silver', nameTh: 'ปราชญ์ฝึกหัดชั้นเงิน', nameEn: 'Silver Apprentice', minXp: 100, maxXp: 299, color: '#cbd5e1', accent: '#94a3b8', glow: 'rgba(203, 213, 225, 0.5)', desc: 'ตราโล่เงินแท้ประดับผลึกแก้วมนตราแห่งความเพียรพยายาม' },
-      { id: 'gold', nameTh: 'พหูสูตชั้นทองคำ', nameEn: 'Gold Adept', minXp: 300, maxXp: 599, color: '#fbbf24', accent: '#f59e0b', glow: 'rgba(251, 191, 36, 0.6)', desc: 'ตราสุริยันทองคำเปลวพร้อมปีกวิหคแห่งปัญญาอันเจิดจ้า' },
-      { id: 'platinum', nameTh: 'มหาบัณฑิตแพลตทินัม', nameEn: 'Platinum Expert', minXp: 600, maxXp: 999, color: '#2dd4bf', accent: '#0d9488', glow: 'rgba(45, 212, 191, 0.65)', desc: 'ตราแพลตทินัมพร้อมออร่ามรกตสัจธรรมและผลึกวิทยาการล้ำยุค' },
-      { id: 'diamond', nameTh: 'มหาปราชญ์ชั้นเพชร', nameEn: 'Diamond Scholar', minXp: 1000, maxXp: 1799, color: '#38bdf8', accent: '#0284c7', glow: 'rgba(56, 189, 248, 0.75)', desc: 'มงกุฎเพชรเจียระไนพร้อมประกายแสงดวงดาวแห่งจักรวาล OmniVerse' },
-      { id: 'master', nameTh: 'จอมปราชญ์คอนเคอเรอร์', nameEn: 'Master Conqueror', minXp: 1800, maxXp: 2999, color: '#c084fc', accent: '#9333ea', glow: 'rgba(192, 132, 252, 0.85)', desc: 'ตราปีกมังกรทองคำโอบล้อมผลึกอเมทิสต์แห่งชัยชนะเหนือศาสตร์ทั้งปวง' },
-      { id: 'supreme', nameTh: 'มหาจักรพรรดิแห่งปัญญา', nameEn: 'Supreme Omniscient', minXp: 3000, maxXp: 999999, color: '#f43f5e', accent: '#fbbf24', glow: 'rgba(244, 63, 94, 0.95)', desc: 'ยศสูงสุดระดับมหาปราชญ์นิรันดร์ รัศมีสุริยะหมุนวนพร้อมวงแหวนแห่งจักรวาล' }
+      { id: 'bronze', nameTh: 'ผู้แสวงหาชั้นทองแดง', nameEn: 'Bronze Novice', minXp: 0, maxXp: 499, color: '#cd7f32', accent: '#ea580c', glow: 'rgba(205, 127, 50, 0.5)', desc: 'ศิลาทองแดงสลักอักษรรูนแห่งก้าวแรกในจักรวาลความรู้' },
+      { id: 'silver', nameTh: 'ปราชญ์ฝึกหัดชั้นเงิน', nameEn: 'Silver Apprentice', minXp: 500, maxXp: 1499, color: '#cbd5e1', accent: '#94a3b8', glow: 'rgba(203, 213, 225, 0.5)', desc: 'ตราโล่เงินแท้ประดับผลึกแก้วมนตราแห่งความเพียรพยายาม' },
+      { id: 'gold', nameTh: 'พหูสูตชั้นทองคำ', nameEn: 'Gold Adept', minXp: 1500, maxXp: 2999, color: '#fbbf24', accent: '#f59e0b', glow: 'rgba(251, 191, 36, 0.6)', desc: 'ตราสุริยันทองคำเปลวพร้อมปีกวิหคแห่งปัญญาอันเจิดจ้า' },
+      { id: 'platinum', nameTh: 'มหาบัณฑิตแพลตทินัม', nameEn: 'Platinum Expert', minXp: 3000, maxXp: 4999, color: '#2dd4bf', accent: '#0d9488', glow: 'rgba(45, 212, 191, 0.65)', desc: 'ตราแพลตทินัมพร้อมออร่ามรกตสัจธรรมและผลึกวิทยาการล้ำยุค' },
+      { id: 'diamond', nameTh: 'มหาปราชญ์ชั้นเพชร', nameEn: 'Diamond Scholar', minXp: 5000, maxXp: 8999, color: '#38bdf8', accent: '#0284c7', glow: 'rgba(56, 189, 248, 0.75)', desc: 'มงกุฎเพชรเจียระไนพร้อมประกายแสงดวงดาวแห่งจักรวาล OmniVerse' },
+      { id: 'master', nameTh: 'จอมปราชญ์คอนเคอเรอร์', nameEn: 'Master Conqueror', minXp: 9000, maxXp: 14999, color: '#c084fc', accent: '#9333ea', glow: 'rgba(192, 132, 252, 0.85)', desc: 'ตราปีกมังกรทองคำโอบล้อมผลึกอเมทิสต์แห่งชัยชนะเหนือศาสตร์ทั้งปวง' },
+      { id: 'supreme', nameTh: 'มหาจักรพรรดิแห่งปัญญา', nameEn: 'Supreme Omniscient', minXp: 15000, maxXp: 999999, color: '#f43f5e', accent: '#fbbf24', glow: 'rgba(244, 63, 94, 0.95)', desc: 'ยศสูงสุดระดับมหาปราชญ์นิรันดร์ รัศมีสุริยะหมุนวนพร้อมวงแหวนแห่งจักรวาล' }
     ];
 
     function getRankTierData(xp) {
@@ -6132,7 +6132,7 @@
         }
       }
 
-      const range = (nextTier ? nextTier.minXp : 3500) - tier.minXp;
+      const range = (nextTier ? nextTier.minXp : 17500) - tier.minXp;
       const progressInTier = currentXp - tier.minXp;
       const fraction = Math.max(0, Math.min(1, progressInTier / range));
       const stars = Math.min(3, Math.floor(fraction * 3) + 1);
