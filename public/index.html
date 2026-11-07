@@ -188,25 +188,210 @@
       color: #fff;
     }
 
+    /* ============================================================ */
+    /* COMPACT NAVBAR & GLASSMORPHISM DROPDOWN MENU                 */
+    /* ============================================================ */
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 1.25rem;
+      gap: 0.45rem;
       list-style: none;
+      margin: 0;
+      padding: 0;
     }
 
     .nav-item {
       color: var(--text-muted);
       cursor: pointer;
-      font-size: 0.95rem;
-      display: flex;
+      font-size: 0.84rem;
+      font-weight: 500;
+      display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      transition: color 0.2s;
+      gap: 0.38rem;
+      padding: 0.32rem 0.65rem;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: transparent;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+      user-select: none;
     }
 
-    .nav-item:hover, .nav-item.active {
-      color: var(--text-main);
+    .nav-item:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .nav-item.active {
+      color: #c7d2fe;
+      background: rgba(99, 102, 241, 0.2);
+      border-color: rgba(99, 102, 241, 0.4);
+      font-weight: 600;
+      box-shadow: 0 0 12px rgba(99, 102, 241, 0.25);
+    }
+
+    .nav-item .nav-svg-icon,
+    .nav-dropdown-trigger .nav-svg-icon {
+      width: 15px;
+      height: 15px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .nav-item .nav-svg-icon svg,
+    .nav-dropdown-trigger .nav-svg-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Dropdown container */
+    .nav-dropdown {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .nav-dropdown-trigger {
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.84rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.38rem;
+      padding: 0.32rem 0.65rem;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: transparent;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .nav-dropdown-trigger:hover,
+    .nav-dropdown.open .nav-dropdown-trigger {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .nav-dropdown.active .nav-dropdown-trigger {
+      color: #c7d2fe;
+      background: rgba(99, 102, 241, 0.2);
+      border-color: rgba(99, 102, 241, 0.4);
+      font-weight: 600;
+      box-shadow: 0 0 12px rgba(99, 102, 241, 0.25);
+    }
+
+    .nav-dropdown-arrow {
+      font-size: 0.65rem;
+      margin-left: 0.1rem;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity: 0.7;
+    }
+
+    .nav-dropdown.open .nav-dropdown-arrow,
+    .nav-dropdown:hover .nav-dropdown-arrow {
+      transform: rotate(180deg);
+      opacity: 1;
+    }
+
+    /* Flyout menu */
+    .nav-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      min-width: 250px;
+      background: rgba(13, 18, 36, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 14px;
+      padding: 0.5rem;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 24px rgba(99, 102, 241, 0.18);
+      display: none;
+      flex-direction: column;
+      gap: 0.25rem;
+      z-index: 1000;
+      animation: navDropdownPop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes navDropdownPop {
+      0% { opacity: 0; transform: translateY(-8px) scale(0.97); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .nav-dropdown:hover .nav-dropdown-menu,
+    .nav-dropdown.open .nav-dropdown-menu {
+      display: flex;
+    }
+
+    /* Dropdown item */
+    .nav-dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.55rem 0.75rem;
+      border-radius: 9px;
+      color: #cbd5e1;
+      font-size: 0.84rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+      background: transparent;
+      border: 1px solid transparent;
+    }
+
+    .nav-dropdown-item:hover {
+      background: rgba(99, 102, 241, 0.16);
+      border-color: rgba(99, 102, 241, 0.25);
+      color: #fff;
+      transform: translateX(3px);
+    }
+
+    .nav-dropdown-item.active {
+      background: rgba(99, 102, 241, 0.25);
+      border-color: rgba(99, 102, 241, 0.45);
+      color: #a5b4fc;
+      font-weight: 600;
+    }
+
+    .nav-dropdown-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+
+    .nav-dropdown-text {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .nav-dropdown-title {
+      font-weight: 600;
+      color: #fff;
+      font-size: 0.84rem;
+      line-height: 1.25;
+    }
+
+    .nav-dropdown-desc {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      line-height: 1.2;
+      margin-top: 2px;
     }
 
     .nav-actions {
@@ -3752,14 +3937,80 @@
       </div>
 
       <ul class="nav-links">
-        <li class="nav-item active" data-route="#/" onclick="app.navigate('#/')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg></span> <span>คลังสายวิชา</span></li>
-        <li class="nav-item" data-route="#/ranks" onclick="app.navigate('#/ranks')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span> <span>ทำเนียบยศ & เควสต์</span></li>
-        <li class="nav-item" data-route="#/flashcards" onclick="app.navigate('#/flashcards')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h10M7 12h10M7 17h6"/></svg></span> <span>บัตรคำ (Cards)</span></li>
-        <li class="nav-item" data-route="#/lab" onclick="app.navigate('#/lab')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31L4.69 17.5A2 2 0 0 0 6.38 21h11.24a2 2 0 0 0 1.69-3.5L14 9.31V2"/><line x1="8" y1="2" x2="16" y2="2"/></svg></span> <span>ห้องแล็บจำลอง (Lab)</span></li>
-        <li class="nav-item" onclick="omniAI.open()"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span> <span>ปรึกษา AI</span></li>
-                <li class="nav-item" data-route="#/leaderboard" onclick="app.navigate('#/leaderboard')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span> <span>ตารางอันดับ</span></li>
-        <li class="nav-item" data-route="#/tickets" onclick="app.navigate('#/tickets')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span> <span>ศูนย์ช่วยเหลือ</span></li>
-        <li class="nav-item" id="nav-admin-link" style="display: none;" onclick="app.navigate('#/admin')"><span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></span> <span>หลังบ้าน (Admin)</span></li>
+        <!-- 1. คลังวิชา -->
+        <li class="nav-item active" data-route="#/" onclick="app.navigate('#/')">
+          <span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg></span>
+          <span>คลังวิชา</span>
+        </li>
+
+        <!-- 2. ทำเนียบยศ & เควสต์ -->
+        <li class="nav-item" data-route="#/ranks" onclick="app.navigate('#/ranks')">
+          <span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+          <span>ยศ & เควสต์</span>
+        </li>
+
+        <!-- 3. เครื่องมือการเรียนรู้ (Dropdown) -->
+        <li class="nav-dropdown" id="nav-dropdown-tools">
+          <div class="nav-dropdown-trigger" onclick="app.toggleNavDropdown('nav-dropdown-tools', event)" title="เครื่องมือการเรียนรู้และ AI">
+            <span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
+            <span>เครื่องมือ</span>
+            <span class="nav-dropdown-arrow">▾</span>
+          </div>
+          <div class="nav-dropdown-menu">
+            <div class="nav-dropdown-item" data-route="#/flashcards" onclick="app.navigate('#/flashcards'); app.closeAllNavDropdowns();">
+              <span class="nav-dropdown-icon">🗂️</span>
+              <div class="nav-dropdown-text">
+                <span class="nav-dropdown-title">บัตรคำช่วยจำ (Flashcards)</span>
+                <span class="nav-dropdown-desc">ทบทวนศัพท์ 20 ภาษาและสูตรสำคัญ</span>
+              </div>
+            </div>
+            <div class="nav-dropdown-item" data-route="#/lab" onclick="app.navigate('#/lab'); app.closeAllNavDropdowns();">
+              <span class="nav-dropdown-icon">🔬</span>
+              <div class="nav-dropdown-text">
+                <span class="nav-dropdown-title">ห้องแล็บจำลอง (OmniLab)</span>
+                <span class="nav-dropdown-desc">การทดลองฟิสิกส์ คณิต เคมี อินเทอร์แอคทีฟ</span>
+              </div>
+            </div>
+            <div class="nav-dropdown-item" onclick="omniAI.open(); app.closeAllNavDropdowns();">
+              <span class="nav-dropdown-icon">⚡</span>
+              <div class="nav-dropdown-text">
+                <span class="nav-dropdown-title">ปรึกษา AI (OmniAI)</span>
+                <span class="nav-dropdown-desc">ผู้ช่วยติวเตอร์ปัญญาประดิษฐ์ส่วนตัว</span>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <!-- 4. ตารางอันดับ -->
+        <li class="nav-item" data-route="#/leaderboard" onclick="app.navigate('#/leaderboard')">
+          <span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span>
+          <span>อันดับ</span>
+        </li>
+
+        <!-- 5. เพิ่มเติม & จัดการ (Dropdown) -->
+        <li class="nav-dropdown" id="nav-dropdown-more">
+          <div class="nav-dropdown-trigger" onclick="app.toggleNavDropdown('nav-dropdown-more', event)" title="เมนูเพิ่มเติม">
+            <span class="nav-svg-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></span>
+            <span>เพิ่มเติม</span>
+            <span class="nav-dropdown-arrow">▾</span>
+          </div>
+          <div class="nav-dropdown-menu">
+            <div class="nav-dropdown-item" data-route="#/tickets" onclick="app.navigate('#/tickets'); app.closeAllNavDropdowns();">
+              <span class="nav-dropdown-icon">🎫</span>
+              <div class="nav-dropdown-text">
+                <span class="nav-dropdown-title">ศูนย์ช่วยเหลือ</span>
+                <span class="nav-dropdown-desc">แจ้งปัญหา ส่งคำถาม และติดต่อผู้พัฒนา</span>
+              </div>
+            </div>
+            <div class="nav-dropdown-item" id="nav-admin-link" style="display: none;" data-route="#/admin" onclick="app.navigate('#/admin'); app.closeAllNavDropdowns();">
+              <span class="nav-dropdown-icon">🛡️</span>
+              <div class="nav-dropdown-text">
+                <span class="nav-dropdown-title">จัดการระบบ (Admin)</span>
+                <span class="nav-dropdown-desc">ศูนย์ควบคุมหลังบ้านเฉพาะแอดมิน</span>
+              </div>
+            </div>
+          </div>
+        </li>
       </ul>
 
       <div class="nav-actions">
@@ -8197,7 +8448,7 @@ class AppController {
         const hash = window.location.hash || '#/';
         themeManager.setTheme('default');
 
-        document.querySelectorAll('.nav-item, .mobile-nav-item').forEach((item) => {
+        document.querySelectorAll('.nav-item, .nav-dropdown-item, .mobile-nav-item').forEach((item) => {
           const target = item.getAttribute('data-route');
           if (target && (hash === target || (target !== '#/' && hash.startsWith(target)))) {
             item.classList.add('active');
@@ -8206,6 +8457,13 @@ class AppController {
           } else {
             item.classList.remove('active');
           }
+        });
+
+        // Highlight parent dropdown if any child item is active
+        document.querySelectorAll('.nav-dropdown').forEach(dd => {
+          const hasActiveChild = dd.querySelector('.nav-dropdown-item.active');
+          if (hasActiveChild) dd.classList.add('active');
+          else dd.classList.remove('active');
         });
 
         if (hash === '#/' || hash === '') this.renderHome();
@@ -8828,6 +9086,24 @@ class AppController {
         setTimeout(() => {
           omniFlashcards.init();
         }, 50);
+      }
+
+      toggleNavDropdown(dropdownId, event) {
+        if (event) {
+          event.stopPropagation();
+          event.preventDefault();
+        }
+        const target = document.getElementById(dropdownId);
+        if (!target) return;
+        const wasOpen = target.classList.contains('open');
+        this.closeAllNavDropdowns();
+        if (!wasOpen) {
+          target.classList.add('open');
+        }
+      }
+
+      closeAllNavDropdowns() {
+        document.querySelectorAll('.nav-dropdown.open').forEach(d => d.classList.remove('open'));
       }
 
       renderHome() {
@@ -12982,6 +13258,9 @@ window.addEventListener('keydown', (e) => {
     }
   }
   if (e.key === 'Escape') {
+    if (window.app && typeof window.app.closeAllNavDropdowns === 'function') {
+      window.app.closeAllNavDropdowns();
+    }
     if (window.app && typeof window.app.closeQuickSearch === 'function') {
       window.app.closeQuickSearch();
     }
@@ -12991,6 +13270,12 @@ window.addEventListener('keydown', (e) => {
 window.addEventListener('DOMContentLoaded', () => {
   if (window.app && typeof window.app.renderMath === 'function') {
     window.app.renderMath(document.body);
+  }
+});
+
+window.addEventListener('click', (e) => {
+  if (!e.target.closest('.nav-dropdown')) {
+    document.querySelectorAll('.nav-dropdown.open').forEach(d => d.classList.remove('open'));
   }
 });
 </script>
