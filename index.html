@@ -4712,6 +4712,19 @@
           console.error('Firebase persistence error:', error);
         });
 
+        // Listen for redirect results if user logged in via redirect
+        try {
+          firebase.auth().getRedirectResult().then(async (result) => {
+            if (result && result.user) {
+              const fbUser = result.user;
+              console.log('[Auth] Redirect sign-in success:', fbUser.displayName || fbUser.email);
+              if (window.app) window.app.showToast(`🎉 เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับ ${fbUser.displayName || 'Learner'}`);
+            }
+          }).catch((err) => {
+            console.warn('[Auth] Redirect sign-in error:', err);
+          });
+        } catch(e) {}
+
         firebase.auth().onAuthStateChanged(async (firebaseUser) => {
           if (!firebaseUser) {
             this.currentUser = null;
@@ -4835,6 +4848,14 @@
         let provider = null;
         let providerTitle = 'Social Provider';
 
+        // 1. Check protocol: file:// is forbidden by OAuth standards
+        if (window.location.protocol === 'file:') {
+          const msg = '⚠️ คุณกำลังเปิดไฟล์ผ่าน file:// โดยตรง\n\nความปลอดภัยของเบราว์เซอร์และ Google จะบล็อกการเข้าสู่ระบบหากไม่ได้รันผ่าน Web Server\n\n💡 วิธีแก้ที่ง่ายที่สุด:\nดับเบิลคลิกที่ไฟล์ "start_server.bat" ในโฟลเดอร์โครงงานของคุณ เพื่อเปิดบน http://localhost:3000 แล้วลองใหม่อีกครั้งครับ';
+          if (typeof window !== 'undefined' && typeof window.alert === 'function') window.alert(msg);
+          if (window.app) window.app.showToast('⚠️ กรุณาเปิดเว็บผ่าน start_server.bat (http://localhost:3000)');
+          return;
+        }
+
         if (name === 'github') {
           provider = new firebase.auth.GithubAuthProvider();
           provider.addScope('read:user');
@@ -4934,18 +4955,33 @@
           if (error.code === 'auth/popup-closed-by-user') {
             if (window.app) window.app.showToast(`ℹ️ ยกเลิกการเข้าสู่ระบบผ่าน ${providerTitle}`);
           } else if (error.code === 'auth/popup-blocked') {
-            if (window.app) window.app.showToast(`⚠️ เบราว์เซอร์บล็อกหน้าต่าง Pop-up กรุณาอนุญาตการเปิด Pop-up บนเว็บนี้`);
+            const useRedirect = confirm(`⚠️ เบราว์เซอร์บล็อกหน้าต่าง Pop-up ของ ${providerTitle}\n\nต้องการเปลี่ยนหน้าไปล็อกอิน (Redirect) แทนหรือไม่?`);
+            if (useRedirect) {
+              firebase.auth().signInWithRedirect(provider).catch(reErr => {
+                if (typeof window !== 'undefined' && typeof window.alert === 'function') window.alert('Redirect error: ' + reErr.message);
+              });
+            }
           } else if (error.code === 'auth/operation-not-allowed') {
-            if (window.app) window.app.showToast(`⚠️ ยังไม่ได้เปิดใช้งาน ${providerTitle} ใน Firebase Console > Authentication > Sign-in method`);
+            const consoleUrl = 'https://console.firebase.google.com/project/namemyskill/authentication/providers';
+            if (window.app) window.app.showToast(`⚠️ ยังไม่ได้เปิดใช้งาน ${providerTitle} ใน Firebase Console`);
+            const alertMsg = `⚠️ ยังไม่ได้เปิดใช้งาน "${providerTitle}" ใน Firebase Console!\n\nวิธีเปิดใช้งาน:\n1. เข้าไปที่: ${consoleUrl}\n2. คลิกที่ "${providerTitle}" แล้วกดสวิตช์ Enable (เปิดใช้งาน)\n3. เลือก Project support email แล้วกด Save (บันทึก)\n\n(กดเปิดแท็บใหม่เพื่อไปที่หน้าตั้งค่าทันที)`;
+            if (typeof window !== 'undefined' && typeof window.confirm === 'function' && window.confirm(alertMsg)) {
+              window.open(consoleUrl, '_blank');
+            }
           } else if (error.code === 'auth/unauthorized-domain') {
             const host = window.location.hostname || 'file://';
-            if (window.app) window.app.showToast(`⚠️ โดเมน (${host}) ยังไม่ได้เพิ่มใน Firebase Console > Authorized domains`);
+            const settingsUrl = 'https://console.firebase.google.com/project/namemyskill/authentication/settings';
+            if (window.app) window.app.showToast(`⚠️ โดเมน (${host}) ยังไม่ได้เพิ่มใน Firebase Authorized Domains`);
+            const alertMsg = `⚠️ โดเมนปัจจุบัน ("${host}") ยังไม่ได้เพิ่มใน Firebase Authorized Domains!\n\nวิธีแก้ไข:\n1. เข้าไปที่: ${settingsUrl}\n2. เลื่อนลงมาที่หัวข้อ "Authorized domains" แล้วกด "Add domain"\n3. พิมพ์ "${host}" แล้วกด Save\n\n(หรือเปิดเว็บผ่าน start_server.bat เพื่อรันบน localhost:3000 ได้ทันที)`;
+            if (typeof window !== 'undefined' && typeof window.confirm === 'function' && window.confirm(alertMsg)) {
+              window.open(settingsUrl, '_blank');
+            }
           } else if (error.code === 'auth/account-exists-with-different-credential') {
             if (window.app) window.app.showToast(`⚠️ มีบัญชีนี้ในระบบแล้วด้วยวิธีเข้าสู่ระบบอื่น กรุณาใช้วิธีเดิม`);
           } else if (error.code === 'auth/network-request-failed') {
             if (window.app) window.app.showToast(`⚠️ ไม่สามารถเชื่อมต่อเครือข่ายได้ กรุณาตรวจสอบอินเทอร์เน็ต`);
           } else {
-            if (window.app) window.app.showToast(`⚠️ เกิดข้อผิดพลาด (${error.code || 'unknown'}): ${error.message || 'โปรดลองใหม่อีกครั้ง'}`);
+            if (typeof window !== 'undefined' && typeof window.alert === 'function') window.alert(`⚠️ ข้อผิดพลาดในการเข้าสู่ระบบ (${error.code}): ${error.message}`);
           }
         }
       }
@@ -10790,7 +10826,7 @@ class AppController {
 
       speakLanguagePhrase(text, langCode, btnEl) {
         if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
-          alert('ขออภัยครับ เบราว์เซอร์ของคุณไม่รองรับ Web Speech API');
+          if (typeof window !== 'undefined' && typeof window.alert === 'function') window.alert('ขออภัยครับ เบราว์เซอร์ของคุณไม่รองรับ Web Speech API');
           return;
         }
 
@@ -11901,7 +11937,7 @@ class AppController {
       startListening() {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SpeechRecognition) {
-          alert('ขออภัยครับ เบราว์เซอร์ของคุณยังไม่รองรับ Web Speech API (แนะนำให้ใช้งานบน Google Chrome, Edge หรือ Safari ครับ)');
+          if (typeof window !== 'undefined' && typeof window.alert === 'function') window.alert('ขออภัยครับ เบราว์เซอร์ของคุณยังไม่รองรับ Web Speech API (แนะนำให้ใช้งานบน Google Chrome, Edge หรือ Safari ครับ)');
           return;
         }
 
@@ -11969,7 +12005,7 @@ class AppController {
       // ============================================================
       exportChatNotes() {
         if (!this.messages || this.messages.length <= 1) {
-          alert('ยังไม่มีบันทึกบทสนทนาที่จะส่งออกครับ ลองเริ่มพูดคุยหรือถามคำถามกับ AI ดูก่อนนะครับ');
+          if (typeof window !== 'undefined' && typeof window.alert === 'function') window.alert('ยังไม่มีบันทึกบทสนทนาที่จะส่งออกครับ ลองเริ่มพูดคุยหรือถามคำถามกับ AI ดูก่อนนะครับ');
           return;
         }
 
@@ -11999,11 +12035,11 @@ class AppController {
           a.click();
           document.body.removeChild(a);
           URL.revokeObjectURL(url);
-          alert('ดาวน์โหลดบันทึกการเรียนรู้ (.md) เรียบร้อยแล้วครับ!');
+          if (typeof window !== 'undefined' && typeof window.alert === 'function') window.alert('ดาวน์โหลดบันทึกการเรียนรู้ (.md) เรียบร้อยแล้วครับ!');
         } catch (e) {
           // Fallback to clipboard
           navigator.clipboard.writeText(mdDoc).then(() => {
-            alert('คัดลอกสรุปบันทึกการเรียนรู้ลงคลิปบอร์ดเรียบร้อยแล้ว!');
+            if (typeof window !== 'undefined' && typeof window.alert === 'function') window.alert('คัดลอกสรุปบันทึกการเรียนรู้ลงคลิปบอร์ดเรียบร้อยแล้ว!');
           });
         }
       }
@@ -12071,7 +12107,7 @@ class AppController {
           }
         }
         this.updateKeyStatusText();
-        alert('บันทึกการตั้งค่าระบบ AI 5.0 เรียบร้อยแล้วครับ!');
+        if (typeof window !== 'undefined' && typeof window.alert === 'function') window.alert('บันทึกการตั้งค่าระบบ AI 5.0 เรียบร้อยแล้วครับ!');
       }
 
       resetSettings() {
@@ -12211,7 +12247,7 @@ class AppController {
 
       speakMessage(msgIndex, btnEl) {
         if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
-          alert('เบราว์เซอร์ของคุณไม่รองรับ Web Speech Synthesis ครับ');
+          if (typeof window !== 'undefined' && typeof window.alert === 'function') window.alert('เบราว์เซอร์ของคุณไม่รองรับ Web Speech Synthesis ครับ');
           return;
         }
 
